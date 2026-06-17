@@ -1,0 +1,14 @@
+metric,value
+thread_count,6
+question_count,10
+avg_questions_per_thread,1.6667
+append_rate,0.4
+debounce_bundle_rate,0.5
+bypass_rate,0.3333
+timeout_rate,0.0
+false_positive_threads,0
+false_negative_threads,1
+category.developer_handover,1
+category.fees_and_charges,3
+category.offer,1
+category.regulatory_documents,1

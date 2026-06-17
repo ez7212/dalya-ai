@@ -1,0 +1,506 @@
+{
+  "name": "Sidra Villas",
+  "developer": "Emaar Properties",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "Sidra Villas comprises three completed phases (I, II, III) within Dubai Hills Estate, Mohammed Bin Rashid City. Phase I has 170 villas, Phase II has 160 villas, Phase III has 145 villas — totalling approximately 475 villas across the three phases (some sources round to ~1,000 for the broader Sidra community; the 475 figure from Property Finder blog refers specifically to Sidra I).",
+    "All three phases are ready and handed over. Sidra I was launched July 2017 with handovers beginning December 2019 per Bayut.",
+    "Freehold ownership confirmed via Bayut area guide.",
+    "Current resale prices (May 2026) range from approximately AED 7.6M to AED 23M based on Bayut and PropertyFinder listing data. DLD transaction data from PropertyFinder shows recent Sidra II sales: 3BR ~AED 8.2M–10.25M, 4BR ~AED 10.3M–11.7M, 5BR ~AED 14.2M–16M.",
+    "Rental indicative figures from PropertyFinder blog (published Nov 2024, may not reflect current market): 3BR from AED 145,000/yr, 4BR from AED 150,000/yr, 5BR from AED 175,000/yr. These should be verified against live listings.",
+    "ROI figures cited by 1newhomes.ae (2.5–4.5% rental yield, 5–10% annual price growth) are sourced from a PwC reference on that site but are not independently verified here; treat as indicative only.",
+    "Source 3 (harperwellington.com/sidra-village) refers to a different community — Sidra Village in Umm Suqeim 2 by Wasl Properties — and has been excluded from this knowledge base to avoid confusion.",
+    "Nearest metro station is InsuranceMarket Metro Station (Red Line) at approximately 15-minute drive per Bayut. Nearest bus stops are Dubai Hills Mulberry and Dubai Hills Mall bus stops.",
+    "Schools referenced in sources include GEMS International School (GIS) Al Khail (IB curriculum, ages 3–18) and Blossom Nursery branches within Dubai Hills Estate. Specific school ratings/fees not confirmed from sources.",
+    "Healthcare: American Hospital Dubai Hills Clinic (in Dubai Hills Mall), Mediclinic Dubai Hills, King's College Hospital Dubai (~10-min drive), Mediclinic Parkview Hospital referenced in Bayut source.",
+    "Dubai Hills Mall (opened 2022, ~650 retail outlets) is the primary retail destination within the master community.",
+    "The 18-hole Dubai Hills Golf Club is a key community anchor referenced across all sources.",
+    "45 km of nature trails and 14 tennis courts cited for Dubai Hills Estate master community (1newhomes.ae).",
+    "Golden Visa eligibility: properties above AED 2M qualify under UAE federal rules; all Sidra Villas units at current market prices exceed this threshold."
+  ],
+  "master_development": {
+    "overview": {
+      "name": "Dubai Hills Estate",
+      "type": "Master-planned mixed-use community",
+      "location": "Mohammed Bin Rashid City, Dubai",
+      "developer": "Emaar Properties",
+      "description": "Dubai Hills Estate is a large-scale master community located off Al Khail Road (E44) and Umm Suqeim Street (D63), southeast of Downtown Dubai, neighbouring Al Barsha South and Nad Al Sheba. It is built around an 18-hole championship golf course and includes villas, townhouses, and apartment sub-communities.",
+      "status": "Established and operational"
+    },
+    "location_connectivity": {
+      "primary_roads": [
+        "Al Khail Road (E44)",
+        "Umm Suqeim Street (D63)"
+      ],
+      "nearest_metro": "InsuranceMarket Metro Station (Red Line) — approximately 15-minute drive",
+      "nearest_bus_stops": [
+        "Dubai Hills Mulberry Bus Stop",
+        "Dubai Hills Mall Bus Stop"
+      ],
+      "drive_time_notes": {
+        "downtown_dubai": "Approximately 15–20 minutes via Al Khail Road",
+        "dubai_marina": "Accessible via Al Khail Road",
+        "dubai_international_airport": "Accessible via Al Khail Road",
+        "note": "Exact drive times not confirmed from sources; estimates based on road access described"
+      },
+      "public_transport_note": "The community is primarily car-oriented. Public bus connections exist at Dubai Hills Mall and Mulberry stops. Metro access requires a drive to the nearest Red Line station."
+    },
+    "shared_amenities": {
+      "golf": "18-hole championship golf course (Dubai Hills Golf Club)",
+      "nature_trails": "45 km of nature trails (Dubai Hills Estate master community)",
+      "tennis_courts": "14 tennis courts (Dubai Hills Estate master community)",
+      "parks": "Central Park and landscaped green spaces",
+      "cycling": "Dedicated cycle track",
+      "retail": "Dubai Hills Mall (~650 retail outlets, opened 2022) within the master community",
+      "community_facilities": [
+        "Swimming pools",
+        "Children's playgrounds",
+        "Jogging tracks",
+        "Outdoor gyms",
+        "Splash pad and water features"
+      ]
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "GEMS International School (GIS) Al Khail",
+          "curriculum": "IB (International Baccalaureate)",
+          "ages": "3–18",
+          "notes": "Located within Dubai Hills Estate; established 2013"
+        },
+        {
+          "name": "Blossom Nursery",
+          "curriculum": "Early years",
+          "notes": "Multiple branches within Dubai Hills Estate"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "American Hospital Dubai Hills Clinic",
+          "location": "Dubai Hills Mall",
+          "drive_time": "~8 minutes from Sidra Villas II per Bayut"
+        },
+        {
+          "name": "Mediclinic Dubai Hills",
+          "location": "Dubai Hills Mall"
+        },
+        {
+          "name": "King's College Hospital Dubai",
+          "notes": "Branch of King's College Hospital London; ~10-minute drive per Bayut"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "notes": "Nearby, exact distance not confirmed"
+        },
+        {
+          "name": "Dr. Joy Dental Clinic",
+          "location": "Dubai Hills Mall"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Hills Mall",
+          "notes": "~650 retail outlets, dining, entertainment; opened 2022; within Dubai Hills Estate"
+        },
+        {
+          "name": "Mall of the Emirates",
+          "notes": "Accessible via Al Khail Road; exact drive time not confirmed from sources"
+        }
+      ],
+      "mosques": [
+        "Dubai Hills Main Mosque (within Dubai Hills Estate)"
+      ],
+      "churches": [
+        "Emirates Baptist Church International (EBCI) — approximately 30-minute drive per Bayut"
+      ],
+      "temples": [
+        "Temples in Bur Dubai — approximately 30-minute drive per Bayut"
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "All current Sidra Villas resale prices exceed the AED 2M threshold for UAE Golden Visa eligibility",
+      "recent_transaction_data": {
+        "source": "DLD via PropertyFinder (Sidra Villas II, Jan–May 2026)",
+        "sample_transactions": [
+          {
+            "beds": 3,
+            "price_aed": 10250000,
+            "date": "2026-04-14"
+          },
+          {
+            "beds": 3,
+            "price_aed": 8170000,
+            "date": "2026-03-02"
+          },
+          {
+            "beds": 4,
+            "price_aed": 11700000,
+            "date": "2026-05-11"
+          },
+          {
+            "beds": 4,
+            "price_aed": 10300000,
+            "date": "2026-03-03"
+          },
+          {
+            "beds": 5,
+            "price_aed": 14202500,
+            "date": "2026-05-07"
+          },
+          {
+            "beds": 5,
+            "price_aed": 16000000,
+            "date": "2026-03-10"
+          }
+        ],
+        "note": "Transactions shown are for Sidra Villas II only; Sidra I and III transaction data not extracted from sources"
+      },
+      "indicative_asking_prices_may_2026": {
+        "range_aed": "7,599,000 – 23,000,000",
+        "source": "Bayut and PropertyFinder listing data"
+      },
+      "indicative_rental_yields": {
+        "value": "2.5–4.5% annual rental income",
+        "source": "1newhomes.ae citing PwC data",
+        "caveat": "Not independently verified; treat as indicative only"
+      },
+      "indicative_price_growth": {
+        "value": "5–10% annual price growth per sqm cited",
+        "source": "1newhomes.ae citing PwC data",
+        "caveat": "Not independently verified; treat as indicative only"
+      }
+    },
+    "developer_profile": {
+      "name": "Emaar Properties",
+      "type": "Publicly listed UAE developer (DFM: EMAAR)",
+      "notable_projects": [
+        "Burj Khalifa",
+        "Dubai Mall",
+        "Dubai Hills Estate",
+        "Downtown Dubai",
+        "Arabian Ranches"
+      ],
+      "track_record_note": "Emaar is one of the UAE's largest and most established developers, known for large-scale master-planned communities and timely delivery. Sidra Villas I handovers commenced December 2019 following a July 2017 launch."
+    }
+  },
+  "sub_developments": {
+    "sidra_villas_i": {
+      "aliases": [
+        "Sidra Villas I",
+        "Sidra Villas 1",
+        "Sidra 1",
+        "Sidra I"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Sidra Villas I",
+        "investment_overrides": {
+          "unit_count": 170,
+          "launch_date": "July 2017",
+          "handover_commenced": "December 2019",
+          "status": "Ready / completed",
+          "location_within_community": "Western side of Dubai Hills Estate, next to Central Park",
+          "size_range_sqft": "3,273 – 4,811",
+          "bedroom_types": [
+            "3BR",
+            "4BR",
+            "5BR"
+          ],
+          "indicative_asking_price_from_aed": 8300000,
+          "price_source": "1newhomes.ae (May 2026)",
+          "notes": "Sidra I is located adjacent to Central Park and is approximately 7 minutes from Dubai Hills Golf Club per Bayut"
+        },
+        "sales_talking_points": {
+          "headline": "First phase of Sidra Villas — established, mature community next to Central Park",
+          "key_features": [
+            "170 contemporary detached villas",
+            "3, 4 and 5-bedroom configurations",
+            "Sizes from 3,273 to 4,811 sq ft",
+            "Private gardens, covered parking, maid's room",
+            "Floor-to-ceiling windows, built-in wardrobes",
+            "Gated, secured community",
+            "Walking distance to Central Park",
+            "~7-minute drive to Dubai Hills Golf Club"
+          ]
+        }
+      }
+    },
+    "sidra_villas_ii": {
+      "aliases": [
+        "Sidra Villas II",
+        "Sidra Villas 2",
+        "Sidra 2",
+        "Sidra II"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Sidra Villas II",
+        "investment_overrides": {
+          "unit_count": 160,
+          "status": "Ready / completed",
+          "size_range_sqft": "3,102 – 4,283",
+          "bedroom_types": [
+            "3BR",
+            "4BR",
+            "5BR"
+          ],
+          "recent_dld_transactions_2026": [
+            {
+              "beds": 3,
+              "price_aed": 10250000,
+              "date": "2026-04-14"
+            },
+            {
+              "beds": 3,
+              "price_aed": 8170000,
+              "date": "2026-03-02"
+            },
+            {
+              "beds": 4,
+              "price_aed": 11700000,
+              "date": "2026-05-11"
+            },
+            {
+              "beds": 5,
+              "price_aed": 14202500,
+              "date": "2026-05-07"
+            }
+          ],
+          "notes": "Set close to Umm Suqeim Street (D63); private garden and pool are highlights; Golf Place sub-community to the north, Maple at Dubai Hills to the east"
+        },
+        "sales_talking_points": {
+          "headline": "160 contemporary villas with private pools and gardens in the heart of Dubai Hills Estate",
+          "key_features": [
+            "160 detached villas across 3, 4 and 5-bedroom types",
+            "Sizes from 3,102 to 4,283 sq ft",
+            "Private garden and pool per villa",
+            "Two-storey design with master en-suite and maid's room",
+            "Double-glazed floor-to-ceiling windows",
+            "Close to Umm Suqeim Street for easy Al Khail Road access",
+            "DLD-verified transactions from AED 8.17M (3BR) to AED 16M (5BR) in early 2026"
+          ]
+        }
+      }
+    },
+    "sidra_villas_iii": {
+      "aliases": [
+        "Sidra Villas III",
+        "Sidra Villas 3",
+        "Sidra 3",
+        "Sidra III"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Sidra Villas III",
+        "investment_overrides": {
+          "unit_count": 145,
+          "status": "Ready / completed",
+          "size_range_sqft": "3,102 – 4,283",
+          "bedroom_types": [
+            "3BR",
+            "4BR",
+            "5BR"
+          ],
+          "starting_price_aed": 5036888,
+          "price_source": "propjunction.ae (3BR starting price; may not reflect current market)",
+          "notes": "Sidra III is the smallest phase by unit count. Starting price from propjunction.ae may be outdated; current market prices likely higher based on broader Sidra Villas transaction data."
+        },
+        "sales_talking_points": {
+          "headline": "The final and most intimate phase of Sidra Villas — 145 villas with full community access",
+          "key_features": [
+            "145 detached villas — smallest and most exclusive phase",
+            "3, 4 and 5-bedroom configurations",
+            "Access to all Dubai Hills Estate master community amenities",
+            "Adjacent to 18-hole golf course",
+            "Multi-purpose hall and fitness club within the development",
+            "Ready to move in"
+          ]
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "~475 detached villas across 3 completed phases within Dubai Hills Estate; all phases ready and handed over; freehold ownership; current resale prices AED 7.6M–23M (May 2026).",
+      "scarcity_argument": "Sidra Villas is a completed, low-density freehold villa community with no new supply being added. With only ~475 homes across three phases and strong demand from families seeking golf-course-adjacent living in a master-planned community, resale inventory is limited and competition among buyers is high.",
+      "lifestyle_pitch": "Sidra Villas offers a rare combination of contemporary villa living, green open spaces, and world-class amenities within Dubai Hills Estate. Residents enjoy direct access to an 18-hole championship golf course, 45 km of nature trails, cycling tracks, swimming pools, and Dubai Hills Mall — all within a gated, family-friendly community that is central to Dubai's key destinations.",
+      "investment_pitch": "Freehold ownership, Golden Visa eligibility (all units exceed AED 2M), and Emaar's track record as Dubai's most trusted developer underpin long-term capital value. DLD transaction data shows active resale market with 3BR villas transacting from AED 8.17M–10.25M and 5BR villas reaching AED 16M in early 2026. The community's established status and scarcity of comparable product support continued price appreciation.",
+      "objection_handling": "Buyers concerned about price levels should note that Sidra Villas offers freehold title, Emaar quality, and a fully operational community with schools, healthcare, retail, and leisure within the master development — factors that justify the premium over less-established villa communities. For those comparing to newer off-plan product, Sidra Villas eliminates construction and delivery risk entirely."
+    },
+    "per_sub_development": {
+      "sidra_villas_i": {
+        "pitch": "The original and most established phase, Sidra I sits adjacent to Central Park and offers the most mature community feel. Ideal for buyers who want an established neighbourhood with proven capital growth since 2019 handover.",
+        "key_differentiator": "Next to Central Park; 170 villas; launched 2017, handed over 2019 — longest track record of the three phases."
+      },
+      "sidra_villas_ii": {
+        "pitch": "Sidra II offers private pools and gardens as standard, with strong DLD-verified transaction activity in 2026. Well-positioned near Umm Suqeim Street for easy access to Al Khail Road.",
+        "key_differentiator": "Private pool per villa; 160 units; active resale market with transparent DLD pricing data available."
+      },
+      "sidra_villas_iii": {
+        "pitch": "The smallest and most intimate phase with only 145 villas, Sidra III offers the greatest scarcity within the Sidra Villas collection. Full access to all Dubai Hills Estate amenities.",
+        "key_differentiator": "Fewest units of the three phases — highest scarcity value within Sidra Villas."
+      }
+    }
+  },
+  "aliases": [
+    "Sidra Villas",
+    "sidra villas",
+    "Sidra Villas I",
+    "Sidra Villas II",
+    "Sidra Villas III",
+    "Sidra 1",
+    "Sidra 2",
+    "Sidra 3",
+    "Sidra I",
+    "Sidra II",
+    "Sidra III",
+    "Sidra Villas Dubai Hills",
+    "Emaar Sidra",
+    "Emaar Sidra Villas"
+  ],
+  "developer_keywords": [
+    "Emaar",
+    "Emaar Properties",
+    "Emaar Dubai Hills",
+    "Emaar master community",
+    "emaar"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties",
+    "community": "Sidra Villas, Dubai Hills Estate",
+    "location": {
+      "area": "Dubai Hills Estate, Mohammed Bin Rashid City, Dubai",
+      "description": "Sidra Villas is located within Dubai Hills Estate, off Al Khail Road (E44) and Umm Suqeim Street (D63), southeast of Downtown Dubai. The community neighbours Al Barsha South and Nad Al Sheba and is built around an 18-hole championship golf course.",
+      "distances": {
+        "nearest_metro": "InsuranceMarket Metro Station (Red Line) — approximately 15-minute drive",
+        "nearest_bus_stops": "Dubai Hills Mulberry and Dubai Hills Mall bus stops",
+        "dubai_hills_mall": "Within Dubai Hills Estate master community",
+        "note": "Exact kilometre distances to landmarks not confirmed from sources; community is primarily car-accessible"
+      }
+    },
+    "community_amenities": [
+      "18-hole championship golf course (Dubai Hills Golf Club)",
+      "Swimming pools (community and private per villa in some phases)",
+      "Children's playgrounds",
+      "Dedicated cycling track",
+      "Jogging and nature trails (45 km across Dubai Hills Estate)",
+      "14 tennis courts (Dubai Hills Estate)",
+      "Central Park (adjacent to Sidra I)",
+      "Retail centre within community",
+      "Outdoor gyms",
+      "Splash pad and water features",
+      "Gated, secured community",
+      "Private gardens per villa",
+      "Covered parking per villa",
+      "Maid's room per villa"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "GEMS International School (GIS) Al Khail",
+          "type": "Primary and secondary (IB curriculum)",
+          "ages": "3–18",
+          "location": "Within Dubai Hills Estate",
+          "notes": "Established 2013; IB diploma programme"
+        },
+        {
+          "name": "Blossom Nursery",
+          "type": "Nursery / early years",
+          "location": "Multiple branches within Dubai Hills Estate"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "American Hospital Dubai Hills Clinic",
+          "type": "Clinic",
+          "location": "Dubai Hills Mall",
+          "notes": "~8-minute drive from Sidra Villas II"
+        },
+        {
+          "name": "Mediclinic Dubai Hills",
+          "type": "Clinic",
+          "location": "Dubai Hills Mall"
+        },
+        {
+          "name": "King's College Hospital Dubai",
+          "type": "Hospital",
+          "notes": "Branch of King's College Hospital London; ~10-minute drive; offers family medicine, paediatrics, general surgery"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "type": "Hospital",
+          "notes": "Nearby; exact distance not confirmed from sources"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Hills Mall",
+          "type": "Regional mall",
+          "notes": "~650 retail outlets, dining, entertainment; opened 2022; within Dubai Hills Estate master community"
+        },
+        {
+          "name": "Mall of the Emirates",
+          "type": "Regional mall",
+          "notes": "Accessible via Al Khail Road; includes Ski Dubai; exact drive time not confirmed"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": null,
+      "branded_premium_note": "Emaar-developed community within a master-planned estate anchored by an 18-hole golf course. All three phases are completed and operational. DLD transaction data available for price transparency."
+    },
+    "sales_talking_points": {
+      "freehold_title": "Full freehold ownership available to all nationalities",
+      "golden_visa": "All current market prices exceed AED 2M threshold — buyers qualify for UAE 10-year Golden Visa",
+      "emaar_quality": "Built by Emaar Properties, UAE's most recognised developer, with handovers completed from 2019",
+      "community_maturity": "Fully operational community with schools, healthcare, retail, and leisure in place — no waiting for infrastructure",
+      "golf_lifestyle": "One of the few villa communities in Dubai with direct access to an 18-hole championship golf course",
+      "green_living": "45 km of nature trails, cycling tracks, and extensive parklands within the master community",
+      "connectivity": "Direct access to Al Khail Road (E44) providing efficient links to Downtown Dubai, Dubai Marina, and both airports",
+      "scarcity": "Fixed supply of ~475 completed villas across three phases with no new Sidra Villas supply planned",
+      "transaction_transparency": "Active DLD-registered resale market with publicly available transaction data"
+    },
+    "developer_track_record": "Emaar Properties is one of the UAE's largest publicly listed developers (DFM: EMAAR), responsible for landmark projects including Burj Khalifa, The Dubai Mall, Downtown Dubai, and Arabian Ranches. Sidra Villas I was launched in July 2017 and handovers commenced December 2019, demonstrating on-schedule delivery."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:37:59.347615+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.propertyfinder.ae/en/buy/dubai/villas-for-sale-dubai-hills-estate-sidra-villas.html",
+      "https://www.bayut.com/area-guides/sidra-villas",
+      "https://harperwellington.com/communities/sidra-village",
+      "https://www.propjunction.ae/projects/sidra-3-villas",
+      "https://www.propertyfinder.ae/blog/a-bright-future-with-sidra-villas",
+      "https://www.bayut.com/for-sale/villas/dubai/dubai-hills-estate/sidra-hills",
+      "https://opr.ae/projects/emaar-sidra-villas-dubai-hills-estate",
+      "https://1newhomes.ae/sidra-villas-i-dubai",
+      "https://www.bayut.com/area-guides/sidra-villas-1",
+      "https://www.bayut.com/area-guides/sidra-villas-ii",
+      "https://www.propertyfinder.ae/en/transactions/buy/dubai/dubai-hills-estate-sidra-villas-sidra-villas-ii",
+      "https://dubaimetrotrain.com/destinations",
+      "https://dubaimetroinfo.com/dubai-metro-station",
+      "https://www.youtube.com/watch?v=q7tP9xojKvM",
+      "https://propsearch.ae/dubai/sidra-1/schools",
+      "https://www.stokedtotravel.com/guide-getting-around-dubai-using-public-transport",
+      "https://richlanddubai.com/sidra",
+      "https://propsearch.ae/dubai/sidra-3/schools",
+      "https://www.ecm.ae/en/communities/dubai-hills-estate/discover/dubaihillsestate-important-contacts",
+      "https://www.instagram.com/reel/DXwx7J2z5cv"
+    ],
+    "audit_flags": [
+      "Rental yield and price growth percentages (2.5–4.5% and 5–10%) sourced from 1newhomes.ae citing PwC; not independently verified — treat as indicative only",
+      "Rental price figures (AED 145K–175K/yr) from PropertyFinder blog dated November 2024 — may not reflect current 2026 market rates; live listing verification recommended",
+      "DLD transaction data extracted only for Sidra Villas II; Sidra I and III transaction-level data not available from provided sources",
+      "Exact drive times to Downtown Dubai, Dubai Marina, and airports not confirmed from sources — directional estimates only",
+      "School fee structures, KHDA ratings, and detailed school information not available from provided sources",
+      "Service charge / RERA-registered maintenance fee data not available from provided sources",
+      "Sidra Villas I unit count discrepancy: PropertyFinder blog states 475 villas for Sidra I specifically; opr.ae and 1newhomes.ae state 170/160/145 per phase totalling 475 across all three phases — the 475-total-across-three-phases figure is used as primary",
+      "Starting price for Sidra III from propjunction.ae (AED 5,036,888) appears inconsistent with current market transaction data and may be outdated — flagged for verification",
+      "No confirmed service charge rates or DLD fee waiver details verified from primary sources",
+      "Sidra Village (Umm Suqeim 2, Wasl Properties) is a distinct community and has been excluded; any query conflating the two should be clarified with the buyer"
+    ]
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "idx": 4,
+  "slug": "khalid_arabic",
+  "persona": "Khalid Al Maktoum — GCC Arabic speaker (full Arabic conversation)",
+  "phone": "+971501010004",
+  "listing_id": "HARNESS_listing_01_bb4f4d45",
+  "listing_facts": {
+    "property_name": "Palmiera",
+    "beds": 4,
+    "baths": 5,
+    "sqft": 9074.99,
+    "plot_sqft": null,
+    "price_aed": 11100000.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 10281618.07,
+    "offer_threshold_pct": 92.6
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "السلام عليكم، الفيلا لا زالت متاحة؟",
+      "bot": "و عليكم السلام ورحمة الله وبركاته.\n\nأنا دليا، مساعدة العقارات من شركة Mahoroba Test Brokerage.\n\nنعم، الفيلا متاحة. إنها فيلا 4 غرف نوم في Palmiera بـ The Oasis من إعمار، بمساحة 9,075 قدم مربع، وسعر الطلب AED 11,100,000. الفيلا قيد الإنشاء والتسليم متوقع في أكتوبر 2027.\n\nهل تبحث عن معلومات محددة عن الفيلا أو المشروع؟",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 53.7
+    },
+    {
+      "turn": 2,
+      "buyer": "ممكن تعطيني تفاصيل عن المشروع؟ كم غرفة نوم؟",
+      "bot": "تمام. إليك التفاصيل:\n\nالفيلا:\n- 4 غرف نوم و 5 حمامات\n- 9,075 قدم مربع\n- موقف سيارات داخل الفيلا\n- تسليم تام في أكتوبر 2027\n\nالمشروع (The Oasis):\nThe Oasis هو مشروع عمراني فاخر من إعمار في Dubailand، يضم حوالي 3,100 فيلا ومنزل. المشروع يتميز بـ:\n\n- 54 كيلومتر من مسارات الدراجات المخصصة\n- بحيرات زرقاء قابلة للسباحة\n- شواطئ خاصة\n- منتجعات صحية وملاعب تنس وسباحة\n- مراكز رياضية وملاعب كروس فيت\n- ملاعب للأطفال وممرات للمشي والركض\n- مسجد داخل المشروع\n- محلات تجارية ومطاعم (قيد الإنشاء)\n\nالموقع:\n- 20 دقيقة من وسط البريج والعروف الوادي\n- 25 دقيقة من مول الإمارات\n- 28 دقيقة من دبي مارينا\n- 18 دقيقة من مطار آل مكتوم\n\nوالملكية حرة 100% مع أهلية تأشيرة الذهب 10 سنوات.\n\nهل في استفسارات أخرى عن الفيلا أو المشروع؟",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 46.5
+    },
+    {
+      "turn": 3,
+      "buyer": "ما هو السعر المطلوب من البائع؟",
+      "bot": "السعر المطلوب هو AED 11,100,000.\n\nلا يوجد ضريبة القيمة المضافة (معفاة من الضريبة).",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 44.3
+    },
+    {
+      "turn": 4,
+      "buyer": "متى تاريخ التسليم؟ وكم المبلغ المتبقي للمطور؟",
+      "bot": "تاريخ التسليم:\nأكتوبر 2027\n\nالمبلغ المتبقي للمطور:\nAED 7,770,000، مقسم على الدفعات المتبقية:\n\n- أكتوبر 2026: AED 1,110,000\n- يناير 2027: AED 1,110,000\n- مايو 2027: AED 1,110,000\n- أكتوبر 2027 (التسليم): AED 4,440,000\n\nعندما تشتري الفيلا، أنت تتولى هذه الدفعات المتبقية مباشرة مع إعمار حسب الجدول الأصلي للعقد.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 36.8
+    },
+    {
+      "turn": 5,
+      "buyer": "هل المنطقة فيها مدارس وجوامع قريبة؟",
+      "bot": "نعم، المنطقة فيها مدارس وجوامع قريبة:\n\nالمدارس:\n- Greenfield International School - 15 دقيقة (منهج IB)\n- South View School - 15 دقيقة (منهج بريطاني)\n- Victory Heights Primary School - 15 دقيقة (منهج بريطاني)\n- GEMS FirstPoint School - 18 دقيقة (منهج بريطاني، تصنيف KHDA: جيد)\n- The Aquila School - 20 دقيقة (منهج بريطاني، تصنيف KHDA: جيد)\n\nالجوامع والمرافق الدينية:\n- مسجد داخل مشروع The Oasis نفسه\n\nالمستشفيات:\n- Mediclinic Parkview Hospital - 19 دقيقة\n\nكل هذه المسافات تقريبية، وأنصحك تؤكد المناهج والرسوم مباشرة مع كل مدرسة قبل تحديد اختيارك.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 41.4
+    },
+    {
+      "turn": 6,
+      "buyer": "ما هي عمولتكم كوسيط؟",
+      "bot": "عمولة Mahoroba Test Brokerage هي 0.85% من سعر العقار، تُدفع من قِبل المشتري عند إتمام الصفقة.\n\nهذا أقل بكثير من المعدل السوقي الذي يتراوح حول 2%.\n\nبالإضافة إلى عمولتنا، هناك رسوم أخرى:\n\n- رسوم دائرة الأراضي والأملاك (DLD): 4% من قيمة العقار - AED 444,000 (تدفع للحكومة)\n- رسوم التنسيق مع الوصي: AED 4,000\n- رسوم معالجة المستندات: AED 2,500\n\nهذه رسوم منفصلة تماماً عن سعر العقار.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 41.5
+    },
+    {
+      "turn": 7,
+      "buyer": "أبغى أقدم عرض بقيمة AED 10,487,000. هل ممكن؟",
+      "bot": "تم تأكيد العرض بقيمة 10,487,000 درهم. أنا أرسله للبائع، وسأعود إليك بمجرد سماع رده. أرسل اسمك لو سمحت حتى أرفقه بالعرض.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "e52e79cf-099d-4ae0-bcf3-b9123cd7c0cd",
+        "listing_id": "HARNESS_listing_01_bb4f4d45",
+        "buyer_phone": "+971501010004",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "أبغى أقدم عرض بقيمة AED 10,487,000. هل ممكن؟",
+        "offer_amount_aed": 10487000.0,
+        "listing_price_aed": 11100000.0,
+        "negotiation_threshold_aed": 10281618.07,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "**Buyer Inquiry Summary – Palmiera Unit**\n\nThe buyer demonstrates serious intent through detailed due diligence questions covering asking price, developer payment schedule, area amenities (schools, mosques, hospitals), and brokerage fees, culminating in a formal offer submission. Their motivations and any specific constraints or timeline requirements were not stated. The agent should await the seller's response to the AED 10,487,000 offer and follow up with the buyer's contact information once received.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 10487000.0,
+          "percent_of_asking": 94.5,
+          "floor_aed": 10281618.07,
+          "vs_floor_aed": 205381.9299999997,
+          "buyer_ref": "+971501010004",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "C5RNF066P2",
+          "body": "[OFFER] Unknown buyer (+971501010004)\n\nProperty: HARNESS_listing_01_bb4f4d45\nOffer: AED 10,487,000\nAsking: AED 11,100,000\nNotification threshold: AED 10,281,618\nPayload:\n- amount_aed: 10487000.0\n- percent_of_asking: 94.5\n- floor_aed: 10281618.07\n- vs_floor_aed: 205381.9299999997\n- buyer_ref: +971501010004\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"أبغى أقدم عرض بقيمة AED 10,487,000. هل ممكن؟\"\n\nSummary: **Buyer Inquiry Summary – Palmiera Unit**\n\nThe buyer demonstrates serious intent through detailed due diligence questions covering asking price, developer payment schedule, area amenities (schools, mosques, hospitals), and brokerage fees, culminating in a formal offer submission. Their motivations and any specific constraints or timeline requirements were not stated. The agent should await the seller's response to the AED 10,487,000 offer and follow up with the buyer's contact information once received.\n\n[Ref: C5RNF066P2]"
+        }
+      ],
+      "error": null,
+      "duration_s": 47.6
+    },
+    {
+      "turn": 8,
+      "buyer": "شكراً، أعطني رقم البائع مباشرة لو سمحت",
+      "bot": "أنا مساعدة العقارات لهذه الشركة. لا يمكنني مشاركة بيانات تواصل البائع، لكن يمكنني الإجابة على أسئلتك هنا أو تمرير عرض جدي عبر مسار المعاملة الصحيح.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 44.0
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "و عليكم السلام ورحمة الله وبركاته.\n\nأنا دليا، مساعدة العقارات من شركة Mahoroba Test Brokerage.\n\nنعم، الفيلا متاحة. إنها فيلا 4 غرف نوم في Palmiera بـ The Oasis من إعمار، بمساحة 9,075 قدم مربع، وسعر الطلب AED 11,100,000. الفيلا قيد الإنشاء والتسليم متوقع في أكتوبر 2027.\n\nهل تبحث عن معلومات محددة عن ا"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 9,214,840; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 10,281,618"
+    },
+    {
+      "check": "responds_in_arabic",
+      "pass": true,
+      "evidence": "arabic chars present"
+    },
+    {
+      "check": "commission_disclosed_t6",
+      "pass": true,
+      "evidence": "عمولة Mahoroba Test Brokerage هي 0.85% من سعر العقار، تُدفع من قِبل المشتري عند إتمام الصفقة.\n\nهذا أقل بكثير من المعدل السوقي الذي يتراوح حول 2%.\n\nبالإضافة إلى عمولتنا، هناك رسوم أخرى:\n\n- رسوم دائرة الأراضي والأملاك (DLD): 4% من قيمة العقار - AED 444,000 (تدفع للحكومة)\n- رسوم التنسيق مع الوصي: AED 4"
+    },
+    {
+      "check": "offer_escalation_t7",
+      "pass": true,
+      "evidence": "turn 7 escalation_triggered=True"
+    },
+    {
+      "check": "no_seller_phone_t8",
+      "pass": true,
+      "evidence": "أنا مساعدة العقارات لهذه الشركة. لا يمكنني مشاركة بيانات تواصل البائع، لكن يمكنني الإجابة على أسئلتك هنا أو تمرير عرض جدي عبر مسار المعاملة الصحيح."
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['at_or_above'], 'envelope_token': 'C5RNF066P2', 'body': '[OFFER] Unknown buyer (+971501010004)\\n\\nProperty: HARNESS_listing_01_bb4f4d45\\nOffer: AED 10,487,000\\nAsking: AED 11,100,00"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t3",
+      "pass": true,
+      "evidence": "expected asking=AED 11,100,000; bot=السعر المطلوب هو AED 11,100,000.\n\nلا يوجد ضريبة القيمة المضافة (معفاة من الضريبة)."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    7
+  ],
+  "summary_auto": "1/8 turns escalated. Arabic test.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Khalid Al Maktoum — GCC Arabic speaker (full Arabic conversation)",
+    "phone": "+971501010004",
+    "listing_id": "HARNESS_listing_01_bb4f4d45",
+    "thread_count": 1,
+    "question_count": 1,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 1.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "offer": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

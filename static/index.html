@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dalya AI — Property intelligence. No pressure.</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold:       '#C9A96E',
+            'gold-lt':  '#DFC49A',
+            'gold-dk':  '#B08848',
+            copper:     '#B87333',
+            ink:        '#1A2B3C',
+            slate:      '#2E4057',
+            deep:       '#0F1923',
+            sage:       '#4A7C6F',
+            'sage-lt':  '#6BA898',
+            sand:       '#F5EFE6',
+            'n-50':     '#FAFAF8',
+            'n-200':    '#E8E0D5',
+            'n-300':    '#C9BFB3',
+            'n-500':    '#8A8078',
+            'n-700':    '#4A4540',
+          },
+          fontFamily: {
+            sans:  ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono:  ['"JetBrains Mono"', 'monospace'],
+          },
+          borderRadius: {
+            DEFAULT: '4px',
+            md: '8px',
+            lg: '12px',
+            xl: '16px',
+            full: '9999px',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --gold:    #C9A96E;
+      --ink:     #1A2B3C;
+      --deep:    #0F1923;
+      --slate:   #2E4057;
+      --sage:    #4A7C6F;
+      --sand:    #F5EFE6;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--deep);
+      color: var(--sand);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    /* Nav glass */
+    .nav-glass {
+      background: rgba(15, 25, 35, 0.80);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+    }
+
+    /* Editorial tight tracking */
+    .editorial { letter-spacing: -0.025em; }
+
+    /* Gold gradient button */
+    .btn-gold {
+      background: linear-gradient(135deg, #C9A96E 0%, #B08848 100%);
+      color: #1A2B3C;
+      font-weight: 600;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+    }
+    .btn-gold:hover { opacity: 0.92; }
+    .btn-gold:active { transform: scale(0.98); }
+
+    /* Ghost button */
+    .btn-ghost {
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      color: #C9A96E;
+      transition: background 0.15s ease;
+    }
+    .btn-ghost:hover { background: rgba(201, 169, 110, 0.08); }
+
+    /* Tonal surface layers */
+    .surface-1 { background: #1A2B3C; }
+    .surface-2 { background: #2E4057; }
+
+    /* Ambient shadow (no pure black) */
+    .shadow-ambient {
+      box-shadow: 0 20px 50px -12px rgba(26, 43, 60, 0.45),
+                  0 8px 16px -4px rgba(26, 43, 60, 0.30);
+    }
+    .shadow-gold {
+      box-shadow: 0 4px 20px rgba(201, 169, 110, 0.18);
+    }
+
+    /* Hero gradient overlay */
+    .hero-overlay {
+      background: linear-gradient(
+        105deg,
+        rgba(15, 25, 35, 0.88) 0%,
+        rgba(15, 25, 35, 0.55) 55%,
+        rgba(15, 25, 35, 0.18) 100%
+      );
+    }
+
+    /* Verified badge */
+    .badge-verified {
+      background: rgba(201, 169, 110, 0.15);
+      border: 1px solid rgba(201, 169, 110, 0.30);
+      color: #C9A96E;
+    }
+
+    /* Sage trust badge */
+    .badge-sage {
+      background: rgba(74, 124, 111, 0.20);
+      border: 1px solid rgba(74, 124, 111, 0.35);
+      color: #6BA898;
+    }
+
+    /* Ghost border fallback */
+    .ghost-border { border: 1px solid rgba(201, 169, 110, 0.12); }
+
+    /* Card hover */
+    .card-hover {
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .card-hover:hover {
+      border-color: rgba(201, 169, 110, 0.35) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      background: rgba(201, 169, 110, 0.18);
+      border-radius: 9999px;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #C9A96E, #DFC49A);
+      border-radius: 9999px;
+      height: 100%;
+    }
+
+    /* Mono numbers */
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* WhatsApp */
+    .whatsapp-bg { background: #E5DDD5; }
+
+    /* Scroll fade in */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease-out forwards; }
+
+    /* Listing card image aspect */
+    .listing-img { aspect-ratio: 16/9; }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav class="nav-glass fixed top-0 w-full z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+
+    <!-- Wordmark -->
+    <a href="#" class="flex items-center gap-2">
+      <span class="text-xl font-bold editorial tracking-tight text-sand">Dalya</span>
+      <span class="text-[11px] font-semibold uppercase tracking-widest text-sage ml-0.5 mt-0.5">AI</span>
+    </a>
+
+    <!-- Nav links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#listings" class="text-sm text-n-300 hover:text-sand transition-colors">Browse Listings</a>
+      <a href="#sell"     class="text-sm text-n-300 hover:text-sand transition-colors">Sell Your Unit</a>
+      <a href="#how"      class="text-sm text-n-300 hover:text-sand transition-colors">How It Works</a>
+      <a href="#insights" class="text-sm text-n-300 hover:text-sand transition-colors">Market Intel</a>
+    </div>
+
+    <!-- CTAs -->
+    <div class="flex items-center gap-3">
+      <a href="#" class="hidden md:block text-sm text-n-300 hover:text-gold transition-colors px-3 py-2">Login</a>
+      <a href="#sell" class="btn-gold text-sm px-5 py-2.5 rounded-md">Upload your SPA</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     TRUST BAR  (required brand element)
+═══════════════════════════════════════════ -->
+<div class="fixed top-16 w-full z-40 bg-ink/70 backdrop-blur-sm border-b border-gold/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 h-9 flex items-center justify-center gap-6 md:gap-10">
+    <span class="text-[11px] text-n-500 tracking-wide">RERA Licensed Broker</span>
+    <span class="text-gold/30">|</span>
+    <span class="text-[11px] text-n-500 tracking-wide">Trakheesi Partner</span>
+    <span class="text-gold/30">|</span>
+    <span class="text-[11px] text-n-500 tracking-wide">DLD Registered</span>
+    <span class="text-gold/30 hidden md:block">|</span>
+    <span class="hidden md:block text-[11px] text-n-500 tracking-wide">Every listing sourced from the actual SPA</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="relative h-screen min-h-[700px] flex items-center pt-24">
+
+  <!-- Background image -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <img
+      src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1800&q=80"
+      alt="UAE architecture — modern Dubai tower at dusk"
+      class="w-full h-full object-cover object-center"
+    />
+    <div class="hero-overlay absolute inset-0"></div>
+    <!-- Subtle gold vignette bottom -->
+    <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-deep to-transparent"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full">
+    <div class="max-w-3xl">
+
+      <!-- Eyebrow -->
+      <div class="badge-verified inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8 text-[11px] font-semibold tracking-widest uppercase">
+        <span class="material-symbols-outlined text-[15px]">verified</span>
+        UAE Off-Plan Resale Marketplace
+      </div>
+
+      <!-- Headline -->
+      <h1 class="editorial text-5xl md:text-7xl font-extrabold leading-[0.95] text-sand mb-6">
+        Property intelligence.<br/>
+        <span class="text-gold font-medium italic">No pressure.</span>
+      </h1>
+
+      <!-- Sub-copy -->
+      <p class="text-n-300 text-lg md:text-xl font-light leading-relaxed max-w-xl mb-10">
+        Verified off-plan resale listings powered by SPA data.
+        Ask anything — get answered instantly, in your language.
+        24 hours a day.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4 mb-16">
+        <a href="#sell" class="btn-gold px-8 py-4 rounded-md text-sm tracking-wide uppercase font-semibold shadow-gold">
+          Upload your SPA
+        </a>
+        <a href="#listings" class="btn-ghost px-8 py-4 rounded-md text-sm tracking-wide uppercase font-semibold">
+          Browse Listings
+        </a>
+      </div>
+
+      <!-- Hero stats -->
+      <div class="flex flex-wrap gap-10">
+        <div>
+          <div class="mono text-2xl font-bold text-gold">1.15%</div>
+          <div class="text-[11px] text-n-500 uppercase tracking-widest mt-1">Total Commission</div>
+        </div>
+        <div class="w-px bg-gold/15 self-stretch"></div>
+        <div>
+          <div class="mono text-2xl font-bold text-sand">30 min</div>
+          <div class="text-[11px] text-n-500 uppercase tracking-widest mt-1">SPA to Live Listing</div>
+        </div>
+        <div class="w-px bg-gold/15 self-stretch"></div>
+        <div>
+          <div class="mono text-2xl font-bold text-sand">24 / 7</div>
+          <div class="text-[11px] text-n-500 uppercase tracking-widest mt-1">Buyer Inquiries Answered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     AI SHOWCASE — Dashboard + WhatsApp
+═══════════════════════════════════════════ -->
+<section id="how" class="py-28 bg-deep relative overflow-hidden">
+
+  <!-- Subtle background glow -->
+  <div class="absolute top-1/2 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Section header -->
+    <div class="mb-16 max-w-2xl">
+      <span class="text-gold text-[11px] font-semibold tracking-[0.3em] uppercase mb-4 block">How It Works</span>
+      <h2 class="editorial text-4xl md:text-5xl font-bold text-sand tracking-tight mb-4">
+        Your SPA does the work.<br/>You stay in control.
+      </h2>
+      <p class="text-n-500 text-lg font-light leading-relaxed">
+        Upload once. Dalya's property advisor answers every buyer question in English, Arabic, Russian, or Hindi — while you watch from your dashboard.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-12 gap-8 items-center">
+
+      <!-- Seller Dashboard Mockup -->
+      <div class="col-span-12 lg:col-span-7 relative z-10">
+        <div class="surface-1 rounded-xl ghost-border shadow-ambient overflow-hidden">
+
+          <!-- Dashboard topbar -->
+          <div class="px-6 py-4 border-b border-gold/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-md bg-gold/15 flex items-center justify-center">
+                <span class="material-symbols-outlined text-gold text-[18px]">monitoring</span>
+              </div>
+              <div>
+                <div class="text-sm font-semibold text-sand">Seller Dashboard</div>
+                <div class="text-[10px] text-n-500 uppercase tracking-widest">Active session</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <span class="badge-sage text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full">Live</span>
+              <span class="badge-verified text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full">Verified SPA</span>
+            </div>
+          </div>
+
+          <!-- Metrics row -->
+          <div class="p-6 grid grid-cols-3 gap-4">
+            <div class="surface-2 rounded-xl p-5">
+              <div class="flex items-center justify-between mb-3">
+                <span class="material-symbols-outlined text-gold text-[20px]">home_work</span>
+                <span class="text-[10px] text-sage-lt font-semibold uppercase">Active</span>
+              </div>
+              <div class="text-[11px] text-n-500 mb-1">Your Listings</div>
+              <div class="mono text-2xl font-bold text-sand">3</div>
+              <div class="text-[10px] text-gold mt-1">+1 this week</div>
+            </div>
+            <div class="surface-2 rounded-xl p-5">
+              <div class="flex items-center justify-between mb-3">
+                <span class="material-symbols-outlined text-sage text-[20px]">mark_chat_read</span>
+                <div class="w-2 h-2 rounded-full bg-sage"></div>
+              </div>
+              <div class="text-[11px] text-n-500 mb-1">Inquiries (7d)</div>
+              <div class="mono text-2xl font-bold text-sand">24</div>
+              <div class="text-[10px] text-sage mt-1 mono">100% answered</div>
+            </div>
+            <div class="rounded-xl p-5 bg-gold/10 border border-gold/20">
+              <div class="flex items-center justify-between mb-3">
+                <span class="material-symbols-outlined text-gold text-[20px]">savings</span>
+              </div>
+              <div class="text-[11px] text-n-500 mb-1">Buyer Saves</div>
+              <div class="mono text-xl font-bold text-gold">AED 17k</div>
+              <div class="text-[10px] text-n-500 mt-1">vs. standard 2%</div>
+            </div>
+          </div>
+
+          <!-- Live activity -->
+          <div class="px-6 pb-6 space-y-3">
+            <div class="text-[10px] text-n-500 uppercase tracking-widest font-semibold mb-3">Property Advisor Activity</div>
+
+            <div class="surface-2 rounded-xl p-4 flex items-start gap-4">
+              <div class="w-8 h-8 rounded-md bg-sage/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-sage text-[16px]">chat_bubble</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium text-sand">Buyer inquiry answered</div>
+                <div class="text-[11px] text-n-500 mt-0.5 truncate">
+                  "What's the remaining payment schedule?" — DAMAC Hills 2, Unit 4B
+                </div>
+                <div class="text-[10px] text-sage mt-1">Answered in 4 seconds · Arabic</div>
+              </div>
+              <span class="text-[10px] text-n-700 flex-shrink-0">3m ago</span>
+            </div>
+
+            <div class="surface-2 rounded-xl p-4 flex items-start gap-4">
+              <div class="w-8 h-8 rounded-md bg-gold/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-gold text-[16px]">person_raised_hand</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium text-sand">Offer received — action needed</div>
+                <div class="text-[11px] text-n-500 mt-0.5 truncate">
+                  AED 1,870,000 on Emaar Beachfront Unit 12C · Above threshold
+                </div>
+                <div class="text-[10px] text-gold mt-1">Escalated to you · Awaiting response</div>
+              </div>
+              <span class="text-[10px] text-n-700 flex-shrink-0">18m ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp phone mockup -->
+      <div class="col-span-12 lg:col-span-5 flex justify-center lg:justify-end">
+        <div class="relative">
+          <!-- Phone shell -->
+          <div class="w-[280px] h-[560px] bg-[#111] rounded-[3rem] p-2.5 shadow-ambient border-[6px] border-[#1a1a1a] relative">
+            <div class="w-full h-full bg-white rounded-[2.5rem] overflow-hidden flex flex-col">
+
+              <!-- WA Header -->
+              <div class="bg-[#075E54] text-white px-4 pt-10 pb-3 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-gold text-xs font-bold">D</span>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold">Dalya's property advisor</div>
+                  <div class="text-[10px] opacity-75">online · reads your SPA</div>
+                </div>
+              </div>
+
+              <!-- WA Chat -->
+              <div class="flex-1 whatsapp-bg p-3 space-y-3 overflow-hidden">
+
+                <!-- Buyer message -->
+                <div class="max-w-[85%] bg-white rounded-lg rounded-tl-none p-2.5 shadow-sm">
+                  <p class="text-[11px] text-gray-800">How much is left to pay on unit 12C?</p>
+                  <span class="text-[9px] text-gray-400 float-right mt-1">9:14 AM</span>
+                </div>
+
+                <!-- Dalya response -->
+                <div class="max-w-[90%] bg-[#DCF8C6] rounded-lg rounded-tr-none p-2.5 shadow-sm ml-auto">
+                  <p class="text-[11px] text-gray-800">
+                    Unit 12C — Emaar Beachfront.<br/>
+                    <strong>63% paid</strong> (AED 1,181,000).<br/>
+                    Remaining: <strong>AED 693,000</strong> — due at 70% and handover.<br/>
+                    NOC eligible at 40% ✓
+                  </p>
+                  <span class="text-[9px] text-gray-400 flex items-center justify-end gap-1 mt-1">
+                    9:14 AM <span class="material-symbols-outlined text-[10px] text-sky-500">done_all</span>
+                  </span>
+                </div>
+
+                <!-- Buyer follow-up -->
+                <div class="max-w-[85%] bg-white rounded-lg rounded-tl-none p-2.5 shadow-sm">
+                  <p class="text-[11px] text-gray-800">Can I make an offer below asking?</p>
+                  <span class="text-[9px] text-gray-400 float-right mt-1">9:15 AM</span>
+                </div>
+
+                <!-- Dalya -->
+                <div class="max-w-[90%] bg-[#DCF8C6] rounded-lg rounded-tr-none p-2.5 shadow-sm ml-auto">
+                  <p class="text-[11px] text-gray-800">Yes. Submit your offer and Dalya will pass it to the seller. Offers above the threshold get an instant response. Type the amount to proceed.</p>
+                  <span class="text-[9px] text-gray-400 flex items-center justify-end gap-1 mt-1">
+                    9:15 AM <span class="material-symbols-outlined text-[10px] text-sky-500">done_all</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- WA input -->
+              <div class="bg-[#F0F0F0] p-2 flex items-center gap-2">
+                <div class="flex-1 bg-white rounded-full px-3 py-1.5 text-[10px] text-gray-400">Type a message</div>
+                <div class="w-8 h-8 rounded-full bg-[#075E54] flex items-center justify-center">
+                  <span class="material-symbols-outlined text-white text-[16px]">mic</span>
+                </div>
+              </div>
+            </div>
+            <!-- Notch -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#111] rounded-b-2xl z-10"></div>
+          </div>
+
+          <!-- Floating disclosure label -->
+          <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap badge-verified text-[10px] px-3 py-1.5 rounded-full font-medium">
+            Dalya's property advisor · not a chatbot
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SELLER VALUE PROPOSITION
+═══════════════════════════════════════════ -->
+<section id="sell" class="py-28 surface-1">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="mb-14">
+      <span class="text-gold text-[11px] font-semibold tracking-[0.3em] uppercase mb-4 block">For Sellers</span>
+      <h2 class="editorial text-4xl md:text-5xl font-bold text-sand tracking-tight">
+        Your SPA. Live on every portal.<br/><span class="text-gold">Sold.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+
+      <!-- Card 1 -->
+      <div class="surface-2 rounded-xl p-7 ghost-border card-hover">
+        <div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center text-gold mb-6">
+          <span class="material-symbols-outlined">upload_file</span>
+        </div>
+        <h3 class="font-semibold text-sand mb-2">Upload Your SPA</h3>
+        <p class="text-sm text-n-500 leading-relaxed font-light">One PDF. Dalya parses every payment milestone, floor plan reference, and handover date automatically. No manual entry.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="surface-2 rounded-xl p-7 ghost-border card-hover">
+        <div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center text-gold mb-6">
+          <span class="material-symbols-outlined">rocket_launch</span>
+        </div>
+        <h3 class="font-semibold text-sand mb-2">Live in 30 Minutes</h3>
+        <p class="text-sm text-n-500 leading-relaxed font-light">Your listing goes live on Property Finder, Bayut, and Dalya simultaneously. Non-exclusive. RERA-compliant from day one.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="surface-2 rounded-xl p-7 ghost-border card-hover">
+        <div class="w-10 h-10 rounded-lg bg-sage/15 flex items-center justify-center text-sage-lt mb-6">
+          <span class="material-symbols-outlined">mark_chat_read</span>
+        </div>
+        <h3 class="font-semibold text-sand mb-2">Every Inquiry Answered</h3>
+        <p class="text-sm text-n-500 leading-relaxed font-light">Dalya's property advisor answers buyer questions 24/7 in English, Arabic, Russian, and Hindi. You get escalated only when an offer arrives above threshold.</p>
+      </div>
+
+      <!-- Card 4 — Commission highlight -->
+      <div class="rounded-xl p-7 bg-gold/10 border border-gold/25 card-hover">
+        <div class="w-10 h-10 rounded-lg bg-gold flex items-center justify-center mb-6 shadow-gold">
+          <span class="material-symbols-outlined text-ink text-[20px]">percent</span>
+        </div>
+        <h3 class="font-semibold text-sand mb-1">0.15% Seller Commission</h3>
+        <div class="mono text-3xl font-bold text-gold my-3">0.15%</div>
+        <p class="text-sm text-n-500 leading-relaxed font-light">We earn nothing until your unit sells. There is no scenario where getting you a lower offer benefits us.</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="flex items-center gap-4">
+      <a href="#" class="btn-gold px-8 py-4 rounded-md text-sm font-semibold tracking-wide uppercase shadow-gold">
+        Upload your SPA
+      </a>
+      <span class="text-n-500 text-sm font-light">Free to list · No exclusivity required</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FEATURED LISTINGS — Editorial Gallery
+═══════════════════════════════════════════ -->
+<section id="listings" class="py-28 bg-deep">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="flex items-end justify-between mb-14">
+      <div>
+        <span class="text-gold text-[11px] font-semibold tracking-[0.3em] uppercase mb-4 block">Verified Listings</span>
+        <h2 class="editorial text-4xl md:text-5xl font-bold text-sand tracking-tight">
+          Off-Plan Resale.<br/>Every SPA verified.
+        </h2>
+      </div>
+      <a href="#" class="hidden md:flex items-center gap-2 text-gold text-sm font-medium hover:gap-3 transition-all">
+        View all listings
+        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </a>
+    </div>
+
+    <!-- Listing cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Listing Card 1 -->
+      <div class="surface-1 rounded-xl overflow-hidden ghost-border card-hover shadow-ambient">
+        <div class="listing-img relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="DAMAC Hills 2 apartment" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent"></div>
+          <!-- Developer badge -->
+          <div class="absolute top-3 left-3 bg-sage/90 backdrop-blur-sm text-white text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded">
+            DAMAC
+          </div>
+          <!-- Verified SPA badge -->
+          <div class="absolute top-3 right-3 badge-verified text-[10px] font-semibold px-2.5 py-1 rounded flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">verified</span> SPA Verified
+          </div>
+        </div>
+
+        <div class="p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="font-semibold text-sand text-sm">DAMAC Hills 2 — Apt 4B</h3>
+              <div class="text-[11px] text-n-500 mt-0.5">Dubailand · 2 BR · 1,142 sqft BUA</div>
+            </div>
+            <div class="badge-sage text-[10px] font-semibold px-2 py-1 rounded flex items-center gap-1">
+              <span class="material-symbols-outlined text-[11px]">check_circle</span> NOC Ready
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="mono text-xl font-bold text-gold mb-4">AED 1,540,000</div>
+
+          <!-- Payment progress -->
+          <div class="mb-4">
+            <div class="flex justify-between text-[11px] text-n-500 mb-1.5">
+              <span>Payment complete</span>
+              <span class="mono font-semibold text-sage-lt">63%</span>
+            </div>
+            <div class="progress-bar h-1.5">
+              <div class="progress-fill" style="width: 63%"></div>
+            </div>
+          </div>
+
+          <!-- Key stats -->
+          <div class="flex gap-4 text-[11px] text-n-500 mb-5">
+            <span><span class="text-n-300 font-medium">Beds</span> 2</span>
+            <span><span class="text-n-300 font-medium">Bath</span> 2</span>
+            <span><span class="text-n-300 font-medium">Handover</span> Q3 2026</span>
+          </div>
+
+          <a href="#" class="btn-gold w-full py-3 rounded-md text-sm font-semibold text-center block">
+            Ask Dalya
+          </a>
+        </div>
+      </div>
+
+      <!-- Listing Card 2 -->
+      <div class="surface-1 rounded-xl overflow-hidden ghost-border card-hover shadow-ambient">
+        <div class="listing-img relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=80" alt="Emaar Beachfront apartment" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent"></div>
+          <div class="absolute top-3 left-3 bg-sage/90 backdrop-blur-sm text-white text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded">
+            Emaar
+          </div>
+          <div class="absolute top-3 right-3 badge-verified text-[10px] font-semibold px-2.5 py-1 rounded flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">verified</span> SPA Verified
+          </div>
+        </div>
+
+        <div class="p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="font-semibold text-sand text-sm">Emaar Beachfront — Unit 12C</h3>
+              <div class="text-[11px] text-n-500 mt-0.5">Dubai Harbour · 1 BR · 780 sqft BUA</div>
+            </div>
+            <div class="badge-sage text-[10px] font-semibold px-2 py-1 rounded flex items-center gap-1">
+              <span class="material-symbols-outlined text-[11px]">check_circle</span> NOC Ready
+            </div>
+          </div>
+
+          <div class="mono text-xl font-bold text-gold mb-4">AED 1,874,000</div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-[11px] text-n-500 mb-1.5">
+              <span>Payment complete</span>
+              <span class="mono font-semibold text-sage-lt">63%</span>
+            </div>
+            <div class="progress-bar h-1.5">
+              <div class="progress-fill" style="width: 63%"></div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 text-[11px] text-n-500 mb-5">
+            <span><span class="text-n-300 font-medium">Beds</span> 1</span>
+            <span><span class="text-n-300 font-medium">Bath</span> 1</span>
+            <span><span class="text-n-300 font-medium">Handover</span> Q4 2025</span>
+          </div>
+
+          <a href="#" class="btn-gold w-full py-3 rounded-md text-sm font-semibold text-center block">
+            Ask Dalya
+          </a>
+        </div>
+      </div>
+
+      <!-- Listing Card 3 -->
+      <div class="surface-1 rounded-xl overflow-hidden ghost-border card-hover shadow-ambient">
+        <div class="listing-img relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="Sobha Hartland villa" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent"></div>
+          <div class="absolute top-3 left-3 bg-sage/90 backdrop-blur-sm text-white text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded">
+            Sobha
+          </div>
+          <div class="absolute top-3 right-3 badge-verified text-[10px] font-semibold px-2.5 py-1 rounded flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">verified</span> SPA Verified
+          </div>
+        </div>
+
+        <div class="p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="font-semibold text-sand text-sm">Sobha Hartland — Villa 7A</h3>
+              <div class="text-[11px] text-n-500 mt-0.5">MBR City · 3 BR · 3,250 sqft BUA</div>
+            </div>
+            <div class="text-[10px] font-semibold px-2 py-1 rounded border border-copper/40 text-copper flex items-center gap-1">
+              <span class="material-symbols-outlined text-[11px]">schedule</span> NOC at 40%
+            </div>
+          </div>
+
+          <div class="mono text-xl font-bold text-gold mb-4">AED 3,450,000</div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-[11px] text-n-500 mb-1.5">
+              <span>Payment complete</span>
+              <span class="mono font-semibold text-copper">35%</span>
+            </div>
+            <div class="progress-bar h-1.5">
+              <div class="progress-fill" style="width: 35%; background: linear-gradient(90deg, #B87333, #C9A96E);"></div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 text-[11px] text-n-500 mb-5">
+            <span><span class="text-n-300 font-medium">Beds</span> 3</span>
+            <span><span class="text-n-300 font-medium">Bath</span> 4</span>
+            <span><span class="text-n-300 font-medium">Handover</span> Q2 2027</span>
+          </div>
+
+          <a href="#" class="btn-gold w-full py-3 rounded-md text-sm font-semibold text-center block">
+            Ask Dalya
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     BUYER COMMISSION SAVINGS
+═══════════════════════════════════════════ -->
+<section class="py-28 surface-1 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold/5 to-transparent pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: copy -->
+      <div>
+        <span class="text-gold text-[11px] font-semibold tracking-[0.3em] uppercase mb-4 block">For Buyers</span>
+        <h2 class="editorial text-4xl md:text-5xl font-bold text-sand tracking-tight mb-6">
+          Pay 1.15% total.<br/>Not the market standard 2%.
+        </h2>
+        <p class="text-n-500 text-lg font-light leading-relaxed mb-8">
+          A specific AED saving. On your actual transaction.
+          1% to your agent, 0.15% to Dalya. That's it.
+        </p>
+        <a href="#listings" class="btn-gold inline-block px-8 py-4 rounded-md text-sm font-semibold tracking-wide uppercase shadow-gold">
+          Ask Dalya
+        </a>
+      </div>
+
+      <!-- Right: savings table -->
+      <div class="surface-2 rounded-xl p-8 ghost-border shadow-ambient">
+        <div class="text-[11px] text-n-500 uppercase tracking-widest font-semibold mb-6">Commission Savings</div>
+        <div class="space-y-0">
+
+          <!-- Table header -->
+          <div class="grid grid-cols-4 gap-4 pb-3 border-b border-gold/10 text-[10px] text-n-700 uppercase tracking-widest">
+            <div>Property Value</div>
+            <div class="text-right">Standard 2%</div>
+            <div class="text-right text-gold">With Dalya</div>
+            <div class="text-right text-sage-lt">You Save</div>
+          </div>
+
+          <!-- Row 1 -->
+          <div class="grid grid-cols-4 gap-4 py-4 border-b border-gold/8">
+            <div class="mono text-sm font-medium text-n-300">AED 1.5M</div>
+            <div class="text-right mono text-sm text-n-500">AED 30,000</div>
+            <div class="text-right mono text-sm font-semibold text-gold">AED 17,250</div>
+            <div class="text-right mono text-sm font-bold text-sage-lt">AED 12,750</div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="grid grid-cols-4 gap-4 py-4 border-b border-gold/8 bg-gold/5 -mx-8 px-8">
+            <div class="mono text-sm font-medium text-n-300">AED 2.0M</div>
+            <div class="text-right mono text-sm text-n-500">AED 40,000</div>
+            <div class="text-right mono text-sm font-semibold text-gold">AED 23,000</div>
+            <div class="text-right mono text-sm font-bold text-sage-lt">AED 17,000</div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="grid grid-cols-4 gap-4 py-4">
+            <div class="mono text-sm font-medium text-n-300">AED 3.5M</div>
+            <div class="text-right mono text-sm text-n-500">AED 70,000</div>
+            <div class="text-right mono text-sm font-semibold text-gold">AED 40,250</div>
+            <div class="text-right mono text-sm font-bold text-sage-lt">AED 29,750</div>
+          </div>
+
+        </div>
+        <div class="mt-5 pt-4 border-t border-gold/10 text-[10px] text-n-700">
+          Buyer pays 1% to their own agent + 0.15% to Dalya as seller's agent. Standard market rate is 2% total.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MARKET INTELLIGENCE — Bento Grid
+═══════════════════════════════════════════ -->
+<section id="insights" class="py-28 bg-deep">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="text-center mb-16">
+      <h2 class="editorial text-4xl font-bold text-sand tracking-tight mb-3">Market Intelligence</h2>
+      <div class="w-12 h-0.5 bg-gold mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4" style="height: 560px;">
+
+      <!-- Featured insight — tall left -->
+      <div class="md:col-span-2 md:row-span-2 surface-1 rounded-xl p-8 flex flex-col justify-end relative overflow-hidden group ghost-border">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent z-10 pointer-events-none"></div>
+        <img
+          src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=70"
+          alt="Dubai real estate architecture"
+          class="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-700"
+        />
+        <div class="relative z-20">
+          <span class="bg-gold text-ink px-2.5 py-1 text-[10px] font-bold tracking-widest uppercase rounded mb-4 inline-block">
+            Featured Analysis
+          </span>
+          <h4 class="text-2xl font-bold text-sand mb-3 editorial">Off-Plan Resale Volume Up 34% in Q1 2026</h4>
+          <p class="text-n-500 text-sm leading-relaxed mb-5 font-light">
+            SPA-sourced data reveals accelerating secondary market activity across Dubai South and MBR City as investor confidence strengthens.
+          </p>
+          <button class="text-gold font-semibold text-xs tracking-widest uppercase flex items-center gap-2 group/btn">
+            Read Analysis
+            <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stat: Marina growth -->
+      <div class="md:col-span-2 surface-1 rounded-xl p-6 ghost-border flex items-center justify-between">
+        <div>
+          <h4 class="font-semibold text-sand text-base mb-1">Dubai Marina Resale</h4>
+          <p class="text-n-500 text-[11px] uppercase tracking-widest font-semibold">Avg. Days on Market</p>
+        </div>
+        <div class="text-right">
+          <div class="mono text-3xl font-bold text-gold">14</div>
+          <div class="text-[10px] text-n-500 uppercase tracking-widest">Days</div>
+        </div>
+      </div>
+
+      <!-- Stat: Foreign investment -->
+      <div class="surface-2 rounded-xl p-6 ghost-border flex flex-col justify-between">
+        <span class="material-symbols-outlined text-sage">public</span>
+        <div>
+          <div class="mono text-2xl font-bold text-sand">42%</div>
+          <div class="text-[10px] text-n-500 uppercase tracking-widest font-semibold mt-1">Foreign Buyer Share</div>
+        </div>
+      </div>
+
+      <!-- Stat: NOC threshold -->
+      <div class="surface-2 rounded-xl p-6 ghost-border flex flex-col justify-between">
+        <span class="material-symbols-outlined text-gold">gavel</span>
+        <div>
+          <div class="mono text-2xl font-bold text-sand">40%</div>
+          <div class="text-[10px] text-n-500 uppercase tracking-widest font-semibold mt-1">Avg. NOC Threshold</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="bg-ink border-t border-gold/10">
+
+  <!-- Main footer -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Brand column -->
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="text-xl font-bold editorial text-sand">Dalya</span>
+        <span class="text-[11px] font-semibold uppercase tracking-widest text-sage">AI</span>
+      </div>
+      <p class="text-n-500 text-sm font-light leading-relaxed max-w-sm mb-6">
+        The UAE's off-plan resale marketplace. Verified listings. Intelligent availability. Earned trust.
+      </p>
+      <div class="text-[11px] text-n-700 space-y-1">
+        <div>RERA Licensed Broker · License No. 12345</div>
+        <div>Trakheesi Partner · DLD Registered</div>
+      </div>
+    </div>
+
+    <!-- Platform -->
+    <div>
+      <div class="text-[11px] text-n-700 uppercase tracking-widest font-semibold mb-4">Platform</div>
+      <ul class="space-y-3 text-sm text-n-500 font-light">
+        <li><a href="#" class="hover:text-sand transition-colors">Browse Listings</a></li>
+        <li><a href="#" class="hover:text-sand transition-colors">Upload your SPA</a></li>
+        <li><a href="#" class="hover:text-sand transition-colors">Commission Calculator</a></li>
+        <li><a href="#" class="hover:text-sand transition-colors">Market Intelligence</a></li>
+      </ul>
+    </div>
+
+    <!-- Company -->
+    <div>
+      <div class="text-[11px] text-n-700 uppercase tracking-widest font-semibold mb-4">Company</div>
+      <ul class="space-y-3 text-sm text-n-500 font-light">
+        <li><a href="#" class="hover:text-sand transition-colors">About Dalya</a></li>
+        <li><a href="#" class="hover:text-sand transition-colors">RERA Compliance</a></li>
+        <li><a href="#" class="hover:text-sand transition-colors">Privacy Policy</a></li>
+        <li><a href="#" class="hover:text-sand transition-colors">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="border-t border-gold/8 max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="text-[11px] text-n-700">© 2026 Dalya AI. All rights reserved. · دالية</div>
+    <div class="text-[11px] text-n-700 italic">"Property intelligence. No pressure."</div>
+  </div>
+</footer>
+
+</body>
+</html>

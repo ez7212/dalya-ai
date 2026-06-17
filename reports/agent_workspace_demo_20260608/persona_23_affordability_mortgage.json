@@ -1,0 +1,183 @@
+{
+  "idx": 23,
+  "slug": "affordability_mortgage",
+  "persona": "Affordability and mortgage-dependent end-user",
+  "phone": "+971501010023",
+  "listing_id": "HARNESS_listing_01_ab6110d5",
+  "listing_facts": {
+    "property_name": "Sidra Villas I",
+    "beds": 5,
+    "baths": 5,
+    "sqft": 4628.0,
+    "plot_sqft": null,
+    "price_aed": 18500000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "I earn AED 40k per month. Can I afford this property?",
+      "bot": "Dalya with Mahoroba Test Brokerage here. Based on AED 40,000 monthly gross income, this appears out of range by a wide margin. A rough 80% mortgage on AED 18,500,000 would be around AED 86,519 per month before service charges, insurance, and other costs, which is above the income figure you gave. A mortgage advisor or bank should confirm eligibility before you spend time on an offer.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 52.6
+    },
+    {
+      "turn": 2,
+      "buyer": "How much deposit would I generally need?",
+      "bot": "Most banks in Dubai offer 80% LTV (loan-to-value) on ready properties, which means you'd need 20% down. On AED 18,500,000, that's roughly AED 3,700,000 in cash at closing.\n\nAdd to that the DLD transfer fee (4%, roughly AED 740,000), Mahoroba Test Brokerage brokerage fee (0.85%, roughly AED 157,250), and a NOC coordination fee (AED 5,000). Total cash outlay around AED 4,602,250 before closing, plus your monthly mortgage payment.\n\nA mortgage advisor can walk through the exact LTV your profile qualifies for, some banks go lower on deposit depending on income, employment type, and credit profile. What's your employment situation like?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 41.7
+    },
+    {
+      "turn": 3,
+      "buyer": "Will a UAE bank finance this kind of purchase?",
+      "bot": "Yes, UAE banks finance ready properties in Dubai Hills Estate regularly. The main factors they assess are your income stability, employment type (UAE resident vs expat), credit history, and down-payment size.\n\nAt AED 40,000 monthly income, the mortgage serviceability is the constraint, most banks want the monthly payment (principal, interest, insurance) to sit around 50% of gross income or lower. On an AED 18.5M property with 80% LTV, that monthly obligation will exceed your income comfortably, which is why a mortgage advisor conversation is important before moving forward.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 35.6
+    },
+    {
+      "turn": 4,
+      "buyer": "Can you confirm the exact LTV I will get?",
+      "bot": "I can't confirm your exact LTV, that's entirely a bank decision based on your full profile: employment type, contract length, credit history, residency status, existing liabilities, and down-payment size.\n\nSome banks go 80%, some 75%, some lower depending on the borrower. You'll need to approach a mortgage advisor or speak directly with banks (FAB, Emirates NBD, Mashreq, DIB, etc.) to get a firm pre-qualification or AIP (approval in principle).",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 32.2
+    },
+    {
+      "turn": 5,
+      "buyer": "What should I ask a mortgage advisor before making an offer?",
+      "bot": "Ask them:\n\n1. What LTV will I qualify for on a AED 18.5M ready property given my income and employment type?\n\n2. What's my maximum affordable purchase price based on my monthly income and debt obligations?\n\n3. What's the monthly mortgage payment (principal, interest, insurance) on an 80% LTV loan, and does it fit my serviceability ratio?\n\n4. Are there any employment or residency restrictions I should know about (expat vs UAE national, contract type, probation)?\n\n5. How quickly can they issue an AIP (approval in principle), and what documents do they need upfront?\n\n6. On a ready resale, what's their typical approval and drawdown timeline once the SPA is signed?\n\nOnce you have those answers, you'll know whether this price point or a lower-priced unit makes sense for your situation.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 46.4
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Mahoroba Test Brokerage here. Based on AED 40,000 monthly gross income, this appears out of range by a wide margin. A rough 80% mortgage on AED 18,500,000 would be around AED 86,519 per month before service charges, insurance, and other costs, which is above the income figure you gave. A "
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 17,829,884"
+    },
+    {
+      "check": "no_bank_approval_fabrication",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "mortgage_advice_qualified",
+      "pass": true,
+      "evidence": "expects qualified mortgage guidance"
+    },
+    {
+      "check": "no_offer_no_escalation",
+      "pass": true,
+      "evidence": "no escalation expected"
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Affordability buyer — 0 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.2,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Affordability and mortgage-dependent end-user",
+    "phone": "+971501010023",
+    "listing_id": "HARNESS_listing_01_ab6110d5",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

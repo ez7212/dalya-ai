@@ -1,0 +1,183 @@
+{
+  "idx": 23,
+  "slug": "affordability_mortgage",
+  "persona": "Affordability and mortgage-dependent end-user",
+  "phone": "+971501010023",
+  "listing_id": "HARNESS_listing_01_ab6110d5",
+  "listing_facts": {
+    "property_name": "Sidra Villas I",
+    "beds": 5,
+    "baths": 5,
+    "sqft": 4628.0,
+    "plot_sqft": null,
+    "price_aed": 18500000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "I earn AED 40k per month. Can I afford this property?",
+      "bot": "Dalya with Gemini Realty here. Based on AED 40,000 monthly gross income, this appears out of range by a wide margin. A rough 80% mortgage on AED 18,500,000 would be around AED 86,519 per month before service charges, insurance, and other costs, which is above the income figure you gave. A mortgage advisor or bank should confirm eligibility before you spend time on an offer.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 27.0
+    },
+    {
+      "turn": 2,
+      "buyer": "How much deposit would I generally need?",
+      "bot": "For a ready resale in Dubai, most banks lend 80% LTV (loan-to-value), which means you'd need a 20% down payment upfront.\n\nOn AED 18,500,000, that's roughly AED 3,700,000 cash at closing, plus DLD transfer fees (4% = AED 740,000) and our brokerage fee (0.85% = AED 157,250), for a total cash outlay around AED 4,597,250 before NOC coordination costs.\n\nThat's separate from your mortgage application, the bank will also want proof of funds for the deposit and closing costs before they approve.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.2
+    },
+    {
+      "turn": 3,
+      "buyer": "Will a UAE bank finance this kind of purchase?",
+      "bot": "Yes, UAE banks finance villa purchases at this price point. The main constraints are your income-to-debt ratio and whether you meet their minimum salary thresholds (usually AED 10,000-15,000 monthly for larger mortgages).\n\nAt AED 40,000 monthly income, you'd likely qualify for financing, but the loan amount and approval depend on the bank's lending criteria, your credit profile, employment stability, and existing debt. Each bank has different rules.\n\nI'd recommend speaking directly with a mortgage advisor or your bank to run the numbers before you commit to an offer. They'll give you a clear picture of what you can borrow and at what rate.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 23.6
+    },
+    {
+      "turn": 4,
+      "buyer": "Can you confirm the exact LTV I will get?",
+      "bot": "No, I can't confirm that. LTV is set by the bank, not by me or Gemini Realty. Each bank has different lending policies, and your personal profile (salary, credit history, existing loans, employment type) affects what they'll offer you.\n\nTalk to your bank or a mortgage broker, they'll pull your details and give you a firm LTV and loan amount. That's the only way to know for certain.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.9
+    },
+    {
+      "turn": 5,
+      "buyer": "What should I ask a mortgage advisor before making an offer?",
+      "bot": "Good questions to ask a mortgage advisor before you make an offer:\n\n- What's my maximum loan amount and LTV based on my income and profile?\n- What's the interest rate and tenor (how long to repay)?\n- What's my monthly mortgage payment at that rate and term?\n- Do I meet the bank's minimum salary and employment requirements?\n- What documentation do I need to provide (payslips, bank statements, employment letter)?\n- Can they pre-approve me, and how long does that take?\n- Are there any hidden fees or insurance costs I should know about?\n- What's the earliest I can close once the SPA is signed?\n\nOnce you have a pre-approval letter from the bank, you'll know exactly what you can afford and can move forward confidently with an offer.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.0
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Gemini Realty here. Based on AED 40,000 monthly gross income, this appears out of range by a wide margin. A rough 80% mortgage on AED 18,500,000 would be around AED 86,519 per month before service charges, insurance, and other costs, which is above the income figure you gave. A mortgage a"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 17,829,884"
+    },
+    {
+      "check": "no_bank_approval_fabrication",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "mortgage_advice_qualified",
+      "pass": true,
+      "evidence": "expects qualified mortgage guidance"
+    },
+    {
+      "check": "no_offer_no_escalation",
+      "pass": true,
+      "evidence": "no escalation expected"
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Affordability buyer — 0 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Affordability and mortgage-dependent end-user",
+    "phone": "+971501010023",
+    "listing_id": "HARNESS_listing_01_ab6110d5",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

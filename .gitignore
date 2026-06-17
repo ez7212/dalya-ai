@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Frontend/build output
+dist/
+build/
+.next/
+out/
+frontend/node_modules/
+frontend/.next/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+env.local
+.codex/config.toml
+.claude/settings.local.json
+
+# Logs and generated reports
+*.log
+reports/chatbot_test*/
+reports/_archive/test_runs_pre_phase8/
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Local Supabase state
+supabase/.branches/
+supabase/.temp/
+
+# Local/private source documents and uploads
+/SPA - SEA HAVEN - SSH-A2305.pdf
+/WhatsApp Image 2026-03-25 at 22.52.34.jpeg
+/dalya-strategic-brief.docx
+/dalya-reviewers.zip

@@ -1,0 +1,277 @@
+{
+  "idx": 29,
+  "slug": "threading_post_alert_followup",
+  "persona": "Threading control — post-alert same-category update",
+  "phone": "+971501010029",
+  "listing_id": "HARNESS_listing_04_413ffb20",
+  "listing_facts": {
+    "property_name": "The Pinnacle at Sobha Central",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 639.19,
+    "plot_sqft": null,
+    "price_aed": 2187575.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 2062254.55,
+    "offer_threshold_pct": 94.3
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Can you confirm the exact service charges for this unit?",
+      "bot": "Best Homes's property advisor here. I don't have the exact service charge in the listing record. I've flagged it for Karim, the agent managing this listing at Best Homes to confirm before you rely on it.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "97dbc927-6af4-4987-b9bb-a82eef9ca386",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010029",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201002",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "RH8KVFBEXG",
+          "body": "[INFO_GAP] Sara (+971501010001)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- topic: rental yield\n- question_digest: 1. What's the rental yield in this community? And expected capital appreciation by handover?\n- requested_action: Confirm the missing listing fact and reply to the buyer.\nTags: info_gap\n\nBuyer message:\n\"1. What's the rental yield in this community? And expected capital appreciation by handover?\"\n\n[Ref: RH8KVFBEXG]"
+        },
+        {
+          "to_agent_phone": "+9715900201002",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "FQRT4JTL7D",
+          "body": "[INFO_GAP] Unknown buyer (+971501010029)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- topic: service charge\n- question_digest: 1. Can you confirm the exact service charges for this unit?\n- requested_action: Confirm the missing listing fact and reply to the buyer.\nTags: info_gap\n\nBuyer message:\n\"1. Can you confirm the exact service charges for this unit?\"\n\n[Ref: FQRT4JTL7D]"
+        }
+      ],
+      "error": null,
+      "duration_s": 48.8,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "33d2fa1a-1236-4865-936d-357e2136f735",
+            "category": "developer_handover",
+            "token": "RH8KVFBEXG"
+          },
+          {
+            "action": "initial_sent",
+            "thread_id": "d5087d5f-fb8d-4b88-a2be-8ff3aa13597d",
+            "category": "fees_and_charges",
+            "token": "FQRT4JTL7D"
+          }
+        ]
+      }
+    },
+    {
+      "turn": 2,
+      "buyer": "Can you also confirm whether maintenance fees are annual or quarterly?",
+      "bot": "I don't have the exact service charge in the listing record. I'm asking Karim to confirm that against current listing and market data.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "97dbc927-6af4-4987-b9bb-a82eef9ca386",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010029",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you also confirm whether maintenance fees are annual or quarterly?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you also confirm whether maintenance fees are annual or quarterly?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201002",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "FQRT4JTL7D",
+          "body": "[Update on Ref: FQRT4JTL7D]\n\nBuyer also asked:\n\"Can you also confirm whether maintenance fees are annual or quarterly?\"\n\nOpen questions on this escalation:\n1. Can you confirm the exact service charges for this unit? (original, 1 min ago)\n2. Can you also confirm whether maintenance fees are annual or quarterly? (added, just now)\n\n[Ref: FQRT4JTL7D]"
+        }
+      ],
+      "error": null,
+      "duration_s": 47.9,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "update_sent",
+            "thread_id": "d5087d5f-fb8d-4b88-a2be-8ff3aa13597d",
+            "category": "fees_and_charges",
+            "token": "FQRT4JTL7D"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Best Homes's property advisor here. I don't have the exact service charge in the listing record. I've flagged it for Karim, the agent managing this listing at Best Homes to confirm before you rely on it.\nI don't have the exact service charge in the listing record. I'm asking Karim to confirm that ag"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 1,704,859; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,062,255"
+    },
+    {
+      "check": "initial_fee_gap_escalated",
+      "pass": true,
+      "evidence": "turn 1 escalation_triggered=True"
+    },
+    {
+      "check": "followup_fee_gap_escalated",
+      "pass": true,
+      "evidence": "turn 2 escalation_triggered=True"
+    },
+    {
+      "check": "update_message_reuses_initial_token",
+      "pass": false,
+      "evidence": "initial_token=RH8KVFBEXG update_token=FQRT4JTL7D"
+    },
+    {
+      "check": "update_message_contains_open_questions",
+      "pass": true,
+      "evidence": "missing=[]; agent_messages=3"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900201002",
+      "pass": true,
+      "evidence": "expected=+9715900201002; routed=[{'to_agent_phone': '+9715900201002', 'from_agents_ai_number': '+971590001101', 'tags': ['info_gap'], 'envelope_token': 'RH8KVFBEXG', 'body': '[INFO_GAP] Sara (+971501010001)\\n\\nProperty: HARNESS_listing_04_413ffb20\\nSubtype: listing_fact_gap\\nPayload:\\n- topic: renta"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    1,
+    2
+  ],
+  "summary_auto": "Post-alert threading control — 2 esc.",
+  "issues_found": [
+    "update_message_reuses_initial_token"
+  ],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Threading control — post-alert same-category update",
+    "phone": "+971501010029",
+    "listing_id": "HARNESS_listing_04_413ffb20",
+    "thread_count": 1,
+    "question_count": 2,
+    "appended_question_count": 1,
+    "avg_questions_per_thread": 2.0,
+    "append_rate": 0.5,
+    "debounce_bundle_rate": 1.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "fees_and_charges": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

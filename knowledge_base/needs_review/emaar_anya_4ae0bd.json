@@ -1,0 +1,461 @@
+{
+  "name": "Anya",
+  "developer": "Emaar Properties",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "Anya is a sub-community within Arabian Ranches 3 (AR3), itself part of the broader Dubailand district in Dubai.",
+    "Phase 1 (Anya) comprises 492 townhouses launched Q1 2023; Phase 2 (Anya 2) added approximately 32 further townhouses launched April 2024.",
+    "Both phases offer 3- and 4-bedroom townhouses; AX Capital source also references 5-bedroom options for Anya 2 but this is not corroborated by Emaar's own materials — flagged as unverified.",
+    "Handover for Anya (Phase 1) cited as Q4 2026 by Tanami; Anya 2 handover cited as December 2026 by DubaiHaus and PropertyFinder.",
+    "Payment plan for both phases is 10% down / 80% during construction / 10% on handover per multiple sources.",
+    "Starting price for Anya Phase 1 cited at AED 2.01M (3BR); Anya 2 starting price cited at AED 2.59M–2.7M across sources — price uplift reflects later launch and market appreciation.",
+    "Service charge for Anya 2 cited at AED 3–4 per sq ft per DubaiHaus; not independently verified.",
+    "GEMS Winchester School is referenced by Aeon & Trisl as nearby; GEMS FirstPoint School (The Villa) cited by AX Capital at ~4.54 km; Ranches Primary School cited at ~7.86 km. Exact distances are source-reported, not independently verified.",
+    "Global Village Metro Station is referenced by AX Capital as planned to be directly connected to AR3 by pedestrian bridge — this is a future/planned infrastructure item, not yet operational.",
+    "No verified ROI percentage from primary Emaar sources; third-party estimate of 2.5–4.5% annual rental yield and 5–10% annual price growth cited by 1newhomes referencing PwC data — treat as indicative only.",
+    "Arabian Ranches Golf Club (18-hole championship course) is approximately 10-minute walk from Anya per anyaarabianranches.com.",
+    "Drive-time distances sourced from Propsearch and Tanami; these are approximate and traffic-dependent."
+  ],
+  "master_development": {
+    "overview": {
+      "name": "Arabian Ranches 3",
+      "type": "Master-planned gated villa and townhouse community",
+      "phase_within_master": "Phase 3 of the Arabian Ranches trilogy",
+      "district": "Dubailand / Wadi Al Safa 5",
+      "total_ar3_units": "Approximately 4,000 villas and townhouses across AR3",
+      "anya_units": "492 townhouses (Phase 1) plus approximately 32 townhouses (Anya 2 / Phase 2)",
+      "property_types": [
+        "3-bedroom townhouse",
+        "4-bedroom townhouse"
+      ],
+      "design_facades": [
+        "Modern",
+        "Contemporary",
+        "Classic"
+      ],
+      "size_range_sqft": "1,558 to 2,680",
+      "ownership": "Freehold",
+      "community_description": "Arabian Ranches 3 is Emaar's third and largest iteration of its flagship suburban villa community, offering gated security, lush landscaping, a central park, and proximity to the Arabian Ranches Golf Club. Anya sits within this masterplan as a premium townhouse cluster."
+    },
+    "location_connectivity": {
+      "area": "Wadi Al Safa 5, Arabian Ranches 3, Dubailand, Dubai",
+      "major_roads": [
+        "Sheikh Mohammed Bin Zayed Road (E311)",
+        "Emirates Road (E611)",
+        "Al Qudra Road"
+      ],
+      "drive_times_approximate": {
+        "downtown_dubai_dubai_mall": "~22–35 minutes (sources vary)",
+        "dubai_international_airport_dxb": "~23–25 minutes",
+        "al_maktoum_international_airport": "~34–35 minutes",
+        "palm_jumeirah": "~32–35 minutes",
+        "dubai_marina": "~30–40 minutes",
+        "global_village": "~10–15 minutes",
+        "dubai_polo_equestrian_club": "~10 minutes",
+        "burj_al_arab": "~30 minutes"
+      },
+      "metro": "No current direct metro access. Global Village Metro Station is planned to be connected to Arabian Ranches 3 via pedestrian bridge as part of Dubai Metro expansion — not yet operational as of research date.",
+      "public_transport_note": "Community is primarily car-dependent. Bus services available in wider Dubailand area."
+    },
+    "shared_amenities": {
+      "within_anya_community": [
+        "Gated community with 24/7 security",
+        "Central park / landscaped green spaces",
+        "Swimming pool(s)",
+        "Children's pool / splash pad",
+        "Fully equipped gymnasium / fitness centre",
+        "Children's play area",
+        "Skate park",
+        "Multi-use sports courts",
+        "Jogging and cycling tracks",
+        "Clubhouse / multipurpose hall",
+        "Shaded seating areas",
+        "Recreational lawn and garden",
+        "Covered parking spaces",
+        "Private gardens per unit"
+      ],
+      "within_arabian_ranches_3_masterplan": [
+        "30,000 sq m city park",
+        "Lazy River (4 km leisure attraction)",
+        "15 sports courts",
+        "Retail outlets and supermarkets",
+        "Cafes and restaurants",
+        "Mosque",
+        "Shopping mall (within AR3 masterplan)"
+      ],
+      "nearby_ar_ecosystem": [
+        "Arabian Ranches Golf Club (18-hole championship course, ~10-minute walk per developer marketing)"
+      ]
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "GEMS FirstPoint School, The Villa",
+          "distance_km": "~4.54 km",
+          "source": "AX Capital"
+        },
+        {
+          "name": "GEMS Winchester School",
+          "distance_km": null,
+          "note": "Referenced as nearby by Aeon & Trisl; exact distance unverified",
+          "source": "Aeon & Trisl"
+        },
+        {
+          "name": "Ranches Primary School, Arabian Ranches 2",
+          "distance_km": "~7.86 km",
+          "source": "AX Capital"
+        },
+        {
+          "name": "GEMS Wellington Academy, Silicon Oasis",
+          "distance_km": "~7.45 km",
+          "source": "AX Capital"
+        },
+        {
+          "name": "Dubai School Nad Al Sheba",
+          "distance_km": "~8.22 km",
+          "source": "AX Capital"
+        },
+        {
+          "name": "Kings School Al Barsha",
+          "distance_km": "~8.54 km",
+          "source": "AX Capital"
+        },
+        {
+          "name": "Vernus International School Dubai",
+          "distance_km": null,
+          "note": "Referenced by DubaiHaus as nearby; exact distance unverified",
+          "source": "DubaiHaus"
+        },
+        {
+          "name": "Dubai International Academic City",
+          "distance_km": null,
+          "note": "Approximately 15-minute drive per AX Capital; higher education institutions",
+          "source": "AX Capital"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Aster Clinic",
+          "distance_note": "~15 minutes drive",
+          "source": "Aeon & Trisl",
+          "verified": false
+        }
+      ],
+      "retail_and_leisure": [
+        {
+          "name": "Dubai Miracle Garden",
+          "note": "Short drive from AR3; world's largest natural flower garden",
+          "source": "AX Capital / AX Capital Anya 2"
+        },
+        {
+          "name": "Global Village",
+          "note": "~10–15 minutes drive",
+          "source": "Tanami / Aeon & Trisl"
+        },
+        {
+          "name": "Dubai Outlet Mall",
+          "note": "~15 minutes drive",
+          "source": "Aeon & Trisl"
+        },
+        {
+          "name": "Dubai Polo & Equestrian Club",
+          "note": "~10 minutes drive",
+          "source": "Tanami"
+        },
+        {
+          "name": "Dubai Autodrome",
+          "note": "Short drive from AR3",
+          "source": "AX Capital Anya 2"
+        },
+        {
+          "name": "Dubai Sports City",
+          "note": "Short drive from AR3",
+          "source": "AX Capital Anya 2"
+        },
+        {
+          "name": "Arabian Ranches Golf Club",
+          "note": "~10-minute walk per developer marketing materials",
+          "source": "anyaarabianranches.com"
+        }
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "dld_fee_percent": "4%",
+      "service_charge_per_sqft": "AED 3–4 (Anya 2, per DubaiHaus; unverified independently)",
+      "projected_roi_percent": null,
+      "indicative_rental_yield_note": "Third-party estimate of 2.5–4.5% annual rental yield cited by 1newhomes referencing PwC data. Not verified by Emaar or DLD. Treat as indicative only.",
+      "indicative_price_growth_note": "Third-party estimate of 5–10% annual price growth per sq m cited by 1newhomes. Not independently verified.",
+      "dlp_transactions_note": "50 sale transaction records available for Anya at Arabian Ranches 3 per Propsearch (DLD Open Data)",
+      "market_context": "Arabian Ranches as a trilogy has sold out across all three phases. Anya 2 was launched as a direct response to a waiting list from Phase 1, indicating strong demand. AR3 is an established, sought-after address in Dubai's suburban villa segment."
+    },
+    "developer_profile": {
+      "name": "Emaar Properties",
+      "founded": 1997,
+      "headquarters": "Dubai, UAE",
+      "employees_approx": 6600,
+      "notable_projects": [
+        "Burj Khalifa",
+        "The Dubai Mall",
+        "Downtown Dubai",
+        "Arabian Ranches 1, 2 & 3",
+        "Dubai Hills Estate",
+        "Emaar South"
+      ],
+      "track_record": "Emaar is one of the UAE's largest and most respected developers, with a 20+ year track record of delivering master-planned communities. Arabian Ranches has been delivered across three phases since 2004, establishing Emaar's credibility in the suburban villa segment.",
+      "estimated_portfolio_value_usd": "~9.7 billion"
+    }
+  },
+  "sub_developments": {
+    "anya_2": {
+      "aliases": [
+        "Anya 2",
+        "anya 2",
+        "Anya Phase 2",
+        "Anya Two"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Anya 2, Arabian Ranches 3",
+        "investment_overrides": {
+          "launch_date": "April 2024",
+          "handover": "December 2026",
+          "starting_price_aed": 2590000,
+          "payment_plan": "10% down / 80% during construction / 10% on handover",
+          "unit_count_approx": 32,
+          "bedrooms": [
+            "3BR",
+            "4BR"
+          ],
+          "size_range_sqft": "1,561 to 2,680",
+          "service_charge_per_sqft": "AED 3–4 (unverified independently)",
+          "sale_status": "Out of stock per DubaiHaus as of research date; resale market active"
+        },
+        "sales_talking_points": {
+          "scarcity": "Anya 2 was launched with only ~32 units as a direct response to the waiting list from Anya Phase 1 — one of the smallest releases in AR3 history, making resale units particularly scarce.",
+          "value_vs_phase_1": "Anya 2 pricing starts from AED 2.59M vs Phase 1's AED 2.01M launch price, reflecting both market appreciation and the premium of a later-phase, limited release.",
+          "design": "Same three facade options (Modern, Contemporary, Classic) as Phase 1, with modern open-plan interiors, floor-to-ceiling windows, private gardens, maid's room, and covered parking.",
+          "community_access": "Full access to all Arabian Ranches 3 masterplan amenities including the Lazy River, 30,000 sq m city park, sports courts, and proximity to Arabian Ranches Golf Club."
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "492 townhouses (Phase 1) + ~32 townhouses (Anya 2) | 3 & 4BR | 1,558–2,680 sq ft | From AED 2.01M (Phase 1 launch) | Freehold | Handover Q4/Dec 2026",
+      "scarcity_argument": "Anya sold out on launch in Q1 2023. Anya 2 was released with only ~32 units in April 2024 to meet residual demand — both phases are effectively sold out at developer level, making any available unit a resale opportunity in a supply-constrained community.",
+      "lifestyle_pitch": "Anya offers the full Arabian Ranches experience: gated security, tree-lined streets, a central park, Lazy River, swimming pools, sports courts, and a clubhouse — all within a 20-year legacy community anchored by an 18-hole championship golf course. Three design facades mean your home reflects your aesthetic, not a developer default.",
+      "investment_pitch": "Freehold ownership in one of Dubai's most established and consistently in-demand suburban communities. Arabian Ranches has sold out across all three phases. Anya's proximity to Global Village, the planned metro connection, and Emaar's delivery track record underpin long-term capital value. Golden Visa eligible.",
+      "objection_handling": "Distance from the city centre is offset by excellent road connectivity via E311 and E611, ~22–25 minutes to Downtown and DXB respectively, and a planned pedestrian-connected metro station at Global Village. The community's self-contained amenity suite means residents rarely need to leave for daily needs."
+    },
+    "per_sub_development": {
+      "anya_2": {
+        "headline": "Anya 2 — the rarest release in Arabian Ranches 3 | ~32 units only | From AED 2.59M | Dec 2026 handover",
+        "pitch": "Launched April 2024 to satisfy the waiting list that Phase 1 could not accommodate, Anya 2 is among the most limited townhouse releases Emaar has made in AR3. With the same design quality, amenity access, and community infrastructure as Phase 1 — but at a price point that reflects genuine market appreciation — resale units here represent a scarce entry into a proven community."
+      }
+    }
+  },
+  "aliases": [
+    "Anya",
+    "anya",
+    "Anya 2",
+    "Anya Phase 2",
+    "Anya Two",
+    "Anya Arabian Ranches",
+    "Anya Arabian Ranches 3",
+    "Anya AR3",
+    "Anya at Arabian Ranches 3"
+  ],
+  "developer_keywords": [
+    "Emaar",
+    "Emaar Properties",
+    "emaar",
+    "emaar properties"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties",
+    "community": "Anya (Phases 1 & 2) at Arabian Ranches 3",
+    "location": {
+      "area": "Wadi Al Safa 5, Arabian Ranches 3, Dubailand, Dubai",
+      "description": "Anya is a gated townhouse sub-community within Arabian Ranches 3, Emaar's third and largest master-planned suburban villa community in Dubai. Located in Dubailand, it offers a quiet, green, family-oriented environment with strong road connectivity via Sheikh Mohammed Bin Zayed Road (E311) and Emirates Road (E611).",
+      "distances": {
+        "downtown_dubai_dubai_mall": "~22–35 min drive (sources vary)",
+        "dubai_international_airport": "~23–25 min drive",
+        "al_maktoum_international_airport": "~34–35 min drive",
+        "palm_jumeirah": "~32–35 min drive",
+        "dubai_marina": "~30–40 min drive",
+        "global_village": "~10–15 min drive",
+        "dubai_polo_equestrian_club": "~10 min drive",
+        "arabian_ranches_golf_club": "~10 min walk (per developer marketing)",
+        "metro_note": "No current direct metro. Global Village Metro Station planned with pedestrian bridge connection to AR3 — future infrastructure, not yet operational."
+      }
+    },
+    "community_amenities": [
+      "Gated community with 24/7 security",
+      "Central park and landscaped green spaces",
+      "Swimming pool(s)",
+      "Children's pool and splash pad",
+      "Fully equipped gymnasium",
+      "Children's play area",
+      "Skate park",
+      "Multi-use sports courts",
+      "Jogging and cycling tracks",
+      "Clubhouse and multipurpose hall",
+      "Shaded seating areas",
+      "Private gardens per unit",
+      "Covered parking per unit",
+      "Maid's room per unit",
+      "Lazy River (4 km, within AR3 masterplan)",
+      "30,000 sq m city park (AR3 masterplan)",
+      "Retail outlets, cafes, restaurants (AR3 masterplan)",
+      "Mosque (AR3 masterplan)",
+      "Proximity to Arabian Ranches Golf Club (18-hole championship course)"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "GEMS FirstPoint School, The Villa",
+          "distance": "~4.54 km",
+          "curriculum": null,
+          "verified_distance": false
+        },
+        {
+          "name": "GEMS Winchester School",
+          "distance": null,
+          "curriculum": null,
+          "note": "Referenced as nearby; exact distance not confirmed in sources"
+        },
+        {
+          "name": "Ranches Primary School, Arabian Ranches 2",
+          "distance": "~7.86 km",
+          "curriculum": null,
+          "verified_distance": false
+        },
+        {
+          "name": "GEMS Wellington Academy, Silicon Oasis",
+          "distance": "~7.45 km",
+          "curriculum": null,
+          "verified_distance": false
+        },
+        {
+          "name": "Kings School Al Barsha",
+          "distance": "~8.54 km",
+          "curriculum": "British",
+          "verified_distance": false
+        },
+        {
+          "name": "Dubai School Nad Al Sheba",
+          "distance": "~8.22 km",
+          "curriculum": null,
+          "verified_distance": false
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Aster Clinic",
+          "distance": "~15 min drive",
+          "note": "Referenced by Aeon & Trisl; exact location and distance unverified"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Miracle Garden",
+          "type": "Leisure / attraction",
+          "note": "Short drive from AR3"
+        },
+        {
+          "name": "Global Village",
+          "type": "Entertainment / retail",
+          "note": "~10–15 min drive"
+        },
+        {
+          "name": "Dubai Outlet Mall",
+          "type": "Retail",
+          "note": "~15 min drive"
+        },
+        {
+          "name": "Dubai Autodrome",
+          "type": "Motorsports / leisure",
+          "note": "Short drive from AR3"
+        },
+        {
+          "name": "Dubai Sports City",
+          "type": "Sports / leisure",
+          "note": "Short drive from AR3"
+        },
+        {
+          "name": "Arabian Ranches Golf Club",
+          "type": "Golf / leisure",
+          "note": "~10 min walk per developer marketing"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": null,
+      "indicative_yield_note": "Third-party indicative range of 2.5–4.5% annual rental yield and 5–10% annual price growth cited by 1newhomes (referencing PwC data). Not verified by Emaar or DLD. For guidance only.",
+      "dld_fee_percent": "4%",
+      "service_charge_per_sqft": "AED 3–4 (Anya 2, per DubaiHaus; not independently verified)",
+      "payment_plan": "10% on booking / 80% during construction / 10% on handover",
+      "branded_premium_note": null,
+      "market_note": "Both Anya phases are sold out at developer level. Availability is via resale market only. Arabian Ranches has a 20-year track record of capital appreciation and consistent demand."
+    },
+    "sales_talking_points": {
+      "for_families": "Anya is purpose-built for family living: gated security, private gardens, maid's rooms, children's play areas, splash pads, and proximity to multiple schools within a 10 km radius. The wider AR3 masterplan adds a 30,000 sq m park, Lazy River, and sports courts.",
+      "for_investors": "Freehold, Golden Visa eligible, in a sold-out Emaar community with a 20-year appreciation track record. Limited resale supply in a high-demand suburban segment.",
+      "for_lifestyle_buyers": "Three design facades, floor-to-ceiling windows, private gardens, and access to an 18-hole championship golf course — all within a quiet, green, gated community 22–25 minutes from Downtown Dubai.",
+      "connectivity": "E311 and E611 provide fast access to all of Dubai. DXB is ~23–25 minutes. A planned Global Village Metro Station with pedestrian bridge to AR3 will further improve connectivity when operational.",
+      "emaar_credibility": "Emaar has delivered Arabian Ranches 1 and 2 in full. AR3 is under active construction with Q4/December 2026 handover targeted for Anya units."
+    },
+    "developer_track_record": "Emaar Properties, founded 1997, is one of the UAE's largest developers with a portfolio including Burj Khalifa, The Dubai Mall, Downtown Dubai, and the full Arabian Ranches trilogy. Arabian Ranches has sold out across all three phases since 2004, demonstrating consistent delivery and demand."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:32:29.823328+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.72,
+    "source_urls": [
+      "https://www.tanamiproperties.com/Projects/Anya-at-Arabian-Ranches-3",
+      "https://www.bnwaquamaya.com/connectivity.html",
+      "https://dubaimetrotrain.com/destinations",
+      "https://propsearch.ae/dubai/anya-at-arabian-ranches-3",
+      "https://www.bayut.com/mybayut/dubai-metro-timings-cost-stations",
+      "https://www.internationalschoolsearch.com/international-schools-in-the-united-arab-emirates-uae",
+      "https://en.wikipedia.org/wiki/List_of_schools_in_the_United_Arab_Emirates",
+      "https://www.investindubai.gov.ae/en/live-and-work/dubai-public-transport-guide",
+      "https://www.dubaimetrorails.com/attractions",
+      "https://www.dubaihaus.com/en/project-details/anya-2-157",
+      "https://www.propertyfinder.ae/en/new-projects/emaar-properties/anya-2",
+      "https://www.axcapital.ae/offplan/detail/anya",
+      "https://anyaarabianranches.com",
+      "https://www.axcapital.ae/offplan/detail/anya-two-townhouses",
+      "https://aeontrisl.com/anya-2-at-arabian-ranches-3-by-emaar",
+      "https://1newhomes.ae/anya-2-dubai",
+      "https://www.tanamiproperties.com/Projects/ANYA-2-at-Arabian-Ranches-3-Amenities",
+      "https://chainexrealestate.com/calculating-rental-yield-in-uae-the-investors-2026-guide-to-roi",
+      "https://magusproperties.ae/real-estate/best-rental-yield-areas-dubai",
+      "https://www.instagram.com/reel/DYqzSEeosUC",
+      "https://apps.apple.com/us/app/bayut-uae-property-search/id923263211?see-all=reviews&platform=iphone",
+      "https://www.international-schools-database.com/country/united-arab-emirates",
+      "https://www.emaar.com/en/properties/anya",
+      "https://support.bayut.com/hc/en-us",
+      "https://www.trustpilot.com/review/bayut.com",
+      "https://www.linkedin.com/in/kshaf-suleman-choudhary-01b264101"
+    ],
+    "audit_flags": [
+      "Exact unit count for Anya 2 (~32) is sourced from anyaarabianranches.com marketing copy — not confirmed by Emaar official channels.",
+      "5-bedroom unit type for Anya 2 referenced by AX Capital but not corroborated by Emaar materials or other sources — excluded from primary data.",
+      "Service charge of AED 3–4/sqft for Anya 2 sourced from DubaiHaus only — not independently verified.",
+      "School distances are sourced from AX Capital aggregator data and are approximate — not independently verified against DLD or school websites.",
+      "GEMS Winchester School proximity referenced by Aeon & Trisl without distance data — exact distance unverified.",
+      "Aster Clinic proximity referenced by Aeon & Trisl without address or distance data — unverified.",
+      "Global Village Metro Station pedestrian bridge connection to AR3 is a planned/future infrastructure item per AX Capital — not yet operational; timeline unconfirmed.",
+      "ROI and price growth figures are third-party indicative estimates (1newhomes citing PwC) — not verified by Emaar, DLD, or independent valuation.",
+      "Drive-time distances vary across sources (Tanami vs Propsearch vs Aeon & Trisl) — all are approximate and traffic-dependent.",
+      "Handover date for Anya Phase 1 cited as Q4 2026 by Tanami; Anya 2 as December 2026 by DubaiHaus and PropertyFinder — construction progress not independently verified.",
+      "No healthcare facility data with verified distances available from sources — healthcare section is sparse.",
+      "Vernus International School referenced by DubaiHaus without distance or curriculum details — unverified."
+    ]
+  }
+}

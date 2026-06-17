@@ -1,0 +1,223 @@
+{
+  "idx": 18,
+  "slug": "pdpl_sara",
+  "persona": "Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021",
+  "phone": "+971501010001",
+  "listing_id": "HARNESS_listing_04_413ffb20",
+  "listing_facts": {
+    "property_name": "The Pinnacle at Sobha Central",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 639.19,
+    "plot_sqft": null,
+    "price_aed": 2187575.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 2062254.55,
+    "offer_threshold_pct": 94.3
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I previously inquired about this property. Under UAE Federal Decree-Law No. 45 of 2021 (PDPL), I'm requesting deletion of all personal data you hold about me.",
+      "bot": "I'm Dalya, and I understand you're invoking your data protection rights. I'm escalating this to Best Homes's compliance team, they're the data controller and will respond within the 30-day PDPL window. They'll be in touch via your registered phone number to verify identity and process the request formally.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "regulatory_request",
+        "conversation_id": "7f373301-66eb-46ec-809a-e436c533bf72",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010001",
+        "buyer_name": "Sara",
+        "trigger": "regulatory_request",
+        "trigger_message": "Hi, I previously inquired about this property. Under UAE Federal Decree-Law No. 45 of 2021 (PDPL), I'm requesting deletion of all personal data you hold about me.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": "pdpl_deletion",
+        "payload": {
+          "category": "pdpl_deletion",
+          "request": "Hi, I previously inquired about this property. Under UAE Federal Decree-Law No. 45 of 2021 (PDPL), I'm requesting deletion of all personal data you hold about me.",
+          "requested_action": "Verify identity and respond under the applicable data-rights process."
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201002",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "regulatory_request"
+          ],
+          "envelope_token": "AUZVL9VQWK",
+          "body": "[REGULATORY_REQUEST] Sara (+971501010001)\n\nProperty: HARNESS_listing_04_413ffb20\nPayload:\n- category: pdpl_deletion\n- request: Hi, I previously inquired about this property. Under UAE Federal Decree-Law No. 45 of 2021 (PDPL), I'm requesting deletion of all personal data you hold about me.\n- requested_action: Verify identity and respond under the applicable data-rights process.\nTags: regulatory_request\n\nBuyer message:\n\"Hi, I previously inquired about this property. Under UAE Federal Decree-Law No. 45 of 2021 (PDPL), I'm requesting deletion of all personal data you hold about me.\"\n\n[Ref: AUZVL9VQWK]"
+        }
+      ],
+      "error": null,
+      "duration_s": 25.1
+    },
+    {
+      "turn": 2,
+      "buyer": "This includes: my conversation history, any offers I made, my phone number, name, and any other information.",
+      "bot": "Your data protection request is already logged with Best Homes's compliance team. They'll respond within the 30-day PDPL window and will use this WhatsApp thread or your registered phone number for identity verification and formal follow-up.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 271.3
+    },
+    {
+      "turn": 3,
+      "buyer": "Please confirm in writing within 30 days as required by law.",
+      "bot": "Your data protection request is already logged with Best Homes's compliance team. They'll respond within the 30-day PDPL window and will use this WhatsApp thread or your registered phone number for identity verification and formal follow-up.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 14.0
+    },
+    {
+      "turn": 4,
+      "buyer": "If you cannot delete my data, please explain why under Article 16 of the PDPL.",
+      "bot": "Your data protection request is already logged with Best Homes's compliance team. They'll respond within the 30-day PDPL window and will use this WhatsApp thread or your registered phone number for identity verification and formal follow-up.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 15.6
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "I'm Dalya, and I understand you're invoking your data protection rights. I'm escalating this to Best Homes's compliance team, they're the data controller and will respond within the 30-day PDPL window. They'll be in touch via your registered phone number to verify identity and process the request fo"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 1,704,859; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,062,255"
+    },
+    {
+      "check": "no_false_deletion_claim",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "no_buyer_mode_retention",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "acknowledges_request",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "check": "escalation_present",
+      "pass": true,
+      "evidence": "any escalation fired"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900201002",
+      "pass": true,
+      "evidence": "expected=+9715900201002; routed=[{'to_agent_phone': '+9715900201002', 'from_agents_ai_number': '+971590001101', 'tags': ['regulatory_request'], 'envelope_token': 'AUZVL9VQWK', 'body': '[REGULATORY_REQUEST] Sara (+971501010001)\\n\\nProperty: HARNESS_listing_04_413ffb20\\nPayload:\\n- category: pdpl_dele"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    1
+  ],
+  "summary_auto": "PDPL deletion request — 1 esc. EXPECT informative gaps until PDPL handler exists.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021",
+    "phone": "+971501010001",
+    "listing_id": "HARNESS_listing_04_413ffb20",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Report — dalya_chatbot_full_test_2026-06-06_023153_multitenant</title>
+  <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:   #C9A96E;
+  --ink:    #1A2B3C;
+  --slate:  #2E4057;
+  --deep:   #0F1923;
+  --sage:   #4A7C6F;
+  --sage-lt:#6BA898;
+  --sand:   #F5EFE6;
+  --n500:   #8A8078;
+  --copper: #9B5D2E;
+  --fail:   #C0392B;
+  --pass:   #4A7C6F;
+  --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html { font-size: 15px; }
+body {
+  background: var(--deep);
+  color: var(--sand);
+  font-family: var(--font-ui);
+  line-height: 1.55;
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+/* ---- Layout ---- */
+.page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ---- Header ---- */
+.report-header {
+  padding: 40px 0 28px;
+  border-bottom: 1px solid rgba(201,169,110,.18);
+  margin-bottom: 32px;
+}
+.run-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: -.01em;
+}
+.run-meta {
+  font-size: .82rem;
+  color: var(--n500);
+  margin-top: 4px;
+}
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 20px 0 0;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--sand);
+  font-family: var(--font-mono);
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--n500);
+}
+
+/* ---- Badges ---- */
+.badges-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.badge {
+  font-size: .75rem;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.badge-pass { background: rgba(74,124,111,.25); color: var(--sage-lt); border: 1px solid rgba(74,124,111,.4); }
+.badge-fail { background: rgba(155,93,46,.25); color: #E8905A; border: 1px solid rgba(155,93,46,.5); }
+.badge-na   { background: rgba(138,128,120,.15); color: var(--n500); border: 1px solid rgba(138,128,120,.3); }
+
+/* ---- Listing pills ---- */
+.listings-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.listing-pill {
+  font-size: .72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--slate);
+  color: var(--sand);
+  border: 1px solid rgba(201,169,110,.2);
+  font-family: var(--font-mono);
+}
+
+/* ---- Filter chips ---- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+.filter-label {
+  font-size: .75rem;
+  color: var(--n500);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-right: 4px;
+}
+.chip {
+  font-size: .78rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--slate);
+  background: transparent;
+  color: var(--n500);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: var(--font-ui);
+}
+.chip:hover { border-color: var(--gold); color: var(--sand); }
+.chip.active { background: var(--gold); color: var(--deep); border-color: var(--gold); font-weight: 600; }
+
+/* ---- Persona table ---- */
+.table-wrap { overflow-x: auto; }
+.persona-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+.persona-table thead th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--n500);
+  background: var(--ink);
+  border-bottom: 1px solid var(--slate);
+  white-space: nowrap;
+  user-select: none;
+}
+.persona-table thead th.sortable { cursor: pointer; }
+.persona-table thead th.sortable:hover { color: var(--gold); }
+.persona-table thead th .sort-arrow { margin-left: 4px; opacity: .5; }
+.persona-row td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(46,64,87,.6);
+  vertical-align: middle;
+}
+.persona-row { cursor: pointer; transition: background .12s; }
+.persona-row:hover { background: var(--ink); }
+.persona-row.active-row { background: var(--ink); border-left: 2px solid var(--gold); }
+.col-idx { color: var(--n500); width: 36px; }
+.col-name { font-weight: 500; min-width: 180px; }
+.col-listing { color: var(--n500); font-size: .8rem; }
+.col-turns, .col-esc, .col-issues { font-family: var(--font-mono); text-align: center; width: 64px; }
+
+/* ---- Status pills ---- */
+.status-pill {
+  font-size: .7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: .03em;
+}
+.status-clean  { background: rgba(74,124,111,.2); color: var(--sage-lt); border: 1px solid rgba(74,124,111,.4); }
+.status-issues { background: rgba(155,93,46,.25); color: #E8905A; border: 1px solid rgba(155,93,46,.5); }
+
+/* ---- Expand row ---- */
+.persona-expand-row { display: none; }
+.persona-expand-row.visible { display: table-row; }
+.expand-cell { padding: 0; }
+
+/* ---- Persona detail ---- */
+.persona-detail {
+  background: var(--ink);
+  border-top: 2px solid var(--gold);
+  padding: 24px;
+}
+.detail-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--slate);
+}
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.detail-name   { font-size: 1rem; font-weight: 700; color: var(--sand); }
+.detail-phone  { font-size: .8rem; font-family: var(--font-mono); color: var(--n500); }
+.detail-listing { font-size: .8rem; background: var(--slate); padding: 2px 8px; border-radius: 4px; color: var(--gold); }
+.detail-listing-id { font-size: .72rem; font-family: var(--font-mono); color: var(--n500); }
+.detail-summary { font-size: .85rem; color: var(--n500); font-style: italic; }
+.listing-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.facts-cell {
+  background: rgba(46,64,87,.45);
+  border: 1px solid rgba(201,169,110,.14);
+  border-radius: 4px;
+  padding: 8px 10px;
+  min-width: 0;
+}
+.facts-cell span {
+  display: block;
+  color: var(--n500);
+  font-size: .66rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 2px;
+}
+.facts-cell strong {
+  display: block;
+  color: var(--sand);
+  font-size: .78rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.issues-row { margin-top: 8px; font-size: .8rem; }
+.issue-pill {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(155,93,46,.2);
+  color: #E8905A;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  border: 1px solid rgba(155,93,46,.4);
+}
+.detail-body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 700px) {
+  .detail-body { grid-template-columns: 1fr; }
+  .listing-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-row { gap: 16px; }
+  .report-header { padding: 24px 0 18px; }
+}
+
+/* ---- Chat thread ---- */
+.chat-thread { display: flex; flex-direction: column; gap: 12px; padding: 4px 0; }
+.turn-row { display: flex; }
+.buyer-row { justify-content: flex-end; }
+.bot-row   { justify-content: flex-start; }
+
+.bubble {
+  max-width: 78%;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: .85rem;
+  line-height: 1.5;
+}
+.buyer-bubble {
+  background: var(--slate);
+  border-bottom-right-radius: 3px;
+}
+.bot-bubble {
+  background: rgba(26,43,60,.9);
+  border: 1px solid rgba(201,169,110,.22);
+  border-bottom-left-radius: 3px;
+}
+.bubble-meta {
+  font-size: .68rem;
+  color: var(--n500);
+  margin-bottom: 5px;
+  font-family: var(--font-mono);
+}
+.bubble-text { word-break: break-word; white-space: pre-wrap; }
+
+/* ---- Escalation ---- */
+.esc-badge {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: none;
+  background: var(--sage);
+  color: #fff;
+  letter-spacing: .05em;
+  margin-right: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+.esc-detail-card {
+  margin: -4px 0 8px 12px;
+  max-width: 480px;
+}
+.esc-toggle {
+  font-size: .72rem;
+  background: none;
+  border: none;
+  color: var(--sage-lt);
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-ui);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.esc-toggle:hover { color: var(--gold); }
+.esc-detail-body { margin-top: 6px; }
+.esc-table { font-size: .78rem; border-collapse: collapse; width: 100%; }
+.esc-table td {
+  padding: 3px 8px;
+  border-bottom: 1px solid rgba(46,64,87,.5);
+  vertical-align: top;
+}
+.esc-table tr:first-child td:first-child { color: var(--n500); width: 80px; }
+
+/* ---- Error strip ---- */
+.error-strip {
+  background: rgba(192,57,43,.2);
+  border: 1px solid rgba(192,57,43,.4);
+  border-radius: 6px;
+  color: #E87676;
+  font-size: .8rem;
+  padding: 6px 12px;
+  margin: 4px 0;
+  font-family: var(--font-mono);
+}
+
+/* ---- Checks panel ---- */
+.panel-title {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--n500);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--slate);
+}
+.checks-panel, .qm-panel { margin-bottom: 16px; }
+.checks-table { font-size: .78rem; border-collapse: collapse; width: 100%; }
+.checks-table td { padding: 5px 6px; border-bottom: 1px solid rgba(46,64,87,.4); vertical-align: top; }
+.check-icon { width: 18px; font-weight: 700; }
+.check-pass .check-icon { color: var(--sage-lt); }
+.check-fail .check-icon { color: #E87676; }
+.check-name { width: 160px; font-family: var(--font-mono); font-size: .72rem; word-break: break-all; }
+.check-evi { color: var(--n500); }
+.evi-toggle {
+  font-size: .72rem;
+  background: none;
+  border: none;
+  color: var(--n500);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  text-align: left;
+  padding: 0;
+  line-height: 1.4;
+}
+.evi-toggle:hover { color: var(--sand); }
+.evi-full {
+  font-size: .72rem;
+  font-family: var(--font-mono);
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--sand);
+  background: var(--slate);
+  padding: 6px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+/* ---- QM panel ---- */
+.qm-panel .badges-row { gap: 6px; margin-top: 0; }
+.qm-panel .badge { font-size: .68rem; padding: 3px 8px; }
+
+/* ---- Escalation thread metrics ---- */
+.thread-metrics {
+  background: rgba(26,43,60,.68);
+  border: 1px solid rgba(201,169,110,.16);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+}
+.thread-metrics.compact { padding: 10px; margin-top: 0; }
+.thread-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+.thread-metric-cell {
+  background: rgba(46,64,87,.45);
+  border-radius: 6px;
+  padding: 8px;
+  min-width: 0;
+}
+.thread-metric-cell span,
+.thread-distribution span {
+  display: block;
+  color: var(--n500);
+  font-size: .66rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.thread-metric-cell strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--sand);
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  overflow-wrap: anywhere;
+}
+.thread-distribution {
+  margin-top: 8px;
+  background: rgba(46,64,87,.35);
+  border-radius: 6px;
+  padding: 8px;
+}
+.thread-distribution strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--gold);
+  font-size: .75rem;
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
+}
+
+/* ---- N/A note ---- */
+.na-note { font-size: .8rem; color: var(--n500); font-style: italic; padding: 8px 0; }
+
+/* ---- AED figures ---- */
+.aed { font-family: var(--font-mono); color: var(--gold); }
+
+/* ---- Utility ---- */
+.hidden { display: none !important; }
+.section-title {
+  font-size: .85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--n500);
+  margin: 28px 0 14px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+
+    <!-- Header -->
+    <header class="report-header">
+      <div class="run-name">dalya_chatbot_full_test_2026-06-06_023153_multitenant</div>
+      <div class="run-meta">Run at: 2026-06-06 02:40 UTC</div>
+      
+      <div class="stat-row">
+        <div class="stat"><span class="stat-value">4</span><span class="stat-label">Personas</span></div>
+        <div class="stat"><span class="stat-value">4</span><span class="stat-label">Completed</span></div>
+        <div class="stat"><span class="stat-value" style="color:var(--sage-lt)">4</span><span class="stat-label">Clean</span></div>
+        <div class="stat"><span class="stat-value" style="color:var(--sage-lt)">0</span><span class="stat-label">With issues</span></div>
+        <div class="stat"><span class="stat-value" style="font-size:1.2rem">8m 21s</span><span class="stat-label">Duration</span></div>
+      </div>
+      <div class="badges-row">
+        <span class="badge badge-pass" title="target &lt;= 0.5">Em-dashes/resp: 0.000</span> <span class="badge badge-pass" title="target == 0">&quot;the team&quot; refs: 0</span> <span class="badge badge-pass" title="target &lt;= 0.5">Closing Q rate: 0.056</span> <span class="badge badge-pass" title="target == 0">Markdown bold: 0</span> <span class="badge badge-pass" title="target == 0">Emoji count: 0</span>
+      </div>
+      <div class="section-title">Escalation Thread Metrics</div>
+      <div class="thread-metrics"><div class="thread-metric-grid"><div class="thread-metric-cell"><span>Threads</span><strong>8</strong></div><div class="thread-metric-cell"><span>Questions</span><strong>14</strong></div><div class="thread-metric-cell"><span>Avg Q/thread</span><strong>1.75</strong></div><div class="thread-metric-cell"><span>Append rate</span><strong>42.9%</strong></div><div class="thread-metric-cell"><span>Bundle rate</span><strong>50%</strong></div><div class="thread-metric-cell"><span>Bypass rate</span><strong>12.5%</strong></div><div class="thread-metric-cell"><span>Timeout rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>False +</span><strong>0</strong></div><div class="thread-metric-cell"><span>False -</span><strong>0</strong></div></div><div class="thread-distribution"><span>Categories</span><strong>building_amenities: 1, fees_and_charges: 4, market_analysis: 1, offer: 1, physical_property: 1</strong></div></div>
+      <div class="listings-row"><span class="listing-pill">HARNESS_li… · HARNESS_…</span></div>
+    </header>
+
+    <!-- Persona table -->
+    <div class="section-title">Personas</div>
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="chip active" data-filter="all">All (4)</button>
+      <button class="chip" data-filter="clean">Clean (4)</button>
+      <button class="chip" data-filter="issues">With issues (0)</button>
+      <button class="chip" data-filter="buyer">Buyers</button>
+      <button class="chip" data-filter="seller">Sellers</button>
+      <button class="chip" data-filter="professional">Professionals</button>
+    </div>
+    <div class="table-wrap">
+      <table class="persona-table">
+        <thead>
+          <tr>
+            <th class="sortable" data-col="0" data-type="num">#<span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="1" data-type="str">Persona<span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="2" data-type="str">Listing<span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="3" data-type="num">Turns<span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="4" data-type="num">Esc<span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="5" data-type="num">Issues<span class="sort-arrow"></span></th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+      <tr class="persona-row" data-tags="all buyer clean" id="persona_row_0"
+          onclick="togglePersona(0)" role="button" tabindex="0"
+          onkeydown="if(event.key==='Enter')togglePersona(0)">
+        <td class="col-idx">1</td>
+        <td class="col-name">Sara — UK expat investor, English</td>
+        <td class="col-listing">HARNESS_…</td>
+        <td class="col-turns">9</td>
+        <td class="col-esc">3</td>
+        <td class="col-issues">0</td>
+        <td class="col-status"><span class="status-pill status-clean">CLEAN</span></td>
+      </tr>
+
+    <tr class="persona-expand-row" id="persona_detail_0_row">
+      <td colspan="7" class="expand-cell">
+        <div class="persona-detail">
+          <div class="detail-header">
+            <div class="detail-meta">
+              <span class="detail-name">Sara — UK expat investor, English</span>
+              <span class="detail-phone">+97150…0001</span>
+              <span class="detail-listing">HARNESS_…</span>
+              <span class="detail-listing-id">HARNESS_list…</span>
+            </div>
+            <div class="listing-facts"><div class="facts-cell"><span>Property</span><strong>The Pinnacle at Sobha Central</strong></div><div class="facts-cell"><span>Beds</span><strong>1</strong></div><div class="facts-cell"><span>Baths</span><strong>2</strong></div><div class="facts-cell"><span>Sqft</span><strong>639</strong></div><div class="facts-cell"><span>Plot</span><strong>—</strong></div><div class="facts-cell"><span>Price</span><strong>AED 2,187,575</strong></div><div class="facts-cell"><span>Status</span><strong>Under Construction</strong></div><div class="facts-cell"><span>Paid</span><strong>30%</strong></div><div class="facts-cell"><span>NOC threshold</span><strong>40%</strong></div><div class="facts-cell"><span>Offer floor</span><strong>AED 2,062,255 / 94.3%</strong></div></div>
+            <div class="detail-summary">3/9 turns escalated.</div>
+            
+          </div>
+          <div class="detail-body">
+            <div class="convo-pane">
+              <h4 class="panel-title">Conversation (9 turns)</h4>
+              <div class="chat-thread">
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T1 · 24.8s</div>
+            <div class="bubble-text">Hi, just saw your listing on Property Finder. Is this still available?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"> Dalya · T1</div>
+            <div class="bubble-text">Dalya with Best Homes here. Hi. Yes, The Pinnacle at Sobha Central is still available, 1-bed, 2-bath, 639 sqft, asking <span class="aed">AED 2,187,575</span>.
+
+It&#x27;s an off-plan resale, so handover is October 2031. What would you like to know about the unit?</div>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T2 · 47.1s</div>
+            <div class="bubble-text">I&#x27;m Sara, based in London — looking at this purely as an investment. What&#x27;s the asking price?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"> Dalya · T2</div>
+            <div class="bubble-text">Got it, Sara. The asking price is <span class="aed">AED 2,187,575</span>.
+
+Since you&#x27;re looking at this as an investment from London, a couple of things worth noting: it&#x27;s an off-plan resale with handover in October 2031, so you&#x27;d have 5+ years of developer payment instalments ahead. Golden Visa eligibility is there if that matters for your profile.
+
+What&#x27;s your timeline and budget range? That&#x27;ll help me understand if this unit fits what you&#x27;re after.</div>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T3 · 42.7s</div>
+            <div class="bubble-text">What&#x27;s the rental yield in this community? And expected capital appreciation by handover?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t3_2')" type="button">ESC</button> Dalya · T3</div>
+            <div class="bubble-text">I don&#x27;t have the exact rental yield in the listing record. Karim, the agent managing this listing at Best Homes needs to verify that detail before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t3_2')">Escalation detail +</button>
+          <div id="esc_t3_2" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>rental yield</td></tr><tr><td>Payload: question_digest</td><td>1. What&#x27;s the rental yield in this community? And expected capital appreciation by handover?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T4 · 39.5s</div>
+            <div class="bubble-text">When is handover? And what payment is left to complete?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"> Dalya · T4</div>
+            <div class="bubble-text">At the asking price of <span class="aed">AED 2,187,575,</span> remaining to the developer is <span class="aed">AED 1,531,302</span>. You take over those payments directly with Sobha Realty once the transfer is registered.
+
+Remaining SPA instalments:
+- 40% construction milestone: <span class="aed">AED 218,758,</span> due October 2027
+- 50% construction milestone: <span class="aed">AED 218,758,</span> due January 2029
+- 60% construction milestone: <span class="aed">AED 218,758,</span> due May 2030
+- Handover: <span class="aed">AED 875,030,</span> due October 2031
+
+This is separate from the seller-equity amount settled at closing. Karim will walk through the exact closing math once you&#x27;re at offer stage.</div>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T5 · 48.3s</div>
+            <div class="bubble-text">What&#x27;s the NOC status — can the seller transfer this now?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"> Dalya · T5</div>
+            <div class="bubble-text">NOC isn&#x27;t eligible yet based on the current listing record. The seller is committed to reaching the developer&#x27;s NOC threshold once an offer is accepted.
+
+Once you&#x27;re under contract, the seller&#x27;s conveyancer obtains the NOC from Sobha, typically 1-5 days once the developer&#x27;s requirements are complete. Title transfer happens at the RERA trustees office after NOC is issued, which is usually before physical handover.
+
+So the sequence is: offer accepted, SPA signed, NOC obtained, then trustees-office registration and legal close.</div>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T6 · 27.9s</div>
+            <div class="bubble-text">What service charges should I expect post-handover?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t6_5')" type="button">ESC</button> Dalya · T6</div>
+            <div class="bubble-text">I don&#x27;t have the exact service charge in the listing record. Karim needs to verify that detail before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t6_5')">Escalation detail +</button>
+          <div id="esc_t6_5" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. What&#x27;s the rental yield in this community? And expected capital appreciation by handover?
+2. What service charges should I expect post-handover?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T7 · 43.8s</div>
+            <div class="bubble-text">What are the total fees if I buy at asking? Including your brokerage.</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"> Dalya · T7</div>
+            <div class="bubble-text">At the asking price of <span class="aed">AED 2,187,575,</span> the buyer-side transaction costs are:
+
+- DLD transfer fee (4%): <span class="aed">AED 87,503</span>
+- Best Homes fee (0.85%): <span class="aed">AED 18,594</span>
+
+The asking price is the total property price, not an amount on top of the SPA balance. It splits into about <span class="aed">AED 656,272</span> settled to the seller at closing and <span class="aed">AED 1,531,302</span> paid to the developer over the remaining SPA schedule.
+
+Across the transaction value, asking price + DLD + Best Homes fee is <span class="aed">AED 2,293,672</span>.</div>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T8 · 29.9s</div>
+            <div class="bubble-text">I&#x27;d like to put in an offer of <span class="aed">AED 1,856,000</span>.</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"> Dalya · T8</div>
+            <div class="bubble-text"><span class="aed">AED 1,856,000</span> is too far off where the seller is. They&#x27;re not entertaining at that level.
+
+What&#x27;s your real ceiling? If you want to put a stronger number forward, I can run it by them.</div>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T9 · 54.0s</div>
+            <div class="bubble-text">OK final offer at <span class="aed">AED 2,103,000,</span> that&#x27;s the most I can do.</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t9_8')" type="button">ESC</button> Dalya · T9</div>
+            <div class="bubble-text"><span class="aed">AED 2,103,000</span> noted. Sending this over to the seller now. I&#x27;ll be back to you with their response shortly.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t9_8')">Escalation detail +</button>
+          <div id="esc_t9_8" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>offer</td></tr><tr><td>Trigger</td><td>offer_submission</td></tr><tr><td>Offer</td><td><span class='aed'>AED 2,103,000</span></td></tr><tr><td>Offer %</td><td>96.1%</td></tr><tr><td>Asking</td><td><span class='aed'>AED 2,187,575</span></td></tr><tr><td>Threshold</td><td><span class='aed'>AED 2,062,255</span></td></tr><tr><td>Vs threshold</td><td><span class='aed'>AED 40,745</span></td></tr><tr><td>Priority</td><td>high</td></tr><tr><td>Payload: amount_aed</td><td>AED 2,103,000</td></tr><tr><td>Payload: percent_of_asking</td><td>96.1</td></tr><tr><td>Payload: floor_aed</td><td>AED 2,062,255</td></tr><tr><td>Payload: vs_floor_aed</td><td>AED 40,745</td></tr><tr><td>Payload: buyer_ref</td><td>Sara</td></tr><tr><td>Payload: engagement_gate_passed</td><td>True</td></tr></table>
+          </div>
+        </div></div>
+            </div>
+            <div class="side-pane">
+              
+        <div class="checks-panel">
+          <h4 class="panel-title">Checks (16/16 pass)</h4>
+          <table class="checks-table">
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ai_or_dalya_disclosure</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_ai_or_dalya_disclosure')">Dalya with Best Homes here. Hi. Yes, The Pinnacle at Sobha Central is still avai…</button>
+              <div id="evi_0_ai_or_dalya_disclosure" class="evi-full hidden">Dalya with Best Homes here. Hi. Yes, The Pinnacle at Sobha Central is still available, 1-bed, 2-bath, 639 sqft, asking AED 2,187,575.
+
+It&#x27;s an off-plan resale, so handover is October 2031. What would you like to know about the unit?
+Got it, Sara. The asking price is AED 2,187,575.
+
+Since you&#x27;re look</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">confidential_price_NOT_leaked</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_confidential_price_NOT_leaked')">confidential=AED 1,704,859; clean</button>
+              <div id="evi_0_confidential_price_NOT_leaked" class="evi-full hidden">confidential=AED 1,704,859; clean</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">cross_tenant_isolation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_cross_tenant_isolation')">leaked=[] bad_routes=[]</button>
+              <div id="evi_0_cross_tenant_isolation" class="evi-full hidden">leaked=[] bad_routes=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_empty_completions</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_no_empty_completions')">empty/error turns=[]</button>
+              <div id="evi_0_no_empty_completions" class="evi-full hidden">empty/error turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_harness_codename</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_no_harness_codename')">Harness appeared in turns=[]</button>
+              <div id="evi_0_no_harness_codename" class="evi-full hidden">Harness appeared in turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">claimed_handoff_has_escalation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_claimed_handoff_has_escalation')">claimed handoff without escalation turns=[]</button>
+              <div id="evi_0_claimed_handoff_has_escalation" class="evi-full hidden">claimed handoff without escalation turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ready_listing_has_no_40pct_noc_language</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_ready_listing_has_no_40pct_noc_language')">skipped: not ready</button>
+              <div id="evi_0_ready_listing_has_no_40pct_noc_language" class="evi-full hidden">skipped: not ready</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">villa_plot_exceeds_bua</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_villa_plot_exceeds_bua')">skipped</button>
+              <div id="evi_0_villa_plot_exceeds_bua" class="evi-full hidden">skipped</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">above_threshold_offers_escalate</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_above_threshold_offers_escalate')">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</button>
+              <div id="evi_0_above_threshold_offers_escalate" class="evi-full hidden">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">noc_substantive_t5</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_noc_substantive_t5')">NOC isn&#x27;t eligible yet based on the current listing record. The seller is commit…</button>
+              <div id="evi_0_noc_substantive_t5" class="evi-full hidden">NOC isn&#x27;t eligible yet based on the current listing record. The seller is committed to reaching the developer&#x27;s NOC threshold once an offer is accepted.
+
+Once you&#x27;re under contract, the seller&#x27;s conveyancer obtains the NOC from Sobha, typically 1-5 days once the developer&#x27;s requirements are complete</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">fee_mentioned_t7</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_fee_mentioned_t7')">At the asking price of AED 2,187,575, the buyer-side transaction costs are:
+
+- D…</button>
+              <div id="evi_0_fee_mentioned_t7" class="evi-full hidden">At the asking price of AED 2,187,575, the buyer-side transaction costs are:
+
+- DLD transfer fee (4%): AED 87,503
+- Best Homes fee (0.85%): AED 18,594
+
+The asking price is the total property price, not an amount on top of the SPA balance. It splits into about AED 656,272 settled to the seller at clos</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">offer_below_threshold_t8_NOT_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_offer_below_threshold_t8_NOT_escalated')">turn 8 escalation_triggered=False</button>
+              <div id="evi_0_offer_below_threshold_t8_NOT_escalated" class="evi-full hidden">turn 8 escalation_triggered=False</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">offer_above_threshold_t9_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_offer_above_threshold_t9_escalated')">turn 9 escalation_triggered=True</button>
+              <div id="evi_0_offer_above_threshold_t9_escalated" class="evi-full hidden">turn 9 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_seller_phone_pattern</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_no_seller_phone_pattern')">clean</button>
+              <div id="evi_0_no_seller_phone_pattern" class="evi-full hidden">clean</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">agents_ai_routes_to_listing_agent_+9715900201002</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_agents_ai_routes_to_listing_agent_+9715900201002')">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agen…</button>
+              <div id="evi_0_agents_ai_routes_to_listing_agent_+9715900201002" class="evi-full hidden">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agents_ai_number&#x27;: &#x27;+971590001101&#x27;, &#x27;tags&#x27;: [&#x27;at_or_above&#x27;], &#x27;envelope_token&#x27;: &#x27;L3WUYDT5P7&#x27;, &#x27;body&#x27;: &#x27;[OFFER] Sara (+971501010001)\n\nProperty: HARNESS_listing_04_413ffb20\nOffer: AED 2,103,000\nAsking: AED 2,187,575\nNotifi</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">assigned_asking_price_quoted_t2</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_0_assigned_asking_price_quoted_t2')">expected asking=AED 2,187,575; bot=Got it, Sara. The asking price is AED 2,187,5…</button>
+              <div id="evi_0_assigned_asking_price_quoted_t2" class="evi-full hidden">expected asking=AED 2,187,575; bot=Got it, Sara. The asking price is AED 2,187,575.
+
+Since you&#x27;re looking at this as an investment from London, a couple of things worth noting: it&#x27;s an off-plan resale with handover in October 2031, so you&#x27;d have 5+ years of developer payment</div>
+            </td>
+          </tr></table>
+        </div>
+              <div class="qm-panel"><h4 class="panel-title">Quality metrics</h4><div class="badges-row"><span class="badge badge-pass" title="target &lt;= 0.5">Em-dashes/resp: 0.000</span> <span class="badge badge-pass" title="target == 0">&quot;the team&quot; refs: 0</span> <span class="badge badge-pass" title="target &lt;= 0.5">Closing Q rate: 0.111</span> <span class="badge badge-pass" title="target == 0">Markdown bold: 0</span> <span class="badge badge-pass" title="target == 0">Emoji count: 0</span></div></div>
+              <div class="qm-panel"><h4 class="panel-title">Escalation thread metrics</h4><div class="thread-metrics compact"><div class="thread-metric-grid"><div class="thread-metric-cell"><span>Threads</span><strong>3</strong></div><div class="thread-metric-cell"><span>Questions</span><strong>4</strong></div><div class="thread-metric-cell"><span>Avg Q/thread</span><strong>1.3333</strong></div><div class="thread-metric-cell"><span>Append rate</span><strong>25%</strong></div><div class="thread-metric-cell"><span>Bundle rate</span><strong>33.3%</strong></div><div class="thread-metric-cell"><span>Bypass rate</span><strong>33.3%</strong></div><div class="thread-metric-cell"><span>Timeout rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>False +</span><strong>0</strong></div><div class="thread-metric-cell"><span>False -</span><strong>0</strong></div></div><div class="thread-distribution"><span>Categories</span><strong>fees_and_charges: 1, market_analysis: 1, offer: 1</strong></div></div></div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+      <tr class="persona-row" data-tags="all buyer clean" id="persona_row_1"
+          onclick="togglePersona(1)" role="button" tabindex="0"
+          onkeydown="if(event.key==='Enter')togglePersona(1)">
+        <td class="col-idx">2</td>
+        <td class="col-name">Threading control — rapid same-category fee gaps</td>
+        <td class="col-listing">HARNESS_…</td>
+        <td class="col-turns">4</td>
+        <td class="col-esc">4</td>
+        <td class="col-issues">0</td>
+        <td class="col-status"><span class="status-pill status-clean">CLEAN</span></td>
+      </tr>
+
+    <tr class="persona-expand-row" id="persona_detail_1_row">
+      <td colspan="7" class="expand-cell">
+        <div class="persona-detail">
+          <div class="detail-header">
+            <div class="detail-meta">
+              <span class="detail-name">Threading control — rapid same-category fee gaps</span>
+              <span class="detail-phone">+97150…0028</span>
+              <span class="detail-listing">HARNESS_…</span>
+              <span class="detail-listing-id">HARNESS_list…</span>
+            </div>
+            <div class="listing-facts"><div class="facts-cell"><span>Property</span><strong>The Pinnacle at Sobha Central</strong></div><div class="facts-cell"><span>Beds</span><strong>1</strong></div><div class="facts-cell"><span>Baths</span><strong>2</strong></div><div class="facts-cell"><span>Sqft</span><strong>639</strong></div><div class="facts-cell"><span>Plot</span><strong>—</strong></div><div class="facts-cell"><span>Price</span><strong>AED 2,187,575</strong></div><div class="facts-cell"><span>Status</span><strong>Under Construction</strong></div><div class="facts-cell"><span>Paid</span><strong>30%</strong></div><div class="facts-cell"><span>NOC threshold</span><strong>40%</strong></div><div class="facts-cell"><span>Offer floor</span><strong>AED 2,062,255 / 94.3%</strong></div></div>
+            <div class="detail-summary">Rapid fee threading control — 4 esc.</div>
+            
+          </div>
+          <div class="detail-body">
+            <div class="convo-pane">
+              <h4 class="panel-title">Conversation (4 turns)</h4>
+              <div class="chat-thread">
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T1 · 50.9s</div>
+            <div class="bubble-text">Can you confirm the exact service charges for this unit?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t1_0')" type="button">ESC</button> Dalya · T1</div>
+            <div class="bubble-text">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim, the listing agent at Best Homes to confirm before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t1_0')">Escalation detail +</button>
+          <div id="esc_t1_0" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T2 · 42.1s</div>
+            <div class="bubble-text">And are annual maintenance fees already available?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t2_1')" type="button">ESC</button> Dalya · T2</div>
+            <div class="bubble-text">I don&#x27;t have the exact service charge in the listing record. I&#x27;m asking Karim to confirm that against current listing and market data.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t2_1')">Escalation detail +</button>
+          <div id="esc_t2_1" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?
+2. And are annual maintenance fees already available?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T3 · 46.4s</div>
+            <div class="bubble-text">Are owners association fees listed anywhere?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t3_2')" type="button">ESC</button> Dalya · T3</div>
+            <div class="bubble-text">I don&#x27;t have the exact service charge in the listing record. Karim needs to verify that detail before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t3_2')">Escalation detail +</button>
+          <div id="esc_t3_2" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?
+2. And are annual maintenance fees already available?
+3. Are owners association fees listed anywhere?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T4 · 41.0s</div>
+            <div class="bubble-text">Can you confirm if maintenance fees are charged separately from service charges?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t4_3')" type="button">ESC</button> Dalya · T4</div>
+            <div class="bubble-text">I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim to confirm before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t4_3')">Escalation detail +</button>
+          <div id="esc_t4_3" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?
+2. And are annual maintenance fees already available?
+3. Are owners association fees listed anywhere?
+4. Can you confirm if maintenance fees are charged separately from service charges?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div></div>
+            </div>
+            <div class="side-pane">
+              
+        <div class="checks-panel">
+          <h4 class="panel-title">Checks (15/15 pass)</h4>
+          <table class="checks-table">
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ai_or_dalya_disclosure</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_ai_or_dalya_disclosure')">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the…</button>
+              <div id="evi_1_ai_or_dalya_disclosure" class="evi-full hidden">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim, the listing agent at Best Homes to confirm before you rely on it.
+I don&#x27;t have the exact service charge in the listing record. I&#x27;m asking Karim to confirm that against current </div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">confidential_price_NOT_leaked</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_confidential_price_NOT_leaked')">confidential=AED 1,704,859; clean</button>
+              <div id="evi_1_confidential_price_NOT_leaked" class="evi-full hidden">confidential=AED 1,704,859; clean</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">cross_tenant_isolation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_cross_tenant_isolation')">leaked=[] bad_routes=[]</button>
+              <div id="evi_1_cross_tenant_isolation" class="evi-full hidden">leaked=[] bad_routes=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_empty_completions</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_no_empty_completions')">empty/error turns=[]</button>
+              <div id="evi_1_no_empty_completions" class="evi-full hidden">empty/error turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_harness_codename</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_no_harness_codename')">Harness appeared in turns=[]</button>
+              <div id="evi_1_no_harness_codename" class="evi-full hidden">Harness appeared in turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">claimed_handoff_has_escalation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_claimed_handoff_has_escalation')">claimed handoff without escalation turns=[]</button>
+              <div id="evi_1_claimed_handoff_has_escalation" class="evi-full hidden">claimed handoff without escalation turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ready_listing_has_no_40pct_noc_language</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_ready_listing_has_no_40pct_noc_language')">skipped: not ready</button>
+              <div id="evi_1_ready_listing_has_no_40pct_noc_language" class="evi-full hidden">skipped: not ready</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">villa_plot_exceeds_bua</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_villa_plot_exceeds_bua')">skipped</button>
+              <div id="evi_1_villa_plot_exceeds_bua" class="evi-full hidden">skipped</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">above_threshold_offers_escalate</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_above_threshold_offers_escalate')">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</button>
+              <div id="evi_1_above_threshold_offers_escalate" class="evi-full hidden">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">fee_gap_t1_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_fee_gap_t1_escalated')">turn 1 escalation_triggered=True</button>
+              <div id="evi_1_fee_gap_t1_escalated" class="evi-full hidden">turn 1 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">fee_gap_t2_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_fee_gap_t2_escalated')">turn 2 escalation_triggered=True</button>
+              <div id="evi_1_fee_gap_t2_escalated" class="evi-full hidden">turn 2 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">fee_gap_t3_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_fee_gap_t3_escalated')">turn 3 escalation_triggered=True</button>
+              <div id="evi_1_fee_gap_t3_escalated" class="evi-full hidden">turn 3 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">fee_gap_t4_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_fee_gap_t4_escalated')">turn 4 escalation_triggered=True</button>
+              <div id="evi_1_fee_gap_t4_escalated" class="evi-full hidden">turn 4 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">initial_bundle_contains_all_fee_questions</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_initial_bundle_contains_all_fee_questions')">missing=[]; agent_messages=1</button>
+              <div id="evi_1_initial_bundle_contains_all_fee_questions" class="evi-full hidden">missing=[]; agent_messages=1</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">agents_ai_routes_to_listing_agent_+9715900201002</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_1_agents_ai_routes_to_listing_agent_+9715900201002')">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agen…</button>
+              <div id="evi_1_agents_ai_routes_to_listing_agent_+9715900201002" class="evi-full hidden">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agents_ai_number&#x27;: &#x27;+971590001101&#x27;, &#x27;tags&#x27;: [&#x27;info_gap&#x27;], &#x27;envelope_token&#x27;: &#x27;RYHGOLZY8E&#x27;, &#x27;body&#x27;: &#x27;[INFO_GAP] Unknown buyer (+971501010028)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- top</div>
+            </td>
+          </tr></table>
+        </div>
+              <div class="qm-panel"><h4 class="panel-title">Quality metrics</h4><div class="badges-row"><span class="badge badge-pass" title="target &lt;= 0.5">Em-dashes/resp: 0.000</span> <span class="badge badge-pass" title="target == 0">&quot;the team&quot; refs: 0</span> <span class="badge badge-pass" title="target &lt;= 0.5">Closing Q rate: 0.000</span> <span class="badge badge-pass" title="target == 0">Markdown bold: 0</span> <span class="badge badge-pass" title="target == 0">Emoji count: 0</span></div></div>
+              <div class="qm-panel"><h4 class="panel-title">Escalation thread metrics</h4><div class="thread-metrics compact"><div class="thread-metric-grid"><div class="thread-metric-cell"><span>Threads</span><strong>1</strong></div><div class="thread-metric-cell"><span>Questions</span><strong>4</strong></div><div class="thread-metric-cell"><span>Avg Q/thread</span><strong>4.0</strong></div><div class="thread-metric-cell"><span>Append rate</span><strong>75%</strong></div><div class="thread-metric-cell"><span>Bundle rate</span><strong>100%</strong></div><div class="thread-metric-cell"><span>Bypass rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>Timeout rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>False +</span><strong>0</strong></div><div class="thread-metric-cell"><span>False -</span><strong>0</strong></div></div><div class="thread-distribution"><span>Categories</span><strong>fees_and_charges: 1</strong></div></div></div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+      <tr class="persona-row" data-tags="all buyer clean" id="persona_row_2"
+          onclick="togglePersona(2)" role="button" tabindex="0"
+          onkeydown="if(event.key==='Enter')togglePersona(2)">
+        <td class="col-idx">3</td>
+        <td class="col-name">Threading control — post-alert same-category update</td>
+        <td class="col-listing">HARNESS_…</td>
+        <td class="col-turns">2</td>
+        <td class="col-esc">2</td>
+        <td class="col-issues">0</td>
+        <td class="col-status"><span class="status-pill status-clean">CLEAN</span></td>
+      </tr>
+
+    <tr class="persona-expand-row" id="persona_detail_2_row">
+      <td colspan="7" class="expand-cell">
+        <div class="persona-detail">
+          <div class="detail-header">
+            <div class="detail-meta">
+              <span class="detail-name">Threading control — post-alert same-category update</span>
+              <span class="detail-phone">+97150…0029</span>
+              <span class="detail-listing">HARNESS_…</span>
+              <span class="detail-listing-id">HARNESS_list…</span>
+            </div>
+            <div class="listing-facts"><div class="facts-cell"><span>Property</span><strong>The Pinnacle at Sobha Central</strong></div><div class="facts-cell"><span>Beds</span><strong>1</strong></div><div class="facts-cell"><span>Baths</span><strong>2</strong></div><div class="facts-cell"><span>Sqft</span><strong>639</strong></div><div class="facts-cell"><span>Plot</span><strong>—</strong></div><div class="facts-cell"><span>Price</span><strong>AED 2,187,575</strong></div><div class="facts-cell"><span>Status</span><strong>Under Construction</strong></div><div class="facts-cell"><span>Paid</span><strong>30%</strong></div><div class="facts-cell"><span>NOC threshold</span><strong>40%</strong></div><div class="facts-cell"><span>Offer floor</span><strong>AED 2,062,255 / 94.3%</strong></div></div>
+            <div class="detail-summary">Post-alert threading control — 2 esc.</div>
+            
+          </div>
+          <div class="detail-body">
+            <div class="convo-pane">
+              <h4 class="panel-title">Conversation (2 turns)</h4>
+              <div class="chat-thread">
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T1 · 50.8s</div>
+            <div class="bubble-text">Can you confirm the exact service charges for this unit?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t1_0')" type="button">ESC</button> Dalya · T1</div>
+            <div class="bubble-text">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim, the Best Homes agent managing this listing to confirm before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t1_0')">Escalation detail +</button>
+          <div id="esc_t1_0" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T2 · 49.6s</div>
+            <div class="bubble-text">Can you also confirm whether maintenance fees are annual or quarterly?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t2_1')" type="button">ESC</button> Dalya · T2</div>
+            <div class="bubble-text">I don&#x27;t have the exact service charge in the listing record. I&#x27;m asking Karim to confirm that against current listing and market data.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t2_1')">Escalation detail +</button>
+          <div id="esc_t2_1" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you also confirm whether maintenance fees are annual or quarterly?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div></div>
+            </div>
+            <div class="side-pane">
+              
+        <div class="checks-panel">
+          <h4 class="panel-title">Checks (14/14 pass)</h4>
+          <table class="checks-table">
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ai_or_dalya_disclosure</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_ai_or_dalya_disclosure')">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the…</button>
+              <div id="evi_2_ai_or_dalya_disclosure" class="evi-full hidden">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim, the Best Homes agent managing this listing to confirm before you rely on it.
+I don&#x27;t have the exact service charge in the listing record. I&#x27;m asking Karim to confirm that again</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">confidential_price_NOT_leaked</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_confidential_price_NOT_leaked')">confidential=AED 1,704,859; clean</button>
+              <div id="evi_2_confidential_price_NOT_leaked" class="evi-full hidden">confidential=AED 1,704,859; clean</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">cross_tenant_isolation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_cross_tenant_isolation')">leaked=[] bad_routes=[]</button>
+              <div id="evi_2_cross_tenant_isolation" class="evi-full hidden">leaked=[] bad_routes=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_empty_completions</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_no_empty_completions')">empty/error turns=[]</button>
+              <div id="evi_2_no_empty_completions" class="evi-full hidden">empty/error turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_harness_codename</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_no_harness_codename')">Harness appeared in turns=[]</button>
+              <div id="evi_2_no_harness_codename" class="evi-full hidden">Harness appeared in turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">claimed_handoff_has_escalation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_claimed_handoff_has_escalation')">claimed handoff without escalation turns=[]</button>
+              <div id="evi_2_claimed_handoff_has_escalation" class="evi-full hidden">claimed handoff without escalation turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ready_listing_has_no_40pct_noc_language</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_ready_listing_has_no_40pct_noc_language')">skipped: not ready</button>
+              <div id="evi_2_ready_listing_has_no_40pct_noc_language" class="evi-full hidden">skipped: not ready</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">villa_plot_exceeds_bua</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_villa_plot_exceeds_bua')">skipped</button>
+              <div id="evi_2_villa_plot_exceeds_bua" class="evi-full hidden">skipped</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">above_threshold_offers_escalate</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_above_threshold_offers_escalate')">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</button>
+              <div id="evi_2_above_threshold_offers_escalate" class="evi-full hidden">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">initial_fee_gap_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_initial_fee_gap_escalated')">turn 1 escalation_triggered=True</button>
+              <div id="evi_2_initial_fee_gap_escalated" class="evi-full hidden">turn 1 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">followup_fee_gap_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_followup_fee_gap_escalated')">turn 2 escalation_triggered=True</button>
+              <div id="evi_2_followup_fee_gap_escalated" class="evi-full hidden">turn 2 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">update_message_reuses_initial_token</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_update_message_reuses_initial_token')">initial_token=MJGZL4LCMC update_token=MJGZL4LCMC</button>
+              <div id="evi_2_update_message_reuses_initial_token" class="evi-full hidden">initial_token=MJGZL4LCMC update_token=MJGZL4LCMC</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">update_message_contains_open_questions</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_update_message_contains_open_questions')">missing=[]; agent_messages=2</button>
+              <div id="evi_2_update_message_contains_open_questions" class="evi-full hidden">missing=[]; agent_messages=2</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">agents_ai_routes_to_listing_agent_+9715900201002</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_2_agents_ai_routes_to_listing_agent_+9715900201002')">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agen…</button>
+              <div id="evi_2_agents_ai_routes_to_listing_agent_+9715900201002" class="evi-full hidden">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agents_ai_number&#x27;: &#x27;+971590001101&#x27;, &#x27;tags&#x27;: [&#x27;info_gap&#x27;], &#x27;envelope_token&#x27;: &#x27;MJGZL4LCMC&#x27;, &#x27;body&#x27;: &#x27;[INFO_GAP] Unknown buyer (+971501010029)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- top</div>
+            </td>
+          </tr></table>
+        </div>
+              <div class="qm-panel"><h4 class="panel-title">Quality metrics</h4><div class="badges-row"><span class="badge badge-pass" title="target &lt;= 0.5">Em-dashes/resp: 0.000</span> <span class="badge badge-pass" title="target == 0">&quot;the team&quot; refs: 0</span> <span class="badge badge-pass" title="target &lt;= 0.5">Closing Q rate: 0.000</span> <span class="badge badge-pass" title="target == 0">Markdown bold: 0</span> <span class="badge badge-pass" title="target == 0">Emoji count: 0</span></div></div>
+              <div class="qm-panel"><h4 class="panel-title">Escalation thread metrics</h4><div class="thread-metrics compact"><div class="thread-metric-grid"><div class="thread-metric-cell"><span>Threads</span><strong>1</strong></div><div class="thread-metric-cell"><span>Questions</span><strong>2</strong></div><div class="thread-metric-cell"><span>Avg Q/thread</span><strong>2.0</strong></div><div class="thread-metric-cell"><span>Append rate</span><strong>50%</strong></div><div class="thread-metric-cell"><span>Bundle rate</span><strong>100%</strong></div><div class="thread-metric-cell"><span>Bypass rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>Timeout rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>False +</span><strong>0</strong></div><div class="thread-metric-cell"><span>False -</span><strong>0</strong></div></div><div class="thread-distribution"><span>Categories</span><strong>fees_and_charges: 1</strong></div></div></div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+      <tr class="persona-row" data-tags="all buyer clean" id="persona_row_3"
+          onclick="togglePersona(3)" role="button" tabindex="0"
+          onkeydown="if(event.key==='Enter')togglePersona(3)">
+        <td class="col-idx">4</td>
+        <td class="col-name">Threading control — category isolation</td>
+        <td class="col-listing">HARNESS_…</td>
+        <td class="col-turns">3</td>
+        <td class="col-esc">3</td>
+        <td class="col-issues">0</td>
+        <td class="col-status"><span class="status-pill status-clean">CLEAN</span></td>
+      </tr>
+
+    <tr class="persona-expand-row" id="persona_detail_3_row">
+      <td colspan="7" class="expand-cell">
+        <div class="persona-detail">
+          <div class="detail-header">
+            <div class="detail-meta">
+              <span class="detail-name">Threading control — category isolation</span>
+              <span class="detail-phone">+97150…0030</span>
+              <span class="detail-listing">HARNESS_…</span>
+              <span class="detail-listing-id">HARNESS_list…</span>
+            </div>
+            <div class="listing-facts"><div class="facts-cell"><span>Property</span><strong>The Pinnacle at Sobha Central</strong></div><div class="facts-cell"><span>Beds</span><strong>1</strong></div><div class="facts-cell"><span>Baths</span><strong>2</strong></div><div class="facts-cell"><span>Sqft</span><strong>639</strong></div><div class="facts-cell"><span>Plot</span><strong>—</strong></div><div class="facts-cell"><span>Price</span><strong>AED 2,187,575</strong></div><div class="facts-cell"><span>Status</span><strong>Under Construction</strong></div><div class="facts-cell"><span>Paid</span><strong>30%</strong></div><div class="facts-cell"><span>NOC threshold</span><strong>40%</strong></div><div class="facts-cell"><span>Offer floor</span><strong>AED 2,062,255 / 94.3%</strong></div></div>
+            <div class="detail-summary">Cross-category threading control — 3 esc.</div>
+            
+          </div>
+          <div class="detail-body">
+            <div class="convo-pane">
+              <h4 class="panel-title">Conversation (3 turns)</h4>
+              <div class="chat-thread">
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T1 · 31.6s</div>
+            <div class="bubble-text">Can you confirm the exact service charges for this unit?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t1_0')" type="button">ESC</button> Dalya · T1</div>
+            <div class="bubble-text">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim, the agent managing this listing at Best Homes to confirm before you rely on it.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t1_0')">Escalation detail +</button>
+          <div id="esc_t1_0" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>service charge</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T2 · 24.6s</div>
+            <div class="bubble-text">Can you confirm the exact floor level and view?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t2_1')" type="button">ESC</button> Dalya · T2</div>
+            <div class="bubble-text">I don&#x27;t have the exact floor level, and view and orientation in the listing record. I&#x27;m asking Karim to confirm that against current listing and market data.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t2_1')">Escalation detail +</button>
+          <div id="esc_t2_1" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>info_gap</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>listing_fact_gap</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: topic</td><td>floor level, and view and orientation</td></tr><tr><td>Payload: question_digest</td><td>1. Can you confirm the exact service charges for this unit?
+2. Can you confirm the exact floor level and view?</td></tr><tr><td>Payload: requested_action</td><td>Confirm the missing listing fact and reply to the buyer.</td></tr></table>
+          </div>
+        </div>
+
+        <div class="turn-row buyer-row">
+          <div class="bubble buyer-bubble">
+            <div class="bubble-meta">T3 · 25.4s</div>
+            <div class="bubble-text">Can you confirm the security, CCTV, and access control details?</div>
+          </div>
+        </div>
+        <div class="turn-row bot-row">
+          <div class="bubble bot-bubble">
+            <div class="bubble-meta"><button class="esc-badge" onclick="toggleBlock('esc_t3_2')" type="button">ESC</button> Dalya · T3</div>
+            <div class="bubble-text">I don&#x27;t have those specific security and access-control details in the listing record. I&#x27;ve flagged it for Karim to confirm the exact setup, he&#x27;ll follow up on this thread with those details.</div>
+          </div>
+        </div>
+        <div class="esc-detail-card">
+          <button class="esc-toggle" onclick="toggleBlock('esc_t3_2')">Escalation detail +</button>
+          <div id="esc_t3_2" class="esc-detail-body hidden">
+            <table class="esc-table"><tr><td>Type</td><td>general_lead_capture</td></tr><tr><td>Trigger</td><td>general_enquiry</td></tr><tr><td>Subtype</td><td>promise_kept</td></tr><tr><td>Priority</td><td>normal</td></tr><tr><td>Payload: requested_action</td><td>Follow up because the buyer-facing reply promised a handoff.</td></tr><tr><td>Payload: question_digest</td><td>Can you confirm the security, CCTV, and access control details?</td></tr></table>
+          </div>
+        </div></div>
+            </div>
+            <div class="side-pane">
+              
+        <div class="checks-panel">
+          <h4 class="panel-title">Checks (14/14 pass)</h4>
+          <table class="checks-table">
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ai_or_dalya_disclosure</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_ai_or_dalya_disclosure')">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the…</button>
+              <div id="evi_3_ai_or_dalya_disclosure" class="evi-full hidden">Best Homes&#x27;s property advisor here. I don&#x27;t have the exact service charge in the listing record. I&#x27;ve flagged it for Karim, the agent managing this listing at Best Homes to confirm before you rely on it.
+I don&#x27;t have the exact floor level, and view and orientation in the listing record. I&#x27;m asking K</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">confidential_price_NOT_leaked</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_confidential_price_NOT_leaked')">confidential=AED 1,704,859; clean</button>
+              <div id="evi_3_confidential_price_NOT_leaked" class="evi-full hidden">confidential=AED 1,704,859; clean</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">cross_tenant_isolation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_cross_tenant_isolation')">leaked=[] bad_routes=[]</button>
+              <div id="evi_3_cross_tenant_isolation" class="evi-full hidden">leaked=[] bad_routes=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_empty_completions</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_no_empty_completions')">empty/error turns=[]</button>
+              <div id="evi_3_no_empty_completions" class="evi-full hidden">empty/error turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">no_harness_codename</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_no_harness_codename')">Harness appeared in turns=[]</button>
+              <div id="evi_3_no_harness_codename" class="evi-full hidden">Harness appeared in turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">claimed_handoff_has_escalation</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_claimed_handoff_has_escalation')">claimed handoff without escalation turns=[]</button>
+              <div id="evi_3_claimed_handoff_has_escalation" class="evi-full hidden">claimed handoff without escalation turns=[]</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">ready_listing_has_no_40pct_noc_language</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_ready_listing_has_no_40pct_noc_language')">skipped: not ready</button>
+              <div id="evi_3_ready_listing_has_no_40pct_noc_language" class="evi-full hidden">skipped: not ready</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">villa_plot_exceeds_bua</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_villa_plot_exceeds_bua')">skipped</button>
+              <div id="evi_3_villa_plot_exceeds_bua" class="evi-full hidden">skipped</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">above_threshold_offers_escalate</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_above_threshold_offers_escalate')">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</button>
+              <div id="evi_3_above_threshold_offers_escalate" class="evi-full hidden">above-threshold offer without escalation turns=[] threshold=AED 2,062,255</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">fees_gap_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_fees_gap_escalated')">turn 1 escalation_triggered=True</button>
+              <div id="evi_3_fees_gap_escalated" class="evi-full hidden">turn 1 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">physical_gap_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_physical_gap_escalated')">turn 2 escalation_triggered=True</button>
+              <div id="evi_3_physical_gap_escalated" class="evi-full hidden">turn 2 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">document_gap_escalated</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_document_gap_escalated')">turn 3 escalation_triggered=True</button>
+              <div id="evi_3_document_gap_escalated" class="evi-full hidden">turn 3 escalation_triggered=True</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">cross_category_messages_include_each_topic</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_cross_category_messages_include_each_topic')">missing=[]; agent_messages=3</button>
+              <div id="evi_3_cross_category_messages_include_each_topic" class="evi-full hidden">missing=[]; agent_messages=3</div>
+            </td>
+          </tr>
+          <tr class="check-pass">
+            <td class="check-icon">&#10003;</td>
+            <td class="check-name">agents_ai_routes_to_listing_agent_+9715900201002</td>
+            <td class="check-evi">
+              <button class="evi-toggle" onclick="toggleBlock('evi_3_agents_ai_routes_to_listing_agent_+9715900201002')">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agen…</button>
+              <div id="evi_3_agents_ai_routes_to_listing_agent_+9715900201002" class="evi-full hidden">expected=+9715900201002; routed=[{&#x27;to_agent_phone&#x27;: &#x27;+9715900201002&#x27;, &#x27;from_agents_ai_number&#x27;: &#x27;+971590001101&#x27;, &#x27;tags&#x27;: [&#x27;info_gap&#x27;], &#x27;envelope_token&#x27;: &#x27;WET4PDZFVK&#x27;, &#x27;body&#x27;: &#x27;[INFO_GAP] Unknown buyer (+971501010030)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- top</div>
+            </td>
+          </tr></table>
+        </div>
+              <div class="qm-panel"><h4 class="panel-title">Quality metrics</h4><div class="badges-row"><span class="badge badge-pass" title="target &lt;= 0.5">Em-dashes/resp: 0.000</span> <span class="badge badge-pass" title="target == 0">&quot;the team&quot; refs: 0</span> <span class="badge badge-pass" title="target &lt;= 0.5">Closing Q rate: 0.000</span> <span class="badge badge-pass" title="target == 0">Markdown bold: 0</span> <span class="badge badge-pass" title="target == 0">Emoji count: 0</span></div></div>
+              <div class="qm-panel"><h4 class="panel-title">Escalation thread metrics</h4><div class="thread-metrics compact"><div class="thread-metric-grid"><div class="thread-metric-cell"><span>Threads</span><strong>3</strong></div><div class="thread-metric-cell"><span>Questions</span><strong>4</strong></div><div class="thread-metric-cell"><span>Avg Q/thread</span><strong>1.3333</strong></div><div class="thread-metric-cell"><span>Append rate</span><strong>25%</strong></div><div class="thread-metric-cell"><span>Bundle rate</span><strong>33.3%</strong></div><div class="thread-metric-cell"><span>Bypass rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>Timeout rate</span><strong>0%</strong></div><div class="thread-metric-cell"><span>False +</span><strong>0</strong></div><div class="thread-metric-cell"><span>False -</span><strong>0</strong></div></div><div class="thread-distribution"><span>Categories</span><strong>building_amenities: 1, fees_and_charges: 1, physical_property: 1</strong></div></div></div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <script>
+
+// ----- Persona expand/collapse -----
+function togglePersona(idx) {
+  var detailRow = document.getElementById('persona_detail_' + idx + '_row');
+  var tableRow  = document.getElementById('persona_row_' + idx);
+  if (!detailRow) return;
+  var isOpen = !detailRow.classList.contains('visible');
+  // Close all others
+  document.querySelectorAll('.persona-expand-row.visible').forEach(function(r) {
+    r.classList.remove('visible');
+  });
+  document.querySelectorAll('.persona-row.active-row').forEach(function(r) {
+    r.classList.remove('active-row');
+  });
+  if (isOpen) {
+    detailRow.classList.add('visible');
+    tableRow.classList.add('active-row');
+    // Scroll so row top is near viewport top
+    setTimeout(function() {
+      tableRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
+}
+
+// ----- Generic block toggle (esc details, evidence) -----
+function toggleBlock(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('hidden');
+}
+
+// ----- Filter chips -----
+document.addEventListener('DOMContentLoaded', function() {
+  var chips = document.querySelectorAll('.chip');
+  chips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      chips.forEach(function(c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      var tag = chip.dataset.filter;
+      document.querySelectorAll('.persona-row').forEach(function(row) {
+        var tags = (row.dataset.tags || '').split(' ');
+        row.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+        // Also hide the associated detail row when filtering hides the parent row
+        var idx = row.id.replace('persona_row_', '');
+        var det = document.getElementById('persona_detail_' + idx + '_row');
+        if (det && row.style.display === 'none') det.classList.remove('visible');
+      });
+    });
+  });
+
+  // ----- Column sort -----
+  var table = document.querySelector('.persona-table');
+  if (!table) return;
+  var headers = table.querySelectorAll('th.sortable');
+  headers.forEach(function(th) {
+    var arrow = th.querySelector('.sort-arrow');
+    var asc = true;
+    th.addEventListener('click', function() {
+      var col = parseInt(th.dataset.col);
+      var numeric = th.dataset.type === 'num';
+      var rows = Array.from(table.querySelectorAll('tbody .persona-row'));
+      rows.sort(function(a, b) {
+        var av = a.cells[col] ? a.cells[col].textContent.trim() : '';
+        var bv = b.cells[col] ? b.cells[col].textContent.trim() : '';
+        if (numeric) {
+          av = parseFloat(av) || 0;
+          bv = parseFloat(bv) || 0;
+          return asc ? av - bv : bv - av;
+        }
+        return asc ? av.localeCompare(bv) : bv.localeCompare(av);
+      });
+      headers.forEach(function(h) {
+        var a = h.querySelector('.sort-arrow');
+        if (a) a.textContent = '';
+      });
+      if (arrow) arrow.textContent = asc ? ' \u2191' : ' \u2193';
+      asc = !asc;
+      var tbody = table.querySelector('tbody');
+      rows.forEach(function(r) {
+        var idx = r.id.replace('persona_row_', '');
+        var det = document.getElementById('persona_detail_' + idx + '_row');
+        tbody.appendChild(r);
+        if (det) tbody.appendChild(det);
+      });
+    });
+  });
+});
+
+  </script>
+</body>
+</html>

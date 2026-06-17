@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "prefix": "HARNESS",
+  "seed": 20260528,
+  "current_year": 2026,
+  "current_month": 5,
+  "randomization": {
+    "threshold_discount_pct": [0.02, 0.08],
+    "commission_rate": [0.005, 0.02],
+    "paid_percent_options": [30, 40, 50],
+    "spa_discount_pct": [0.10, 0.25],
+    "additional_fee_count": [1, 2]
+  },
+  "community_research": {
+    "mode": "backfill"
+  },
+  "agent_generation": {
+    "count_per_brokerage": 2,
+    "origins": ["south_asian", "arab", "western", "filipino"]
+  },
+  "brokerages": [
+    {
+      "id": "harness-brokerage-a",
+      "name": "Best Homes",
+      "slug": "best-homes",
+      "real_estate_number": "HARNESS-OFFICE-A",
+      "brokerage_ai_number": "+971590001001",
+      "agents_ai_number": "+971590001101",
+      "default_fee_framing": {
+        "market_benchmark": 0.02,
+        "commission_rate": 0.0085,
+        "managing_agent_title": "agent managing this listing"
+      }
+    },
+    {
+      "id": "harness-brokerage-b",
+      "name": "Gemini Realty",
+      "slug": "gemini-realty",
+      "real_estate_number": "HARNESS-OFFICE-B",
+      "brokerage_ai_number": "+971590001002",
+      "agents_ai_number": "+971590001102",
+      "default_fee_framing": {
+        "market_benchmark": 0.02,
+        "commission_rate": 0.0085,
+        "managing_agent_title": "agent managing this listing"
+      }
+    }
+  ],
+  "listings": [
+    {
+      "brokerage_id": "harness-brokerage-a",
+      "source_url": "https://www.bayut.com/property/details-14395274.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-a",
+      "source_url": "https://www.bayut.com/property/details-15223790.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-a",
+      "source_url": "https://www.bayut.com/property/details-15069219.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-a",
+      "source_url": "https://www.bayut.com/property/details-14866538.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-a",
+      "source_url": "https://www.bayut.com/property/details-15014530.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-b",
+      "source_url": "https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dubai-dubai-hills-estate-sidra-villas-sidra-villas-i-92256451.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-b",
+      "source_url": "https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-beach-residence-the-address-jumeirah-resort-and-spa-jumeirah-gate-tower-1-92697597.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-b",
+      "source_url": "https://www.propertyfinder.ae/en/plp/buy/townhouse-for-sale-dubai-arabian-ranches-3-anya-anya-2-89649726.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-b",
+      "source_url": "https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-marina-liv-residence-82376932.html"
+    },
+    {
+      "brokerage_id": "harness-brokerage-b",
+      "source_url": "https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dubai-town-square-shams-townhouses-92275744.html"
+    }
+  ]
+}

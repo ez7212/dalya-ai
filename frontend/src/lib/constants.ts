@@ -1,0 +1,55 @@
+import { Listing } from '@/types/listing'
+
+export const LISTINGS: Listing[] = [
+  {
+    id: 'damac-hills-4b',
+    title: 'DAMAC Hills 2 — Apt 4B',
+    developer: 'DAMAC',
+    location: 'Dubailand',
+    bedrooms: 2,
+    bathrooms: 2,
+    buaSqft: 1142,
+    priceAed: 1540000,
+    paymentPercent: 63,
+    nocStatus: 'ready',
+    handoverQuarter: 'Q3 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80',
+    imageAlt: 'DAMAC Hills 2 apartment interior, modern living space in Dubai',
+  },
+  {
+    id: 'emaar-beachfront-12c',
+    title: 'Emaar Beachfront — Unit 12C',
+    developer: 'Emaar',
+    location: 'Dubai Harbour',
+    bedrooms: 1,
+    bathrooms: 1,
+    buaSqft: 780,
+    priceAed: 1874000,
+    paymentPercent: 63,
+    nocStatus: 'ready',
+    handoverQuarter: 'Q4 2025',
+    imageUrl: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=80',
+    imageAlt: 'Emaar Beachfront apartment with sea view, Dubai Harbour',
+  },
+  {
+    id: 'sobha-hartland-7a',
+    title: 'Sobha Hartland — Villa 7A',
+    developer: 'Sobha',
+    location: 'MBR City',
+    bedrooms: 3,
+    bathrooms: 4,
+    buaSqft: 3250,
+    priceAed: 3450000,
+    paymentPercent: 35,
+    nocStatus: 'at40',
+    handoverQuarter: 'Q2 2027',
+    imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
+    imageAlt: 'Sobha Hartland villa exterior in MBR City Dubai',
+  },
+]
+
+export const SAVINGS_TABLE = [
+  { value: 'AED 1.5M', standard: 'AED 30,000', withDalya: 'Set by brokerage', saves: 'Varies' },
+  { value: 'AED 2.0M', standard: 'AED 40,000', withDalya: 'Set by brokerage', saves: 'Varies' },
+  { value: 'AED 3.5M', standard: 'AED 70,000', withDalya: 'Set by brokerage', saves: 'Varies' },
+]

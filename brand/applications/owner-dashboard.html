@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-density="compact">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dalya — Brokerage Owner Dashboard</title>
+  <link rel="stylesheet" href="./_tokens.css" />
+  <style>
+    /* ─────────────────────────────────────────────────────────────────────
+     * Brokerage owner dashboard layout (06-components.md §7.2)
+     * Compact density (06 §3.2) — set via data-density="compact" on <html>
+     * ───────────────────────────────────────────────────────────────────── */
+
+    .app {
+      display: grid;
+      grid-template-rows: var(--header-height) 1fr;
+      min-height: 100vh;
+    }
+
+    /* ── Top bar — same pattern as agent surface ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      padding: 0 var(--space-16);
+      background: var(--color-surface-1);
+      border-bottom: 1px solid var(--color-border-hairline);
+    }
+
+    .wordmark-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-shrink: 0;
+    }
+    .wordmark-text {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-brand-500);
+      letter-spacing: -0.01em;
+      opacity: 0.85;
+    }
+    .nav-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border-hairline);
+      margin: 0 var(--space-4);
+    }
+    .header-context {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+    }
+    .header-context strong {
+      color: var(--color-text-1);
+      font-weight: 500;
+      margin-left: var(--space-4);
+    }
+
+    .header-tabs {
+      display: flex;
+      gap: var(--space-2);
+      margin-left: var(--space-12);
+    }
+    .header-tab {
+      padding: var(--space-4) var(--space-8);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--color-text-3);
+      border-radius: var(--radius-1);
+      cursor: pointer;
+      transition: background var(--duration-base) var(--ease-out),
+                  color var(--duration-base) var(--ease-out);
+    }
+    .header-tab:hover {
+      color: var(--color-text-1);
+      background: var(--color-surface-2);
+    }
+    .header-tab.is-active {
+      color: var(--color-text-1);
+      background: var(--color-surface-2);
+      font-weight: 600;
+    }
+
+    .header-user {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+    .header-user .name { font-size: var(--text-xs); color: var(--color-text-2); }
+    .header-user .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      background: var(--color-brand-100);
+      color: var(--color-brand-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: var(--text-2xs);
+    }
+
+    /* ── Main: tabbed analytics + left-rail filters ── */
+    .main {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+    }
+
+    /* ── Left rail (06 §7.2) ── */
+    .rail {
+      background: var(--color-surface-1);
+      border-right: 1px solid var(--color-border-hairline);
+      padding: var(--space-12) var(--space-8);
+      min-height: calc(100vh - var(--header-height));
+    }
+    .rail-section { margin-bottom: var(--space-16); }
+    .rail-label {
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 500;
+      padding: 0 var(--space-6) var(--space-4);
+    }
+    .rail-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-6);
+      font-size: var(--text-xs);
+      color: var(--color-text-2);
+      border-radius: var(--radius-1);
+      cursor: pointer;
+      transition: background var(--duration-base) var(--ease-out);
+    }
+    .rail-item:hover { background: var(--color-surface-2); color: var(--color-text-1); }
+    .rail-item.is-active {
+      background: var(--color-brand-50);
+      color: var(--color-brand-700);
+      font-weight: 500;
+    }
+    .rail-item .count {
+      font-feature-settings: "tnum";
+      color: var(--color-text-3);
+      font-size: var(--text-2xs);
+    }
+    .rail-item.is-active .count { color: var(--color-brand-500); }
+
+    /* ── Content area ── */
+    .content {
+      padding: var(--space-16);
+      max-width: var(--width-wide);
+    }
+
+    .content-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: var(--space-16);
+    }
+    .content-title {
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--color-text-1);
+      letter-spacing: var(--tracking-tight);
+    }
+    .content-subtitle {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      margin-top: 2px;
+    }
+    .content-actions { display: flex; gap: var(--space-6); }
+
+    /* ── Buttons (replicated from agent-desktop for self-containment) ── */
+    .btn {
+      height: var(--button-height-md);
+      padding: 0 var(--space-12);
+      border-radius: var(--radius-2);
+      border: 1px solid transparent;
+      font: inherit;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-4);
+      transition: background var(--duration-base) var(--ease-out),
+                  border-color var(--duration-base) var(--ease-out);
+    }
+    .btn-primary {
+      background: var(--color-brand-600);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--color-brand-700); }
+    .btn-secondary {
+      background: var(--color-brand-500);
+      color: white;
+    }
+    .btn-secondary:hover { background: var(--color-brand-600); }
+    .btn-tertiary {
+      background: var(--color-surface-1);
+      color: var(--color-text-1);
+      border-color: var(--color-border-hairline);
+    }
+    .btn-tertiary:hover { background: var(--color-surface-2); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-2);
+    }
+    .btn-ghost:hover { background: var(--color-surface-1); color: var(--color-text-1); }
+
+    /* ── Stat cards (06 §4.6) ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-10);
+      margin-bottom: var(--space-16);
+    }
+    .stat {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-2);
+      padding: var(--space-10) var(--space-12);
+    }
+    .stat .label {
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 500;
+    }
+    .stat .value {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--color-text-1);
+      font-variant-numeric: tabular-nums slashed-zero;
+      letter-spacing: var(--tracking-tight);
+      line-height: 1.1;
+      margin-top: var(--space-4);
+    }
+    .stat .delta {
+      font-size: var(--text-xs);
+      margin-top: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat .delta.positive { color: var(--color-success-700); }
+    .stat .delta.negative { color: var(--color-error-700); }
+    .stat .delta.neutral  { color: var(--color-text-3); }
+
+    /* ── Section heading ── */
+    .section {
+      margin-bottom: var(--space-16);
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: var(--space-10);
+    }
+    .section-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text-1);
+    }
+    .section-subtitle {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      margin-top: 2px;
+    }
+    .section-link {
+      font-size: var(--text-xs);
+      color: var(--color-link);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .section-link:hover { color: var(--color-link-hover); text-decoration: underline; }
+
+    /* ── Table (06 §3) ── */
+    .table-wrap {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-2);
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); }
+    thead {
+      background: var(--color-surface-2);
+    }
+    thead th {
+      padding: var(--space-6) var(--space-8);
+      text-align: left;
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 500;
+      border-bottom: 1px solid var(--color-border-hairline);
+      white-space: nowrap;
+    }
+    thead th.num { text-align: right; }
+    thead th.center { text-align: center; }
+    tbody tr {
+      height: var(--row-height-compact);
+      border-bottom: 1px solid var(--color-border-hairline);
+      transition: background 100ms var(--ease-out);
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--color-surface-2); cursor: pointer; }
+    tbody td {
+      padding: 0 var(--space-8);
+      color: var(--color-text-1);
+      vertical-align: middle;
+    }
+    tbody td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums slashed-zero;
+    }
+    tbody td.center { text-align: center; }
+    tbody td.muted  { color: var(--color-text-3); }
+    tbody td.gold   { color: var(--color-text-1); font-weight: 500; }
+
+    .property-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding: var(--space-4) 0;
+    }
+    .property-cell .name {
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--color-text-1);
+    }
+    .property-cell .meta {
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+    }
+
+    /* Status pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-2xs);
+      font-weight: 600;
+      padding: 2px var(--space-4);
+      border-radius: var(--radius-full);
+      letter-spacing: var(--tracking-wide);
+      white-space: nowrap;
+    }
+    .pill-live    { background: var(--color-success-100); color: var(--color-success-700); }
+    .pill-pending { background: var(--color-warning-100); color: var(--color-warning-700); }
+    .pill-blocked { background: var(--color-error-100); color: var(--color-error-700); }
+    .pill-neutral { background: var(--color-surface-2); color: var(--color-text-3); }
+
+    /* Sort indicator */
+    .sort {
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0.4;
+    }
+    .sort.is-active { opacity: 1; color: var(--color-text-1); }
+
+    /* ── Two-column section grid ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-16);
+    }
+
+    /* ── Activity feed (right column) ── */
+    .activity {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-2);
+      overflow: hidden;
+    }
+    .activity-row {
+      padding: var(--space-8) var(--space-10);
+      border-bottom: 1px solid var(--color-border-hairline);
+      font-size: var(--text-xs);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-6);
+      align-items: start;
+    }
+    .activity-row:last-child { border-bottom: none; }
+    .activity-row:hover { background: var(--color-surface-2); }
+    .activity-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .activity-icon.offer    { background: var(--color-success-100); color: var(--color-success-700); }
+    .activity-icon.inquiry  { background: var(--color-brand-50); color: var(--color-brand-700); }
+    .activity-icon.escalate { background: var(--color-warning-100); color: var(--color-warning-700); }
+    .activity-icon.alert    { background: var(--color-error-100); color: var(--color-error-700); }
+    .activity-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+    .activity-body .title {
+      color: var(--color-text-1);
+      font-weight: 500;
+    }
+    .activity-body .meta {
+      color: var(--color-text-3);
+      font-size: var(--text-2xs);
+    }
+    .activity-row .time {
+      color: var(--color-text-3);
+      font-size: var(--text-2xs);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    /* Activity AED inline emphasis */
+    .activity-body .aed {
+      font-weight: 600;
+      color: var(--color-text-1);
+      font-variant-numeric: tabular-nums slashed-zero;
+    }
+
+    /* Section divider in body */
+    .section-divider {
+      border-top: 1px solid var(--color-border-hairline);
+      margin: var(--space-12) 0;
+    }
+
+    /* Mini-sparkline placeholder (data viz) */
+    .sparkline {
+      display: inline-flex;
+      align-items: end;
+      gap: 1px;
+      height: 16px;
+      margin-left: var(--space-4);
+    }
+    .sparkline span {
+      width: 2px;
+      background: var(--color-brand-300);
+      border-radius: 1px;
+    }
+    .sparkline span:nth-child(n+5) { background: var(--color-brand-500); }
+
+    /* Scrollbar restraint */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--color-border-hairline); border-radius: var(--radius-full); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-border-default); }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ═══════════════════ TOP BAR ═══════════════════ -->
+    <header class="header">
+      <div class="wordmark-block">
+        <span class="wordmark-text">dalya</span>
+      </div>
+      <div class="nav-sep"></div>
+      <div class="header-context">
+        Mahoroba Realty <strong>· Brokerage Dashboard</strong>
+      </div>
+      <div class="header-tabs">
+        <div class="header-tab is-active">Overview</div>
+        <div class="header-tab">Listings</div>
+        <div class="header-tab">Agents</div>
+        <div class="header-tab">Reports</div>
+      </div>
+      <div class="header-user">
+        <span class="name">Eric Zhu · Owner</span>
+        <span class="avatar">EZ</span>
+      </div>
+    </header>
+
+    <!-- ═══════════════════ MAIN ═══════════════════ -->
+    <div class="main">
+
+      <!-- ════════ LEFT RAIL — filters ════════ -->
+      <aside class="rail">
+        <div class="rail-section">
+          <div class="rail-label">Date range</div>
+          <div class="rail-item">Today<span class="count">12</span></div>
+          <div class="rail-item">Last 7 days<span class="count">94</span></div>
+          <div class="rail-item is-active">Last 30 days<span class="count">312</span></div>
+          <div class="rail-item">Q2 2026<span class="count">487</span></div>
+          <div class="rail-item">All time<span class="count">1,204</span></div>
+        </div>
+        <div class="rail-section">
+          <div class="rail-label">Listing</div>
+          <div class="rail-item is-active">All<span class="count">2</span></div>
+          <div class="rail-item">Palace Villas Ostra</div>
+          <div class="rail-item">Sobha Seahaven</div>
+        </div>
+        <div class="rail-section">
+          <div class="rail-label">Agent</div>
+          <div class="rail-item is-active">All<span class="count">4</span></div>
+          <div class="rail-item">Eric Zhu</div>
+        </div>
+      </aside>
+
+      <!-- ════════ CONTENT ════════ -->
+      <main class="content">
+
+        <div class="content-header">
+          <div>
+            <h1 class="content-title">Overview</h1>
+            <p class="content-subtitle">Mahoroba Realty · Last 30 days · 2 listings live</p>
+          </div>
+          <div class="content-actions">
+            <button class="btn btn-tertiary">Export CSV</button>
+            <button class="btn btn-primary">Add listing</button>
+          </div>
+        </div>
+
+        <!-- ── Stat cards ── -->
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Total conversations</div>
+            <div class="value">122</div>
+            <div class="delta positive">+18 this week
+              <span class="sparkline">
+                <span style="height:30%"></span><span style="height:45%"></span><span style="height:35%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:75%"></span><span style="height:90%"></span>
+              </span>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="label">Active listings</div>
+            <div class="value">2</div>
+            <div class="delta neutral">No change</div>
+          </div>
+          <div class="stat">
+            <div class="label">Offers received</div>
+            <div class="value">30</div>
+            <div class="delta positive">+4 this week</div>
+          </div>
+          <div class="stat">
+            <div class="label">Escalated to Eric</div>
+            <div class="value">28</div>
+            <div class="delta positive">93% offer-to-escalation</div>
+          </div>
+        </div>
+
+        <!-- ── Two-column body ── -->
+        <div class="two-col">
+
+          <!-- Left: Listings table -->
+          <div class="section">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Listings</h2>
+                <p class="section-subtitle">Performance across active inventory</p>
+              </div>
+              <a href="#" class="section-link">View all →</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th class="center">Status</th>
+                    <th class="num">Asking <span class="sort is-active">↓</span></th>
+                    <th class="num">Convos</th>
+                    <th class="num">Escalated</th>
+                    <th class="num">Top offer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="property-cell">
+                        <span class="name">Palace Villas Ostra · Unit 2805</span>
+                        <span class="meta">5BD · 8,500 sqft · The Oasis · Emaar</span>
+                      </div>
+                    </td>
+                    <td class="center"><span class="pill pill-live">Live</span></td>
+                    <td class="num gold">AED 17,253,444</td>
+                    <td class="num">48</td>
+                    <td class="num">12</td>
+                    <td class="num">AED 17,000,000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="property-cell">
+                        <span class="name">Sobha Seahaven · Unit 2305</span>
+                        <span class="meta">2BD · 1,475 sqft · Dubai Harbour · Sobha</span>
+                      </div>
+                    </td>
+                    <td class="center"><span class="pill pill-live">Live</span></td>
+                    <td class="num gold">AED 6,200,000</td>
+                    <td class="num">74</td>
+                    <td class="num">16</td>
+                    <td class="num">AED 6,100,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Recent offers table -->
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Recent offers</h2>
+                <p class="section-subtitle">Above-threshold offers route to Eric</p>
+              </div>
+              <a href="#" class="section-link">View all 30 →</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Buyer</th>
+                    <th>Property</th>
+                    <th class="num">Offer</th>
+                    <th class="num">vs Asking</th>
+                    <th class="center">Status</th>
+                    <th class="num">When</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sara Mohammed</td>
+                    <td class="muted">Ostra · 2805</td>
+                    <td class="num gold">AED 17,000,000</td>
+                    <td class="num">−1.5%</td>
+                    <td class="center"><span class="pill pill-live">Above asking</span></td>
+                    <td class="num muted">14:23</td>
+                  </tr>
+                  <tr>
+                    <td>Tom Henderson</td>
+                    <td class="muted">Seahaven · 2305</td>
+                    <td class="num gold">AED 6,100,000</td>
+                    <td class="num">−1.6%</td>
+                    <td class="center"><span class="pill pill-pending">Countered</span></td>
+                    <td class="num muted">13:51</td>
+                  </tr>
+                  <tr>
+                    <td>Mohammed Al Marri</td>
+                    <td class="muted">Ostra · 2805</td>
+                    <td class="num gold">AED 17,500,000</td>
+                    <td class="num">+1.4%</td>
+                    <td class="center"><span class="pill pill-pending">Soft offer</span></td>
+                    <td class="num muted">Yesterday</td>
+                  </tr>
+                  <tr>
+                    <td>Priya Sharma</td>
+                    <td class="muted">Ostra · 2805</td>
+                    <td class="num gold">AED 17,000,000</td>
+                    <td class="num">−1.5%</td>
+                    <td class="center"><span class="pill pill-neutral">Forwarded</span></td>
+                    <td class="num muted">Yesterday</td>
+                  </tr>
+                  <tr>
+                    <td>Khalid Al Maktoum</td>
+                    <td class="muted">Ostra · 2805</td>
+                    <td class="num gold">AED 17,000,000</td>
+                    <td class="num">−1.5%</td>
+                    <td class="center"><span class="pill pill-live">Accepted</span></td>
+                    <td class="num muted">Mon</td>
+                  </tr>
+                  <tr>
+                    <td>Dmitri Volkov</td>
+                    <td class="muted">Seahaven · 2305</td>
+                    <td class="num gold">AED 5,800,000</td>
+                    <td class="num">−6.5%</td>
+                    <td class="center"><span class="pill pill-neutral">Declined</span></td>
+                    <td class="num muted">Mon</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right: Activity feed -->
+          <div class="section">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Activity</h2>
+                <p class="section-subtitle">Real-time across listings</p>
+              </div>
+              <a href="#" class="section-link">All →</a>
+            </div>
+            <div class="activity">
+
+              <div class="activity-row">
+                <div class="activity-icon offer">↑</div>
+                <div class="activity-body">
+                  <div class="title">New offer <span class="aed">AED 17,000,000</span></div>
+                  <div class="meta">Sara Mohammed · Ostra 2805 · Above threshold</div>
+                </div>
+                <div class="time">14:23</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon escalate">!</div>
+                <div class="activity-body">
+                  <div class="title">Conversation escalated</div>
+                  <div class="meta">Tom Henderson · Seahaven 2305 · Soft offer pause</div>
+                </div>
+                <div class="time">13:51</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon inquiry">→</div>
+                <div class="activity-body">
+                  <div class="title">New conversation</div>
+                  <div class="meta">+971 50 101 0012 · DIFC counsel · Ostra 2805</div>
+                </div>
+                <div class="time">12:04</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon alert">!</div>
+                <div class="activity-body">
+                  <div class="title">BRN request flagged</div>
+                  <div class="meta">Sarah Patel · Seahaven 2305 · Competing broker</div>
+                </div>
+                <div class="time">11:47</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon offer">↑</div>
+                <div class="activity-body">
+                  <div class="title">Offer revised <span class="aed">AED 5,950,000 → 6,100,000</span></div>
+                  <div class="meta">Tom Henderson · Seahaven 2305</div>
+                </div>
+                <div class="time">11:02</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon inquiry">→</div>
+                <div class="activity-body">
+                  <div class="title">New conversation</div>
+                  <div class="meta">Mohammed Al Marri · Ostra 2805 · End-use family</div>
+                </div>
+                <div class="time">09:18</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon escalate">!</div>
+                <div class="activity-body">
+                  <div class="title">Returning buyer</div>
+                  <div class="meta">Sara Mohammed · prior AED 17M offer surfaced</div>
+                </div>
+                <div class="time">09:11</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon offer">↑</div>
+                <div class="activity-body">
+                  <div class="title">New offer <span class="aed">AED 17,500,000</span></div>
+                  <div class="meta">Mohammed Al Marri · Ostra 2805 · Soft offer</div>
+                </div>
+                <div class="time">Yesterday</div>
+              </div>
+
+              <div class="activity-row">
+                <div class="activity-icon inquiry">→</div>
+                <div class="activity-body">
+                  <div class="title">New conversation</div>
+                  <div class="meta">Khalid Al Maktoum · GCC Arabic · Ostra 2805</div>
+                </div>
+                <div class="time">Mon</div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Demo interactivity
+    document.querySelectorAll('.header-tab').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.header-tab').forEach(x => x.classList.remove('is-active'));
+        t.classList.add('is-active');
+      });
+    });
+    document.querySelectorAll('.rail-section').forEach(section => {
+      section.querySelectorAll('.rail-item').forEach(item => {
+        item.addEventListener('click', () => {
+          section.querySelectorAll('.rail-item').forEach(x => x.classList.remove('is-active'));
+          item.classList.add('is-active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

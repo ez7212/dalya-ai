@@ -1,0 +1,355 @@
+{
+  "idx": 1,
+  "slug": "sara",
+  "persona": "Sara — UK expat investor, English",
+  "phone": "+971501010001",
+  "listing_id": "HARNESS_listing_04_413ffb20",
+  "listing_facts": {
+    "property_name": "The Pinnacle at Sobha Central",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 639.19,
+    "plot_sqft": null,
+    "price_aed": 2187575.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 2062254.55,
+    "offer_threshold_pct": 94.3
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, just saw your listing on Property Finder. Is this still available?",
+      "bot": "Dalya with Best Homes here. Hi! Yes, it's still available. This is a 1-bed, 2-bath apartment at The Pinnacle at Sobha Central, asking AED 2,187,575.\n\nIt's an off-plan resale, so you'd take over the remaining developer payment schedule through handover in October 2031, when the unit is delivered turnkey.\n\nWhat would you like to know?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 32.8
+    },
+    {
+      "turn": 2,
+      "buyer": "I'm Sara, based in London — looking at this purely as an investment. What's the asking price?",
+      "bot": "Hi Sara. The asking price is AED 2,187,575.\n\nSince you're looking at this as an investment, a few things worth flagging upfront: this is an off-plan resale with handover in October 2031, so there's a build period ahead. You'd take over the remaining developer payments to Sobha across the schedule, the bulk due at handover. The unit delivers turnkey, so no fit-out costs on your end.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 22.9
+    },
+    {
+      "turn": 3,
+      "buyer": "What's the rental yield in this community? And expected capital appreciation by handover?",
+      "bot": "I don't have rental yield data or capital appreciation forecasts for Sobha Central in my brief, those are market assumptions that sit outside the listing scope and vary by analyst and timing.\n\nFor investment due diligence like that, you'd want to pull recent comparable rental and resale comps from the community yourself, or have your advisor run those numbers. Your bank may also ask for a valuation or investment summary when you're ready to finance.\n\nWhat I can confirm is the unit specs, developer track record, and payment structure, happy to walk through those if useful.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 16.7
+    },
+    {
+      "turn": 4,
+      "buyer": "When is handover? And what payment is left to complete?",
+      "bot": "At the asking price of AED 2,187,575, remaining to the developer is AED 1,531,302. You take over those payments directly with Sobha Realty once the transfer is registered.\n\nRemaining SPA instalments:\n- 40% construction milestone: AED 218,758, due October 2027\n- 50% construction milestone: AED 218,758, due January 2029\n- 60% construction milestone: AED 218,758, due May 2030\n- Handover: AED 875,030, due October 2031\n\nThis is separate from the seller-equity amount settled at closing. Karim, the Best Homes agent managing this listing will walk through the exact closing math once you're at offer stage.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 14.3
+    },
+    {
+      "turn": 5,
+      "buyer": "What's the NOC status — can the seller transfer this now?",
+      "bot": "NOC is not yet eligible based on the current listing record. The seller is responsible for reaching the developer's NOC threshold once an offer is accepted.\n\nHere's how it works: once your offer is accepted and the SPA is signed, the seller's conveyancer obtains the developer NOC before the title transfer happens at the trustees office. That's typically a 1-5 day turnaround from Sobha once all requirements are met.\n\nThe legal close (title transfer) happens at the RERA trustees office once NOC is issued, usually months before physical handover. You become the owner of record at that point, then take over the remaining SPA payments directly with the developer through October 2031.\n\nBest Homes will verify the exact NOC position with the seller before any MOU is signed.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "general_lead_capture",
+        "conversation_id": "07a553c7-bb43-425e-a72e-ce73bf1570cc",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010001",
+        "buyer_name": "Sara",
+        "trigger": "general_enquiry",
+        "trigger_message": "What's the NOC status — can the seller transfer this now?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "promise_kept",
+        "regulatory_category": null,
+        "payload": {
+          "requested_action": "Follow up because the buyer-facing reply promised a handoff.",
+          "question_digest": "What's the NOC status — can the seller transfer this now?"
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 30.9
+    },
+    {
+      "turn": 6,
+      "buyer": "What service charges should I expect post-handover?",
+      "bot": "I don't have the exact service charge in the listing record. Karim needs to verify that detail before you rely on it.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "07a553c7-bb43-425e-a72e-ce73bf1570cc",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010001",
+        "buyer_name": "Sara",
+        "trigger": "general_enquiry",
+        "trigger_message": "1. What service charges should I expect post-handover?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. What service charges should I expect post-handover?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 23.8
+    },
+    {
+      "turn": 7,
+      "buyer": "What are the total fees if I buy at asking? Including your brokerage.",
+      "bot": "At the asking price of AED 2,187,575, the buyer-side transaction costs are:\n\n- DLD transfer fee (4%): AED 87,503\n- Best Homes fee (0.85%): AED 18,594\n\nThe asking price is the total property price, not an amount on top of the SPA balance. It splits into about AED 656,272 settled to the seller at closing and AED 1,531,302 paid to the developer over the remaining SPA schedule.\n\nAcross the transaction value, asking price + DLD + Best Homes fee is AED 2,293,672.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 13.7
+    },
+    {
+      "turn": 8,
+      "buyer": "I'd like to put in an offer of AED 1,856,000.",
+      "bot": "AED 1,856,000 is too far off for the seller. That's roughly 15% below asking and they won't engage at that level.\n\nWhere could you stretch to if you're serious about moving forward?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 22.3
+    },
+    {
+      "turn": 9,
+      "buyer": "OK final offer at AED 2,103,000, that's the most I can do.",
+      "bot": "AED 2,103,000 noted. Let me run this past the seller and I'll come back with where they land.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "07a553c7-bb43-425e-a72e-ce73bf1570cc",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010001",
+        "buyer_name": "Sara",
+        "trigger": "offer_submission",
+        "trigger_message": "OK final offer at AED 2,103,000, that's the most I can do.",
+        "offer_amount_aed": 2103000.0,
+        "listing_price_aed": 2187575.0,
+        "negotiation_threshold_aed": 2062254.55,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 1,856,000 → AED 2,103,000.\n\nBuyer enquired about The Pinnacle at Sobha Central Unit . Submitted offer of AED 2,103,000 against AED 2,187,575 asking (3.9% below). Escalation triggered — review conversation for context.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 2103000.0,
+          "percent_of_asking": 96.1,
+          "floor_aed": 2062254.55,
+          "vs_floor_aed": 40745.44999999995,
+          "buyer_ref": "Sara",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201002",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "IURMUV9VU0",
+          "body": "[OFFER] Sara (+971501010001)\n\nProperty: HARNESS_listing_04_413ffb20\nOffer: AED 2,103,000\nAsking: AED 2,187,575\nNotification threshold: AED 2,062,255\nPayload:\n- amount_aed: 2103000.0\n- percent_of_asking: 96.1\n- floor_aed: 2062254.55\n- vs_floor_aed: 40745.44999999995\n- buyer_ref: Sara\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"OK final offer at AED 2,103,000, that's the most I can do.\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 1,856,000 → AED 2,103,000.\n\nBuyer enquired about The Pinnacle at Sobha Central Unit . Submitted offer of AED 2,103,000 against AED 2,187,575 asking (3.9% below). Escalation triggered — review conversation for context.\n\n[Ref: IURMUV9VU0]"
+        },
+        {
+          "to_agent_phone": "+9715900201002",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "general_lead_capture"
+          ],
+          "envelope_token": "IHLVOAYVMJ",
+          "body": "[GENERAL_LEAD_CAPTURE] Sara (+971501010001)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: promise_kept\nPayload:\n- requested_action: Follow up because the buyer-facing reply promised a handoff.\n- question_digest: What's the NOC status — can the seller transfer this now?\nTags: general_lead_capture\n\nBuyer message:\n\"What's the NOC status — can the seller transfer this now?\"\n\nOpen questions on this escalation:\n1. What's the NOC status — can the seller transfer this now?\n2. What service charges should I expect post-handover?\n\n[Ref: IHLVOAYVMJ]"
+        }
+      ],
+      "error": null,
+      "duration_s": 26.0,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "9beec8b1-4a11-4b59-862e-52ba80a5a313",
+            "category": "fees_and_charges",
+            "token": "IHLVOAYVMJ"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Best Homes here. Hi! Yes, it's still available. This is a 1-bed, 2-bath apartment at The Pinnacle at Sobha Central, asking AED 2,187,575.\n\nIt's an off-plan resale, so you'd take over the remaining developer payment schedule through handover in October 2031, when the unit is delivered turn"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 1,704,859; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,062,255"
+    },
+    {
+      "check": "noc_substantive_t5",
+      "pass": true,
+      "evidence": "NOC is not yet eligible based on the current listing record. The seller is responsible for reaching the developer's NOC threshold once an offer is accepted.\n\nHere's how it works: once your offer is accepted and the SPA is signed, the seller's conveyancer obtains the developer NOC before the title tr"
+    },
+    {
+      "check": "fee_mentioned_t7",
+      "pass": true,
+      "evidence": "At the asking price of AED 2,187,575, the buyer-side transaction costs are:\n\n- DLD transfer fee (4%): AED 87,503\n- Best Homes fee (0.85%): AED 18,594\n\nThe asking price is the total property price, not an amount on top of the SPA balance. It splits into about AED 656,272 settled to the seller at clos"
+    },
+    {
+      "check": "offer_below_threshold_t8_NOT_escalated",
+      "pass": true,
+      "evidence": "turn 8 escalation_triggered=False"
+    },
+    {
+      "check": "offer_above_threshold_t9_escalated",
+      "pass": true,
+      "evidence": "turn 9 escalation_triggered=True"
+    },
+    {
+      "check": "no_seller_phone_pattern",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900201002",
+      "pass": true,
+      "evidence": "expected=+9715900201002; routed=[{'to_agent_phone': '+9715900201002', 'from_agents_ai_number': '+971590001101', 'tags': ['at_or_above'], 'envelope_token': 'IURMUV9VU0', 'body': '[OFFER] Sara (+971501010001)\\n\\nProperty: HARNESS_listing_04_413ffb20\\nOffer: AED 2,103,000\\nAsking: AED 2,187,575\\nNotifi"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t2",
+      "pass": true,
+      "evidence": "expected asking=AED 2,187,575; bot=Hi Sara. The asking price is AED 2,187,575.\n\nSince you're looking at this as an investment, a few things worth flagging upfront: this is an off-plan resale with handover in October 2031, so there's a build period ahead. You'd take over the "
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    5,
+    6,
+    9
+  ],
+  "summary_auto": "3/9 turns escalated.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.222,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Sara — UK expat investor, English",
+    "phone": "+971501010001",
+    "listing_id": "HARNESS_listing_04_413ffb20",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

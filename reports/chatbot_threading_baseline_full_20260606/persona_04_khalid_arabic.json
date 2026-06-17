@@ -1,0 +1,274 @@
+{
+  "idx": 4,
+  "slug": "khalid_arabic",
+  "persona": "Khalid Al Maktoum — GCC Arabic speaker (full Arabic conversation)",
+  "phone": "+971501010004",
+  "listing_id": "HARNESS_listing_02_7cdd1b00",
+  "listing_facts": {
+    "property_name": "Mirage The Oasis",
+    "beds": 6,
+    "baths": 7,
+    "sqft": 15757.0,
+    "plot_sqft": null,
+    "price_aed": 21693243.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 40,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 20749669.05,
+    "offer_threshold_pct": 95.7
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "السلام عليكم، الفيلا لا زالت متاحة؟",
+      "bot": "وعليكم السلام ورحمة الله\n\nأنا دليا، مساعدة العقارات من شركة Best Homes. نعم، الفيلا متاحة تماماً.\n\nفيلا 6 غرف في ميراج الواحة، تطوير إمار، المساحة المبنية 15,757 قدم مربع، السعر 21,693,243 درهم، والتسليم المتوقع أبريل 2028.\n\nوحالياً قيد البناء لكن يمكن حجزها الآن والدفع يكون حسب جدول الإنشاء.\n\nكيف أساعدك أكثر؟",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 31.5
+    },
+    {
+      "turn": 2,
+      "buyer": "ممكن تعطيني تفاصيل عن المشروع؟ كم غرفة نوم؟",
+      "bot": "الفيلا 6 غرف نوم و 7 حمامات، المساحة المبنية 15,757 قدم مربع.\n\nالمشروع اسمه ميراج الواحة، تطوير إمار في منطقة الواحة بدبي لاند. مشروع فيلات فاخرة منخفضة الكثافة مع تركيز على المياه والطبيعة، يمتد على حوالي 100 مليون قدم مربع.\n\nالموقع في تقاطع شارع الشيخ زايد بن حمدان والناهيان (D54) وشارع يلايس (D57) - تقريباً 18 دقيقة من مطار آل مكتوم و 10 دقائق من إكسبو سيتي.\n\nالمشروع فيه:\n\n- بحيرات بلورية قابلة للسباحة وشواطئ خاصة\n- مسارات دراجات 54 كم\n- ملاعب رياضية وصالات ألعاب خارجية\n- مسابح ومنتجعات صحية\n- حدائق وملاعب للأطفال\n- أمان 24/7 مع بوابات مراقبة\n\nالتسليم أبريل 2028، والفيلا تُسلم مفروشة وجاهزة للسكن.\n\nهل في أي تفاصيل ثانية بدك تعرفها؟",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 28.2
+    },
+    {
+      "turn": 3,
+      "buyer": "ما هو السعر المطلوب من البائع؟",
+      "bot": "السعر 21,693,243 درهم.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.9
+    },
+    {
+      "turn": 4,
+      "buyer": "متى تاريخ التسليم؟ وكم المبلغ المتبقي للمطور؟",
+      "bot": "تاريخ التسليم: أبريل 2028.\n\nالمبلغ المتبقي للمطور هو 13,015,946 درهم، وتدفعه على دفعات حسب جدول الإنشاء:\n\n- 50% من الإنشاء (10%): 2,169,324 درهم - يناير 2027\n- 60% من الإنشاء (10%): 2,169,324 درهم - أغسطس 2027\n- التسليم (40%): 8,677,297 درهم - أبريل 2028\n\nأنت ستتولى هذه الدفعات مباشرة مع المطور عند شراءك الفيلا من البائع الحالي، وتدفع الجزء المتبقي من البائع في وقت التوقيع.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 26.0
+    },
+    {
+      "turn": 5,
+      "buyer": "هل المنطقة فيها مدارس وجوامع قريبة؟",
+      "bot": "نعم، المنطقة فيها خيارات تعليمية جيدة قريبة:\n\nالمدارس:\n- GEMS FirstPoint School - 18 دقيقة، مناهج بريطانية (KHDA تصنيف Good)\n- The Aquila School - 20 دقيقة، مناهج بريطانية (KHDA تصنيف Good)\n- South View School - مناهج بريطانية\n- Jebel Ali School - مناهج بريطانية\n- Royal Grammar School Guildford Dubai - مناهج بريطانية\n- Dwight School Dubai - منهاج IB\n- Fairgreen International School - منهاج IB (تركيز بيئي)\n- Bright Riders School - منهاج هندي CBSE\n\nالجوامع:\n- في المشروع نفسه في الواحة سيكون هناك مسجد (مخطط للافتتاح)\n\nبالإضافة كده، المنطقة قريبة من Global Village (14 دقيقة) وفيه مستشفى Mediclinic Parkview (19 دقيقة).",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 28.8
+    },
+    {
+      "turn": 6,
+      "buyer": "ما هي عمولتكم كوسيط؟",
+      "bot": "عمولة Best Homes هي 0.85% من سعر العقار، وتُدفع من قبلك كمشتري عند إتمام الصفقة.\n\nهذا منفصل تماماً عن رسوم التسجيل الحكومية (DLD) وهي 4% من قيمة العقار تُدفع لدائرة الأراضي والأملاك.\n\nإذا اشتريت بالسعر المطلوب (21,693,243 درهم):\n\nعند التوقيع:\n- رسوم DLD (4%): 867,730 درهم\n- عمولة Best Homes (0.85%): 184,393 درهم\n- حصة البائع المتبقية: تُسدد للبائع\n\nعلى جدول الإنشاء:\n- الدفعات المتبقية للمطور: 13,015,946 درهم (حسب المواعيد أعلاه)\n\nإجمالي قيمة الصفقة: 21,693,243 + 867,730 + 184,393 = 22,745,365 درهم.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.9
+    },
+    {
+      "turn": 7,
+      "buyer": "أبغى أقدم عرض بقيمة AED 21,165,000. هل ممكن؟",
+      "bot": "تم تأكيد العرض بقيمة 21,165,000 درهم. أنا أرسله للبائع، وسأعود إليك بمجرد سماع رده. ما الاسم الذي أضعه على العرض؟",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "ce0f3868-86ae-4c98-965b-ef3b9997c639",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010004",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "أبغى أقدم عرض بقيمة AED 21,165,000. هل ممكن؟",
+        "offer_amount_aed": 21165000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "**INQUIRY SUMMARY - Mirage The Oasis Unit**\n\nThe buyer demonstrated serious intent through detailed questions about payment schedules, developer outstanding amounts, and local amenities (schools and mosques), indicating thorough due diligence. Their context is not stated, though they proceeded directly to submit an offer of AED 21,165,000 against the asking price of AED 21,693,243 (a gap of AED 528,243 or 2.4% below). The agent should prioritize obtaining the buyer's name to formalize the offer submission and follow up promptly once the seller responds.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 21165000.0,
+          "percent_of_asking": 97.6,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 415330.94999999925,
+          "buyer_ref": "+971501010004",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201001",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "TGRHFKG9LA",
+          "body": "[OFFER] Unknown buyer (+971501010004)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 21,165,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 21165000.0\n- percent_of_asking: 97.6\n- floor_aed: 20749669.05\n- vs_floor_aed: 415330.94999999925\n- buyer_ref: +971501010004\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"أبغى أقدم عرض بقيمة AED 21,165,000. هل ممكن؟\"\n\nSummary: **INQUIRY SUMMARY - Mirage The Oasis Unit**\n\nThe buyer demonstrated serious intent through detailed questions about payment schedules, developer outstanding amounts, and local amenities (schools and mosques), indicating thorough due diligence. Their context is not stated, though they proceeded directly to submit an offer of AED 21,165,000 against the asking price of AED 21,693,243 (a gap of AED 528,243 or 2.4% below). The agent should prioritize obtaining the buyer's name to formalize the offer submission and follow up promptly once the seller responds.\n\n[Ref: TGRHFKG9LA]"
+        }
+      ],
+      "error": null,
+      "duration_s": 33.7
+    },
+    {
+      "turn": 8,
+      "buyer": "شكراً، أعطني رقم البائع مباشرة لو سمحت",
+      "bot": "أنا مساعدة العقارات لهذه الشركة. لا يمكنني مشاركة بيانات تواصل البائع، لكن يمكنني الإجابة على أسئلتك هنا أو تمرير عرض جدي عبر مسار المعاملة الصحيح.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 19.2
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "وعليكم السلام ورحمة الله\n\nأنا دليا، مساعدة العقارات من شركة Best Homes. نعم، الفيلا متاحة تماماً.\n\nفيلا 6 غرف في ميراج الواحة، تطوير إمار، المساحة المبنية 15,757 قدم مربع، السعر 21,693,243 درهم، والتسليم المتوقع أبريل 2028.\n\nوحالياً قيد البناء لكن يمكن حجزها الآن والدفع يكون حسب جدول الإنشاء.\n\nكيف أ"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 16,900,368; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 20,749,669"
+    },
+    {
+      "check": "responds_in_arabic",
+      "pass": true,
+      "evidence": "arabic chars present"
+    },
+    {
+      "check": "commission_disclosed_t6",
+      "pass": true,
+      "evidence": "عمولة Best Homes هي 0.85% من سعر العقار، وتُدفع من قبلك كمشتري عند إتمام الصفقة.\n\nهذا منفصل تماماً عن رسوم التسجيل الحكومية (DLD) وهي 4% من قيمة العقار تُدفع لدائرة الأراضي والأملاك.\n\nإذا اشتريت بالسعر المطلوب (21,693,243 درهم):\n\nعند التوقيع:\n- رسوم DLD (4%): 867,730 درهم\n- عمولة Best Homes (0.85%):"
+    },
+    {
+      "check": "offer_escalation_t7",
+      "pass": true,
+      "evidence": "turn 7 escalation_triggered=True"
+    },
+    {
+      "check": "no_seller_phone_t8",
+      "pass": true,
+      "evidence": "أنا مساعدة العقارات لهذه الشركة. لا يمكنني مشاركة بيانات تواصل البائع، لكن يمكنني الإجابة على أسئلتك هنا أو تمرير عرض جدي عبر مسار المعاملة الصحيح."
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900201001",
+      "pass": true,
+      "evidence": "expected=+9715900201001; routed=[{'to_agent_phone': '+9715900201001', 'from_agents_ai_number': '+971590001101', 'tags': ['at_or_above'], 'envelope_token': 'TGRHFKG9LA', 'body': '[OFFER] Unknown buyer (+971501010004)\\n\\nProperty: HARNESS_listing_02_7cdd1b00\\nOffer: AED 21,165,000\\nAsking: AED 21,693,"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t3",
+      "pass": true,
+      "evidence": "expected asking=AED 21,693,243; bot=السعر 21,693,243 درهم."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    7
+  ],
+  "summary_auto": "1/8 turns escalated. Arabic test.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Khalid Al Maktoum — GCC Arabic speaker (full Arabic conversation)",
+    "phone": "+971501010004",
+    "listing_id": "HARNESS_listing_02_7cdd1b00",
+    "thread_count": 1,
+    "question_count": 1,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 1.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "offer": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

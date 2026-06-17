@@ -1,0 +1,407 @@
+{
+  "name": "Dubai Marina",
+  "developer": "LIV Developers",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "LIV Residence is a completed G+27 tower in Dubai Marina by LIV Real Estate Development (also known as LIV Developers). It is ready to move in per Tanami Properties listing.",
+    "LIV Residence construction began September 2016; original handover target was July 2019 per Propsearch. Current listings confirm it is ready/completed.",
+    "Dubai Marina DLD area code is 'Marsa Dubai'. ROI data from uaecalc.com is sourced from DLD open data.",
+    "Gross rental yield figures vary by source: uaecalc.com (DLD-based) shows 5.1% average for apartments; valorisimo.com cites 5.8–7.2%; astraterra.ae cites 7.1% long-term and 8.5–12% short-term. All figures are gross and pre-fees.",
+    "LIV Developers also known as LIV Real Estate Development. Sources use both 'LIV Developers' and 'LIV Real Estate' interchangeably.",
+    "Closest metro stations to Dubai Marina: DMCC (R37) and Sobha Realty (R36) on the Red Line. Dubai Tram also serves the area directly.",
+    "Closest school cited by Luxhabitat: Wellington International School. Closest hospital: Emirates Hospital. Exact distances not confirmed by sources.",
+    "Dubai Marina is freehold, making it eligible for UAE Golden Visa for purchases AED 2M+.",
+    "Average selling prices as of December 2025 per Property Monitor via Engel & Voelkers: Studio AED 1.38M, 1BR AED 1.88M, 2BR AED 2.70M, 3BR AED 4.49M, 4BR AED 10.68M.",
+    "LIV Residence unit sizes: 1,243 to 2,224 sq ft per Tanami; Luxhabitat states from 505 sq ft (likely includes studios). Starting price cited as AED 849,548–859,548 across sources.",
+    "Short-term rental in Dubai Marina requires a DTCM Holiday Home Permit; fines from AED 5,000 for unlicensed operations.",
+    "Dubai Marina ranked #3 by apartment transaction volume citywide in Q4 2025 per DLD data cited by Astraterra."
+  ],
+  "master_development": {
+    "overview": {
+      "name": "Dubai Marina",
+      "type": "Master-planned waterfront residential and mixed-use community",
+      "description": "Dubai Marina is the world's largest man-made marina, stretching approximately 3.5 km with 11 km of marine frontage along the Persian Gulf shoreline. It comprises over 200 residential towers, a 7 km Marina Walk promenade, and a vibrant mix of dining, retail, hotels, and leisure. The community covers approximately 50 million sq ft and accommodates an estimated 55,000 residents, with capacity for up to 120,000 when fully built out.",
+      "total_towers": "200+",
+      "area_sqft": "50 million sq ft (approx)",
+      "canal_length_km": "3.5 km marina, 11 km marine frontage",
+      "status": "Established/operational community with select off-plan projects ongoing",
+      "dld_area_name": "Marsa Dubai"
+    },
+    "location_connectivity": {
+      "emirate": "Dubai",
+      "district": "New Dubai / Sheikh Zayed Road corridor",
+      "metro": {
+        "nearest_stations": [
+          "DMCC Metro Station (Red Line, R37) – serves Dubai Marina and JLT",
+          "Sobha Realty Metro Station (Red Line, R36)"
+        ],
+        "line": "Red Line",
+        "notes": "Red Line connects to Dubai Mall/Burj Khalifa, Mall of the Emirates, Dubai Internet City, and Dubai International Airport"
+      },
+      "tram": {
+        "available": true,
+        "station": "Dubai Marina Tram Station",
+        "notes": "Dubai Tram runs through the community and connects to the metro at DMCC and Sobha Realty stations"
+      },
+      "water_taxi": {
+        "available": true,
+        "notes": "Dubai Water Taxi accessible from the marina"
+      },
+      "road": {
+        "primary": "Sheikh Zayed Road (E11)",
+        "notes": "Direct access to Sheikh Zayed Road; connects to all major Dubai business and leisure districts"
+      },
+      "drive_times_approximate": {
+        "dubai_mall": "~19 minutes",
+        "palm_jumeirah": "~11 minutes",
+        "burj_al_arab": "~17 minutes",
+        "the_walk_jbr": "~8 minutes",
+        "dubai_international_airport_dxb": "~26–27 minutes",
+        "al_maktoum_international_airport": "~36 minutes",
+        "disclaimer": "Drive times are approximate and sourced from Propsearch and Luxhabitat; actual times vary with traffic"
+      }
+    },
+    "shared_amenities": {
+      "promenade": "7 km Marina Walk – pedestrian and cycling path lined with cafes, restaurants, and retail",
+      "retail": [
+        "Dubai Marina Mall (includes Waitrose hypermarket and Reel Cinemas)",
+        "Promenade-level retail in multiple towers",
+        "The Beach at JBR (adjacent)"
+      ],
+      "dining_and_nightlife": [
+        "Pier 7 – seven-floor dining destination",
+        "Cafe Bateel, Starbucks, Costa Coffee on Marina Walk",
+        "Numerous waterfront restaurants and late-night lounges",
+        "The Address Dubai Marina – 5-star hotel with rooftop Shades lounge"
+      ],
+      "hotels": [
+        "The Address Dubai Marina (5-star)",
+        "Grosvenor House",
+        "Ritz-Carlton Dubai Marina",
+        "Stella Di Mare"
+      ],
+      "leisure_and_recreation": [
+        "Dubai Marina Yacht Club",
+        "JBR Beach (adjacent, minutes away)",
+        "Bluewaters Island (connected via promenade)",
+        "XLine Dubai – urban zipline",
+        "Outdoor gyms along Marina Walk",
+        "Multiple fitness studios and spas including Fitness First"
+      ],
+      "parks_and_green_spaces": "Small parks and playgrounds within the community",
+      "transport_hubs": "Metro, Tram, Water Taxi, and abundant taxis"
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "Wellington International School",
+          "notes": "Cited as closest school to Dubai Marina by Luxhabitat; exact distance not confirmed"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Emirates Hospital",
+          "notes": "Cited as closest hospital by Luxhabitat; exact distance not confirmed"
+        }
+      ],
+      "supermarkets": [
+        "Waitrose (Dubai Marina Mall)",
+        "Multiple supermarkets and pharmacies within the community"
+      ],
+      "mosques": "Mosque within the community",
+      "disclaimer": "Exact distances to schools and healthcare facilities are not confirmed by sources; buyers should verify independently"
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_threshold": "AED 2,000,000 minimum purchase price",
+      "average_selling_prices_dec_2025": {
+        "source": "Property Monitor via Engel & Voelkers, December 2025",
+        "studio": "AED 1,383,696",
+        "one_bed": "AED 1,878,981",
+        "two_bed": "AED 2,701,465",
+        "three_bed": "AED 4,490,784",
+        "four_bed": "AED 10,677,118"
+      },
+      "average_rental_prices_dec_2025": {
+        "source": "Property Monitor via Engel & Voelkers, December 2025",
+        "studio": "AED 69,154/year",
+        "one_bed": "AED 96,484/year",
+        "two_bed": "AED 144,521/year",
+        "three_bed": "AED 219,393/year",
+        "four_bed": "AED 333,700/year"
+      },
+      "gross_rental_yield_dld_based": {
+        "source": "UAE Calc / DLD open data",
+        "average_apartments": "5.1%",
+        "by_type": {
+          "studio": "4.5%",
+          "one_bed": "5.2%",
+          "two_bed": "5.5%",
+          "three_bed": "5.3%",
+          "four_bed_plus": "3.9%"
+        }
+      },
+      "gross_rental_yield_market_estimates": {
+        "source": "Valorisimo Q2 2025; Astraterra Q1 2026",
+        "long_term_range": "5.8%–7.2% (apartments); 7.1% average per Astraterra/Property Monitor Q1 2026",
+        "short_term_rental_range": "8.5%–12% gross for DTCM-licensed holiday homes",
+        "note": "Short-term rental requires DTCM Holiday Home Permit. Management fees of 15–20% apply. Net yields lower than gross."
+      },
+      "capital_appreciation": {
+        "source": "Valorisimo 2024–2025",
+        "yoy_growth": "8%–12% year-on-year; luxury waterfront apartments saw ~10.4% price increase in 2024",
+        "note": "Historical data; not a guarantee of future performance"
+      },
+      "rental_market_growth": {
+        "source": "RERA Q4 2025 via Astraterra",
+        "yoy_rent_growth": "+16.4% year-on-year – second highest in Dubai after Business Bay"
+      },
+      "transaction_volume": {
+        "source": "DLD March 2026 via Astraterra",
+        "note": "Dubai Marina ranked #3 by apartment transaction volume citywide in Q4 2025 with 3,200+ apartment sales"
+      },
+      "short_term_rental_notes": "DTCM Holiday Home Permit required. Fines from AED 5,000 for unlicensed operations. Best STR buildings include Marina Gate I & II, Cayan Tower, Princess Tower, 23 Marina."
+    },
+    "developer_profile": {
+      "name": "LIV Real Estate Development (LIV Developers)",
+      "also_known_as": [
+        "LIV Developers",
+        "LIV Real Estate",
+        "Marina LIV Development"
+      ],
+      "founded": "Approximately early 2000s; Dubai operations established early 2010s",
+      "ceo": "Latif Habib",
+      "headquarters": "Dubai, UAE",
+      "background": "Boutique luxury developer with roots in high-end real estate in Los Angeles and New York before expanding into Dubai. Focused on premium waterfront residential towers in Dubai Marina.",
+      "notable_projects": [
+        "LIV Residence – Dubai Marina (completed)",
+        "LIV Marina – Dubai Marina (completed/near completion)",
+        "LIV Lux – Dubai Marina (off-plan, est. completion Q4 2026)",
+        "LIV Maritime – Madinat Dubai Al Melaheyah",
+        "LIV Oceanside – Palm Deira"
+      ],
+      "units_delivered": "600+ high-end residential units (per Homeland.ae)",
+      "built_up_area": "Exceeds 1.5 million sq ft (per Homeland.ae)",
+      "reputation": "Known for glass-facade architecture, full-height glazing, resort-style amenities, and premium marina-view positioning. Strong rental demand and resale performance cited across multiple sources.",
+      "disclaimer": "Developer profile data partially sourced from developer-adjacent marketing sources; independent verification recommended"
+    }
+  },
+  "sub_developments": {
+    "liv_residence": {
+      "aliases": [
+        "LIV Residence",
+        "Liv Residence",
+        "LIV Residences"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "LIV Residence, Dubai Marina",
+        "investment_overrides": {
+          "status": "Ready / Move-in",
+          "starting_price_aed": 849548,
+          "unit_types": [
+            "Studio",
+            "1 Bedroom",
+            "2 Bedroom",
+            "3 Bedroom",
+            "4 Bedroom Penthouse"
+          ],
+          "size_range_sqft": "505–2,224 sq ft (apartments); penthouses larger",
+          "tower_height": "G+27 floors",
+          "marina_view_units_percent": "70% of apartments have marina views",
+          "private_beach_access": true,
+          "construction_started": "September 2016",
+          "original_handover_target": "July 2019",
+          "current_status": "Completed and ready to move in",
+          "total_project_value_approx": "AED 400 million",
+          "payment_plan": "100% payment (secondary market resale)",
+          "note": "LIV Residence is a completed secondary-market asset. Pricing reflects resale market."
+        },
+        "sales_talking_points": {
+          "architecture": "Striking G+27 tower with full-height glazing and spacious terraces designed to maximise marina and sea views",
+          "views": "Views of Palm Jumeirah, JBR The Beach, Atlantis, and Ain Dubai from upper floors",
+          "amenities": "Infinity pool, gym, ladies and gents spa, indoor and outdoor kids' play area, residents' lounge, landscaped garden, promenade-level retail, fine dining restaurants",
+          "location": "Heart of Dubai Marina; walking distance to Marina Walk, Dubai Marina Mall, and The Beach at JBR",
+          "beach_access": "Exclusive private beach access for residents",
+          "transport": "Walking distance to Dubai Marina Tram and DMCC Metro Station (Red Line)",
+          "lobby": "Awe-inspiring lobby with high ceilings and ambient lighting",
+          "penthouses": "Three duplex penthouses tailor-made to clients' tastes",
+          "developer_quality": "Delivered by LIV Real Estate Development, known for premium waterfront luxury in Dubai Marina"
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "Dubai Marina: 200+ towers, 7 km waterfront promenade, world's largest man-made marina. Average 1BR selling price AED 1.88M (Dec 2025, Property Monitor). Rental market grew +16.4% YoY in Q4 2025 (RERA). #3 by apartment transaction volume in Dubai Q4 2025.",
+      "scarcity_argument": "Dubai Marina is a fully built-out, established community with limited land for new development. Off-plan supply is scarce – only a handful of new projects remain as of late 2025. Waterfront-facing units with direct marina views command a persistent premium and are rarely available at entry-level prices.",
+      "lifestyle_pitch": "Riviera-style waterfront living in the heart of New Dubai. Step out to a 7 km promenade lined with world-class restaurants, cafes, and boutiques. JBR Beach is minutes away. The marina skyline – illuminated at night – is one of Dubai's most iconic vistas. Metro, tram, and water taxi on your doorstep. Everything from Waitrose to Michelin-calibre dining is within walking distance.",
+      "investment_pitch": "Freehold ownership with Golden Visa eligibility at AED 2M+. Gross rental yields of 5.1–7.2% (DLD/market data). Short-term rental potential of 8.5–12% gross for DTCM-licensed holiday homes. Capital appreciation of 8–12% YoY (2024–2025). Zero income tax on rental profits. Dubai Marina ranked top 5 most-searched neighbourhood on Airbnb by international visitors.",
+      "objection_handling": "Concerned about oversupply? Dubai Marina is one of the most constrained supply environments in Dubai – it is a finished community, not a greenfield development. Worried about yields vs. other areas? While JVC offers higher gross yields, Dubai Marina delivers superior capital appreciation, liquidity, and lifestyle premium that protects long-term value. Concerned about management? DTCM-licensed operators handle short-term rentals end-to-end for 15–20% of revenue."
+    },
+    "per_sub_development": {
+      "liv_residence": {
+        "headline": "LIV Residence – Completed luxury tower in the heart of Dubai Marina. Studios to 4BR penthouses from AED 849,548. 70% of units with marina views. Private beach access. Move-in ready.",
+        "key_differentiators": [
+          "Full-height glazing and spacious terraces maximising marina and sea views",
+          "Views of Palm Jumeirah, Atlantis, Ain Dubai, and JBR from upper floors",
+          "Exclusive private beach access – rare in Dubai Marina",
+          "Resort-style amenities: infinity pool, spa, gym, kids' play areas, fine dining",
+          "Delivered by LIV Real Estate – boutique luxury developer with proven Marina track record",
+          "Walking distance to Marina Walk, Dubai Marina Mall, tram, and metro"
+        ],
+        "investor_note": "Completed asset with active secondary market. 50 DLD sale transactions recorded. Strong rental demand from professionals and expats. Marina-view units command premium rents."
+      }
+    }
+  },
+  "aliases": [
+    "Dubai Marina",
+    "dubai marina",
+    "LIV Residence",
+    "Marsa Dubai",
+    "Dubai Marina waterfront",
+    "LIV Residences",
+    "Liv Residence Dubai Marina",
+    "LIV Real Estate Dubai Marina"
+  ],
+  "developer_keywords": [
+    "LIV Developers",
+    "LIV Real Estate",
+    "LIV Real Estate Development",
+    "Marina LIV Development",
+    "LIV",
+    "Latif Habib",
+    "liv"
+  ],
+  "prompt_data": {
+    "developer": "LIV Real Estate Development (LIV Developers)",
+    "community": "Dubai Marina",
+    "location": {
+      "area": "Dubai Marina (DLD: Marsa Dubai), New Dubai, UAE",
+      "description": "Dubai Marina is the world's largest man-made marina, a fully established waterfront community on the Persian Gulf shoreline. It spans approximately 3.5 km with 11 km of marine frontage, 200+ residential towers, and a 7 km pedestrian promenade. Located on Sheikh Zayed Road, it offers direct access to JBR, Bluewaters Island, JLT, and Dubai Internet City. Served by Dubai Metro (Red Line), Dubai Tram, and Water Taxi.",
+      "distances": {
+        "dubai_mall": "~19 min drive",
+        "palm_jumeirah": "~11 min drive",
+        "burj_al_arab": "~17 min drive",
+        "the_walk_jbr": "~8 min drive",
+        "dubai_international_airport": "~26–27 min drive",
+        "al_maktoum_international_airport": "~36 min drive",
+        "disclaimer": "Approximate drive times from LIV Residence per Propsearch and Luxhabitat; traffic-dependent"
+      }
+    },
+    "community_amenities": [
+      "7 km Marina Walk promenade (jogging, cycling, dining, retail)",
+      "Dubai Marina Mall (Waitrose, Reel Cinemas, 140+ retail and dining outlets)",
+      "Dubai Marina Yacht Club",
+      "Pier 7 dining destination",
+      "The Address Dubai Marina (5-star hotel, rooftop infinity pool, spa)",
+      "Grosvenor House and Ritz-Carlton hotels",
+      "JBR Beach (adjacent, minutes away)",
+      "Bluewaters Island (connected)",
+      "XLine Dubai urban zipline",
+      "Multiple gyms including Fitness First",
+      "Numerous spas and wellness centres",
+      "Parks and children's playgrounds",
+      "Supermarkets, pharmacies, salons, dry-cleaners within community",
+      "Mosque within community",
+      "Dubai Metro (DMCC station, Red Line)",
+      "Dubai Tram (Dubai Marina Tram Station)",
+      "Dubai Water Taxi"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "Wellington International School",
+          "notes": "Cited as closest school to Dubai Marina by Luxhabitat. Curriculum and exact distance not confirmed by sources – verify independently."
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Emirates Hospital",
+          "notes": "Cited as closest hospital to Dubai Marina by Luxhabitat. Exact distance not confirmed – verify independently."
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Marina Mall",
+          "notes": "Within the community. Includes Waitrose hypermarket, Reel Cinemas, and 140+ retail and dining outlets."
+        },
+        {
+          "name": "The Beach at JBR",
+          "notes": "Adjacent open-air retail and dining destination, minutes from Dubai Marina."
+        },
+        {
+          "name": "Marina Walk promenade retail",
+          "notes": "Ground-floor retail and F&B along the 7 km waterfront promenade."
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": "5.1%–7.2% gross long-term rental yield (DLD/market data 2025–2026); 8.5%–12% gross for DTCM-licensed short-term rentals. Net yields lower after fees and service charges. Not a guarantee of future returns.",
+      "branded_premium_note": "LIV Residence is a boutique luxury product by LIV Real Estate Development, a developer known for premium glass-facade waterfront towers in Dubai Marina. The LIV brand commands a lifestyle and design premium over standard Marina stock."
+    },
+    "sales_talking_points": {
+      "freehold_and_visa": "Freehold ownership. Purchases of AED 2M+ qualify for UAE Golden Visa (10-year renewable residency).",
+      "yield_and_growth": "Gross rental yields 5.1–7.2% (DLD-based to market estimates). Rental prices grew +16.4% YoY in Q4 2025 (RERA). Capital appreciation 8–12% YoY in 2024–2025.",
+      "liquidity": "Dubai Marina ranked #3 by apartment transaction volume citywide in Q4 2025 (3,200+ sales). High secondary market liquidity.",
+      "lifestyle": "Riviera-style waterfront living. 7 km promenade, beach minutes away, world-class dining and nightlife, metro and tram on doorstep.",
+      "tax_free": "Zero income tax on rental income in the UAE.",
+      "short_term_rental": "Strong Airbnb/holiday home market. DTCM permit required. Peak season nightly rates AED 550–950 for 1BR Marina Walk-facing units.",
+      "scarcity": "Established, land-constrained community. Limited new supply. Waterfront-view units are a finite asset."
+    },
+    "developer_track_record": "LIV Real Estate Development (LIV Developers) is a Dubai-based boutique luxury developer founded around 2000, with Dubai operations from the early 2010s. Led by CEO Latif Habib. Known for premium glass-facade waterfront towers in Dubai Marina. Completed projects include LIV Residence and LIV Marina. Pipeline includes LIV Lux (est. Q4 2026), LIV Maritime, and LIV Oceanside. Over 600 high-end units delivered across 1.5M+ sq ft. Consistently cited for strong rental demand, high occupancy, and premium resale values."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:34:59.338224+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.nestseekers.com/Guides/Neighborhood/dubai-marina",
+      "https://www.luxhabitat.ae/areas/dubai/dubai-marina",
+      "https://www.bhomes.com/en/blog/definitive-guides/best-areas-in-dubai-near-metro",
+      "https://www.engelvoelkers.com/ae/en/area-guide/dubai-marina",
+      "https://dubaimetroinfo.com/dubai-metro-station",
+      "https://www.tanamiproperties.com/Projects/LIV-Residence",
+      "https://valorisimo.com/rental-yields-and-roi",
+      "https://www.astraterra.ae/blogs/dubai-marina-short-term-rental-yields-2026-holiday-home-roi-airbnb-rates-investment-guide",
+      "https://www.christiesrealestatedubai.com/developments/dubai/liv-marina",
+      "https://www.guestready.com/blog/best-rental-yields-in-dubai",
+      "https://aysdevelopers.ae/dubai-luxury-roi-rental-yields?utm_=",
+      "https://uaecalc.com/real-estate-roi/project/dubai-marina",
+      "https://www.luxhabitat.ae/developments/dubai/liv-residence",
+      "https://www.homeland.ae/developers/marina-liv",
+      "https://propsearch.ae/dubai/liv-residence",
+      "https://www.bayut.com/area-guides/dubai-marina",
+      "https://www.bayut.com/buildings/liv-residence",
+      "https://opr.ae/developers/liv-developers",
+      "https://lm.livuae.com",
+      "https://www.propertyfinder.ae/blog/schools-in-dubai-marina",
+      "https://in.linkedin.com/company/liv-developers",
+      "https://www.christiesrealestatedubai.com/the-journal/top-5-schools-near-dubai-marina",
+      "https://www.propertyfinder.ae/en/rent/dubai/properties-for-rent-dubai-marina.html",
+      "https://www.luxhabitat.ae/the-journal/8-nurseries-schools-dubai-marina",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-dubai-marina.html",
+      "https://www.bayut.com",
+      "https://www.bhomes.com/en/off-plan/liv-real-estate-development-llc/liv-marina",
+      "https://en.wikipedia.org/wiki/Dubai_Marina",
+      "https://propsearch.ae/dubai/dubai-marina/schools",
+      "https://www.propertyfinder.ae/en/rent/dubai/furnished-apartments-for-rent-dubai-marina.html"
+    ],
+    "audit_flags": [
+      "School details (Wellington International School) confirmed as nearest by Luxhabitat only – curriculum, fees, ratings, and exact distance not verified by independent sources",
+      "Healthcare details (Emirates Hospital) confirmed as nearest by Luxhabitat only – exact distance and specialisms not verified",
+      "LIV Residence exact handover date: original target July 2019 per Propsearch; confirmed as completed/ready per Tanami 2026 listing, but official DLD completion certificate date not sourced",
+      "ROI and rental yield figures vary across sources (DLD-based 5.1% vs market estimates up to 7.2% long-term, up to 12% short-term); buyers should verify with current DLD data",
+      "Developer founding date and units-delivered figures sourced from Homeland.ae (developer-adjacent marketing source) – independent verification recommended",
+      "Capital appreciation figures (8–12% YoY) sourced from Valorisimo (broker/marketing source) – not independently audited",
+      "LIV Residence starting price AED 849,548–859,548 reflects secondary market resale; no active off-plan payment plan available",
+      "Golden Visa threshold of AED 2M is current policy as of research date; subject to change – verify with DLD/ICP",
+      "Drive time estimates are approximate and sourced from Propsearch/Luxhabitat; not independently verified",
+      "No specific service charge (per sqft) data sourced for LIV Residence specifically; community average AED 18.6/sqft cited for Dubai Marina by Astraterra",
+      "LIV Residence private beach access claim sourced from Propsearch listing notes – exact beach location and access terms not detailed"
+    ]
+  }
+}

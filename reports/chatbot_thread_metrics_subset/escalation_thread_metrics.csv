@@ -1,0 +1,10 @@
+metric,value
+thread_count,0
+question_count,0
+avg_questions_per_thread,0.0
+append_rate,0.0
+debounce_bundle_rate,0.0
+bypass_rate,0.0
+timeout_rate,0.0
+false_positive_threads,0
+false_negative_threads,0

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dalya — Agent Working Surface (Desktop)</title>
+  <link rel="stylesheet" href="./_tokens.css" />
+  <style>
+    /* ────────────────────────────────────────────────────────────────────
+     * Page-specific layout — applies the token system to the agent surface
+     * Per 06-components.md §7.1 (agent working surface = hot-list sidebar + detail)
+     * ──────────────────────────────────────────────────────────────────── */
+
+    .app {
+      display: grid;
+      grid-template-rows: var(--header-height) 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Top bar (06 §7.1) ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      padding: 0 var(--space-12);
+      background: var(--color-surface-1);
+      border-bottom: 1px solid var(--color-border-hairline);
+    }
+
+    .wordmark-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+    }
+
+    .wordmark-text {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-brand-500);
+      letter-spacing: -0.01em;
+      opacity: 0.85; /* 06 §7.4 — wordmark doesn't compete with CTAs */
+    }
+
+    .header-search {
+      flex: 1;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .header-search input {
+      width: 100%;
+      height: var(--input-height-sm);
+      padding: 0 var(--space-8) 0 var(--space-12);
+      background: var(--color-surface-2);
+      border: 1px solid transparent;
+      border-radius: var(--radius-1);
+      font: inherit;
+      font-size: var(--text-xs);
+      color: var(--color-text-1);
+      transition: border-color var(--duration-base) var(--ease-out);
+    }
+    .header-search input::placeholder { color: var(--color-text-3); }
+    .header-search input:focus {
+      outline: none;
+      border-color: var(--color-border-default);
+      background: var(--color-surface-0);
+    }
+    .header-search .kbd {
+      position: absolute;
+      right: var(--space-6);
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      padding: 2px 6px;
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-1);
+    }
+
+    .header-user {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+    .header-user .name {
+      font-size: var(--text-xs);
+      color: var(--color-text-2);
+    }
+    .header-user .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-brand-100);
+      color: var(--color-brand-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: var(--text-xs);
+    }
+
+    /* ── Main two-column layout ── */
+    .main {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar (06 §7.1) ── */
+    .sidebar {
+      background: var(--color-surface-1);
+      border-right: 1px solid var(--color-border-hairline);
+      overflow-y: auto;
+      padding: var(--space-8) 0;
+    }
+
+    .sidebar-section {
+      padding: 0 var(--space-8) var(--space-8);
+    }
+    .sidebar-label {
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 500;
+      padding: var(--space-8) var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sidebar-label .count {
+      font-weight: 600;
+      color: var(--color-text-2);
+      font-feature-settings: "tnum";
+    }
+
+    /* Conversation card in sidebar — compact density */
+    .conv-card {
+      display: block;
+      padding: var(--space-6) var(--space-6);
+      border-radius: var(--radius-1);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: background var(--duration-base) var(--ease-out);
+      border-left: 2px solid transparent;
+    }
+    .conv-card:hover {
+      background: var(--color-surface-2);
+    }
+    .conv-card.is-selected {
+      background: var(--color-surface-2);
+      border-left-color: var(--color-brand-500);
+    }
+    .conv-card .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: 2px;
+    }
+    .conv-card .name {
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--color-text-1);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .conv-card .time {
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      flex-shrink: 0;
+      font-feature-settings: "tnum";
+    }
+    .conv-card .preview {
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .conv-card .meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-top: 4px;
+    }
+    .conv-card .listing-tag {
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+    }
+
+    /* Escalation indicator on conv card */
+    .esc-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--color-error-500);
+      flex-shrink: 0;
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--color-brand-500);
+      flex-shrink: 0;
+      animation: pulse-dot 1600ms ease-in-out infinite;
+    }
+
+    /* ── Detail view — conversation thread ── */
+    .detail {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      background: var(--color-surface-0);
+    }
+
+    .detail-header {
+      padding: var(--space-10) var(--space-16);
+      border-bottom: 1px solid var(--color-border-hairline);
+      background: var(--color-surface-0);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .detail-header .buyer-line {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-bottom: 2px;
+    }
+    .detail-header .buyer-name {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text-1);
+      letter-spacing: var(--tracking-tight);
+    }
+    .detail-header .buyer-phone {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      font-feature-settings: "tnum";
+    }
+    .detail-header .context {
+      font-size: var(--text-xs);
+      color: var(--color-text-2);
+    }
+    .detail-header .context a {
+      color: var(--color-link);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .detail-header .context a:hover { color: var(--color-link-hover); text-decoration: underline; }
+
+    .detail-actions {
+      display: flex;
+      gap: var(--space-6);
+      align-items: center;
+    }
+
+    /* ── Buttons (06 §1) ── */
+    .btn {
+      height: var(--button-height-md);
+      padding: 0 var(--space-12);
+      border-radius: var(--radius-2);
+      border: 1px solid transparent;
+      font: inherit;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-4);
+      white-space: nowrap;
+      transition: background var(--duration-base) var(--ease-out),
+                  border-color var(--duration-base) var(--ease-out);
+    }
+    .btn-primary {
+      background: var(--color-brand-600);  /* TOP-TIER CTA — per Phase 2 lock */
+      color: white;
+    }
+    .btn-primary:hover { background: var(--color-brand-700); }
+
+    .btn-secondary {
+      background: var(--color-brand-500);
+      color: white;
+    }
+    .btn-secondary:hover { background: var(--color-brand-600); }
+
+    .btn-tertiary {
+      background: var(--color-surface-1);
+      color: var(--color-text-1);
+      border-color: var(--color-border-hairline);
+    }
+    .btn-tertiary:hover { background: var(--color-surface-2); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-2);
+    }
+    .btn-ghost:hover { background: var(--color-surface-1); color: var(--color-text-1); }
+
+    .btn-sm {
+      height: var(--button-height-sm);
+      padding: 0 var(--space-8);
+      font-size: var(--text-2xs);
+    }
+
+    /* ── Conversation thread (06 §6) ── */
+    .thread {
+      overflow-y: auto;
+      padding: var(--space-12) var(--space-16);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-10);
+    }
+
+    .day-separator {
+      text-align: center;
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      padding: var(--space-6) 0;
+      position: relative;
+    }
+    .day-separator::before,
+    .day-separator::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 80px;
+      height: 1px;
+      background: var(--color-border-hairline);
+    }
+    .day-separator::before { left: calc(50% - 130px); }
+    .day-separator::after  { right: calc(50% - 130px); }
+
+    /* Message bubble — three sender patterns per 06 §6.1 */
+    .msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 560px;
+    }
+    .msg.from-buyer { align-self: flex-start; }
+    .msg.from-dalya { align-self: flex-start; }
+    .msg.from-agent { align-self: flex-end; align-items: flex-end; }
+
+    .msg-meta {
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      padding: 0 var(--space-6) var(--space-2);
+      font-feature-settings: "tnum";
+    }
+
+    .msg-bubble {
+      padding: var(--space-6) var(--space-10);
+      border-radius: var(--radius-2);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      border: 1px solid var(--color-border-hairline);
+    }
+    .msg.from-buyer .msg-bubble {
+      background: var(--color-surface-2);
+      color: var(--color-text-1);
+    }
+    .msg.from-dalya .msg-bubble {
+      background: var(--color-surface-1);
+      color: var(--color-text-1);
+      border-left: 2px solid var(--color-brand-500);
+    }
+    .msg.from-agent .msg-bubble {
+      background: var(--color-brand-50);
+      color: var(--color-text-1);
+      border-color: var(--color-brand-100);
+    }
+
+    /* Escalation pill above a Dalya bubble */
+    .esc-pill {
+      align-self: flex-start;
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      font-weight: 600;
+      padding: 2px var(--space-4);
+      margin-bottom: 4px;
+      border-radius: var(--radius-1);
+    }
+    .esc-pill.kind-offer    { background: var(--color-success-100); color: var(--color-success-700); }
+    .esc-pill.kind-bypass   { background: var(--color-error-50); color: var(--color-error-700); }
+    .esc-pill.kind-returning { background: var(--color-brand-50); color: var(--color-brand-700); }
+
+    /* Inline data card inside Dalya bubble (06 §6.4) */
+    .inline-card {
+      margin-top: var(--space-6);
+      padding: var(--space-8) var(--space-10);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-2);
+      display: grid;
+      gap: var(--space-2);
+    }
+    .inline-card .label {
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 500;
+    }
+    .inline-card .aed {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--color-text-1);
+      font-variant-numeric: tabular-nums slashed-zero;
+      letter-spacing: var(--tracking-tight);
+    }
+    .inline-card .sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-2);
+    }
+    .inline-card-action {
+      margin-top: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--color-link);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .inline-card-action:hover { text-decoration: underline; }
+
+    /* ── Composer (06 §6.8 + 07 §8.2) ── */
+    .composer {
+      border-top: 1px solid var(--color-border-hairline);
+      padding: var(--space-10) var(--space-16);
+      background: var(--color-surface-0);
+    }
+    .composer-shell {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: var(--space-8);
+      padding: var(--space-6) var(--space-8);
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-2);
+      transition: border-color var(--duration-base) var(--ease-out);
+    }
+    .composer-shell:focus-within {
+      border-color: var(--color-brand-500);
+      box-shadow: 0 0 0 3px var(--color-brand-50);
+    }
+    .composer textarea {
+      resize: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font: inherit;
+      font-size: var(--text-sm);
+      color: var(--color-text-1);
+      min-height: 40px;
+      max-height: 200px;
+      line-height: var(--leading-normal);
+    }
+    .composer textarea::placeholder { color: var(--color-text-3); }
+    .composer-hint {
+      padding: var(--space-4) var(--space-2) 0;
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      display: flex;
+      gap: var(--space-8);
+    }
+    .composer-hint kbd {
+      font-family: var(--font-mono);
+      padding: 1px 4px;
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-1);
+      font-size: 10px;
+    }
+
+    /* ── Status pills (06 §8.2) ── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-2xs);
+      font-weight: 600;
+      padding: 2px var(--space-6);
+      border-radius: var(--radius-full);
+      letter-spacing: var(--tracking-wide);
+      white-space: nowrap;
+    }
+    .pill-success  { background: var(--color-success-100); color: var(--color-success-700); }
+    .pill-warning  { background: var(--color-warning-100); color: var(--color-warning-700); }
+    .pill-error    { background: var(--color-error-100); color: var(--color-error-700); }
+    .pill-brand    { background: var(--color-brand-50); color: var(--color-brand-700); }
+    .pill-neutral  { background: var(--color-surface-2); color: var(--color-text-3); }
+
+    /* Scrollbar restraint */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-border-hairline);
+      border-radius: var(--radius-full);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-border-default); }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- ════════════════════ TOP BAR ════════════════════ -->
+    <header class="header">
+      <div class="wordmark-block">
+        <span class="wordmark-text">dalya</span>
+      </div>
+      <div class="header-search">
+        <input type="search" placeholder="Search conversations, listings, buyers" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="header-user">
+        <span class="name">Eric Zhu</span>
+        <span class="avatar">EZ</span>
+      </div>
+    </header>
+
+    <!-- ════════════════════ MAIN ════════════════════ -->
+    <div class="main">
+
+      <!-- ════════ SIDEBAR — hot list ════════ -->
+      <aside class="sidebar">
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Active <span class="count">3</span></div>
+
+          <a class="conv-card is-selected" href="#">
+            <div class="top">
+              <span class="name">Sara Mohammed</span>
+              <span class="time">14:23</span>
+            </div>
+            <div class="preview">My offer of AED 17,000,000 is firm. Can we close in 30 days?</div>
+            <div class="meta">
+              <span class="esc-dot"></span>
+              <span class="listing-tag">Palace Villas Ostra · 2805</span>
+            </div>
+          </a>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">Tom Henderson</span>
+              <span class="time">13:51</span>
+            </div>
+            <div class="preview">Final position: AED 5,780,000.</div>
+            <div class="meta">
+              <span class="live-dot"></span>
+              <span class="listing-tag">Sobha Seahaven · 2305</span>
+            </div>
+          </a>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">+971 50 101 0012</span>
+              <span class="time">12:04</span>
+            </div>
+            <div class="preview">I'm David Chen, real estate counsel at a DIFC firm…</div>
+            <div class="meta">
+              <span class="listing-tag">Palace Villas Ostra · 2805</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Recent <span class="count">8</span></div>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">Mohammed Al Marri</span>
+              <span class="time">Yesterday</span>
+            </div>
+            <div class="preview">Will discuss with my wife and revert.</div>
+            <div class="meta">
+              <span class="listing-tag">Palace Villas Ostra · 2805</span>
+            </div>
+          </a>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">Priya Sharma</span>
+              <span class="time">Yesterday</span>
+            </div>
+            <div class="preview">AED 17M noted. Will speak to my husband.</div>
+            <div class="meta">
+              <span class="listing-tag">Palace Villas Ostra · 2805</span>
+            </div>
+          </a>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">Khalid Al Maktoum</span>
+              <span class="time">Mon</span>
+            </div>
+            <div class="preview" dir="rtl" lang="ar">شكراً، سأرجع إليك قريباً.</div>
+            <div class="meta">
+              <span class="listing-tag">Palace Villas Ostra · 2805</span>
+            </div>
+          </a>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">Sarah Patel</span>
+              <span class="time">Mon</span>
+            </div>
+            <div class="preview">BRN of the agent on this listing, please.</div>
+            <div class="meta">
+              <span class="listing-tag">Sobha Seahaven · 2305</span>
+            </div>
+          </a>
+
+          <a class="conv-card" href="#">
+            <div class="top">
+              <span class="name">Raj Kapoor</span>
+              <span class="time">Sun</span>
+            </div>
+            <div class="preview">Mortgage broker at Mashreq. Can you share the payment plan?</div>
+            <div class="meta">
+              <span class="listing-tag">Sobha Seahaven · 2305</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Archived <span class="count">142</span></div>
+        </div>
+      </aside>
+
+      <!-- ════════ DETAIL — conversation thread ════════ -->
+      <section class="detail">
+
+        <header class="detail-header">
+          <div>
+            <div class="buyer-line">
+              <span class="buyer-name">Sara Mohammed</span>
+              <span class="buyer-phone">+971 50 101 0001</span>
+              <span class="pill pill-success">Above asking</span>
+            </div>
+            <div class="context">
+              Buyer on <a href="#">Palace Villas Ostra · Unit 2805</a> · Asking <span class="tabular-nums">AED 17,253,444</span> · Started 6 days ago
+            </div>
+          </div>
+          <div class="detail-actions">
+            <button class="btn btn-ghost btn-sm" aria-label="Archive">Archive</button>
+            <button class="btn btn-secondary">Open in listing</button>
+            <button class="btn btn-primary">Send to Eric</button>
+          </div>
+        </header>
+
+        <div class="thread">
+
+          <div class="day-separator">Tuesday, May 5</div>
+
+          <!-- Buyer T1 -->
+          <div class="msg from-buyer">
+            <div class="msg-meta">Sara · 09:11</div>
+            <div class="msg-bubble">
+              Hi, just saw your listing on Property Finder. Is this still available?
+            </div>
+          </div>
+
+          <!-- Dalya T1 -->
+          <div class="msg from-dalya">
+            <div class="msg-meta">Dalya · 09:11</div>
+            <div class="msg-bubble">
+              Hi, yes — Palace Villas Ostra Unit 2805 is live. 5-bedroom Palace-branded villa in The Oasis, 8,500 sqft. Asking <span class="tabular-nums">AED 17,253,444</span>. Handover September 2029. What's drawing you to it?
+            </div>
+          </div>
+
+          <!-- Buyer T2 -->
+          <div class="msg from-buyer">
+            <div class="msg-meta">Sara · 09:14</div>
+            <div class="msg-bubble">
+              We're moving from London. End-use, family of 5. What's the payment situation — how much has been paid so far?
+            </div>
+          </div>
+
+          <!-- Dalya T2 -->
+          <div class="msg from-dalya">
+            <div class="msg-meta">Dalya · 09:14</div>
+            <div class="msg-bubble">
+              Remaining to the developer is <span class="tabular-nums">AED 10,621,261</span>, paid across the SPA schedule through September 2029. You'd take those payments over directly to Emaar as part of your purchase. At closing you settle the seller's equity portion plus the DLD fee and Mahoroba brokerage. Eric, our Lead Broker at Dalya who handles all transactions, walks through exact closing math when you're at offer stage.
+            </div>
+          </div>
+
+          <div class="day-separator">Today, May 14</div>
+
+          <!-- Buyer T9 (the canonical offer turn) -->
+          <div class="msg from-buyer">
+            <div class="msg-meta">Sara · 14:21</div>
+            <div class="msg-bubble">
+              OK, my offer is AED 17,000,000 firm. Cash. Can we close in 30 days?
+            </div>
+          </div>
+
+          <!-- Dalya T9 with offer escalation -->
+          <div class="msg from-dalya">
+            <span class="esc-pill kind-offer">Offer · above threshold</span>
+            <div class="msg-meta">Dalya · 14:23</div>
+            <div class="msg-bubble">
+              AED <span class="tabular-nums">17,000,000</span>, got it. Passing this to the seller now and circling back once they've reviewed.
+
+              <div class="inline-card">
+                <span class="label">Offer received</span>
+                <span class="aed">AED 17,000,000</span>
+                <span class="sub">Above your alert threshold (AED 16,894,000) · Cash · 30-day close requested</span>
+                <a href="#" class="inline-card-action">View in working surface ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Agent intervention -->
+          <div class="msg from-agent">
+            <div class="msg-meta">You · 14:25</div>
+            <div class="msg-bubble">
+              Hi Sara, Eric here. We're aligned on the offer. I'll call you on this number in 10 minutes to walk through next steps — does that work?
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Composer -->
+        <div class="composer">
+          <div class="composer-shell">
+            <textarea placeholder="Write a message to Sara…" rows="1"></textarea>
+            <button class="btn btn-secondary btn-sm">Send</button>
+          </div>
+          <div class="composer-hint">
+            <span><kbd>↵</kbd> send</span>
+            <span><kbd>⇧↵</kbd> new line</span>
+            <span>Dalya stays paused while you type</span>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- Tiny demo interactivity — clicking a conv-card swaps the selected state.
+       Kept inline so the mockup runs standalone without a build step. -->
+  <script>
+    document.querySelectorAll('.conv-card').forEach(c => {
+      c.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.conv-card').forEach(x => x.classList.remove('is-selected'));
+        c.classList.add('is-selected');
+      });
+    });
+  </script>
+</body>
+</html>

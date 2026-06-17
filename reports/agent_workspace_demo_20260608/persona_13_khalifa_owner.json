@@ -1,0 +1,276 @@
+{
+  "idx": 13,
+  "slug": "khalifa_owner",
+  "persona": "Khalifa Al Mansoori — Existing Owner pivoting to seller",
+  "phone": "+971501010013",
+  "listing_id": "HARNESS_listing_04_bd2d6707",
+  "listing_facts": {
+    "property_name": "LIV Residence",
+    "beds": 4,
+    "baths": 6,
+    "sqft": 5148.0,
+    "plot_sqft": null,
+    "price_aed": 16990000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm interested in LIV Residence the unit. Is it still available?",
+      "bot": "Hi there! Yes, the LIV Residence 4-bed is available. It's a ready resale in Dubai Marina, asking AED 16,990,000.\n\nI'm Dalya with Mahoroba Test Brokerage. What would you like to know about the unit?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 60.8
+    },
+    {
+      "turn": 2,
+      "buyer": "What's the asking price?",
+      "bot": "AED 16,990,000.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 65.1
+    },
+    {
+      "turn": 3,
+      "buyer": "How long has this unit been on the market?",
+      "bot": "I don't have that detail in the listing record, but I can get that confirmed for you.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 63.5
+    },
+    {
+      "turn": 4,
+      "buyer": "Has the seller had many offers? What's the highest they've received?",
+      "bot": "I don't share offer history or pricing details from other buyers, that's a discretion matter for the seller. The asking price is AED 16,990,000, and if you'd like to put a number forward.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 45.9
+    },
+    {
+      "turn": 5,
+      "buyer": "Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market.",
+      "bot": "That's helpful context. For market intelligence on LIV Residence, comparable units, recent sales, activity levels, that's a conversation worth having directly with Eric, the Mahoroba Test Brokerage agent managing this listing, our senior broker. They can walk you through the current dynamics in the building and help you think through timing and positioning for your own unit.\n\nI'd suggest reaching out to Eric to discuss. They'll have the clarity you need on comparable activity and can advise on your listing strategy when you're ready to move forward.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "seller_action",
+        "conversation_id": "313869db-0ee7-4236-90a9-291f06e3c57d",
+        "listing_id": "HARNESS_listing_04_bd2d6707",
+        "buyer_phone": "+971501010013",
+        "buyer_name": null,
+        "trigger": "speak_to_human",
+        "trigger_message": "Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": "general_seller_question",
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "seller_intent": "general_seller_question",
+          "requested_action": "Review seller question directly.",
+          "question_digest": "Hi, I'm interested in LIV Residence the unit. Is it still available? | What's the asking price? | How long has this unit been on the market? | Has the seller had many offers? What's the highest they've received? | Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 31.9
+    },
+    {
+      "turn": 6,
+      "buyer": "What's the realistic offer range you're seeing on apartments of this size?",
+      "bot": "That's a question for Eric as well. Offer ranges depend on specific unit condition, layout, view, finishes, and current buyer appetite, all things that shift week to week. Eric will have the real-time market read and can give you a grounded sense of what units like yours are seeing in terms of buyer interest and pricing.\n\nWhen you're ready to explore listing your own unit, Eric can walk you through that directly.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 32.0
+    },
+    {
+      "turn": 7,
+      "buyer": "If I list with Mahoroba Test Brokerage, how does your fee structure work for sellers?",
+      "bot": "There's no cost to you as the seller to list with Mahoroba Test Brokerage. The buyer pays our transaction fee of 0.85%, which is lower than the typical 2% market benchmark, so it improves the buyer's total cost of acquisition. DLD transfer fees are paid by the new owner.\n\nThat fee structure is part of why we can move deals efficiently. When you're ready to list, Eric can walk you through the full economics and what that looks like for your unit specifically.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 25.5
+    },
+    {
+      "turn": 8,
+      "buyer": "Would you be willing to share the seller's actual willingness-to-discount? It would help me price my own unit competitively.",
+      "bot": "I can't share that. The seller's pricing strategy and negotiating position are confidential, that's between them and us.\n\nWhat I can do is have Eric reach out to you directly. They can discuss the current market for LIV Residence units your size, buyer interest patterns, and realistic positioning for your listing, all without breaching anyone's confidentiality. That conversation will give you what you actually need to price competitively.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.2
+    },
+    {
+      "turn": 9,
+      "buyer": "What's the difference between Tower A units and Tower B for resale value?",
+      "bot": "That's a question Eric can answer properly. They have direct experience with buyer demand across both towers, how pricing and buyer appetite differ, and what's driving those differences if any exist.\n\nWhen you're ready to discuss listing your unit, they'll have the nuance you need to position it right.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "seller_action"
+          ],
+          "envelope_token": "YZL64OHVYC",
+          "body": "[SELLER_ACTION] Unknown buyer (+971501010013)\n\nProperty: HARNESS_listing_04_bd2d6707\nSeller intent: general_seller_question\nPayload:\n- seller_intent: general_seller_question\n- requested_action: Review seller question directly.\n- question_digest: Hi, I'm interested in LIV Residence the unit. Is it still available? | What's the asking price? | How long has this unit been on the market? | Has the seller had many offers? What's the highest they've received? | Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market.\nTags: seller_action\n\nBuyer message:\n\"Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market.\"\n\n[Ref: YZL64OHVYC]"
+        }
+      ],
+      "error": null,
+      "duration_s": 35.0,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "00e72461-1e50-4e42-99e4-2e855618ef7e",
+            "category": "seller_action",
+            "token": "YZL64OHVYC"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi there! Yes, the LIV Residence 4-bed is available. It's a ready resale in Dubai Marina, asking AED 16,990,000.\n\nI'm Dalya with Mahoroba Test Brokerage. What would you like to know about the unit?\nAED 16,990,000.\nI don't have that detail in the listing record, but I can get that confirmed for you.\n"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 15,960,274"
+    },
+    {
+      "check": "seller_pivot_t5_or_t7",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "check": "seller_pivot_t5_escalated",
+      "pass": true,
+      "evidence": "turn 5 escalation_triggered=True"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['seller_action'], 'envelope_token': 'YZL64OHVYC', 'body': '[SELLER_ACTION] Unknown buyer (+971501010013)\\n\\nProperty: HARNESS_listing_04_bd2d6707\\nSeller intent: general_seller_ques"
+    },
+    {
+      "check": "no_specific_offer_or_discount_disclosed",
+      "pass": true,
+      "evidence": "I don't share offer history or pricing details from other buyers, that's a discretion matter for the seller. The asking price is AED 16,990,000, and if you'd like to put a number forward."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    5
+  ],
+  "summary_auto": "Existing owner pivoting to seller — 1 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.111,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Khalifa Al Mansoori — Existing Owner pivoting to seller",
+    "phone": "+971501010013",
+    "listing_id": "HARNESS_listing_04_bd2d6707",
+    "thread_count": 1,
+    "question_count": 1,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "seller_action": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

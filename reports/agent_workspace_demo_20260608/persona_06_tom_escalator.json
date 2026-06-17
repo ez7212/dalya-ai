@@ -1,0 +1,391 @@
+{
+  "idx": 6,
+  "slug": "tom_escalator",
+  "persona": "Tom Henderson — offer escalator (6 escalating bids)",
+  "phone": "+971501010006",
+  "listing_id": "HARNESS_listing_02_7cdd1b00",
+  "listing_facts": {
+    "property_name": "Mirage The Oasis",
+    "beds": 6,
+    "baths": 7,
+    "sqft": 15757.0,
+    "plot_sqft": null,
+    "price_aed": 21693243.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 40,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 20749669.05,
+    "offer_threshold_pct": 95.7
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, calling about the the property listing",
+      "bot": "Hi! I'm Dalya from Mahoroba Test Brokerage. I'm here to help with the Mirage The Oasis villa.\n\nWhat would you like to know?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 55.8
+    },
+    {
+      "turn": 2,
+      "buyer": "What's the asking price?",
+      "bot": "The asking price is AED 21,693,243.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.5
+    },
+    {
+      "turn": 3,
+      "buyer": "What % is paid to date and who's the developer?",
+      "bot": "The developer is Emaar Properties.\n\nAs for payment status, I don't share specific percentages paid to date, that's between the seller and their conveyancer. What I can confirm is the remaining developer balance you'd take over: AED 13,015,946, paid across the remaining milestones through handover in April 2028.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.3
+    },
+    {
+      "turn": 4,
+      "buyer": "When is handover?",
+      "bot": "Handover is April 2028.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 30.4
+    },
+    {
+      "turn": 5,
+      "buyer": "OK I'd like to offer AED 18,675,000 — round number cash",
+      "bot": "AED 18,675,000 is well below where the seller is. That gap is too wide for them to engage.\n\nWhere could you realistically stretch to?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 54.7
+    },
+    {
+      "turn": 6,
+      "buyer": "Let me update my offer to AED 20,853,000",
+      "bot": "AED 20,853,000 noted. I'll get this to the seller and follow up with their response. Please send your name so I can attach it to the offer.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "160ecd06-fb7e-4afc-940a-5b63e4374c84",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010006",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "Let me update my offer to AED 20,853,000",
+        "offer_amount_aed": 20853000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000.\n\nThe buyer demonstrates serious intent by asking detailed questions about handover timing, developer details, and payment structure before submitting an offer. Their stated constraint is a preference for cash payment, and they showed willingness to revise their initial proposal upward after feedback on market positioning. The agent should follow up with the seller's response to the AED 20,853,000 offer and obtain the buyer's name to formalize the submission.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 20853000.0,
+          "percent_of_asking": 96.1,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 103330.94999999925,
+          "buyer_ref": "+971501010006",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "VY17JXL7AQ",
+          "body": "[OFFER] Unknown buyer (+971501010006)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 20,853,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 20853000.0\n- percent_of_asking: 96.1\n- floor_aed: 20749669.05\n- vs_floor_aed: 103330.94999999925\n- buyer_ref: +971501010006\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"Let me update my offer to AED 20,853,000\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000.\n\nThe buyer demonstrates serious intent by asking detailed questions about handover timing, developer details, and payment structure before submitting an offer. Their stated constraint is a preference for cash payment, and they showed willingness to revise their initial proposal upward after feedback on market positioning. The agent should follow up with the seller's response to the AED 20,853,000 offer and obtain the buyer's name to formalize the submission.\n\n[Ref: VY17JXL7AQ]"
+        }
+      ],
+      "error": null,
+      "duration_s": 53.5
+    },
+    {
+      "turn": 7,
+      "buyer": "Actually AED 18,675,000 is my real number, sorry was overshooting",
+      "bot": "AED 18,675,000 is moving the wrong direction, that's below your last offer. The seller isn't engaging at that level.\n\nWhat's your actual ceiling?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 43.5
+    },
+    {
+      "turn": 8,
+      "buyer": "OK final position: AED 21,165,000",
+      "bot": "AED 21,165,000, got it. Passing this to the seller now and circling back once they've reviewed. What name should I put this under?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "160ecd06-fb7e-4afc-940a-5b63e4374c84",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010006",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "OK final position: AED 21,165,000",
+        "offer_amount_aed": 21165000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000 → AED 18,675,000 → AED 21,165,000.\n\nThe buyer demonstrated genuine interest by asking specific questions about handover timing (April 2028) and showed seriousness through multiple offer iterations, though their negotiation process was somewhat disorganized. Their stated constraint is a preference for cash payment, and they eventually landed on a final offer matching the previous buyer's position. The agent should now formally submit this offer to the seller with the buyer's name and await their response.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 21165000.0,
+          "percent_of_asking": 97.6,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 415330.94999999925,
+          "buyer_ref": "+971501010006",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "6ME4PT7XMC",
+          "body": "[OFFER] Unknown buyer (+971501010006)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 21,165,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 21165000.0\n- percent_of_asking: 97.6\n- floor_aed: 20749669.05\n- vs_floor_aed: 415330.94999999925\n- buyer_ref: +971501010006\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"OK final position: AED 21,165,000\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000 → AED 18,675,000 → AED 21,165,000.\n\nThe buyer demonstrated genuine interest by asking specific questions about handover timing (April 2028) and showed seriousness through multiple offer iterations, though their negotiation process was somewhat disorganized. Their stated constraint is a preference for cash payment, and they eventually landed on a final offer matching the previous buyer's position. The agent should now formally submit this offer to the seller with the buyer's name and await their response.\n\n[Ref: 6ME4PT7XMC]"
+        }
+      ],
+      "error": null,
+      "duration_s": 57.2
+    },
+    {
+      "turn": 9,
+      "buyer": "And one more: AED 20,826,000 absolute final",
+      "bot": "AED 20,826,000 acknowledged. I'm forwarding to the seller, expect a response from me soon. What name should I put this under?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "160ecd06-fb7e-4afc-940a-5b63e4374c84",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010006",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "And one more: AED 20,826,000 absolute final",
+        "offer_amount_aed": 20826000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000 → AED 18,675,000 → AED 21,165,000 → AED 20,826,000.\n\nThe buyer demonstrated moderate seriousness by making multiple revised offers across the conversation, though they did not ask clarifying questions about the property condition, timeline, or negotiation flexibility. They stated they prefer cash and appear to be testing price sensitivity, though no other constraints or motivations were disclosed. The agent should obtain the buyer's name and confirm their final offer position in writing, as the buyer provided several different figures without clarification on which represents their genuine ceiling.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 20826000.0,
+          "percent_of_asking": 96.0,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 76330.94999999925,
+          "buyer_ref": "+971501010006",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "MNR4IH1THS",
+          "body": "[OFFER] Unknown buyer (+971501010006)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 20,826,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 20826000.0\n- percent_of_asking: 96.0\n- floor_aed: 20749669.05\n- vs_floor_aed: 76330.94999999925\n- buyer_ref: +971501010006\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"And one more: AED 20,826,000 absolute final\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000 → AED 18,675,000 → AED 21,165,000 → AED 20,826,000.\n\nThe buyer demonstrated moderate seriousness by making multiple revised offers across the conversation, though they did not ask clarifying questions about the property condition, timeline, or negotiation flexibility. They stated they prefer cash and appear to be testing price sensitivity, though no other constraints or motivations were disclosed. The agent should obtain the buyer's name and confirm their final offer position in writing, as the buyer provided several different figures without clarification on which represents their genuine ceiling.\n\n[Ref: MNR4IH1THS]"
+        }
+      ],
+      "error": null,
+      "duration_s": 58.7
+    },
+    {
+      "turn": 10,
+      "buyer": "Forget it. AED 21,800,000 — let's just close this",
+      "bot": "AED 21,800,000, that's heading to the seller. I'll let you know once they've come back to me. What name should I put this under?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "160ecd06-fb7e-4afc-940a-5b63e4374c84",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010006",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "Forget it. AED 21,800,000 — let's just close this",
+        "offer_amount_aed": 21800000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000 → AED 18,675,000 → AED 21,165,000 → AED 20,826,000 → AED 21,800,000.\n\nBuyer enquired about Mirage The Oasis Unit . Submitted offer of AED 21,800,000 against AED 21,693,243 asking (-0.5% below). Escalation triggered — review conversation for context.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 21800000.0,
+          "percent_of_asking": 100.5,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 1050330.9499999993,
+          "buyer_ref": "+971501010006",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "VRACQU189J",
+          "body": "[OFFER] Unknown buyer (+971501010006)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 21,800,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 21800000.0\n- percent_of_asking: 100.5\n- floor_aed: 20749669.05\n- vs_floor_aed: 1050330.9499999993\n- buyer_ref: +971501010006\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"Forget it. AED 21,800,000 — let's just close this\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 18,675,000 → AED 20,853,000 → AED 18,675,000 → AED 21,165,000 → AED 20,826,000 → AED 21,800,000.\n\nBuyer enquired about Mirage The Oasis Unit . Submitted offer of AED 21,800,000 against AED 21,693,243 asking (-0.5% below). Escalation triggered — review conversation for context.\n\n[Ref: VRACQU189J]"
+        }
+      ],
+      "error": null,
+      "duration_s": 52.1
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi! I'm Dalya from Mahoroba Test Brokerage. I'm here to help with the Mirage The Oasis villa.\n\nWhat would you like to know?\nThe asking price is AED 21,693,243.\nThe developer is Emaar Properties.\n\nAs for payment status, I don't share specific percentages paid to date, that's between the seller and th"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 16,900,368; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 20,749,669"
+    },
+    {
+      "check": "bare_greeting_t1_NOT_escalated",
+      "pass": true,
+      "evidence": "turn 1 escalation_triggered=False"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t2",
+      "pass": true,
+      "evidence": "expected asking=AED 21,693,243; bot=The asking price is AED 21,693,243."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    6,
+    8,
+    9,
+    10
+  ],
+  "summary_auto": "Escalation matrix: 4/10 offers triggered escalation.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.6,
+      "target": 0.75,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Tom Henderson — offer escalator (6 escalating bids)",
+    "phone": "+971501010006",
+    "listing_id": "HARNESS_listing_02_7cdd1b00",
+    "thread_count": 4,
+    "question_count": 4,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 1.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "offer": 4
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

@@ -1,0 +1,394 @@
+{
+  "idx": 5,
+  "slug": "dmitri",
+  "persona": "Dmitri Volkov — Russian, broken English with typos",
+  "phone": "+971501010005",
+  "listing_id": "HARNESS_listing_05_9d419b92",
+  "listing_facts": {
+    "property_name": "Address Harbour Point Tower 2",
+    "beds": 2,
+    "baths": 2,
+    "sqft": 1094.9,
+    "plot_sqft": null,
+    "price_aed": 4300000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "hello prce??",
+      "bot": "Hi there! I'm Dalya from Best Homes.\n\nThe asking price on this 2-bed apartment at Address Harbour Point Tower 2 is AED 4,300,000. It's a ready resale in Dubai Creek Harbour, so you can move in immediately.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 29.1
+    },
+    {
+      "turn": 2,
+      "buyer": "wht is asking pricee, cash buyer no problm",
+      "bot": "The asking price is AED 4,300,000.\n\nAs a cash buyer, you'd also need to account for the DLD transfer fee (4% to the Dubai Land Department) and the Best Homes brokerage fee (0.85%), plus a NOC coordination fee of AED 5,000.\n\nSo at asking, your total outlay would be around AED 4,508,550.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 22.3
+    },
+    {
+      "turn": 3,
+      "buyer": "HOW MNY BEDROOM",
+      "bot": "2 bedrooms, 2 bathrooms. Built-up area is 1,095 sqft.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 20.7
+    },
+    {
+      "turn": 4,
+      "buyer": "develper good?? my friend say the developer is OK",
+      "bot": "Emaar Properties is one of Dubai's largest and most established developers, they built the Burj Khalifa, The Dubai Mall, and Dubai Marina. Publicly traded on the Dubai Financial Market with a strong track record.\n\nAddress Harbour Point is completed and handed over, so you're buying a ready resale, not waiting on the developer. The unit is move-in ready.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 20.9
+    },
+    {
+      "turn": 5,
+      "buyer": "vyu of sea?",
+      "bot": "Yes, the unit has views of Dubai Creek and the waterfront. Tower 2 is the taller of the two towers at 65 storeys, so higher floors command views of the creek, plus you'd see the Burj Khalifa and Downtown Dubai skyline from certain angles.\n\nTo confirm the exact view from this specific unit, I can send you the floor plans and renders right now, would you like to see them?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "cec44836-16a0-410a-b678-8005a6d7be53",
+        "listing_id": "HARNESS_listing_05_9d419b92",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "unknown",
+        "trigger_message": "vyu of sea?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "materials_request",
+        "regulatory_category": null,
+        "payload": {
+          "materials": [
+            "floor_plan",
+            "renders",
+            "brochure"
+          ],
+          "requested_action": "Send the promised floor plans, renders, brochure, or listing media to the buyer.",
+          "question_digest": "vyu of sea?"
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 25.3
+    },
+    {
+      "turn": 6,
+      "buyer": "kanI come tomorow saturday",
+      "bot": "Saturday viewings depend on seller and tenant availability. Let me route this to Aisha, the agent managing this listing at Best Homes, and they will confirm if tomorrow works and coordinate access directly with you. They will follow up on this WhatsApp thread.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "viewing_schedule",
+        "conversation_id": "cec44836-16a0-410a-b678-8005a6d7be53",
+        "listing_id": "HARNESS_listing_05_9d419b92",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "viewing_request",
+        "trigger_message": "kanI come tomorow saturday",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "physical_viewing",
+        "regulatory_category": null,
+        "payload": {
+          "date_requested": "saturday",
+          "requested_action": "Coordinate a physical viewing for the ready unit."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 30.6
+    },
+    {
+      "turn": 7,
+      "buyer": "is NOC or title-deed transfer ready or not",
+      "bot": "The unit is a ready resale, so the title deed already exists. NOC and title transfer happen after you sign the SPA, typically a 1-5 day developer turnaround once the contract is executed.\n\nYour bank will want the NOC in hand before final mortgage drawdown, so the sequence is straightforward: offer accepted → SPA signed → NOC issued → transfer complete.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 24.1
+    },
+    {
+      "turn": 8,
+      "buyer": "ok AED 4,117,000 cash final pls",
+      "bot": "Got it, AED 4,117,000. I'll forward to the seller and follow up with their response. Send your name and I'll keep the offer record clean.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "cec44836-16a0-410a-b678-8005a6d7be53",
+        "listing_id": "HARNESS_listing_05_9d419b92",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "ok AED 4,117,000 cash final pls",
+        "offer_amount_aed": 4117000.0,
+        "listing_price_aed": 4300000.0,
+        "negotiation_threshold_aed": 4096466.03,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "**BUYER SERIOUSNESS:** Buyer demonstrated genuine engagement by asking substantive due diligence questions about the developer's credibility, unit views, title deed status, and NOC readiness—indicating they are seriously evaluating the property fundamentals.\n\n**CONSTRAINTS/CONTEXT:** Buyer is ready to proceed with a cash offer of AED 4,117,000 (AED 183,000 below asking price) and requested a viewing for Saturday; no other constraints stated.\n\n**RECOMMENDED NEXT ACTION:** Confirm Saturday viewing availability with the seller/tenant, obtain buyer's full name to formalize the offer, and present the cash offer to the seller for a response.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 4117000.0,
+          "percent_of_asking": 95.7,
+          "floor_aed": 4096466.03,
+          "vs_floor_aed": 20533.970000000205,
+          "buyer_ref": "+971501010005",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201001",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "6XXVZQMU7M",
+          "body": "[OFFER] Unknown buyer (+971501010005)\n\nProperty: HARNESS_listing_05_9d419b92\nOffer: AED 4,117,000\nAsking: AED 4,300,000\nNotification threshold: AED 4,096,466\nPayload:\n- amount_aed: 4117000.0\n- percent_of_asking: 95.7\n- floor_aed: 4096466.03\n- vs_floor_aed: 20533.970000000205\n- buyer_ref: +971501010005\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"ok AED 4,117,000 cash final pls\"\n\nSummary: **BUYER SERIOUSNESS:** Buyer demonstrated genuine engagement by asking substantive due diligence questions about the developer's credibility, unit views, title deed status, and NOC readiness—indicating they are seriously evaluating the property fundamentals.\n\n**CONSTRAINTS/CONTEXT:** Buyer is ready to proceed with a cash offer of AED 4,117,000 (AED 183,000 below asking price) and requested a viewing for Saturday; no other constraints stated.\n\n**RECOMMENDED NEXT ACTION:** Confirm Saturday viewing availability with the seller/tenant, obtain buyer's full name to formalize the offer, and present the cash offer to the seller for a response.\n\n[Ref: 6XXVZQMU7M]"
+        }
+      ],
+      "error": null,
+      "duration_s": 35.1
+    },
+    {
+      "turn": 9,
+      "buyer": "AED 4,178,000 last offer cash today",
+      "bot": "AED 4,178,000, that's heading to the seller. I'll let you know once they've come back to me. What name should I put this under?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "cec44836-16a0-410a-b678-8005a6d7be53",
+        "listing_id": "HARNESS_listing_05_9d419b92",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "AED 4,178,000 last offer cash today",
+        "offer_amount_aed": 4178000.0,
+        "listing_price_aed": 4300000.0,
+        "negotiation_threshold_aed": 4096466.03,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 4,117,000 → AED 4,178,000.\n\nThe buyer demonstrates genuine interest through substantive questions about property features (sea views, tower height), logistics (Saturday viewing availability), and transaction mechanics (NOC and title deed transfer process). Their stated constraint is a cash purchase, with no other motivations or context provided. The agent should secure the buyer's name for the offer record and await seller feedback on the AED 4,178,000 offer while confirming Saturday viewing availability through the listing agent Aisha.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 4178000.0,
+          "percent_of_asking": 97.2,
+          "floor_aed": 4096466.03,
+          "vs_floor_aed": 81533.9700000002,
+          "buyer_ref": "+971501010005",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+9715900201001",
+          "from_agents_ai_number": "+971590001101",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "4GU1GU8X46",
+          "body": "[OFFER] Unknown buyer (+971501010005)\n\nProperty: HARNESS_listing_05_9d419b92\nOffer: AED 4,178,000\nAsking: AED 4,300,000\nNotification threshold: AED 4,096,466\nPayload:\n- amount_aed: 4178000.0\n- percent_of_asking: 97.2\n- floor_aed: 4096466.03\n- vs_floor_aed: 81533.9700000002\n- buyer_ref: +971501010005\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"AED 4,178,000 last offer cash today\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 4,117,000 → AED 4,178,000.\n\nThe buyer demonstrates genuine interest through substantive questions about property features (sea views, tower height), logistics (Saturday viewing availability), and transaction mechanics (NOC and title deed transfer process). Their stated constraint is a cash purchase, with no other motivations or context provided. The agent should secure the buyer's name for the offer record and await seller feedback on the AED 4,178,000 offer while confirming Saturday viewing availability through the listing agent Aisha.\n\n[Ref: 4GU1GU8X46]"
+        }
+      ],
+      "error": null,
+      "duration_s": 31.4
+    },
+    {
+      "turn": 10,
+      "buyer": "give me ownr whatsap no agent fee pls",
+      "bot": "I'm Best Homes's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 20.4
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi there! I'm Dalya from Best Homes.\n\nThe asking price on this 2-bed apartment at Address Harbour Point Tower 2 is AED 4,300,000. It's a ready resale in Dubai Creek Harbour, so you can move in immediately.\nThe asking price is AED 4,300,000.\n\nAs a cash buyer, you'd also need to account for the DLD tr"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 4,096,466"
+    },
+    {
+      "check": "viewing_escalation_t6",
+      "pass": true,
+      "evidence": "turn 6 escalation_triggered=True"
+    },
+    {
+      "check": "noc_substantive_t7",
+      "pass": true,
+      "evidence": "The unit is a ready resale, so the title deed already exists. NOC and title transfer happen after you sign the SPA, typically a 1-5 day developer turnaround once the contract is executed.\n\nYour bank will want the NOC in hand before final mortgage drawdown, so the sequence is straightforward: offer a"
+    },
+    {
+      "check": "offer_escalation_t8_or_t9",
+      "pass": true,
+      "evidence": "t8=True t9=True"
+    },
+    {
+      "check": "no_seller_phone_t10",
+      "pass": true,
+      "evidence": "I'm Best Homes's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process."
+    },
+    {
+      "check": "fee_not_waived_t10",
+      "pass": true,
+      "evidence": "I'm Best Homes's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process."
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900201001",
+      "pass": true,
+      "evidence": "expected=+9715900201001; routed=[{'to_agent_phone': '+9715900201001', 'from_agents_ai_number': '+971590001101', 'tags': ['at_or_above'], 'envelope_token': '6XXVZQMU7M', 'body': '[OFFER] Unknown buyer (+971501010005)\\n\\nProperty: HARNESS_listing_05_9d419b92\\nOffer: AED 4,117,000\\nAsking: AED 4,300,00"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t1",
+      "pass": true,
+      "evidence": "expected asking=AED 4,300,000; bot=Hi there! I'm Dalya from Best Homes.\n\nThe asking price on this 2-bed apartment at Address Harbour Point Tower 2 is AED 4,300,000. It's a ready resale in Dubai Creek Harbour, so you can move in immediately."
+    },
+    {
+      "check": "assigned_developer_or_project_referenced",
+      "pass": true,
+      "evidence": "expected one of=['emaar properties pjsc', 'address harbour point tower 2', 'address harbour point']; hits=['address harbour point tower 2', 'address harbour point']"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    5,
+    6,
+    8,
+    9
+  ],
+  "summary_auto": "4/10 turns escalated.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.2,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Dmitri Volkov — Russian, broken English with typos",
+    "phone": "+971501010005",
+    "listing_id": "HARNESS_listing_05_9d419b92",
+    "thread_count": 4,
+    "question_count": 4,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.5,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "physical_property": 1,
+      "viewing_logistics": 1,
+      "offer": 2
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

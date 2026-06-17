@@ -1,0 +1,453 @@
+{
+  "name": "The Address Jumeirah Resort and Spa",
+  "developer": "Emaar Properties / Emaar Hospitality Group",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "Developer attribution: Multiple sources (Bayut, Luxhabitat, jbr-dubai.ae, propsearch.ae) attribute the development to Emaar Properties and Emaar Hospitality Group. The harness brief lists 'Dubai Holding' as developer — this appears to be an error or confusion with the JBR master-community manager (Dubai Holding Communities / DHCM). The building itself is an Emaar/Emaar Hospitality Group product. Flagged for audit.",
+    "The development is known under several names across portals: 'The Address Jumeirah Resort and Spa', 'The Address Residences Jumeirah Resort and Spa', 'Address Beach Resort', and 'Address JBR'. All refer to the same twin-tower complex at the end of Jumeirah Beach Walk.",
+    "Two towers are commonly referenced: Jumeirah Gate Tower 1 (residential/serviced apartments) and Jumeirah Gate Tower 2 (also residential/serviced apartments). The harness listing only references Tower 1 but Tower 2 also trades actively on portals.",
+    "Completion: Construction began September 2016; completed February 2021 per Propsearch. Bayut states 'launched 2016, completed 2020' — minor discrepancy, likely soft vs hard completion. Using February 2021 as the more granular source.",
+    "Height discrepancy across sources: Bayut/brochure state 310 m / 1,017 ft; Propsearch states 303 m / 994 ft; Autism Travel states 301 m. The official brochure (Source 4) states 310 m. Using 310 m as primary figure.",
+    "ROI figures: jbr-dubai.ae (Source 3) cites 6.7% average and 10% maximum ROI. These are from a third-party agent site and are not independently verified. Schmidt & Partner (Source 15) places Dubai Marina broadly at 6.5–8% gross yield. Branded waterfront trophy buildings carry higher service charges (AED 50–90 psf/yr per Source 16) which compress net yields. ROI figures presented as indicative only.",
+    "Golden Visa eligibility: Units priced above AED 2 million qualify per UAE investor visa rules (Source 16). Many listed units exceed this threshold.",
+    "The Spa at Address Beach Resort is located on Level 75 and holds the Guinness World Record for highest outdoor infinity pool in a building in the world (Source 8).",
+    "The development sits on the last available land plot on Jumeirah Beach Walk, providing a scarcity argument (Source 4, Source 7).",
+    "School and healthcare distances are described qualitatively ('within 15-minute drive') in sources; exact distances not confirmed and are not stated in this file.",
+    "Service charges are paid to Emaar as district cooling supplier per Bayut (Source 1); exact annual psf rate not publicly confirmed in sources."
+  ],
+  "master_development": {
+    "overview": {
+      "full_name": "The Address Residences Jumeirah Resort and Spa",
+      "also_known_as": [
+        "Address Beach Resort",
+        "Address JBR",
+        "Jumeirah Gate Towers"
+      ],
+      "type": "Mixed-use branded residential and hotel development",
+      "towers": 2,
+      "tower_names": [
+        "Jumeirah Gate Tower 1",
+        "Jumeirah Gate Tower 2"
+      ],
+      "floors": 77,
+      "height_metres": 310,
+      "total_units": {
+        "hotel_rooms_and_suites": 217,
+        "serviced_apartments": 443,
+        "residential_apartments": 478
+      },
+      "unit_types": [
+        "1BR",
+        "2BR",
+        "3BR",
+        "4BR",
+        "5BR"
+      ],
+      "unit_size_range_sqft": {
+        "min": 635,
+        "max": 4299
+      },
+      "launched": 2016,
+      "completed": "February 2021",
+      "status": "Ready / Completed",
+      "architect": "Killa Design",
+      "structural_consultant": "WSP Parsons Brinckerhoff",
+      "main_contractor": "Multiplex",
+      "hotel_operator": "Address Hotels + Resorts (Emaar Hospitality Group)",
+      "interior_theme": "La Dolce Vita — pastel palette, Italian-inspired, smart home technology",
+      "distinguishing_feature": "Two elliptical towers connected at ground podium and summit via link bridges; central void increases daylight and views; Guinness World Record highest outdoor infinity pool"
+    },
+    "location_connectivity": {
+      "community": "Jumeirah Beach Residence (JBR)",
+      "sub_district": "Dubai Marina / JBR",
+      "emirate": "Dubai",
+      "plot_note": "Located on the last available land plot on Jumeirah Beach Walk at the point where Dubai Marina meets the sea",
+      "beach_access": "100 metres of direct beach frontage",
+      "road_access": "Direct access to Sheikh Zayed Road",
+      "tram": "Dubai Tram stops serve JBR; nearest stop within walking distance",
+      "metro": "DMCC Metro Station (Red Line) approximately 6-minute drive per Bayut",
+      "bus": "Jumeirah Beach Residence 2 Bus Station approximately 3-minute drive; Bus 8, Bus 84, Bus N55",
+      "airport": "Dubai International Airport (DXB) approximately 27 minutes by car / taxi (21.2 miles road distance per Rome2Rio)",
+      "walkable_destinations": [
+        "The Walk at JBR",
+        "JBR Beach",
+        "The Beach Mall",
+        "Dubai Marina Walk",
+        "Ain Dubai (Bluewaters Island)"
+      ]
+    },
+    "shared_amenities": {
+      "pools": [
+        "Rooftop infinity pool (Level 77) — Guinness World Record highest outdoor infinity pool",
+        "Podium-level residential pool",
+        "Serviced apartments pool (ground level)",
+        "Children's swimming pool",
+        "Cascading interconnected pools in landscaped terraces"
+      ],
+      "wellness": [
+        "The Spa at Address Beach Resort (Level 75) — 9 treatment rooms, steam room, sauna, couples suite",
+        "24-hour fitness centre / gymnasium",
+        "Jacuzzi"
+      ],
+      "dining_and_retail": [
+        "Li'Brasil restaurant",
+        "ZETA Seventy Seven rooftop lounge (Level 77)",
+        "The Beach Grill",
+        "Rooftop café (Level 77)",
+        "Signature restaurant (Level 73)",
+        "Podium-level restaurants",
+        "Retail area"
+      ],
+      "family": [
+        "Kids' club (Qix)",
+        "Splash Pad water play area",
+        "Kids' play area",
+        "BBQ area"
+      ],
+      "services": [
+        "24-hour concierge",
+        "24-hour valet parking",
+        "24-hour in-room dining",
+        "Reception desk / grand lobby",
+        "Business support services",
+        "Meeting rooms and ballrooms",
+        "Event lawn",
+        "Laundry service",
+        "Prayer rooms",
+        "Pet-friendly building"
+      ],
+      "technology": [
+        "Smart home systems",
+        "Touch-sensitive switches",
+        "Automated climate and lighting controls",
+        "High-speed wireless internet"
+      ],
+      "security": [
+        "24-hour CCTV",
+        "On-site security guards"
+      ],
+      "parking": "Covered parking; minimum one dedicated slot per unit",
+      "elevators": "Multiple high-speed elevators; private elevators available",
+      "district_cooling_supplier": "Emaar"
+    },
+    "nearby_infrastructure": {
+      "beaches": [
+        "JBR Beach (walking distance)",
+        "Marina Beach (walking distance)"
+      ],
+      "retail_and_entertainment": [
+        "The Walk at JBR (2 km beachfront boulevard)",
+        "The Beach Mall",
+        "Dubai Marina Mall",
+        "Bluewaters Island / Ain Dubai",
+        "AquaFun Waterpark",
+        "Roxy Cinemas",
+        "Flying Cup attraction"
+      ],
+      "dining_nearby": [
+        "Executive Lounge",
+        "Pure Sky Lounge & Dining",
+        "Tim Hortons",
+        "The Noodle House",
+        "Fogueira Restaurant & Lounge",
+        "Bliss Lounge"
+      ],
+      "schools_nearby_qualitative": "Several educational institutions within approximately 15-minute drive including British Orchard Nursery (nearby) and Dubai British School",
+      "healthcare_nearby_qualitative": "NMC Royal Hospital within approximately 15-minute drive",
+      "business_hubs_nearby": [
+        "Dubai Media City",
+        "Dubai Internet City",
+        "Knowledge Village",
+        "Jebel Ali",
+        "DIFC / Downtown Dubai (accessible via Sheikh Zayed Road)"
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_threshold_aed": 2000000,
+      "project_value_aed": 2133500000,
+      "indicative_roi_range": "6.7%–10% gross (source: jbr-dubai.ae agent site; treat as indicative)",
+      "jbr_area_gross_yield_context": "Dubai Marina / JBR broadly 6.5%–8% gross per Schmidt & Partner 2026 analysis",
+      "branded_premium_note": "Branded residences under Address Hotels + Resorts typically command a price premium and higher service charges vs non-branded. Service charges for trophy waterfront branded buildings estimated AED 50–90 psf/yr (Source 16). Net yields will be materially lower than gross.",
+      "asking_price_range_observed_aed": {
+        "1BR": "approximately AED 2.8M–AED 4.5M (based on portal listings)",
+        "2BR": "approximately AED 5.1M–AED 6.5M",
+        "3BR": "approximately AED 9.1M–AED 10M",
+        "4BR": "approximately AED 19.9M",
+        "penthouse": "AED 120M reported for 10,000 sqft penthouse (floors 73–75, December 2022)"
+      },
+      "price_per_sqft_observed_aed": "approximately AED 3,966–AED 5,569 per sqft (portal listings, May 2026)",
+      "scarcity_note": "Built on the last available land plot on Jumeirah Beach Walk; no comparable beachfront twin-tower development can be replicated in this location"
+    },
+    "developer_profile": {
+      "developer": "Emaar Properties / Emaar Hospitality Group",
+      "founded": 1997,
+      "brand_partner": "Address Hotels + Resorts (established 2008 by Mohamed Alabbar)",
+      "track_record": "Emaar is one of the world's largest real estate developers; delivered Burj Khalifa, The Dubai Mall, Downtown Dubai, Dubai Marina, and multiple Address-branded properties. Address Hotels + Resorts portfolio spans Downtown Dubai, Dubai Mall, Dubai Marina, and international locations.",
+      "note_on_harness_developer_field": "Harness brief lists 'Dubai Holding' — JBR is managed by Dubai Holding Communities (DHCM) as master community operator, but the Address towers were developed and are operated by Emaar/Emaar Hospitality Group. Flagged for audit."
+    }
+  },
+  "sub_developments": {
+    "jumeirah_gate_tower_1": {
+      "aliases": [
+        "Jumeirah Gate Tower 1",
+        "Gate Tower 1",
+        "JGT1"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Jumeirah Gate Tower 1, The Address Jumeirah Resort and Spa, Jumeirah Beach Residence, Dubai",
+        "investment_overrides": {
+          "notes": "Tower 1 is the primary tower referenced in harness listings. Units range from 1BR to 5BR. Active resale market observed on PropertyFinder and SquareYards. Asking prices observed at AED 3,966–AED 5,569 per sqft. Both furnished (serviced) and unfurnished (residential) units available.",
+          "unit_types_confirmed": [
+            "1BR",
+            "2BR",
+            "3BR",
+            "4BR"
+          ],
+          "furnished_options": "Both fully furnished serviced apartments and unfurnished residential apartments available"
+        },
+        "sales_talking_points": {
+          "headline": "Jumeirah Gate Tower 1 — Address-branded beachfront living on JBR's last land plot",
+          "view_premium": "High-floor units command Arabian Gulf, Palm Jumeirah, Bluewaters Island, and Dubai Marina views",
+          "lifestyle": "Residents access full 5-star hotel amenities including world-record rooftop infinity pool, Level 75 spa, multiple F&B outlets, and 100m direct beach access",
+          "investment": "Freehold ownership; Golden Visa eligible above AED 2M; branded residence premium supports resale liquidity; active secondary market"
+        }
+      }
+    },
+    "jumeirah_gate_tower_2": {
+      "aliases": [
+        "Jumeirah Gate Tower 2",
+        "Gate Tower 2",
+        "JGT2"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Jumeirah Gate Tower 2, The Address Residences Jumeirah Resort and Spa, Jumeirah Beach Residence, Dubai",
+        "investment_overrides": {
+          "notes": "Tower 2 also trades actively on portals (SquareYards, Luxhabitat). Not referenced in harness listings but part of the same twin-tower complex sharing all amenities.",
+          "unit_types_confirmed": [
+            "1BR",
+            "2BR",
+            "3BR",
+            "4BR",
+            "5BR"
+          ],
+          "furnished_options": "Both furnished and unfurnished units available"
+        },
+        "sales_talking_points": {
+          "headline": "Jumeirah Gate Tower 2 — same world-class Address amenities, same iconic JBR beachfront address",
+          "note": "Shares all amenities with Tower 1 via connected podium and sky bridge"
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "77 floors, 310 metres, 1,138 total units (217 hotel + 443 serviced + 478 residential), Guinness World Record highest outdoor infinity pool, 100m direct beach access, last land plot on Jumeirah Beach Walk",
+      "scarcity_argument": "The Address JBR occupies the very last developable land plot on Jumeirah Beach Walk — no future development can replicate this beachfront position where Dubai Marina meets the open sea. Supply is permanently capped.",
+      "lifestyle_pitch": "Wake up to Arabian Gulf views, walk to JBR Beach in minutes, dine at rooftop restaurants with 360-degree skyline panoramas, unwind at the world's highest outdoor infinity pool or the Level 75 spa. The Walk, Ain Dubai, and Dubai Marina are all on your doorstep — resort living with city connectivity.",
+      "investment_pitch": "Freehold ownership in one of Dubai's most liquid branded-residence markets. Units above AED 2M qualify for UAE Golden Visa. Address Hotels + Resorts brand management supports rental demand from hotel guests and short-stay visitors. Indicative gross yields of 6.7%–8% cited across JBR/Marina comparable data. Zero income tax and zero capital gains tax on Dubai property.",
+      "objection_handling": "Service charges on branded trophy buildings are higher than standard residential — budget AED 50–90 psf/yr and verify actual charges before committing. Net yields will be lower than gross. However, the brand premium, resale liquidity, and lifestyle quality justify the cost differential for buyers seeking a flagship Dubai address."
+    },
+    "per_sub_development": {
+      "jumeirah_gate_tower_1": {
+        "headline": "The most actively traded tower in the Address JBR complex — strong secondary market, full hotel amenity access, freehold beachfront ownership"
+      },
+      "jumeirah_gate_tower_2": {
+        "headline": "Identical amenity access to Tower 1 via shared podium — same Address brand, same beach, same skyline views"
+      }
+    }
+  },
+  "aliases": [
+    "The Address Jumeirah Resort and Spa",
+    "the address jumeirah resort and spa",
+    "Jumeirah Gate Tower 1",
+    "The Address Residences Jumeirah Resort and Spa",
+    "Address Beach Resort",
+    "Address JBR",
+    "Jumeirah Gate Tower 2",
+    "Address Residences JBR",
+    "The Address Beach Resort",
+    "Address Jumeirah Resort Spa"
+  ],
+  "developer_keywords": [
+    "Emaar",
+    "Emaar Properties",
+    "Emaar Hospitality Group",
+    "Address Hotels and Resorts",
+    "Address Hotels + Resorts",
+    "Dubai Holding",
+    "DHCM",
+    "Dubai Holding Communities",
+    "dubai"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties / Emaar Hospitality Group (brand: Address Hotels + Resorts)",
+    "community": "The Address Jumeirah Resort and Spa, Jumeirah Beach Residence (JBR), Dubai",
+    "location": {
+      "area": "Jumeirah Beach Residence (JBR), Dubai Marina district, Dubai",
+      "description": "Beachfront twin-tower development on the last land plot at the end of Jumeirah Beach Walk, where Dubai Marina meets the Arabian Gulf. Direct access to Sheikh Zayed Road. Walking distance to The Walk at JBR, JBR Beach, The Beach Mall, Dubai Marina Walk, and Bluewaters Island / Ain Dubai.",
+      "distances": {
+        "jbr_beach": "Walking distance (direct beach access from podium)",
+        "the_walk_jbr": "Walking distance",
+        "ain_dubai_bluewaters": "Walking distance / short drive",
+        "dubai_marina_mall": "Short drive",
+        "dmcc_metro_station": "Approximately 6-minute drive (Red Line)",
+        "jbr_bus_station": "Approximately 3-minute drive (Bus 8, 84, N55)",
+        "dubai_tram": "Walking distance to nearest tram stop",
+        "dubai_airport_dxb": "Approximately 27 minutes by car (21.2 miles road distance)",
+        "downtown_dubai": "Accessible via Sheikh Zayed Road",
+        "dubai_media_city": "Short drive via Sheikh Zayed Road",
+        "schools_healthcare": "Key institutions within approximately 15-minute drive (qualitative; exact distances unverified)"
+      }
+    },
+    "community_amenities": [
+      "Rooftop infinity pool (Level 77) — Guinness World Record highest outdoor infinity pool",
+      "The Spa at Address Beach Resort (Level 75) — 9 treatment rooms, steam, sauna, couples suite",
+      "24-hour fitness centre",
+      "Jacuzzi",
+      "Children's swimming pool",
+      "Cascading landscaped pools at podium level",
+      "100 metres direct beach access",
+      "Li'Brasil restaurant",
+      "ZETA Seventy Seven rooftop lounge",
+      "The Beach Grill",
+      "Rooftop café (Level 77)",
+      "Signature restaurant (Level 73)",
+      "Podium-level restaurants and retail",
+      "Kids' club (Qix)",
+      "Splash Pad children's water play",
+      "BBQ area",
+      "Meeting rooms and ballrooms",
+      "Event lawn",
+      "24-hour concierge",
+      "24-hour valet parking",
+      "24-hour in-room dining",
+      "Grand lobby with reception",
+      "Business support services",
+      "Laundry service",
+      "Prayer rooms",
+      "Games room",
+      "Private elevators",
+      "Smart home technology (automated climate, lighting, touch switches)",
+      "High-speed wireless internet",
+      "24-hour CCTV and on-site security",
+      "Covered parking (minimum 1 space per unit)",
+      "Pet-friendly building"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "British Orchard Nursery",
+          "type": "Nursery",
+          "curriculum": "British",
+          "distance_note": "Nearby JBR area",
+          "distance_exact": null
+        },
+        {
+          "name": "Dubai British School",
+          "type": "School",
+          "curriculum": "British",
+          "distance_note": "Within approximately 15-minute drive",
+          "distance_exact": null
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "NMC Royal Hospital",
+          "type": "Hospital",
+          "distance_note": "Within approximately 15-minute drive",
+          "distance_exact": null
+        }
+      ],
+      "retail": [
+        {
+          "name": "The Walk at JBR",
+          "type": "Beachfront retail and dining boulevard (~2 km)",
+          "distance_note": "Walking distance"
+        },
+        {
+          "name": "The Beach Mall",
+          "type": "Open-air shopping and dining",
+          "distance_note": "Walking distance"
+        },
+        {
+          "name": "Dubai Marina Mall",
+          "type": "Shopping mall",
+          "distance_note": "Short drive"
+        },
+        {
+          "name": "Bluewaters Island / Ain Dubai",
+          "type": "Entertainment and retail island",
+          "distance_note": "Walking distance / short drive"
+        },
+        {
+          "name": "Roxy Cinemas",
+          "type": "Cinema",
+          "distance_note": "JBR area"
+        },
+        {
+          "name": "AquaFun Waterpark",
+          "type": "Inflatable water park",
+          "distance_note": "JBR Beach area"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": "6.7%–8% gross indicative (jbr-dubai.ae cites 6.7% average / 10% max; Schmidt & Partner places JBR/Marina at 6.5%–8% gross for 2026). Net yields materially lower after branded service charges (est. AED 50–90 psf/yr) and management costs.",
+      "branded_premium_note": "Address Hotels + Resorts brand management by Emaar Hospitality Group. Branded residences command a price premium and benefit from hotel-standard services and rental programme access. Higher service charges than non-branded buildings — verify actual charges before purchase. Resale liquidity supported by strong brand recognition and active secondary market."
+    },
+    "sales_talking_points": {
+      "unique_position": "Last land plot on Jumeirah Beach Walk — irreplaceable beachfront address that cannot be replicated",
+      "world_record": "Guinness World Record: highest outdoor infinity pool in a building in the world (Level 77)",
+      "scale": "77 floors, 310 metres, twin towers connected by sky bridge — one of Dubai's most recognisable skyline landmarks",
+      "lifestyle": "5-star hotel amenities for residents: rooftop pool, Level 75 spa, multiple restaurants, kids' club, 100m beach access, concierge, valet",
+      "views": "Panoramic views of Arabian Gulf, Palm Jumeirah, Bluewaters Island / Ain Dubai, and Dubai Marina skyline from floor-to-ceiling windows",
+      "connectivity": "Direct Sheikh Zayed Road access; DMCC Metro (Red Line) ~6 min drive; Dubai Tram walkable; DXB airport ~27 min",
+      "investment": "Freehold; Golden Visa eligible (AED 2M+); zero UAE income and capital gains tax; active secondary market; branded residence premium",
+      "interiors": "Killa Design interiors — marble, natural wood, smart home tech, premium appliances, La Dolce Vita theme"
+    },
+    "developer_track_record": "Emaar Properties (est. 1997) is one of the world's largest real estate developers, responsible for Burj Khalifa, The Dubai Mall, Downtown Dubai, and Dubai Marina. Address Hotels + Resorts (est. 2008) is Emaar's luxury hospitality brand with properties across Dubai and internationally. The Address JBR was delivered February 2021 following a September 2016 construction start."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:44:26.428151+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.bayut.com/buildings/the-address-residences-jumeirah-resort-and-spa",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-jumeirah-beach-residence-the-address-jumeirah-resort-and-spa.html",
+      "https://jbr-dubai.ae/the-address-residences-jumeirah-resort-and-spa",
+      "https://www.property-dubai.com/wp-content/uploads/2020/04/The-Address-JBR-Brochure.pdf",
+      "https://www.emirates.com/us/english/dubai-experience/hotels/10910/address-beach-resort",
+      "https://www.addresshotels.com/en/resorts/address-beach-resort/wellness/spa",
+      "https://propsearch.ae/dubai/address-beach-resort",
+      "https://autismtravel.com/directory/address-beach-resort",
+      "https://www.rome2rio.com/s/Dubai-Airport-DXB/Address-Beach-Resort-Dubai",
+      "https://www.dubaiholdingcommunities.ae/communities/jumeirah-beach-residence",
+      "https://www.jumeirah.com/en/jumeirah-group/contact-us",
+      "http://address-jumeirah.ae",
+      "https://www.squareyards.ae/sale/property-in-the-address-residences-jumeirah-resort-and-spa-dubai",
+      "https://www.luxhabitat.ae/developments/dubai/the-address-residences-jumeirah-resorts-spa",
+      "https://www.schmidtandpartner.com/blogs/dubai-rental-yields-2026-highest-roi-areas-property-investors",
+      "https://www.sunsetrealestate.ca/dubai-real-estate-roi-2026",
+      "https://theaddressjumeirahresort.com",
+      "https://www.banke.ae/real-estate-roi-in-dubai-area-by-area-comparison",
+      "https://www.addresshotels.com/en/resorts/address-beach-resort/amenities",
+      "https://www.addresshotels.com/en/resorts/address-beach-resort",
+      "https://www.forbestravelguide.com/hotels/dubai-united-arab-emirates/address-beach-resort-dubai"
+    ],
+    "audit_flags": [
+      "DEVELOPER_MISMATCH: Harness brief specifies 'Dubai Holding' as developer. All research sources attribute the development to Emaar Properties and Emaar Hospitality Group. Dubai Holding Communities (DHCM) manages JBR as master community operator but did not develop the Address towers. Requires client confirmation before publishing.",
+      "ROI_UNVERIFIED: Gross ROI figures (6.7% avg, 10% max) sourced from jbr-dubai.ae, a third-party agent marketing site. Not independently verified against DLD transaction data. Presented as indicative only.",
+      "SERVICE_CHARGE_EXACT_RATE_MISSING: Exact annual service charge per sqft for this specific building not confirmed in sources. Range of AED 50–90 psf/yr used from general branded waterfront trophy building benchmarks (Source 16).",
+      "SCHOOL_DISTANCES_UNVERIFIED: School and healthcare distances described qualitatively ('within 15-minute drive') from jbr-dubai.ae. Exact distances not confirmed.",
+      "HEIGHT_DISCREPANCY: Sources cite 301m, 303m, and 310m. Official brochure (Source 4) states 310m / 77 floors. Used 310m as primary.",
+      "TOWER_2_NOT_IN_HARNESS_LISTINGS: Jumeirah Gate Tower 2 is included in sub_developments for completeness as it is part of the same complex and trades actively, but was not in the original harness listing brief.",
+      "RENTAL_YIELD_DATA_SPARSE: No DLD-sourced transaction-level rental yield data available in sources for this specific building.",
+      "COMPLETION_DATE_MINOR_DISCREPANCY: Bayut states 2020 completion; Propsearch states February 2021. February 2021 used as more granular source."
+    ]
+  }
+}

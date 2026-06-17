@@ -1,0 +1,31 @@
+persona,phone,listing_id,thread_count,question_count,avg_questions_per_thread,append_rate,debounce_bundle_rate,bypass_rate,timeout_rate,false_positive_threads,false_negative_threads,category_distribution
+"Adversarial — jailbreaks, abuse, out-of-scope, prompt injection",+971501010009,HARNESS_listing_02_381a47e2,1,2,2.0,0.5,1.0,0.0,0.0,0,0,"{""other"": 1}"
+Affordability and mortgage-dependent end-user,+971501010023,HARNESS_listing_01_ab6110d5,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Ahmed — social engineer / Dalya bypass,+971501010008,HARNESS_listing_03_d8351536,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""offer"": 1}"
+Authenticated Seller — the property performance check,+971501010015,HARNESS_listing_01_ab6110d5,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Cross-tenant isolation — buyer probes for another brokerage,+971501010021,HARNESS_listing_03_d1640603,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""offer"": 1}"
+David Chen — Conveyancing Lawyer (DIFC firm),+971501010012,HARNESS_listing_05_cdd77fda,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""regulatory_documents"": 1}"
+"Dmitri Volkov — Russian, broken English with typos",+971501010005,HARNESS_listing_05_9d419b92,4,4,1.0,0.0,0.0,0.5,0.0,0,0,"{""offer"": 2, ""physical_property"": 1, ""viewing_logistics"": 1}"
+Fast Cash — zero-context spammer (3 turns),+971501010007,HARNESS_listing_03_d8351536,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Khalid Al Maktoum — GCC Arabic speaker (full Arabic conversation),+971501010004,HARNESS_listing_02_7cdd1b00,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""offer"": 1}"
+Khalifa Al Mansoori — Existing Owner pivoting to seller,+971501010013,HARNESS_listing_04_bd2d6707,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""seller_action"": 1}"
+Lisa Park — Independent Property Advisor (Singapore-based),+971501010014,HARNESS_listing_04_bd2d6707,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Mohammed Al Marri — Emirati end-user family,+971501010002,HARNESS_listing_03_d1640603,2,2,1.0,0.0,0.0,0.5,0.0,0,0,"{""offer"": 1, ""regulatory_documents"": 1}"
+No Listing ID — inbound with empty listing context,+971501010019,,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+"Ordinary hesitant end-user — logistics, no offer",+971501010022,HARNESS_listing_01_bb4f4d45,1,1,1.0,0.0,0.0,0.0,0.0,0,1,"{""physical_property"": 1}"
+"Priya Sharma — Indian expat, Hinglish code-switching",+971501010003,HARNESS_listing_01_bb4f4d45,2,3,1.5,0.3333,0.5,0.5,0.0,0,0,"{""community_amenities"": 1, ""offer"": 1}"
+Raj Kapoor — Mortgage Broker (Mashreq),+971501010011,HARNESS_listing_05_cdd77fda,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Ready-property tenancy and vacant-possession questions,+971501010024,HARNESS_listing_01_ab6110d5,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Repeated out-of-scope and instruction-probe refusal,+971501010027,HARNESS_listing_02_381a47e2,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""other"": 1}"
+Repeated seller-contact probe — off-plan listing,+971501010026,HARNESS_listing_04_413ffb20,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""other"": 1}"
+Repeated seller-contact probe — ready listing,+971501010025,HARNESS_listing_02_381a47e2,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""other"": 1}"
+Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021,+971501010001,HARNESS_listing_04_413ffb20,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Sara (Returning) — continuity and hallucination test,+971501010001,HARNESS_listing_04_413ffb20,5,10,2.0,0.5,0.6,0.4,0.0,0,1,"{""fees_and_charges"": 1, ""market_analysis"": 1, ""offer"": 1, ""other"": 1, ""regulatory_documents"": 1}"
+"Sara — UK expat investor, English",+971501010001,HARNESS_listing_04_413ffb20,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Sarah Patel — competing broker fishing for info,+971501010010,HARNESS_listing_02_381a47e2,2,3,1.5,0.3333,0.5,0.5,0.0,0,0,"{""offer"": 1, ""regulatory_documents"": 1}"
+Seller — the property accepting/countering Sara's offer,+971501010017,HARNESS_listing_04_413ffb20,1,2,2.0,0.5,1.0,0.0,0.0,0,0,"{""seller_action"": 1}"
+Seller — the property price-change attempt,+971501010015,HARNESS_listing_01_ab6110d5,1,2,2.0,0.5,1.0,0.0,0.0,0,0,"{""seller_action"": 1}"
+Threading control — category isolation,+971501010030,HARNESS_listing_04_413ffb20,2,5,2.5,0.6,1.0,0.0,0.0,0,0,"{""fees_and_charges"": 1, ""physical_property"": 1}"
+Threading control — post-alert same-category update,+971501010029,HARNESS_listing_04_413ffb20,1,2,2.0,0.5,1.0,0.0,0.0,0,0,"{""fees_and_charges"": 1}"
+Threading control — rapid same-category fee gaps,+971501010028,HARNESS_listing_04_413ffb20,1,4,4.0,0.75,1.0,0.0,0.0,0,0,"{""fees_and_charges"": 1}"
+Tom Henderson — offer escalator (6 escalating bids),+971501010006,HARNESS_listing_05_9d419b92,4,4,1.0,0.0,0.0,1.0,0.0,0,0,"{""offer"": 4}"

@@ -1,0 +1,178 @@
+{
+  "idx": 24,
+  "slug": "ready_tenancy",
+  "persona": "Ready-property tenancy and vacant-possession questions",
+  "phone": "+971501010024",
+  "listing_id": "HARNESS_listing_01_ab6110d5",
+  "listing_facts": {
+    "property_name": "Sidra Villas I",
+    "beds": 5,
+    "baths": 5,
+    "sqft": 4628.0,
+    "plot_sqft": null,
+    "price_aed": 18500000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Is this ready property rented or vacant right now?",
+      "bot": "Dalya with Mahoroba Test Brokerage here. It's currently tenanted. The lease runs January 2026 to January 2027. I don't have a current rent or yield figure to rely on, so that needs to be verified from the Ejari/lease record before you underwrite it.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 49.3
+    },
+    {
+      "turn": 2,
+      "buyer": "If it is rented, when does the lease end?",
+      "bot": "It's currently tenanted. The lease runs January 2026 to January 2027. I don't have a current rent or yield figure to rely on, so that needs to be verified from the Ejari/lease record before you underwrite it.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 38.9
+    },
+    {
+      "turn": 3,
+      "buyer": "Can I get vacant possession after transfer?",
+      "bot": "It's currently tenanted. The lease runs January 2026 to January 2027. Vacant possession is not automatic at lease expiry. For qualifying vacant-possession grounds in Dubai, the owner normally needs 12 months' notice served through notary public or registered mail, so verify whether that notice has already been served.\n\nThe owner can also speak with the tenant around 3 months before lease end about renewal or move-out, but that does not replace the statutory notice route.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 16.8
+    },
+    {
+      "turn": 4,
+      "buyer": "What current rent or yield can I rely on?",
+      "bot": "I don't have the current rent amount or yield figures in the listing data. You'll need to request the Ejari (tenancy contract) and recent rent receipts from the seller's conveyancer to confirm the lease value and calculate yield yourself.\n\nOnce you have those, factor in service charges and DEWA costs to get a true net yield picture.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.9
+    },
+    {
+      "turn": 5,
+      "buyer": "Would a notice be needed before I can move in?",
+      "bot": "It's currently tenanted. The lease runs January 2026 to January 2027. Vacant possession is not automatic at lease expiry. For qualifying vacant-possession grounds in Dubai, the owner normally needs 12 months' notice served through notary public or registered mail, so verify whether that notice has already been served.\n\nThe owner can also speak with the tenant around 3 months before lease end about renewal or move-out, but that does not replace the statutory notice route.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 32.6
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Mahoroba Test Brokerage here. It's currently tenanted. The lease runs January 2026 to January 2027. I don't have a current rent or yield figure to rely on, so that needs to be verified from the Ejari/lease record before you underwrite it.\nIt's currently tenanted. The lease runs January 20"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 17,829,884"
+    },
+    {
+      "check": "no_lease_term_hallucination",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "tenancy_answer_qualified",
+      "pass": true,
+      "evidence": "expects tenancy/vacancy qualification"
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Ready tenancy inquiry — 0 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Ready-property tenancy and vacant-possession questions",
+    "phone": "+971501010024",
+    "listing_id": "HARNESS_listing_01_ab6110d5",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

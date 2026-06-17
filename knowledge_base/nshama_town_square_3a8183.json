@@ -1,0 +1,592 @@
+{
+  "name": "Town Square",
+  "developer": "Nshama",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "Town Square spans 750 acres along Al Qudra Road (D63) in DubaiLand, developed by Nshama from 2015 onwards.",
+    "Nshama delivered 6,000+ units across multiple phases between 2018 and 2024, with average delays of 6–12 months per phase.",
+    "Shams Townhouses is a delivered sub-community within Town Square offering 3BR and 4BR townhouses; listed as ready-to-move-in per Tanami Properties (2026).",
+    "No metro station exists within Town Square; primary public transport is RTA bus route J02. Shuttle buses to Equity Metro Station have been reported by residents.",
+    "A new RTA exit linking Town Square to E611 was opened in May 2025, improving road connectivity.",
+    "Gross rental yields for townhouses are sourced at 5.5–6.5% (Oliva/joinoliva.com, April 2026). Dubuy.ai notes yield data is sparse due to limited Ejari records.",
+    "Price appreciation: +45% over 3 years and +19.3% YoY as of 2026 per Dubuy.ai, outperforming the citywide +13.3% benchmark.",
+    "No school operates within Town Square's gates; nearest schools are Fairgreen International (~2.6 km), South View School (~2.7 km), Ranches Primary (~2.8 km), and GEMS Metropole Al Waha (~3.5 km).",
+    "Service charges average AED 10–14 per sqft across clusters per Oliva review.",
+    "Escrow accounts for off-plan sales held with Dubai Islamic Bank; RERA registrations verified as of March 2026 per Oliva.",
+    "Shams Townhouses unit sizes: 3BR (2,092–2,158 sqft), 4BR (2,382 sqft); starting price listed at AED 1.7M per Tanami Properties.",
+    "Resident sentiment is below average per Dubuy.ai (64 Reddit mentions); main criticisms are morning traffic congestion and construction noise."
+  ],
+  "master_development": {
+    "overview": {
+      "full_name": "Town Square Dubai",
+      "developer": "Nshama",
+      "master_plan_architect": "Parsons International",
+      "main_contractor": "Binladen Contracting Group",
+      "total_area_acres": 750,
+      "location_district": "DubaiLand, Al Yelayiss 2",
+      "road_address": "Al Qudra Road (D63), Dubai",
+      "launched": "February 2015",
+      "community_type": "Master-planned gated residential community",
+      "property_types": [
+        "Studios",
+        "1BR apartments",
+        "2BR apartments",
+        "3BR apartments",
+        "Townhouses (3BR, 4BR)",
+        "Villas"
+      ],
+      "total_planned_units": "~21,500 (3,500 townhouses + 18,000 apartments)",
+      "total_planned_retail_sqft": "2,500,000",
+      "units_delivered_to_2024": "6,000+",
+      "gated": true,
+      "freehold": true,
+      "description": "A large-scale affordable master-planned community targeting families and first-time buyers, built around a 37,000 sqm central park with extensive green space, cycling and jogging trails, retail, and leisure amenities."
+    },
+    "location_connectivity": {
+      "primary_road": "Al Qudra Road (D63)",
+      "secondary_road": "Emirates Road (E611) — accessible in ~5 minutes by car from Shams Townhouses",
+      "nearby_highway": "Sheikh Mohammed Bin Zayed Road (E311)",
+      "metro": "No metro station within community",
+      "bus": "RTA bus route J02 (stops: Hayat Townhouses 1, Mira Town Centre, Mira Oasis, Mira 5); shuttle buses to Equity Metro Station reported by residents",
+      "rta_exit_update": "New RTA exit linking Town Square to E611 opened May 2025",
+      "drive_times_approximate": {
+        "al_maktoum_international_airport_dwc": "~20–25 min",
+        "dubai_marina": "~27 min",
+        "dubai_mall_downtown": "~29 min",
+        "dubai_international_airport": "~28 min",
+        "expo_city_dubai": "~20 min",
+        "burj_al_arab": "~24 min",
+        "dubai_hills_mall": "~15 min"
+      },
+      "notes": "Drive times are approximate and sourced from listing/developer marketing materials; actual times vary with traffic. Morning traffic congestion is a frequently cited resident complaint."
+    },
+    "shared_amenities": {
+      "parks_and_green": [
+        "Town Square Park (37,000 sqm central green space with walking tracks, play areas, outdoor fitness equipment)",
+        "16 community gardens",
+        "154,000 sqm of parkland",
+        "260,000+ sqm of green areas (per haus & haus / Khaleej Times)"
+      ],
+      "trails": [
+        "10 km green jogging trails",
+        "12 km cycling trails"
+      ],
+      "sports_and_recreation": [
+        "Skate Park",
+        "Trampoline Park",
+        "Wave Rider / recreational park",
+        "Basketball courts",
+        "Tennis courts",
+        "Football areas",
+        "8,000 sqm outdoor sports areas",
+        "Outdoor cinema",
+        "S2dio fitness studios (5 units of varying sizes)"
+      ],
+      "pools_and_fitness": [
+        "Multiple swimming pools (one per cluster)",
+        "State-of-the-art gymnasium (per cluster)"
+      ],
+      "family_and_kids": [
+        "Children's play areas",
+        "Kids' fountain",
+        "Kids' splash pad",
+        "Toy train / carousel",
+        "Pet-friendly community park"
+      ],
+      "retail_and_dining": [
+        "Town Square Mall (opened 2022)",
+        "Reel Cinemas / boutique cinema",
+        "Vida Hotel (boutique hotel)",
+        "Carrefour Market",
+        "Spinneys (within community and Mira Town Centre branch)",
+        "Multiple restaurants: The Good Hood Kitchen, Slate Kitchen & Café, Arzetna Lebanese Restaurant, Il Forno, Taqado Mexican Kitchen, Nando's, Five Guys, Starbucks, Domino's",
+        "600+ planned retail and F&B outlets (2.5M sqft retail precinct, partially open)"
+      ],
+      "community_services": [
+        "Maple Bear Nursery (Town Square branch, ages 4 months to 6 years)",
+        "Medical centre / healthcare centre within community",
+        "Pharmacy",
+        "Barber shop",
+        "Community mosque (in neighbouring Mira community)"
+      ],
+      "management": "Nshama in-house property management"
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "Fairgreen International School",
+          "curriculum": "IB (PYP, MYP, DP, CP)",
+          "khda_rating": "Good",
+          "approximate_distance_km": 2.6,
+          "age_range": "Pre-KG to Grade 12",
+          "fees_aed_range": "49,400–84,500 per year",
+          "location": "Wadi Al Safa 7, The Sustainable City"
+        },
+        {
+          "name": "South View School",
+          "curriculum": "British",
+          "khda_rating": "Good",
+          "approximate_distance_km": 2.7,
+          "age_range": "FS1–Y12",
+          "fees_aed_range": null
+        },
+        {
+          "name": "Ranches Primary School",
+          "curriculum": "British",
+          "khda_rating": "Very Good",
+          "approximate_distance_km": 2.8,
+          "age_range": "FS1–Y6",
+          "fees_aed_range": null
+        },
+        {
+          "name": "GEMS Metropole School – Al Waha",
+          "curriculum": "British",
+          "khda_rating": null,
+          "approximate_distance_km": 3.5,
+          "age_range": "FS1–Y8",
+          "fees_aed_range": null
+        },
+        {
+          "name": "GEMS Metropole School – Dubai Branch",
+          "curriculum": "British",
+          "khda_rating": "Good",
+          "approximate_distance_km": 5.0,
+          "age_range": "FS1–Y13",
+          "fees_aed_range": null
+        },
+        {
+          "name": "GEMS Al Barsha National School",
+          "curriculum": null,
+          "khda_rating": null,
+          "approximate_distance_km": null,
+          "drive_time_approx_min": 10,
+          "age_range": null,
+          "fees_aed_range": null,
+          "notes": "Drive time sourced from Oliva review; km distance not confirmed"
+        },
+        {
+          "name": "Jumeirah English Speaking School",
+          "curriculum": "British",
+          "khda_rating": null,
+          "approximate_distance_km": null,
+          "drive_time_approx_min": 15,
+          "age_range": null,
+          "fees_aed_range": null,
+          "notes": "Drive time sourced from Oliva review; km distance not confirmed"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Medical centre (within Town Square community)",
+          "type": "General clinic",
+          "notes": "Exact operator name not confirmed in sources"
+        },
+        {
+          "name": "Pharmacy (within Town Square community)",
+          "type": "Pharmacy",
+          "notes": "Exact operator name not confirmed in sources"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Town Square Mall",
+          "type": "Community mall",
+          "notes": "Opened 2022; small but functional retail anchor"
+        },
+        {
+          "name": "Carrefour Market",
+          "type": "Supermarket",
+          "notes": "Within Town Square"
+        },
+        {
+          "name": "Spinneys",
+          "type": "Supermarket",
+          "notes": "Branch within Town Square on Al Qudra Road (~9 min drive from Shams); additional branch at Mira Town Centre"
+        },
+        {
+          "name": "Dubai Outlet Mall",
+          "type": "Outlet mall",
+          "notes": "~19 min drive from Shams Townhouses per Bayut"
+        }
+      ],
+      "leisure_nearby": [
+        "Al Qudra Lake and cycling track",
+        "Arabian Ranches Golf Course",
+        "Dubai Polo and Equestrian Club",
+        "Expo City Dubai"
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "Investor visa eligible (2-year renewable) for properties with median price ≥ AED 750,000 in freehold areas",
+      "median_price_per_sqft_aed": 1249,
+      "yoy_price_growth_percent": 19.3,
+      "three_year_price_growth_percent": 45,
+      "price_growth_source": "Dubuy.ai, based on DLD transaction data, updated 2026",
+      "citywide_yoy_benchmark_percent": 13.3,
+      "apartment_gross_yield_range_percent": "7.0–8.5",
+      "townhouse_gross_yield_range_percent": "5.5–6.5",
+      "yield_source": "Oliva / joinoliva.com, April 2026",
+      "yield_caveat": "Dubuy.ai notes limited Ejari data for Town Square; gross yields should be verified against current rental comparables",
+      "service_charge_per_sqft_aed": "10–14",
+      "service_charge_source": "Oliva review, April 2026",
+      "price_vs_jvc": "10–20% below JVC for comparable unit types",
+      "projected_annual_growth_2028_percent": "3–5",
+      "projected_growth_source": "Oliva review, April 2026",
+      "five_year_transaction_volume": 12089,
+      "transaction_volume_source": "Dubuy.ai",
+      "dubuy_verdict": "Capital growth, not cashflow — buy for resale appreciation thesis rather than pure rental income",
+      "current_apartment_prices_aed": {
+        "studio": "420,000–520,000",
+        "one_bed": "550,000–720,000",
+        "two_bed": "750,000–1,050,000"
+      },
+      "current_townhouse_prices_aed": {
+        "three_bed": "1,100,000–1,450,000",
+        "four_bed": "1,400,000–1,800,000"
+      },
+      "price_data_source": "Oliva review (April 2026) and PropertyFinder DLD data (2025–2026)",
+      "off_plan_pipeline": [
+        {
+          "project": "Elaya",
+          "est_handover": "Q3 2026"
+        },
+        {
+          "project": "FIA",
+          "est_handover": "Q4 2026"
+        },
+        {
+          "project": "Savannah",
+          "est_handover": "Q2 2027"
+        },
+        {
+          "project": "Alton",
+          "est_handover": "Q2 2028"
+        }
+      ]
+    },
+    "developer_profile": {
+      "developer": "Nshama",
+      "founded": 2014,
+      "founder": "Fred Durie (former CEO, Emaar retail division)",
+      "structure": "Privately held; no publicly listed shares",
+      "focus": "Sole focus on Town Square Dubai",
+      "rera_registered": true,
+      "escrow_bank": "Dubai Islamic Bank",
+      "escrow_verified_date": "March 2026",
+      "units_delivered": "6,000+",
+      "delivery_delay_range": "6–12 months average across phases",
+      "delay_benchmark": "Better than Azizi (12–24 months); worse than Emaar (3–6 months)",
+      "cancellations": "None — every announced phase delivered",
+      "construction_quality_score": "6.5/10 (based on snagging reports reviewed by Oliva)",
+      "common_snagging_issues": [
+        "Paint and finishing",
+        "Bathroom waterproofing",
+        "AC duct alignment"
+      ],
+      "structural_integrity": "Solid; meets Dubai Municipality standards",
+      "financial_transparency": "Limited — no annual reports published",
+      "source": "Oliva / joinoliva.com, April 2026"
+    }
+  },
+  "sub_developments": {
+    "shams_townhouses": {
+      "aliases": [
+        "Shams Townhouses",
+        "Shams by Nshama",
+        "Shams Town Square"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Shams Townhouses",
+        "investment_overrides": {
+          "property_type": "Townhouse",
+          "unit_types": [
+            "3BR + Maid",
+            "4BR + Maid"
+          ],
+          "size_range_sqft": "2,092–2,382",
+          "starting_price_aed": 1700000,
+          "status": "Ready to move in",
+          "ownership": "Freehold",
+          "floor_plans": {
+            "3BR_type_a1_a2": "2,092–2,158 sqft",
+            "4BR_type_b": "2,382 sqft"
+          },
+          "unit_features": [
+            "Open layout great room",
+            "Built-in wardrobes",
+            "Dining area",
+            "Private rear garden",
+            "Balcony overlooking garden",
+            "Maid's room",
+            "Covered parking garage",
+            "Master bedroom with en-suite bathroom",
+            "Ground floor powder room"
+          ],
+          "cluster_amenities": [
+            "State-of-the-art gymnasium",
+            "Swimming pool",
+            "Children's play areas",
+            "Carousel",
+            "Event lawn",
+            "Kids' fountain",
+            "Kids' splash pad",
+            "Kids' train",
+            "Retail outlets"
+          ],
+          "total_units_approx": "200+",
+          "location_within_community": "South of intersection of Al Qudra Road (D63) and Emirates Road (E611)",
+          "e611_access_approx_min": 5,
+          "d63_access_approx_min": 6
+        },
+        "sales_talking_points": {
+          "headline": "Spacious 3 & 4BR freehold townhouses in a delivered, move-in-ready community",
+          "lifestyle": "Private rear garden, covered parking, and direct access to Town Square Park — ideal for families wanting space without premium villa-community pricing",
+          "investment": "Freehold ownership in a community that has appreciated 45% over 3 years; townhouse gross yields of 5.5–6.5%; golden visa eligible",
+          "scarcity": "Over 200 townhouses in a delivered cluster; resale stock is finite as Nshama's new launches focus on apartments",
+          "objection_distance": "~25–29 min drive to Dubai Marina and Dubai Mall; new E611 exit (May 2025) has improved connectivity"
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "750-acre master-planned community; 6,000+ units delivered; median PSF up 45% in 3 years and +19.3% YoY (outperforming Dubai's +13.3% citywide benchmark)",
+      "scarcity_argument": "Townhouse supply is finite within a maturing community — new Nshama launches are predominantly apartments; resale townhouses in delivered clusters like Shams are increasingly scarce",
+      "lifestyle_pitch": "Dubai's most complete affordable family community: 37,000 sqm central park, 10 km jogging trails, 12 km cycling tracks, skate park, cinemas, Vida Hotel, Carrefour, Spinneys, and a pet-friendly environment — all within a gated, secure setting",
+      "investment_pitch": "Freehold ownership, golden visa eligible, apartment yields of 7–8.5%, townhouse yields of 5.5–6.5%, prices 10–20% below JVC, and 3–5% projected annual growth through 2028 as the community matures",
+      "objection_handling": "Distance from Downtown (~29 min) is offset by significantly lower entry prices, a new E611 exit (May 2025), and a self-contained lifestyle that reduces the need for daily city-centre trips. No metro is a real limitation — best suited to car-owning families."
+    },
+    "per_sub_development": {
+      "shams_townhouses": {
+        "headline": "Ready-to-move 3 & 4BR townhouses from AED 1.7M — freehold, private garden, covered parking",
+        "lifestyle_pitch": "Each home includes a private rear garden, balcony, maid's room, and covered garage. Steps from Town Square Park's carousel, splash pad, and wave rider — a genuine family lifestyle at an accessible price point",
+        "investment_pitch": "Delivered freehold asset in a community with 45% three-year price growth; townhouse gross yields 5.5–6.5%; golden visa eligible; finite resale supply as new launches shift to apartments",
+        "objection_handling": "Shams is ready to move in — no off-plan risk. E611 is accessible in ~5 minutes, connecting to the wider Dubai road network. Fairgreen International School is ~2.6 km away."
+      }
+    }
+  },
+  "aliases": [
+    "Town Square",
+    "town square",
+    "Shams Townhouses",
+    "Town Square Dubai",
+    "Nshama Town Square",
+    "TSAD",
+    "town square nshama",
+    "Shams by Nshama",
+    "Shams Town Square"
+  ],
+  "developer_keywords": [
+    "Nshama",
+    "nshama",
+    "Nshama Group",
+    "Nshama Properties",
+    "Nshama Development"
+  ],
+  "prompt_data": {
+    "developer": "Nshama",
+    "community": "Town Square",
+    "location": {
+      "area": "DubaiLand, Al Yelayiss 2, Dubai",
+      "description": "A 750-acre gated master-planned community on Al Qudra Road (D63), south of the intersection with Emirates Road (E611), bordering Mudon to the north and near DAMAC Hills and Arabian Ranches. Self-contained and family-oriented, positioned as Dubai's most complete affordable residential community.",
+      "distances": {
+        "al_maktoum_airport_dwc": "~20–25 min drive",
+        "dubai_marina": "~27 min drive",
+        "dubai_mall": "~29 min drive",
+        "dubai_international_airport": "~28 min drive",
+        "expo_city_dubai": "~20 min drive",
+        "burj_al_arab": "~24 min drive",
+        "dubai_hills_mall": "~15 min drive",
+        "e611_from_shams": "~5 min drive",
+        "d63_from_shams": "~6 min drive",
+        "notes": "All drive times are approximate from marketing and listing sources; actual times vary with traffic. Morning peak congestion is a known resident concern."
+      }
+    },
+    "community_amenities": [
+      "Town Square Park (37,000 sqm central green space)",
+      "16 community gardens and 154,000 sqm of parkland",
+      "10 km jogging trails",
+      "12 km cycling trails",
+      "Skate Park",
+      "Trampoline Park",
+      "Wave Rider recreational park",
+      "Multiple swimming pools (per cluster)",
+      "Gymnasiums (per cluster)",
+      "Basketball and tennis courts",
+      "Outdoor cinema",
+      "Reel Cinemas (boutique cinema)",
+      "Vida Hotel",
+      "Town Square Mall (opened 2022)",
+      "Carrefour Market",
+      "Spinneys supermarket",
+      "Multiple restaurants and cafes (Nando's, Five Guys, Taqado, Il Forno, Starbucks, Domino's and others)",
+      "Maple Bear Nursery (Town Square branch)",
+      "Medical centre and pharmacy",
+      "Children's play areas, carousel, kids' train, splash pad, kids' fountain",
+      "Pet-friendly community park",
+      "Dedicated covered parking per unit",
+      "Gated community with security"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "Fairgreen International School",
+          "curriculum": "IB (PYP, MYP, DP, CP)",
+          "khda_rating": "Good",
+          "distance_km": 2.6,
+          "ages": "Pre-KG to Grade 12",
+          "annual_fees_aed": "49,400–84,500"
+        },
+        {
+          "name": "South View School",
+          "curriculum": "British",
+          "khda_rating": "Good",
+          "distance_km": 2.7,
+          "ages": "FS1–Y12",
+          "annual_fees_aed": null
+        },
+        {
+          "name": "Ranches Primary School",
+          "curriculum": "British",
+          "khda_rating": "Very Good",
+          "distance_km": 2.8,
+          "ages": "FS1–Y6",
+          "annual_fees_aed": null
+        },
+        {
+          "name": "GEMS Metropole School – Al Waha",
+          "curriculum": "British",
+          "khda_rating": null,
+          "distance_km": 3.5,
+          "ages": "FS1–Y8",
+          "annual_fees_aed": null
+        },
+        {
+          "name": "GEMS Metropole School – Dubai Branch",
+          "curriculum": "British",
+          "khda_rating": "Good",
+          "distance_km": 5.0,
+          "ages": "FS1–Y13",
+          "annual_fees_aed": null
+        },
+        {
+          "name": "Maple Bear Nursery (Town Square branch)",
+          "curriculum": "Canadian-based early years",
+          "khda_rating": null,
+          "distance_km": null,
+          "ages": "4 months to 6 years",
+          "annual_fees_aed": null,
+          "notes": "Located within Town Square community"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Medical centre (within Town Square)",
+          "type": "General clinic",
+          "distance_km": null,
+          "notes": "Operator name not confirmed in sources"
+        },
+        {
+          "name": "Pharmacy (within Town Square)",
+          "type": "Pharmacy",
+          "distance_km": null,
+          "notes": "Operator name not confirmed in sources"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Town Square Mall",
+          "type": "Community mall",
+          "notes": "Within community; opened 2022"
+        },
+        {
+          "name": "Carrefour Market",
+          "type": "Supermarket",
+          "notes": "Within Town Square"
+        },
+        {
+          "name": "Spinneys",
+          "type": "Supermarket",
+          "notes": "Branch within Town Square on Al Qudra Road; additional branch at Mira Town Centre"
+        },
+        {
+          "name": "Dubai Outlet Mall",
+          "type": "Outlet mall",
+          "notes": "~19 min drive from Shams Townhouses"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": "Apartments: 7.0–8.5% gross; Townhouses: 5.5–6.5% gross (Oliva, April 2026). Dubuy.ai flags limited Ejari data — verify against current rental comparables.",
+      "branded_premium_note": null,
+      "price_appreciation_3yr": "+45%",
+      "price_appreciation_yoy": "+19.3%",
+      "median_psf_aed": 1249,
+      "service_charge_per_sqft_aed": "10–14",
+      "entry_price_apartments_aed": "From AED 420,000 (studio)",
+      "entry_price_townhouses_aed": "From AED 1,100,000 (3BR); Shams Townhouses from AED 1.7M",
+      "investment_style": "Primarily capital growth play; secondary rental income. Dubuy.ai verdict: buy for appreciation, not cashflow.",
+      "off_plan_pipeline_note": "Active pipeline includes Elaya (Q3 2026), FIA (Q4 2026), Savannah (Q2 2027), Alton (Q2 2028) — future supply may affect resale values"
+    },
+    "sales_talking_points": {
+      "affordability": "Prices 10–20% below JVC for comparable units; one of Dubai's most accessible freehold family communities",
+      "capital_growth": "+45% over 3 years; +19.3% YoY, outperforming Dubai's citywide +13.3% benchmark",
+      "lifestyle": "Self-contained community with 37,000 sqm park, 22 km of trails, cinema, hotel, supermarkets, and restaurants — minimal need to leave for daily needs",
+      "family_appeal": "Gated, pet-friendly, multiple schools within 5 km, nursery on-site, extensive children's facilities",
+      "connectivity": "New E611 exit opened May 2025; ~20–29 min to key Dubai destinations by car",
+      "developer_credibility": "Nshama has delivered every announced phase; RERA registered; escrow with Dubai Islamic Bank; 6,000+ units handed over",
+      "key_caveat": "No metro access; car-dependent community; morning traffic congestion is a known resident pain point; no school within the gates"
+    },
+    "developer_track_record": "Nshama, founded 2014 by former Emaar executives, has delivered 6,000+ units across Town Square with average delays of 6–12 months — within acceptable Dubai mid-market range. No project cancellations. Construction quality rated 6.5/10 based on snagging reports; structural integrity is solid. RERA registered; escrow held with Dubai Islamic Bank (verified March 2026). Financial transparency is limited as the company is privately held."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:51:02.289906+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://joinoliva.com/en/learn/blog/town-square-nshama-developer-and-project-review",
+      "https://www.bayut.com/area-guides/town-square",
+      "https://dubairealestateanalysis.com/blog/best-areas-rental-income-dubai.html",
+      "https://iqaratuae.com/shams-townhouses-by-nshama-at-town-square",
+      "https://dubairealestateproperties.com/nshama/shams-townhouses",
+      "https://www.propertyfinder.ae/blog/schools-near-town-square-dubai",
+      "https://www.tanamiproperties.com/Projects/Shams-Townhouses",
+      "https://www.guestready.com/blog/best-rental-yields-in-dubai",
+      "https://nshama.ae",
+      "https://propsearch.ae/dubai/town-square",
+      "https://www.townsquareatdubai.com",
+      "https://dubuy.ai/community/town-square",
+      "https://www.bayut.com/area-guides/shams-townhouses",
+      "https://www.hausandhaus.com/resources/latest-news-and-insights/town-square-a-neighbourhood-that-brims-with-dubai-s-urban-vibe",
+      "https://www.propertyfinder.ae/blog/pros-cons-living-town-square",
+      "https://laforet.ae/town-square-dubai-investment-guide-2026",
+      "https://dubaimetrotrain.com/destinations",
+      "https://www.youtube.com/watch?v=HmkyWcwAlUg",
+      "https://www.maplebeargulfschools.com/our-location/dubai/nursery-town-square",
+      "https://bnw.ae/en/blog/dubai-metro-guide",
+      "https://www.propertyfinder.ae/en/transactions/buy/dubai/town-square",
+      "https://web.khda.gov.ae/en/Education-Directory/Schools/School-Details?Id=5614&CenterID=506085",
+      "https://www.bayut.com/for-sale/property/dubai/town-square",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-town-square.html",
+      "https://www.bayut.com/to-rent/apartments/dubai/town-square",
+      "https://www.bayut.com/for-sale/apartments/dubai/town-square"
+    ],
+    "audit_flags": [
+      "Exact net rental yields for Shams Townhouses not available — gross yield range (5.5–6.5% for townhouses) sourced from Oliva review; Dubuy.ai flags limited Ejari data for Town Square overall",
+      "Shams Townhouses starting price of AED 1.7M sourced from Tanami Properties (2026); current resale prices should be verified against live DLD transaction data",
+      "KHDA ratings and annual fees for several nearby schools (South View, Ranches Primary, GEMS Metropole) not confirmed in sources — fees listed as null",
+      "Healthcare operator names within Town Square not confirmed in any source — listed generically as 'medical centre' and 'pharmacy'",
+      "Drive times are approximate from marketing/listing materials and may not reflect peak-hour conditions; morning traffic congestion is a documented resident complaint",
+      "Nshama financial statements not publicly available; developer solvency cannot be independently verified beyond RERA registration and escrow confirmation",
+      "Off-plan pipeline handover dates (Elaya, FIA, Savannah, Alton) sourced from Bayut area guide and subject to change",
+      "Shams Townhouses total unit count listed as '200+' per Bayut — exact figure not confirmed across all sources",
+      "No confirmed school within Town Square gates; resident Reddit mentions reference a new school opening in 2027 but this is unverified in official sources",
+      "Projected annual price growth of 3–5% through 2028 is a forecast from Oliva review (April 2026) and should not be presented as guaranteed"
+    ]
+  }
+}

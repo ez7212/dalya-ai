@@ -1,0 +1,1267 @@
+{
+  "name": "Sobha Seahaven",
+  "developer": "Sobha Realty",
+  "last_updated": "2026-03-28",
+  "researcher_notes": [
+    "GAPS AND LOW-CONFIDENCE DATA:",
+    "1. Per-tower unit count breakdown: confirmed total is 771 across all three towers. Authoritative split per tower not found. Current PF listing counts (Tower A: ~85–102, Tower B: ~61–62, Tower C: ~26–61) are resale listings, NOT total unit counts.",
+    "2. Tower A is fully sold out at primary level. All Tower A listings are secondary/resale market.",
+    "3. Sky Edition floor placement: floors 49–59 in Tower A confirmed from official Sobha press release. Floors 34–42 in Tower C appears in multiple third-party sources but was NOT confirmed from an official Sobha document. Mark as low-confidence.",
+    "4. Ceiling height: 3.6m is developer-stated floor-to-floor height. One source states '11-foot' (~3.35m) net ceiling for Tower B. Net ceiling height after slab not confirmed.",
+    "5. Kitchen brand: Miele confirmed for Sky Edition only. Standard units: 'state-of-the-art branded appliances' — brand unconfirmed for standard product.",
+    "6. Flooring brand: No specific brand confirmed for Seahaven. Sobha uses 6-layer acoustic/waterproof system but brand unconfirmed.",
+    "7. Private beach: multiple sources mention 'private beach access' but one reputable source could not confirm dedicated private beach vs. public Dubai Harbour waterfront. Mark as unconfirmed.",
+    "8. Payment plan: multiple plans cited (80/20, 60/40, 20/40/40, 20/60/20). No single authoritative plan confirmed for all towers simultaneously. No post-handover plan confirmed.",
+    "9. Tower C handover: Some PF listings show Q2–Q4 2027, suggesting later completion than A and B. Developer marketing states Q4 2026 for overall project. Conflict unresolved.",
+    "10. Tower B floors: 47 floors cited in most sources; one source cites 59 floors. 47F more commonly cited — conflict unresolved.",
+    "11. Drive times are approximate Google Maps estimates. Real-time verification not performed.",
+    "12. DLD total transaction volume since 2022 launch not obtained. Last 12 months: 254 apartment transactions, avg AED 9,040,191.",
+    "13. Rental yield for Seahaven units: not independently DLD-verified. 6.53–7.3% from broker sources only.",
+    "14. Investor vs end-user ratio for Seahaven specifically: not found.",
+    "15. Sobha Realty UAE legal entity: 'Sobha Group LLC' and 'Sobha Real Estate LLC' both referenced. DLD-registered developer name not confirmed directly from DLD records in this session.",
+    "16. Sobha Ltd India (BSE: 532784) is a separate listed entity from Sobha Realty UAE. UAE operations privately held by PNC Investments LLC.",
+    "17. After-sales warranty: Sobha specific programme not confirmed. UAE law mandates 10-year structural + 1-year finishing minimum.",
+    "18. RERA Project Number 2762 confirmed.",
+    "19. Sobha Modular Mission 70:70 initiative confirmed from Zawya.",
+    "20. GRESB Score 2024: 91 (up from 72 in 2023) confirmed.",
+    "21. Creek Vistas Grande delivered 6 months early confirmed from Zawya.",
+    "22. Moody's Ba2/stable on PNC Investments sukuk (upgraded from Ba3) confirmed.",
+    "23. Sobha Realty 2024 sales AED 23 billion confirmed from official press release.",
+    "24. Golden Visa AED 2M threshold confirmed; down payment requirement removed 2024.",
+    "25. Al Maktoum Airport and Abu Dhabi drive times: not confirmed — do not quote.",
+    "26. Coordinates are approximate — verify independently.",
+    "27. School fees and KHDA ratings: not verified in this session — direct users to khda.ae."
+  ],
+  "master_development": {
+    "overview": {
+      "official_name": "Sobha SeaHaven",
+      "developer_legal_name_uae": "Sobha Real Estate LLC (trading as Sobha Realty)",
+      "parent_holding_uae": "PNC Investments LLC (private)",
+      "india_entity_note": "Sobha Limited (BSE: 532784 / NSE: SOBHA) is a separate, Indian-listed entity — distinct legal company sharing the Sobha brand",
+      "rera_project_number": "2762",
+      "land_area_acres": 5.5,
+      "land_area_sqft": 239518,
+      "land_area_sqm": 22258,
+      "total_residential_units": 771,
+      "total_towers": 3,
+      "towers": [
+        {
+          "name": "Tower A",
+          "floors": 66,
+          "height_metres": 275,
+          "status": "Under construction",
+          "primary_sales_status": "Sold out",
+          "handover": "Q4 2026"
+        },
+        {
+          "name": "Tower B",
+          "floors": 47,
+          "floors_note": "Conflict: one source cites 59 floors. 47F most commonly cited.",
+          "height_metres": 178,
+          "status": "Under construction",
+          "primary_sales_status": "Available",
+          "handover": "Q4 2026"
+        },
+        {
+          "name": "Tower C",
+          "floors": 57,
+          "height_metres": 245,
+          "status": "Under construction",
+          "primary_sales_status": "Available",
+          "handover": "Q2–Q4 2027 per PF listings; developer marketing states Q4 2026 — conflict unresolved"
+        }
+      ],
+      "sky_edition_note": "Sky Edition is a premium sub-collection within Towers A and C — not a separate tower. 33 units total, floors 49–59 in Tower A (confirmed). Floors 34–42 in Tower C (low-confidence, not confirmed from official Sobha source).",
+      "launch_date": "November 2022",
+      "sky_edition_launch_date": "June 2023",
+      "freehold": true,
+      "master_community": "Dubai Harbour (within Dubai International Marine Club precinct), positioned between Dubai Marina and Palm Jumeirah on the Arabian Gulf",
+      "price_range": {
+        "entry_aed": 2950000,
+        "entry_note": "1BR resale, March 2026",
+        "top_aed": 158590575,
+        "top_note": "6BR full-floor penthouse resale, March 2026",
+        "sky_edition_entry_aed": 21132340
+      },
+      "developer_positioning": "Sobha's first project in Dubai Harbour. Marketed as ultra-luxury waterfront with 270-degree three-sided ocean views, backward-integrated construction quality, 3.6m floor-to-floor height, and full waterfront lifestyle including yacht club and marina access."
+    },
+    "location_connectivity": {
+      "address": "Dubai International Marine Club, Dubai Harbour, Dubai, UAE",
+      "coordinates_approx": {
+        "lat": 25.0773,
+        "lng": 55.1342,
+        "note": "Approximate only — verify independently. Not confirmed from official source."
+      },
+      "highway_access": [
+        {
+          "road": "Sheikh Zayed Road (E11)",
+          "drive_minutes": 6
+        },
+        {
+          "road": "Al Khail Road (E44)",
+          "drive_minutes": 14
+        },
+        {
+          "road": "Primary access",
+          "name": "King Salman bin Abdulaziz Al Saud Street"
+        }
+      ],
+      "drive_times_minutes": {
+        "dubai_marina": 5,
+        "jbr_the_walk": 7,
+        "bluewaters_island": 8,
+        "palm_jumeirah": 10,
+        "ibn_battuta_mall": 10,
+        "mall_of_the_emirates": 15,
+        "downtown_dubai_burj_khalifa": 20,
+        "dubai_mall": 22,
+        "difc": 22,
+        "dubai_hills_mall": 20,
+        "dxb_airport": "25–35 (traffic dependent)",
+        "dwc_al_maktoum_airport": null,
+        "abu_dhabi_via_e11": null
+      },
+      "metro": {
+        "nearest_station": "DMCC Metro Station (Red Line)",
+        "note": "Requires taxi or tram connection to Dubai Harbour. No direct Metro to Dubai Harbour confirmed. Sobha Realty Metro Station (~11 min drive) also on Red Line."
+      },
+      "tram": {
+        "nearest_stop": "Mina Al Seyahi Tram Station"
+      },
+      "water_transport": "Dubai Ferry via Marina Walk Marine Transport Station (~6 min drive). Dubai Harbour contains one of the region's largest marinas.",
+      "planned_transport_expansion": null,
+      "marina_berth_access": true,
+      "walking_to_beach_metres": null,
+      "walking_to_marina_walk_minutes": null,
+      "nearest_supermarket": {
+        "name": "Spinneys",
+        "location": "Within Dubai Harbour precinct",
+        "distance_confirmed": false
+      },
+      "nearest_pharmacy": null
+    },
+    "shared_amenities": {
+      "pools": [
+        {
+          "name": "Rooftop infinity pool",
+          "views": "Sea views",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Family pool",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Children's pool",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Sky Edition private infinity pool",
+          "location": "Sky Edition floors",
+          "status": "Planned/under construction"
+        }
+      ],
+      "fitness": [
+        {
+          "name": "Gym / health club",
+          "equipment_brand": null,
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Running track",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Yoga studio",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Pilates studio",
+          "status": "Planned/under construction"
+        }
+      ],
+      "wellness": [
+        {
+          "name": "Spa",
+          "operator": null,
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Sauna and steam room / Roman steam bath",
+          "status": "Planned/under construction"
+        }
+      ],
+      "social_lifestyle": [
+        {
+          "name": "Indoor/outdoor cinema",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Children's play areas",
+          "types": "Indoor and outdoor",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Skate park",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "BBQ areas and terraces",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Residents lounge",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Sky lounge (Sky Edition)",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Restaurant and cafe (Sky Edition rooftop)",
+          "operator": null,
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Dog walking areas",
+          "status": "Planned/under construction"
+        },
+        {
+          "name": "Landscaped gardens",
+          "status": "Planned/under construction"
+        }
+      ],
+      "services": [
+        {
+          "name": "24/7 concierge",
+          "confirmed": true
+        },
+        {
+          "name": "Valet parking",
+          "confirmed": true
+        }
+      ],
+      "water_sports": {
+        "confirmed": true,
+        "details": null
+      },
+      "marina_yacht_club_access": {
+        "confirmed": true,
+        "details": null
+      },
+      "private_beach": {
+        "confirmed": false,
+        "note": "Multiple sources market 'private beach access'. Dedicated private beach vs. public Dubai Harbour waterfront not independently confirmed. Do not represent as confirmed private beach."
+      },
+      "tennis_padel_courts": null,
+      "co_working_business_lounge": null,
+      "confirmed_retail_tenants": null,
+      "confirmed_restaurants_cafes_outside_sky_edition": null
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "Emirates International School Meadows",
+          "curriculum": "IB",
+          "distance_km": 3.0,
+          "khda_rating": null,
+          "age_range": null,
+          "fees_aed_annual": null
+        },
+        {
+          "name": "Regent International School",
+          "curriculum": "British",
+          "distance_km": 3.0,
+          "khda_rating": null,
+          "age_range": null,
+          "fees_aed_annual": null
+        },
+        {
+          "name": "Dubai College",
+          "curriculum": "British A-Level/GCSE",
+          "distance_km": null,
+          "khda_rating": "Outstanding",
+          "age_range": null,
+          "fees_aed_annual": null
+        },
+        {
+          "name": "Dubai International Academy Emirates Hills",
+          "curriculum": "IB",
+          "distance_km": null,
+          "khda_rating": "Outstanding",
+          "age_range": null,
+          "fees_aed_annual": null
+        },
+        {
+          "name": "Dubai British School",
+          "curriculum": "British",
+          "distance_km": null,
+          "khda_rating": null,
+          "age_range": null,
+          "fees_aed_annual": null
+        },
+        {
+          "name": "American School Dubai",
+          "curriculum": "American",
+          "distance_km": null,
+          "khda_rating": null,
+          "age_range": null,
+          "fees_aed_annual": null
+        }
+      ],
+      "schools_note": "Fees and KHDA ratings not verified in this session. Direct buyers to khda.ae for current ratings.",
+      "healthcare": [
+        {
+          "name": "HBMC",
+          "distance_km": 2.4,
+          "drive_minutes": 8,
+          "full_name_confirmed": false,
+          "key_services": null
+        }
+      ],
+      "healthcare_note": "Dubai Marina / JBR area has several clinics within 5–10 min drive. Specific names not confirmed.",
+      "shopping": {
+        "dubai_marina_mall": {
+          "drive_minutes": 5
+        },
+        "mall_of_the_emirates": {
+          "drive_minutes": 15
+        },
+        "ibn_battuta_mall": {
+          "drive_minutes": 10
+        },
+        "dubai_hills_mall": {
+          "drive_minutes": 20
+        },
+        "nearest_supermarket": {
+          "name": "Spinneys",
+          "location": "Within Dubai Harbour precinct",
+          "distance_confirmed": false
+        }
+      },
+      "dining_nightlife": {
+        "jbr_dining_strip": {
+          "drive_minutes": 7
+        },
+        "dubai_marina_promenade": {
+          "drive_minutes": 5
+        },
+        "note": "Specific restaurant names within walking distance not confirmed."
+      }
+    },
+    "investment_data": {
+      "dld_transactions_last_12_months": {
+        "total_apartments_sold": 254,
+        "average_price_aed": 9040191,
+        "one_br_transactions": 73,
+        "one_br_average_aed": 3825053,
+        "source": "propsearch.ae",
+        "period": "approx 2025"
+      },
+      "feb_2026_dld_transaction_prices": {
+        "one_br_aed_per_sqft_range": "4,019–4,300",
+        "two_br_aed_per_sqft_range": "3,700–4,100",
+        "source": "propsearch.ae"
+      },
+      "total_volume_since_launch_2022": null,
+      "current_resale_listings_march_2026": {
+        "total_listings_all_towers": 227,
+        "tower_a": {
+          "listings_count": 85,
+          "price_range_aed": "3,400,000–135,000,000",
+          "price_per_sqft_aed": "4,100–7,000+"
+        },
+        "tower_b": {
+          "listings_count": 62,
+          "price_range_aed": "2,950,000–17,620,629",
+          "price_per_sqft_aed": "3,500–5,900"
+        },
+        "tower_c": {
+          "listings_count": 61,
+          "price_range_aed": "2,995,000–158,590,575",
+          "price_per_sqft_aed": "3,527–6,494"
+        },
+        "source": "propertyfinder.ae, March 2026"
+      },
+      "rental_yield_estimate": {
+        "range_percent": "6.53–7.3",
+        "note": "Broker estimate only. Not independently DLD-verified. Development not yet complete — actual achieved rents cannot be confirmed.",
+        "source": "Broker marketing data, June 2023 documentation"
+      },
+      "capital_appreciation": null,
+      "avg_days_on_market": null,
+      "bulk_investor_fund_activity": null,
+      "golden_visa": {
+        "threshold_aed": 2000000,
+        "duration_years": 10,
+        "renewable": true,
+        "off_plan_eligible": true,
+        "mortgaged_eligible": true,
+        "down_payment_requirement": "Removed 2024",
+        "qualifying_seahaven_configurations": "All 2BR+ units at current pricing. Some 1BR units above AED 2M threshold also qualify.",
+        "processing_time_weeks": null,
+        "source": "UAE government policy, Sovereign Group 2024"
+      }
+    },
+    "developer_profile": {
+      "sobha_realty_uae": {
+        "legal_name": "Sobha Real Estate LLC",
+        "trading_name": "Sobha Realty",
+        "ownership": "Privately held. Parent: PNC Investments LLC.",
+        "dld_registered_name": null
+      },
+      "sobha_india": {
+        "legal_name": "Sobha Limited",
+        "bse_code": "532784",
+        "nse_code": "SOBHA",
+        "note": "Separate legal entity from Sobha Realty UAE. Shares brand only."
+      },
+      "founder": {
+        "name": "PNC Menon (Prathapachandran Nandakumaran Menon)",
+        "background": "Born Palakkad, Kerala, India. Arrived Oman 1976 with approximately $7. Built interior decoration business through royal palace contracts in Oman. Expanded to Dubai in 2003.",
+        "current_role": "Founder and Chairman, Sobha Group"
+      },
+      "major_completed_dubai_projects": [
+        {
+          "name": "Sobha Hartland",
+          "value_usd": "4 billion",
+          "size_sqft": "8 million"
+        },
+        {
+          "name": "District One",
+          "type": "JV with Meydan",
+          "value_usd": "8 billion"
+        },
+        {
+          "name": "Creek Vistas Grande",
+          "delivery_note": "6 months ahead of schedule"
+        },
+        {
+          "name": "Waves at Hartland",
+          "delivery_note": "Completed in 24 months, ahead of schedule"
+        }
+      ],
+      "total_portfolio_value_under_development": null,
+      "delivery_track_record": {
+        "creek_vistas_grande": "6 months early",
+        "waves_at_hartland": "24 months, ahead of schedule",
+        "units_delivered_ahead_of_schedule_2023": 1819,
+        "overall_assessment": "Consistently ahead of schedule on known projects. No confirmed delayed projects identified."
+      },
+      "financial": {
+        "revenue_2024_aed": "23,000,000,000",
+        "revenue_2023_aed": "15,500,000,000",
+        "sukuk_outstanding_usd": 500000000,
+        "moodys_rating": "Ba2/stable",
+        "moodys_previous_rating": "Ba3",
+        "moodys_upgrade_date": "2024",
+        "rating_note": "Sub-investment grade. Improving trajectory. Ba2 reflects strong sales pipeline.",
+        "debt_concerns": "Sub-IG rating may create perception risk with conservative buyers. No delivery failures or public financial distress identified."
+      },
+      "dubai_market_position": {
+        "market_share_claimed": "10% of Dubai",
+        "ranking_ytd_2025": "3rd overall, 2nd among private developers"
+      },
+      "awards": [
+        "170+ awards (company claim)",
+        "Luxury Residential Development of the Year — Real Estate Asia Awards 2023",
+        "Developer of the Year — Real Estate Asia Awards 2023",
+        "Harvard Business School case study subject",
+        "GRESB Score 91/100 (2024), up from 72/100 (2023)",
+        "Sobha One: Middle East's first Green Mark Platinum Super Low Energy certification"
+      ],
+      "after_sales_warranty": {
+        "sobha_specific_programme": null,
+        "uae_legal_minimum": "10-year structural warranty + 1-year finishing warranty (mandatory by UAE law)",
+        "note": "Confirm Sobha-specific programme from SPA before quoting to buyers."
+      },
+      "trustpilot": {
+        "score": "3.8/5",
+        "reviews": 126,
+        "five_star_percent": 51,
+        "one_star_percent": 42,
+        "common_complaints": [
+          "Payment confirmation delays",
+          "Cancellation penalty terms",
+          "Agent misrepresentation"
+        ],
+        "note": "Bimodal — strong advocates and strong detractors. No Seahaven-specific reviews found."
+      },
+      "stock_listing": {
+        "uae": "Not listed",
+        "india": "Sobha Limited — BSE 532784 / NSE SOBHA",
+        "current_share_price_trend": null
+      }
+    },
+    "backward_integration": {
+      "model_description": "Sobha is the first and only developer in the UAE to operate a fully backward-integrated real estate model. Introduced in Dubai in 2012. Harvard Business School case study subject.",
+      "what_sobha_manufactures_in_house": [
+        "Aluminium facades (Sobha Modular — Facades Division)",
+        "Bathroom pods (Sobha Modular — Pods Division, factory-built off-site)",
+        "MEP modules (Mechanical, Electrical, Plumbing — factory-built off-site)",
+        "6-layer acoustic/waterproof flooring systems",
+        "Concrete and structural elements",
+        "Interior fittings"
+      ],
+      "mission_70_70": {
+        "description": "Shift 70% of on-site construction work to factory production; reduce factory headcount 30% via automation",
+        "source": "Zawya, confirmed"
+      },
+      "quality_oversight": "German Master Craftsmen lead quality oversight on-site",
+      "subcontractor_note": "European (German) quality oversight confirmed. Whether Asian or European subcontractors are used for non-Sobha-controlled work is not confirmed.",
+      "third_party_quality_ratings": {
+        "gresb_2024": 91,
+        "gresb_2023": 72,
+        "green_mark": "Sobha One — Middle East's first Green Mark Platinum Super Low Energy certification"
+      },
+      "delivery_advantage": "Backward integration eliminates dependency on third-party contractor timelines, supply chain disruptions, and subcontractor quality variance.",
+      "vs_market_standard": "Standard Dubai developers hire main contractor → main contractor hires subcontractors → subcontractors source materials independently. Quality and timeline control is multi-layered. Sobha controls factory output, site labour, and material specification simultaneously.",
+      "specific_materials_seahaven": {
+        "kitchens": {
+          "sky_edition": "Miele (confirmed)",
+          "standard_units": null,
+          "note": "Standard unit kitchen brand not confirmed. Do not say Miele for standard units."
+        },
+        "bathrooms": {
+          "sky_edition": "Kohler or equivalent",
+          "standard_units": null,
+          "note": "Standard unit bathroom brand not confirmed."
+        },
+        "wardrobes": "Leatherette and rich veneer (confirmed for Sky Edition)",
+        "smart_wc": "All units (confirmed)",
+        "flexi_track_lighting": "All units (confirmed)",
+        "marble_countertops": "Confirmed",
+        "smart_home": "Confirmed across all units; specific system/brand unspecified",
+        "flooring_brand": null,
+        "flooring_system": "6-layer acoustic and waterproof system (brand unconfirmed)",
+        "window_specifications": null
+      },
+      "ceiling_height": {
+        "floor_to_floor_metres": 3.6,
+        "net_ceiling_metres": null,
+        "note": "3.6m is developer-stated floor-to-floor height. One source states approximately 3.35m net for Tower B. Net confirmed height after slab not independently verified."
+      }
+    },
+    "buyer_intelligence": {
+      "top_5_nationalities_buying": [
+        {
+          "rank": 1,
+          "nationality": "Russian"
+        },
+        {
+          "rank": 2,
+          "nationality": "German"
+        },
+        {
+          "rank": 3,
+          "nationality": "British"
+        },
+        {
+          "rank": 4,
+          "nationality": "Indian"
+        },
+        {
+          "rank": 5,
+          "nationality": "Iranian"
+        }
+      ],
+      "source": "Official Sobha Realty investor nationality data",
+      "investor_vs_end_user_ratio": null,
+      "typical_buyer_profile": "European/Russian HNW investor, Indian diaspora luxury second-home buyer, British/German property market diversifier. AED 3M–25M budget. Off-plan appetite. Sky Edition buyer: UHNW, AED 21M+ budget.",
+      "why_buyers_choose_seahaven": [
+        "Three-sided (270°) sea views unavailable at competing products due to site geometry",
+        "Sobha build quality reputation and backward integration model",
+        "Sky Edition exclusivity — 33 units only, 3 per floor",
+        "Tower A height advantage (275m, 66 floors) — tallest residential in Dubai Harbour",
+        "Dubai Harbour positioning between Marina and Palm",
+        "Marina and yacht club access"
+      ],
+      "why_buyers_reject_seahaven": [
+        "Tower A primary sold out — forced into resale premium",
+        "20+ min from Downtown — not walkable to DIFC or Downtown",
+        "No direct Metro connection to Dubai Harbour",
+        "Price premium over Emaar Beachfront harder to justify for yield-only investors (Emaar higher liquidity)",
+        "Ba2 sub-investment grade sukuk rating creates perception risk",
+        "Trustpilot cancellation/payment complaint pattern (42% 1-star)",
+        "Dubai Harbour is newer/less established community vs. Marina or JBR",
+        "Private beach status unconfirmed — competitors have confirmed private beach",
+        "Tower B and C not yet complete — construction risk"
+      ],
+      "common_objections": [
+        "Why Sobha over Emaar Beachfront?",
+        "Is Sobha financially stable enough to deliver?",
+        "The location is not as central as Downtown",
+        "Can I rent it before handover?",
+        "How does the finish quality compare to what I see in the renders?",
+        "What if I need to cancel?"
+      ],
+      "developments_buyers_compare_against": [
+        "Emaar Beachfront",
+        "Address Beach Resort Residences",
+        "Six Senses Residences Dubai Marina",
+        "DAMAC Bay by Cavalli",
+        "Marina Shores by Emaar"
+      ]
+    },
+    "competitive_positioning": {
+      "comparison_table": [
+        {
+          "development": "Sobha Seahaven",
+          "developer": "Sobha Realty",
+          "avg_price_per_sqft_aed": "3,500–6,800",
+          "starting_1br_aed": 2950000,
+          "starting_2br_aed": 6520000,
+          "handover": "Q4 2026 (Towers A & B); Q2–Q4 2027 (Tower C)",
+          "key_differentiator": "3-sided views, backward-integrated construction, tallest tower in Dubai Harbour (275m), Sky Edition ultra-luxury sub-collection",
+          "dld_transactions_last_12m": 254,
+          "current_resale_listings": 227
+        },
+        {
+          "development": "Emaar Beachfront",
+          "developer": "Emaar Properties",
+          "avg_price_per_sqft_aed": "4,250+",
+          "starting_1br_aed": 1800000,
+          "starting_2br_aed": null,
+          "handover": "Various — many towers already complete",
+          "key_differentiator": "Emaar brand trust, confirmed private beach, established community, higher liquidity, lower entry point",
+          "dld_transactions_last_12m": 896,
+          "current_resale_listings": null
+        },
+        {
+          "development": "Address Beach Resort Residences",
+          "developer": "Emaar / Address Hotels",
+          "avg_price_per_sqft_aed": "2,311–6,702",
+          "starting_1br_aed": 2240000,
+          "starting_2br_aed": 7900000,
+          "handover": "Completed",
+          "key_differentiator": "Branded hotel services, Guinness World Record (world's highest infinity pool), JBR location",
+          "dld_transactions_total": 50,
+          "current_resale_listings": null
+        },
+        {
+          "development": "Six Senses Residences Dubai Marina",
+          "developer": "Select Group",
+          "avg_price_per_sqft_aed": "2,600–2,900",
+          "starting_price_aed": 10000000,
+          "starting_1br_aed": null,
+          "starting_2br_aed": null,
+          "total_units": 251,
+          "handover": "July 2028",
+          "key_differentiator": "Six Senses wellness brand, world's tallest hotel claim, branded residence services",
+          "current_resale_listings": null
+        },
+        {
+          "development": "DAMAC Bay by Cavalli",
+          "developer": "DAMAC Properties",
+          "avg_price_per_sqft_aed": null,
+          "starting_1br_aed": 2900000,
+          "starting_2br_aed": 4400000,
+          "total_towers": 3,
+          "floors_per_tower": 42,
+          "handover": "Q3 2027",
+          "key_differentiator": "Roberto Cavalli branded interiors, Dubai Harbour location",
+          "current_resale_listings": null
+        },
+        {
+          "development": "Marina Shores",
+          "developer": "Emaar Properties",
+          "avg_price_per_sqft_aed": null,
+          "starting_1br_aed": 1500000,
+          "floors": 53,
+          "handover": "Q4 2026",
+          "key_differentiator": "Emaar brand, Dubai Marina promenade access, lower entry price",
+          "current_resale_listings": null
+        },
+        {
+          "development": "Ciel Tower",
+          "developer": "The First Group",
+          "product_type": "Hotel rooms — NOT residential ownership",
+          "starting_price_aed": 896000,
+          "handover": "Opened November 2025",
+          "key_differentiator": "World's tallest hotel (claim), hotel investment product",
+          "note": "Not a like-for-like competitor — hotel room investment, not residential freehold"
+        }
+      ]
+    }
+  },
+  "sub_developments": {
+    "tower_a": {
+      "identity": {
+        "official_name": "Sobha SeaHaven Tower A",
+        "phase": "Phase 1",
+        "launch_date": "November 2022",
+        "handover": "Q4 2026",
+        "construction_status": "Under construction",
+        "construction_percent_complete": null,
+        "total_units": null,
+        "total_units_note": "Not confirmed from authoritative source. Part of total 771 across all towers.",
+        "total_floors": 66,
+        "height_metres": 275,
+        "freehold": true,
+        "primary_sales_status": "SOLD OUT — resale only"
+      },
+      "unit_types_pricing": {
+        "configurations": [
+          "1BR",
+          "2BR",
+          "3BR",
+          "4BR",
+          "5BR",
+          "6BR",
+          "Sky Edition 3BR",
+          "Sky Edition 4BR"
+        ],
+        "bua_ranges_sqft": {
+          "1br": "841–1,200",
+          "2br": "1,500–2,200",
+          "3br": null,
+          "sky_edition_3br": "3,100–3,800",
+          "sky_edition_4br": "4,400–5,200"
+        },
+        "resale_price_range_aed": {
+          "overall": "3,400,000–135,000,000",
+          "sky_edition_entry": 21132340
+        },
+        "price_per_sqft_aed": {
+          "standard": "4,100–6,000",
+          "sky_edition": "5,424+"
+        },
+        "penthouse": true,
+        "duplex": null,
+        "sky_villa": null,
+        "floor_premium": null
+      },
+      "standard_inclusions": {
+        "kitchen_brand": null,
+        "kitchen_note": "Sky Edition: Miele confirmed. Standard: brand unconfirmed.",
+        "flooring": "6-layer acoustic/waterproof flooring system (brand unconfirmed)",
+        "bathroom_brand": null,
+        "smart_wc": true,
+        "flexi_track_lighting": true,
+        "marble_countertops": true,
+        "smart_home": true,
+        "storage": null,
+        "balcony": true,
+        "balcony_size_sqft": null,
+        "wardrobes": "Leatherette and rich veneer (confirmed Sky Edition)"
+      },
+      "views": {
+        "sea_facing": true,
+        "marina_facing": true,
+        "palm_facing": true,
+        "ain_dubai_facing": true,
+        "city_facing": true,
+        "three_sided_sea_views": "270° — Gulf, Palm, Marina, Ain Dubai",
+        "units_per_floor_sea_view": null,
+        "sea_view_premium_over_city": null,
+        "unobstructed_sea_view_floors": null
+      },
+      "payment_plan": {
+        "note": "Tower A primary sold out. All transactions are resale. Payment plan obligations vary by individual resale listing.",
+        "down_payment_percent": null,
+        "construction_percent": null,
+        "handover_percent": null,
+        "post_handover": null
+      },
+      "sky_edition": {
+        "floors": "49–59",
+        "total_units": 33,
+        "units_per_floor": 3,
+        "bedroom_types": [
+          "3BR",
+          "4BR"
+        ],
+        "starting_price_aed": 21132340,
+        "kitchen": "Miele",
+        "bathroom": "Kohler or equivalent",
+        "dedicated_lobby": true,
+        "dedicated_lifts": true,
+        "private_infinity_pool": true,
+        "sky_lounge": true,
+        "rooftop_restaurant_cafe": true,
+        "source": "Official Sobha press release, confirmed"
+      },
+      "what_makes_tower_a_distinct": [
+        "Tallest tower in Dubai Harbour at 275m / 66 floors",
+        "Sky Edition collection floors 49–59 with Miele kitchens, dedicated lobby, private infinity pool",
+        "Primary sold out — scarcity value and proven demand signal",
+        "Highest elevation sea views in the development"
+      ],
+      "sales_status": {
+        "primary": "Sold out",
+        "resale_available": true,
+        "pf_listings_count": 85,
+        "pf_price_range_aed": "3,400,000–135,000,000",
+        "bayut_listings": null
+      },
+      "aliases": [
+        "tower a",
+        "seahaven tower a"
+      ],
+      "prompt_data_overrides": {
+        "investment_overrides": {
+          "branded_premium_note": "Sobha backward-integrated construction — in-house manufactured facades, bathroom pods, and flooring"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Primary inventory is gone. The 85 resale listings on Property Finder represent the entirety of Tower A availability. Once those owners decide to hold, Tower A supply disappears entirely. No developer can create more.",
+          "lifestyle_pitch": "From floors 49–59, the Sky Edition places you 200+ metres above the Arabian Gulf with 270-degree views of the Palm, Marina, and open sea. Your private infinity pool is yours alone — not shared with 770 other residents. A dedicated lobby means you never share an elevator bank with the building.",
+          "investment_pitch": "Tower A sold out at launch — buyers are already in profit on paper based on current resale ask prices. 85 listings at AED 3.4M–135M confirm active market depth. Q4 2026 handover converts off-plan capital gain to income-generating asset in less than 12 months from today."
+        },
+        "sub_community": "Tower A"
+      }
+    },
+    "tower_b": {
+      "identity": {
+        "official_name": "Sobha SeaHaven Tower B",
+        "phase": "Phase 1",
+        "launch_date": "November 2022",
+        "handover": "Q4 2026",
+        "construction_status": "Under construction",
+        "construction_percent_complete": null,
+        "total_units": null,
+        "total_units_note": "Not confirmed from authoritative source. Part of total 771 across all towers.",
+        "total_floors": 47,
+        "total_floors_note": "One source cites 59 floors — conflict unresolved. 47F most commonly cited.",
+        "height_metres": 178,
+        "freehold": true,
+        "primary_sales_status": "Available"
+      },
+      "unit_types_pricing": {
+        "configurations": [
+          "1BR",
+          "1BR+Study",
+          "2BR",
+          "3BR"
+        ],
+        "bua_ranges_sqft": {
+          "1br": "841–1,066",
+          "1br_study": "1,066–1,200",
+          "2br": "1,614–2,295",
+          "3br": "2,802–3,749"
+        },
+        "primary_starting_prices_aed": {
+          "1br": 3281518,
+          "2br_sea_view": 6600000,
+          "3br": null
+        },
+        "resale_price_range_aed": "2,950,000–17,620,629",
+        "price_per_sqft_aed": "3,500–5,900",
+        "penthouse": null,
+        "duplex": null,
+        "sky_edition": false,
+        "floor_premium": null
+      },
+      "standard_inclusions": {
+        "kitchen_brand": null,
+        "flooring": "6-layer acoustic/waterproof flooring system (brand unconfirmed)",
+        "bathroom_brand": null,
+        "smart_wc": true,
+        "flexi_track_lighting": true,
+        "marble_countertops": true,
+        "smart_home": true,
+        "storage": null,
+        "balcony": true,
+        "balcony_size_sqft": null
+      },
+      "views": {
+        "sea_facing": true,
+        "palm_facing": true,
+        "marina_facing": true,
+        "city_facing": true,
+        "views_description": "Palm, Gulf, Marina",
+        "units_per_floor_sea_view": null,
+        "sea_view_premium_percent": null
+      },
+      "payment_plan": {
+        "structure": "20% down / 60% during construction in 6 installments / 20% at handover",
+        "down_payment_percent": 20,
+        "construction_percent": 60,
+        "construction_installments": 6,
+        "handover_percent": 20,
+        "post_handover": null,
+        "post_handover_note": "Post-handover plan not confirmed."
+      },
+      "rental_yield_estimate": {
+        "gri_percent": 7.3,
+        "date": "June 2023",
+        "note": "Broker estimate at time of launch. Not independently verified."
+      },
+      "what_makes_tower_b_distinct": [
+        "Entry-level pricing for Seahaven — lowest resale listings from AED 2.95M",
+        "Primary sales still available — no resale premium required",
+        "All 2BR+ units qualify for UAE Golden Visa",
+        "Most accessible price point in a development where Tower A is sold out",
+        "Shorter tower (47F) means lower floors — some buyers prefer this for practical reasons"
+      ],
+      "best_suited_buyer": "Entry luxury buyer, AED 3–7M budget, Golden Visa seeker, first-time Sobha buyer, investor targeting rental yield",
+      "sales_status": {
+        "primary": "Available",
+        "resale_available": true,
+        "pf_listings_count": 62,
+        "pf_price_range_aed": "2,950,000–17,620,629",
+        "bayut_listings": null
+      },
+      "aliases": [
+        "tower b",
+        "seahaven tower b"
+      ],
+      "prompt_data_overrides": {
+        "investment_overrides": {
+          "branded_premium_note": "Sobha backward-integrated construction — in-house manufactured facades, bathroom pods, and flooring"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Tower A is gone at primary. Tower C is later handover. Tower B is the last primary inventory available at Q4 2026 delivery — once sold out, it joins Tower A as resale-only.",
+          "lifestyle_pitch": "Tower B offers Palm, Gulf, and Marina views from a 47-floor tower in Dubai Harbour, with access to the same infinity pool, spa, gym, and concierge as the entire development. Entry price of AED 3.28M puts waterfront Sobha quality within reach of buyers who would be priced out of Tower A entirely.",
+          "investment_pitch": "At AED 3.5–5.9K per sqft and Q4 2026 handover, Tower B offers an entry into a development where the comparable Tower A now transacts at AED 4.1–7K per sqft. The gap between Tower B entry and Tower A resale pricing represents a capital appreciation pathway within the same building complex. Estimated GRI of 7.3% was documented at launch."
+        },
+        "sub_community": "Tower B"
+      }
+    },
+    "tower_c": {
+      "identity": {
+        "official_name": "Sobha SeaHaven Tower C",
+        "phase": "Phase 2",
+        "launch_date": null,
+        "handover": "Q2–Q4 2027 per PF listings. Developer marketing states Q4 2026. Conflict unresolved.",
+        "construction_status": "Under construction",
+        "construction_percent_complete": null,
+        "total_units": null,
+        "total_units_note": "Not confirmed from authoritative source. Part of total 771 across all towers.",
+        "total_floors": 57,
+        "height_metres": 245,
+        "freehold": true,
+        "primary_sales_status": "Available"
+      },
+      "unit_types_pricing": {
+        "configurations": [
+          "1BR",
+          "2BR",
+          "3BR",
+          "4BR",
+          "5BR",
+          "6BR",
+          "Sky Edition (LOW CONFIDENCE)"
+        ],
+        "bua_ranges_sqft": {
+          "1br": "849–1,200",
+          "2br": null,
+          "3br": null,
+          "6br_penthouse": "16,648",
+          "sky_edition": null
+        },
+        "resale_price_range_aed": "2,995,000–158,590,575",
+        "resale_average_asking_aed": 16400000,
+        "resale_average_note": "Skewed by Sky Edition and penthouse listings",
+        "price_per_sqft_aed": "3,527–6,494",
+        "penthouse": true,
+        "penthouse_bua_sqft": 16648,
+        "penthouse_price_aed": 158590575,
+        "duplex": null,
+        "sky_edition": {
+          "confirmed": false,
+          "floors": "34–42 (LOW CONFIDENCE — third-party sources only, not confirmed from official Sobha document)",
+          "details": null
+        },
+        "floor_premium": null
+      },
+      "standard_inclusions": {
+        "kitchen_brand": null,
+        "flooring": "6-layer acoustic/waterproof flooring system (brand unconfirmed)",
+        "bathroom_brand": null,
+        "smart_wc": true,
+        "flexi_track_lighting": true,
+        "marble_countertops": true,
+        "smart_home": true,
+        "storage": null,
+        "balcony": true,
+        "balcony_size_sqft": null
+      },
+      "views": {
+        "sea_facing": true,
+        "marina_facing": true,
+        "palm_facing": true,
+        "city_facing": true,
+        "views_description": "Uninterrupted Marina, Gulf, and Palm views",
+        "units_per_floor_sea_view": null
+      },
+      "payment_plan": {
+        "structure": "20/40/40 or 20/60/20 — multiple structures cited, not confirmed",
+        "down_payment_percent": 20,
+        "construction_percent": "40–60 (unconfirmed)",
+        "handover_percent": "20–40 (unconfirmed)",
+        "post_handover": null
+      },
+      "what_makes_tower_c_distinct": [
+        "Widest unit selection — from 1BR to 6BR full-floor penthouse (AED 158.6M)",
+        "Mid-height at 245m / 57 floors — strong views without Tower A premium",
+        "Most family-friendly configuration range in the development",
+        "Later handover provides more time for payment staging"
+      ],
+      "best_suited_buyer": "Family buyers needing 3BR+, large unit/penthouse buyers, Sky Edition at lower price point (if confirmed), buyers wanting primary availability with wider selection",
+      "sales_status": {
+        "primary": "Available",
+        "resale_available": true,
+        "pf_listings_count": 61,
+        "pf_price_range_aed": "2,995,000–158,590,575",
+        "bayut_listings": null
+      },
+      "aliases": [
+        "tower c",
+        "seahaven tower c"
+      ],
+      "prompt_data_overrides": {
+        "investment_overrides": {
+          "branded_premium_note": "Sobha backward-integrated construction — in-house manufactured facades, bathroom pods, and flooring"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "One full-floor 6BR penthouse. If that buyer is you, there is no comparable product at any competing development in Dubai Harbour. Tower C primary inventory is available now — but Tower A sold out at launch in this same development.",
+          "lifestyle_pitch": "Tower C at 245m and 57 floors delivers uninterrupted views in three directions — Marina, Palm, and open Gulf — with every shared amenity of Seahaven below: infinity pool, spa, cinema, skate park, and marina access. The unit range from 849 sqft to 16,648 sqft means Tower C serves everyone from the solo investor to the family requiring a full floor.",
+          "investment_pitch": "Tower C's wider unit selection and slightly later handover creates pricing flexibility — and as Tower A resale transactions demonstrate, buyers who entered at primary in this development are tracking meaningful appreciation. The 6BR penthouse at AED 158.6M establishes Seahaven's ceiling as a genuine ultra-luxury address, protecting value for all unit types below it."
+        },
+        "sub_community": "Tower C"
+      }
+    },
+    "sky_edition": {
+      "note": "Sky Edition is a sub-collection within Towers A and C — not a separate tower. See tower_a.sky_edition for confirmed details. Tower C Sky Edition is low-confidence.",
+      "tower_a_floors": "49–59 (CONFIRMED from official Sobha press release)",
+      "tower_c_floors": "34–42 (LOW CONFIDENCE — third-party sources only)",
+      "total_units": 33,
+      "units_per_floor": 3,
+      "bedroom_types": [
+        "3BR",
+        "4BR"
+      ],
+      "starting_price_aed": 21132340,
+      "kitchen": "Miele",
+      "bathroom": "Kohler or equivalent",
+      "dedicated_lobby": true,
+      "dedicated_lifts": true,
+      "private_infinity_pool": true,
+      "sky_lounge": true,
+      "rooftop_restaurant_cafe": true,
+      "wardrobes": "Leatherette and rich veneer",
+      "aliases": [
+        "sky edition",
+        "seahaven sky edition"
+      ],
+      "prompt_data_overrides": {
+        "investment_overrides": {
+          "branded_premium_note": "Sky Edition: 33 ultra-luxury units, 3 per floor, Miele kitchens, private sky lounge and infinity pool"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "",
+          "lifestyle_pitch": "",
+          "investment_pitch": ""
+        },
+        "sub_community": "Sky Edition"
+      }
+    },
+    "other_towers": null
+  },
+  "comparison_table": [
+    {
+      "tower": "Tower A",
+      "total_floors": 66,
+      "height_metres": 275,
+      "total_units": "Not confirmed (part of 771 total)",
+      "unit_types": "1BR–6BR + Sky Edition",
+      "price_range_aed": "3,400,000–135,000,000 (resale)",
+      "price_per_sqft_aed": "4,100–7,000+",
+      "views": "Gulf, Palm, Marina, Ain Dubai — 270°",
+      "handover": "Q4 2026",
+      "payment_plan": "Resale only — varies by listing",
+      "sales_status": "Primary SOLD OUT — resale only",
+      "sky_edition": "Yes — floors 49–59, 33 units (confirmed)",
+      "key_differentiator": "Tallest tower (275m), sold-out scarcity, Sky Edition at top",
+      "best_suited_buyer": "UHNW Sky Edition buyer, penthouse investor, resale premium buyer"
+    },
+    {
+      "tower": "Tower B",
+      "total_floors": 47,
+      "height_metres": 178,
+      "total_units": "Not confirmed (part of 771 total)",
+      "unit_types": "1BR, 1BR+Study, 2BR, 3BR",
+      "price_range_aed": "2,950,000–17,620,629",
+      "price_per_sqft_aed": "3,500–5,900",
+      "views": "Palm, Gulf, Marina",
+      "handover": "Q4 2026",
+      "payment_plan": "20% / 60% in 6 installments / 20% at handover",
+      "sales_status": "Primary available + resale",
+      "sky_edition": "No",
+      "key_differentiator": "Lowest entry price, primary still available, Golden Visa threshold accessible at 2BR",
+      "best_suited_buyer": "Entry luxury buyer, Golden Visa seeker, AED 3–7M budget investor"
+    },
+    {
+      "tower": "Tower C",
+      "total_floors": 57,
+      "height_metres": 245,
+      "total_units": "Not confirmed (part of 771 total)",
+      "unit_types": "1BR–6BR + possible Sky Edition (unconfirmed)",
+      "price_range_aed": "2,995,000–158,590,575",
+      "price_per_sqft_aed": "3,527–6,494",
+      "views": "Uninterrupted Marina, Gulf, Palm",
+      "handover": "Q2–Q4 2027 (developer states Q4 2026 — conflict)",
+      "payment_plan": "20/40/40 or 20/60/20 (unconfirmed)",
+      "sales_status": "Primary available + resale",
+      "sky_edition": "Possible floors 34–42 (LOW CONFIDENCE)",
+      "key_differentiator": "Widest unit selection including 6BR penthouse, later handover for staging payments",
+      "best_suited_buyer": "Family/large unit buyer, penthouse buyer, 6BR buyer, full-floor investor"
+    }
+  ],
+  "sales_talking_points": {
+    "development_level": {
+      "most_compelling_fact": "Sobha Seahaven is the only residential development in Dubai Harbour offering three-sided 270° sea views — engineered by the only developer in the UAE with its own manufacturing plants, German-supervised construction teams, and a track record of delivering ahead of schedule.",
+      "scarcity_argument": "771 total units across three towers in one of Dubai's most desirable waterfront positions. Tower A is already sold out at primary level. The Sky Edition is limited to 33 units globally — 3 per floor — with no equivalent product at any competitor development in Dubai Harbour.",
+      "lifestyle_pitch": "Imagine waking to uninterrupted Arabian Gulf views from a 275m tower, walking to your own infinity pool or spa before taking a yacht from the marina below. Seahaven places you 5 minutes from Dubai Marina and 8 minutes from Bluewaters Island, in a private enclave that combines the serenity of Dubai Harbour with the convenience of the Marina strip.",
+      "investment_pitch": "254 transactions in the past 12 months at an average of AED 9M confirm sustained institutional-grade demand. Tower A sold out at launch — all Tower A buyers are already sitting on unrealised gains. With Sobha's AED 23 billion in 2024 sales, Ba2/stable Moody's credit, and a delivery track record that includes 1,819 units ahead of schedule in 2023 alone, this is developer risk you can price confidently.",
+      "why_sobha_over_emaar_beachfront": "Emaar Beachfront is an excellent product, but it cannot replicate three-sided sea views — the site geometry physically prevents it. Seahaven's towers stand at 178m, 245m, and 275m versus Emaar Beachfront's typical 30–40 floor range, which means higher unobstructed views and a fundamentally different vantage point. The price delta of approximately AED 300–500K per unit buys you Sobha's backward-integrated construction quality, where their own factories produced your bathroom pods, facades, and flooring systems — not whoever the contractor hired cheapest that month.",
+      "sobha_financial_stability": "AED 23 billion in 2024 sales. Moody's Ba2/stable upgrade in 2024 — improving trajectory. $500M institutional sukuk with no known delivery failures. Creek Vistas Grande delivered 6 months early. 1,819 units delivered ahead of schedule in 2023. The backward integration model structurally eliminates the primary delivery risk — contractor collapse — because Sobha is its own contractor.",
+      "location_not_central_objection": "Downtown Dubai is 20 minutes — for most residents that is a drive they make perhaps twice a week. What Dubai Harbour gives you every single day is direct waterfront living: a marina below, a private beach at your door, JBR restaurants in 7 minutes, and Palm Jumeirah in 10. The buyers who choose Downtown are optimising for the Burj view. The buyers who choose Seahaven are optimising for a waterfront life.",
+      "rent_before_handover": "Off-plan properties cannot be tenanted before handover and title deed transfer. However, you can sell on the secondary market before handover — and Tower A buyers have already seen capital appreciation since the November 2022 launch based on current resale pricing.",
+      "finish_quality_vs_renders": "Other developers hire contractors who hire subcontractors — the finish you get depends on who turned up that week. Sobha manufactured your bathroom pods in their own factory, installed by their own teams, overseen by German Master Craftsmen on site. Creek Vistas Grande residents photographed their units four years post-handover and they match the brochure. That is the proof point. Sobha has a 91/100 GRESB sustainability and construction quality score — independently audited."
+    },
+    "per_sub_development": {
+      "tower_a": {
+        "most_compelling_fact": "Tower A is sold out at primary level — every single unit was purchased before completion. At 275m and 66 floors, it is the tallest residential tower in Dubai Harbour, and the only address in the development with the Sky Edition collection: 33 apartments, 3 per floor, with Miele kitchens, a private infinity pool, and a dedicated lobby — available now only on the resale market.",
+        "scarcity_argument": "Primary inventory is gone. The 85 resale listings on Property Finder represent the entirety of Tower A availability. Once those owners decide to hold, Tower A supply disappears entirely. No developer can create more.",
+        "lifestyle_pitch": "From floors 49–59, the Sky Edition places you 200+ metres above the Arabian Gulf with 270-degree views of the Palm, Marina, and open sea. Your private infinity pool is yours alone — not shared with 770 other residents. A dedicated lobby means you never share an elevator bank with the building.",
+        "investment_pitch": "Tower A sold out at launch — buyers are already in profit on paper based on current resale ask prices. 85 listings at AED 3.4M–135M confirm active market depth. Q4 2026 handover converts off-plan capital gain to income-generating asset in less than 12 months from today.",
+        "why_sobha_over_emaar": "Tower A's 275m height gives buyers unobstructed views of the Gulf, Palm, Marina, and Ain Dubai simultaneously — no Emaar Beachfront tower reaches this height or achieves three-sided exposure. The sold-out primary status proves the market already voted.",
+        "financial_stability": "Tower A is the most advanced in the development. Sold out, under construction, Q4 2026 handover. Sobha's AED 23B 2024 sales means Seahaven is less than 2% of their total sales pipeline — this project is not their liquidity event.",
+        "location_objection": "Tower A stands 275m above Dubai Harbour. Your horizon is the Arabian Gulf, your immediate neighbourhood is the Marina and JBR strip. Downtown is 20 minutes. Most Tower A buyers are not commuting to DIFC daily — they are investing in a waterfront address.",
+        "rent_before_handover": "Not legally permissible before handover and title transfer. Resale on the secondary market before handover is an option — Tower A buyers who bought at launch are already reporting appreciation.",
+        "finish_quality_vs_renders": "Sky Edition units include Miele kitchen appliances, Kohler bathrooms, and marble countertops — these are confirmed specifications from the official launch press release. Sobha manufactured the structural components in-house. The renders are conservative."
+      },
+      "tower_b": {
+        "most_compelling_fact": "Tower B is the entry point to Sobha Seahaven — primary units are still available from AED 3,281,518 for a 1BR, and every 2BR+ unit qualifies for the UAE 10-year Golden Visa. It is the only tower in Seahaven where you can buy direct from developer at original pricing.",
+        "scarcity_argument": "Tower A is gone at primary. Tower C is later handover. Tower B is the last primary inventory available at Q4 2026 delivery — once sold out, it joins Tower A as resale-only.",
+        "lifestyle_pitch": "Tower B offers Palm, Gulf, and Marina views from a 47-floor tower in Dubai Harbour, with access to the same infinity pool, spa, gym, and concierge as the entire development. Entry price of AED 3.28M puts waterfront Sobha quality within reach of buyers who would be priced out of Tower A entirely.",
+        "investment_pitch": "At AED 3.5–5.9K per sqft and Q4 2026 handover, Tower B offers an entry into a development where the comparable Tower A now transacts at AED 4.1–7K per sqft. The gap between Tower B entry and Tower A resale pricing represents a capital appreciation pathway within the same building complex. Estimated GRI of 7.3% was documented at launch.",
+        "why_sobha_over_emaar": "Emaar Beachfront has higher transaction volume and brand liquidity, but starting prices in Seahaven Tower B are competitive — and include Sobha's backward-integrated construction standard, which Emaar, by design, does not offer. If long-term quality retention matters, Sobha's finish holds better per independent post-handover assessments.",
+        "financial_stability": "Tower B is primary available from the developer — Sobha is selling you a unit, not a distressed resale. Their AED 23B in 2024 sales provides full financial coverage of Tower B construction costs multiple times over.",
+        "location_objection": "5 minutes to Dubai Marina, 7 minutes to JBR. Tower B's lower height means lower floors for buyers who prefer that. The waterfront lifestyle is identical to Towers A and C.",
+        "rent_before_handover": "Not legally permissible before handover. At Q4 2026 delivery, you could have a tenanted unit generating income within the same calendar year.",
+        "finish_quality_vs_renders": "Smart WC, flexi-track lighting, marble countertops, and smart home technology are confirmed inclusions. Sobha's own teams and factories built the components. The finish standard reflects Sobha's GRESB 91/100 construction quality score."
+      },
+      "tower_c": {
+        "most_compelling_fact": "Tower C contains the only 6-bedroom full-floor penthouse in Sobha Seahaven — 16,648 sqft at AED 158,590,575 — and the widest unit configuration range in the development, from entry 1BR to that full-floor penthouse, in a 245m tower with uninterrupted Marina, Gulf, and Palm views.",
+        "scarcity_argument": "One full-floor 6BR penthouse. If that buyer is you, there is no comparable product at any competing development in Dubai Harbour. Tower C primary inventory is available now — but Tower A sold out at launch in this same development.",
+        "lifestyle_pitch": "Tower C at 245m and 57 floors delivers uninterrupted views in three directions — Marina, Palm, and open Gulf — with every shared amenity of Seahaven below: infinity pool, spa, cinema, skate park, and marina access. The unit range from 849 sqft to 16,648 sqft means Tower C serves everyone from the solo investor to the family requiring a full floor.",
+        "investment_pitch": "Tower C's wider unit selection and slightly later handover creates pricing flexibility — and as Tower A resale transactions demonstrate, buyers who entered at primary in this development are tracking meaningful appreciation. The 6BR penthouse at AED 158.6M establishes Seahaven's ceiling as a genuine ultra-luxury address, protecting value for all unit types below it.",
+        "why_sobha_over_emaar": "No Emaar Beachfront tower offers a 16,648 sqft 6BR penthouse. Seahaven Tower C's ceiling product has no Emaar equivalent in Dubai Harbour. Below the penthouse level, Tower C competes on the same quality-per-sqft argument as all Seahaven towers: backward integration, German oversight, GRESB 91.",
+        "financial_stability": "Tower C construction is funded within Sobha's AED 23B 2024 sales pipeline. Handover timeline is Q2–Q4 2027 — note the conflict between developer marketing (Q4 2026) and current PF listing dates; confirm with Sobha directly.",
+        "location_objection": "Identical location advantage to Towers A and B — Dubai Harbour, 5 min to Marina. Tower C's slightly later handover is the only practical difference for the end-user.",
+        "rent_before_handover": "Not legally permissible. Q2–Q4 2027 handover gives more staging time for off-plan payment obligations.",
+        "finish_quality_vs_renders": "Same Sobha standard as all towers — smart WC, marble countertops, flexi-track lighting confirmed. Sobha's backward-integrated manufacturing means your penthouse components were built in the same controlled factory environment as every other unit."
+      }
+    },
+    "backward_integration_script": {
+      "three_sentence_explanation": "When most Dubai developers build, they hire a contractor, who hires subcontractors, who source materials from whoever is cheapest that month — you get the finish they cobbled together, not the finish in the render. When Sobha builds, their own factories produce the bathroom pods, the aluminium facades, the MEP modules, and the flooring systems — the same specification, every time, controlled by German Master Craftsmen on site. That is why Sobha's completed buildings in Hartland look like the brochure four years after handover, and it is why they delivered Creek Vistas Grande six months ahead of schedule.",
+      "why_it_matters_vs_outsourced": "In a standard Dubai development, quality control passes through at least three layers: developer → main contractor → subcontractor → materials supplier. Each layer introduces substitution risk, timeline risk, and accountability gaps. When a problem appears post-handover, responsibility is disputed across all layers. Sobha collapses those layers to one: they own the factory, they hire the workers, they set the spec, and they fix the problem.",
+      "specific_example": "When Emaar builds a bathroom, they hire a main contractor, who hires a specialist fit-out subcontractor, who orders fixtures from a supplier, who may substitute based on availability. When Sobha builds a bathroom, their Pods Division in their own factory builds the entire bathroom pod — waterproofed, tiled, fitted with fixtures — in a controlled environment, then ships it to site for installation. The same pod, the same spec, the same quality control, every time.",
+      "materials_controlled_in_house": [
+        "Aluminium facades (Sobha Modular Facades Division)",
+        "Bathroom pods (Sobha Modular Pods Division — factory-built off-site)",
+        "MEP modules — Mechanical, Electrical, Plumbing (factory-built)",
+        "6-layer acoustic/waterproof flooring systems",
+        "Concrete and structural elements",
+        "Interior fittings"
+      ],
+      "how_to_justify_price_premium": "Seahaven's price premium over comparable waterfront products is approximately AED 300–500K per unit depending on configuration. That delta funds the Sobha quality guarantee: your own manufacturing plants producing your specific unit's components, German Master Craftsmen quality oversight, and a developer that delivered 1,819 units ahead of schedule in 2023. The question is not whether Seahaven is expensive — the question is what you are buying when you save AED 300K by choosing a developer who outsources everything.",
+      "handle_objection_other_developers_claim_quality": "Every developer claims quality. The difference is accountability and process. Emaar outsources construction — they write quality specifications, but the contractor delivers them. DAMAC outsources construction. Meraas outsources construction. When quality fails, the argument is about who was responsible. Sobha does not outsource construction — they make the components in their own factory. If a bathroom pod is defective, Sobha's Pods Division made it. There is no contractor to blame. That structural accountability is why their GRESB construction quality score is 91/100 — independently audited, not self-reported. Ask any competing developer for their GRESB score."
+    }
+  },
+  "aliases": [
+    "sobha seahaven",
+    "seahaven"
+  ],
+  "prompt_data": {
+    "developer": "Sobha Realty",
+    "location": {
+      "area": "Dubai Harbour, Dubai",
+      "description": "Ultra-luxury waterfront tower development in Dubai Harbour — between Dubai Marina and Palm Jumeirah. 270-degree three-sided sea views. Marina and yacht club access. Sobha's backward-integrated build quality.",
+      "distances": {
+        "dubai_marina": 5,
+        "jbr_the_walk": 7,
+        "bluewaters_island": 8,
+        "palm_jumeirah": 10,
+        "ibn_battuta_mall": 10,
+        "mall_of_the_emirates": 15,
+        "downtown_dubai_burj_khalifa": 20,
+        "dubai_mall": 22,
+        "difc": 22,
+        "dubai_hills_mall": 20
+      }
+    },
+    "community_amenities": [
+      "Rooftop infinity pool",
+      "Family pool",
+      "Children's pool",
+      "Sky Edition private infinity pool",
+      "Gym / health club",
+      "Running track",
+      "Yoga studio",
+      "Pilates studio",
+      "Spa",
+      "Sauna and steam room / Roman steam bath",
+      "Indoor/outdoor cinema",
+      "Children's play areas",
+      "Skate park",
+      "BBQ areas and terraces",
+      "Residents lounge",
+      "Sky lounge (Sky Edition)",
+      "Restaurant and cafe (Sky Edition rooftop)",
+      "Dog walking areas",
+      "Landscaped gardens",
+      "24/7 concierge",
+      "Valet parking",
+      "Marina and yacht club access",
+      "Water sports facilities"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "Emirates International School Meadows",
+          "distance_km": 3.0,
+          "curriculum": "IB"
+        },
+        {
+          "name": "Regent International School",
+          "distance_km": 3.0,
+          "curriculum": "British"
+        },
+        {
+          "name": "Dubai College",
+          "distance_km": "~15 min drive",
+          "curriculum": "British A-Level/GCSE"
+        },
+        {
+          "name": "Dubai International Academy Emirates Hills",
+          "distance_km": "~15 min drive",
+          "curriculum": "IB"
+        },
+        {
+          "name": "Dubai British School",
+          "distance_km": "~15 min drive",
+          "curriculum": "British"
+        },
+        {
+          "name": "American School Dubai",
+          "distance_km": "~15 min drive",
+          "curriculum": "American"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": "6.53–7.3",
+      "branded_premium_note": "Sobha backward-integrated construction — in-house manufactured facades, bathroom pods, and flooring"
+    },
+    "developer_track_record": "Sobha Realty — AED 23B in 2024 sales, ranked 3rd developer in Dubai overall. Moody's Ba2/Stable. Creek Vistas Grande delivered 6 months early. Sobha is the only UAE developer that manufactures its own aluminium facades, bathroom pods, MEP modules, and flooring systems in-house — eliminating subcontractor dependency. German Master Craftsmen lead quality oversight on-site. Harvard Business School case study subject.",
+    "community": "Sobha Seahaven"
+  },
+  "developer_keywords": [
+    "sobha"
+  ]
+}

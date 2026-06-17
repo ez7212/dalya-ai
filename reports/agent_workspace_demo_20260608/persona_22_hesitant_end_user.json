@@ -1,0 +1,245 @@
+{
+  "idx": 22,
+  "slug": "hesitant_end_user",
+  "persona": "Ordinary hesitant end-user — logistics, no offer",
+  "phone": "+971501010022",
+  "listing_id": "HARNESS_listing_03_d8351536",
+  "listing_facts": {
+    "property_name": "Anya Phase 2 By Emaar",
+    "beds": 4,
+    "baths": 5,
+    "sqft": 2700.0,
+    "plot_sqft": null,
+    "price_aed": 3600000.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 50,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 3514761.22,
+    "offer_threshold_pct": 97.6
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, is this property still available?",
+      "bot": "Hi there. I'm Dalya, the property advisor for this listing at Mahoroba Test Brokerage. Yes, the Anya Phase 2 townhouse is available, it's a 4-bed, 5-bath, 2,700 sqft unit in Arabian Ranches 3, asking AED 3,600,000. Handover is October 2026.\n\nWhat would you like to know about it?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 58.0
+    },
+    {
+      "turn": 2,
+      "buyer": "Is it furnished or unfurnished?",
+      "bot": "It's an off-plan unit, so it's unfurnished and untenanted, there's no existing lease or occupant. You take handover with vacant possession and decide whether to live in it, furnish it, or rent it out from there.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 31.9
+    },
+    {
+      "turn": 3,
+      "buyer": "How many parking spaces come with it?",
+      "bot": "Parking is within the townhouse itself, on the private plot, typically a driveway plus covered/garage spaces, so there's no separate allocated-bay count like an apartment has. The exact garage capacity is confirmed on a viewing.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 43.6
+    },
+    {
+      "turn": 4,
+      "buyer": "Do you know the floor, view, and whether pets are allowed?",
+      "bot": "I don't have the exact floor level in the listing record. I've flagged it for Eric, the Mahoroba Test Brokerage agent managing this listing to confirm before you rely on it. On pets: most Dubai communities allow them subject to the owners-association rules (some apartments cap size or number), so plan on confirming the building's specific policy.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "05ea3b3b-2799-44f0-b5c4-f5105b700ebf",
+        "listing_id": "HARNESS_listing_03_d8351536",
+        "buyer_phone": "+971501010022",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Do you know the floor, view, and whether pets are allowed?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "floor level",
+          "question_digest": "1. Do you know the floor, view, and whether pets are allowed?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 26.0
+    },
+    {
+      "turn": 5,
+      "buyer": "Since it is off-plan, should I assume it is unfurnished and not tenanted?",
+      "bot": "Right, as mentioned - this is off-plan, so it should be unfurnished and vacant at handover with no current tenant or lease.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 46.5
+    },
+    {
+      "turn": 6,
+      "buyer": "Thanks, I need to think about it and discuss with my family.",
+      "bot": "Sounds good. Take the time you need, and I'm one message away when you want to continue.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "Y5HYX003JK",
+          "body": "[INFO_GAP] Unknown buyer (+971501010022)\n\nProperty: HARNESS_listing_03_d8351536\nSubtype: listing_fact_gap\nPayload:\n- topic: floor level\n- question_digest: 1. Do you know the floor, view, and whether pets are allowed?\n- requested_action: Confirm the missing listing fact and reply to the buyer.\nTags: info_gap\n\nBuyer message:\n\"1. Do you know the floor, view, and whether pets are allowed?\"\n\n[Ref: Y5HYX003JK]"
+        }
+      ],
+      "error": null,
+      "duration_s": 38.9,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "0950139c-f580-49e0-83a8-c1a5ebc98f95",
+            "category": "physical_property",
+            "token": "Y5HYX003JK"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi there. I'm Dalya, the property advisor for this listing at Mahoroba Test Brokerage. Yes, the Anya Phase 2 townhouse is available, it's a 4-bed, 5-bath, 2,700 sqft unit in Arabian Ranches 3, asking AED 3,600,000. Handover is October 2026.\n\nWhat would you like to know about it?\nIt's an off-plan uni"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 2,787,779; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 3,514,761"
+    },
+    {
+      "check": "parking_answer_or_escalation_t3",
+      "pass": true,
+      "evidence": "Parking is within the townhouse itself, on the private plot, typically a driveway plus covered/garage spaces, so there's no separate allocated-bay count like an apartment has. The exact garage capacity is confirmed on a viewing."
+    },
+    {
+      "check": "no_pressure_language",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['info_gap'], 'envelope_token': 'Y5HYX003JK', 'body': '[INFO_GAP] Unknown buyer (+971501010022)\\n\\nProperty: HARNESS_listing_03_d8351536\\nSubtype: listing_fact_gap\\nPayload:\\n- topic"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    4
+  ],
+  "summary_auto": "Hesitant ordinary inquiry — 1 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.167,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Ordinary hesitant end-user — logistics, no offer",
+    "phone": "+971501010022",
+    "listing_id": "HARNESS_listing_03_d8351536",
+    "thread_count": 1,
+    "question_count": 1,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "physical_property": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

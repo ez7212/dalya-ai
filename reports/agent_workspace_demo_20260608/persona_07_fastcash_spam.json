@@ -1,0 +1,153 @@
+{
+  "idx": 7,
+  "slug": "fastcash_spam",
+  "persona": "Fast Cash — zero-context spammer (3 turns)",
+  "phone": "+971501010007",
+  "listing_id": "HARNESS_listing_02_381a47e2",
+  "listing_facts": {
+    "property_name": "Jumeirah Gate Tower 1",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 706.0,
+    "plot_sqft": null,
+    "price_aed": 2800000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Will pay 5 million cash today",
+      "bot": "Got it. AED 5,000,000 is going to the seller now. I'll follow up as soon as they've responded. Send your name and I'll keep the offer record clean.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 28.8
+    },
+    {
+      "turn": 2,
+      "buyer": "Final offer 5.5M cash transfer in 24 hours",
+      "bot": "Got it, AED 5,500,000. Send your name and I'll keep the offer record clean.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.7
+    },
+    {
+      "turn": 3,
+      "buyer": "OK 6 million absolute final, give me the seller now",
+      "bot": "I'm Mahoroba Test Brokerage's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 33.8
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "EXEMPT (transactional demand)"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "skipped: zero-context spam/social-engineering persona"
+    },
+    {
+      "check": "no_seller_phone_t3",
+      "pass": true,
+      "evidence": "I'm Mahoroba Test Brokerage's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process."
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Below-threshold zero-context offers must NOT escalate; above-threshold may escalate per current spec.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.85,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Fast Cash — zero-context spammer (3 turns)",
+    "phone": "+971501010007",
+    "listing_id": "HARNESS_listing_02_381a47e2",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

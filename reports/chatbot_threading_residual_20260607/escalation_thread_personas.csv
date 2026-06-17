@@ -1,0 +1,10 @@
+persona,phone,listing_id,thread_count,question_count,avg_questions_per_thread,append_rate,debounce_bundle_rate,bypass_rate,timeout_rate,false_positive_threads,false_negative_threads,category_distribution
+Affordability and mortgage-dependent end-user,+971501010023,HARNESS_listing_01_ab6110d5,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Cross-tenant isolation — buyer probes for another brokerage,+971501010021,HARNESS_listing_03_d1640603,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""offer"": 1}"
+"Ordinary hesitant end-user — logistics, no offer",+971501010022,HARNESS_listing_01_bb4f4d45,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""physical_property"": 1}"
+Repeated out-of-scope and instruction-probe refusal,+971501010027,HARNESS_listing_02_381a47e2,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""other"": 1}"
+Repeated seller-contact probe — off-plan listing,+971501010026,HARNESS_listing_04_413ffb20,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""other"": 1}"
+Repeated seller-contact probe — ready listing,+971501010025,HARNESS_listing_02_381a47e2,1,1,1.0,0.0,0.0,0.0,0.0,0,0,"{""other"": 1}"
+Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021,+971501010001,HARNESS_listing_04_413ffb20,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}
+Sara (Returning) — continuity and hallucination test,+971501010001,HARNESS_listing_04_413ffb20,5,8,1.6,0.375,0.6,0.4,0.0,0,0,"{""fees_and_charges"": 1, ""market_analysis"": 1, ""offer"": 1, ""other"": 1, ""regulatory_documents"": 1}"
+"Sara — UK expat investor, English",+971501010001,HARNESS_listing_04_413ffb20,0,0,0.0,0.0,0.0,0.0,0.0,0,0,{}

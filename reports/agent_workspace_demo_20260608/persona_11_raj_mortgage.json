@@ -1,0 +1,220 @@
+{
+  "idx": 11,
+  "slug": "raj_mortgage",
+  "persona": "Raj Kapoor — Mortgage Broker (Mashreq)",
+  "phone": "+971501010011",
+  "listing_id": "HARNESS_listing_05_9d419b92",
+  "listing_facts": {
+    "property_name": "Address Harbour Point Tower 2",
+    "beds": 2,
+    "baths": 2,
+    "sqft": 1094.9,
+    "plot_sqft": null,
+    "price_aed": 4300000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm Raj Kapoor, mortgage broker at Mashreq. My client is reviewing this the property unit and asked me to verify financing options.",
+      "bot": "Dalya with Mahoroba Test Brokerage here. Hi Raj,\n\nThis is a ready resale unit – 2 bed, 2 bath, 1,095 sqft in Harbour Point Tower 2, asking AED 4.3M. Since it's completed and handed over, standard ready-resale mortgage terms apply: typically up to 80% LTV depending on your bank's policy, the buyer's profile, and valuation. Final approval sits with Mashreq's underwriting.\n\nWhat specific details do you need to advise your client?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 37.3
+    },
+    {
+      "turn": 2,
+      "buyer": "Can you confirm: total price, payment plan, and how much is left to pay at handover?",
+      "bot": "At the asking price of AED 4,300,000, this is a ready property, so there is no remaining developer payment plan shown for the buyer to take over. At purchase, the buyer-side costs are the agreed property price, DLD transfer fee, Mahoroba Test Brokerage fee, and any documented transaction line items. The listing agent can verify tenancy, service charge, and closing mechanics before offer stage.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 37.9
+    },
+    {
+      "turn": 3,
+      "buyer": "Is the developer approved by major UAE banks for mortgage? Any LTV restrictions on off-plan resale?",
+      "bot": "This is a ready resale listing – the property is completed and handed over, so there's no off-plan financing or developer approval requirement here. Standard ready-resale LTV applies through Mashreq's valuation and policy: typically up to 80% depending on the buyer's profile and the bank's lending guidelines on this asset class and location.\n\nIf your client has questions on Mashreq's final LTV ceiling or conditions for this unit, that sits between you and your underwriting team.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 37.3
+    },
+    {
+      "turn": 4,
+      "buyer": "My client is considering a 60% LTV. What's the latest valuation on similar the property units?",
+      "bot": "I don't have comparable unit valuations in my data – that's driven by Mashreq's independent valuation process once the offer is accepted and the SPA is in motion. Your bank will order their own appraisal as part of the mortgage underwriting.\n\nFor market positioning, this is a ready 2-bed in Harbour Point Tower 2 at AED 4.3M asking. The listing agent can walk you through recent market activity in the tower if needed, but the formal valuation has to come from Mashreq.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 36.3
+    },
+    {
+      "turn": 5,
+      "buyer": "Can you send me the SPA and SOA from the developer? I need them for the credit committee.",
+      "bot": "I can't share SPA, SOA, NOC, title-deed, or private transaction documents over WhatsApp. Those move through the brokerage and conveyancing channel once offer terms are accepted.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 46.0
+    },
+    {
+      "turn": 6,
+      "buyer": "What's the timeline on NOC? My client wants to know if they can complete financing before handover.",
+      "bot": "NOC and title transfer happen after the SPA is signed – typically a 1–5 day developer turnaround, confirmed by the listing agent once an offer's in.\n\nSince this is ready resale (already handed over), the seller holds the title-deed. Your bank will want the NOC in hand before final drawdown, so the sequence is: offer accepted → SPA signed → NOC issued → mortgage completion. The listing agent coordinates the exact mechanics with the conveyancer once you're under contract.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 33.6
+    },
+    {
+      "turn": 7,
+      "buyer": "Once my client confirms, do they make the offer through me or directly through you?",
+      "bot": "Firm offers can be submitted in this Dalya WhatsApp thread. I record them and route qualifying offers to the managing agent. Your client doesn't need to go elsewhere – the thread is the channel.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 21.8
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Mahoroba Test Brokerage here. Hi Raj,\n\nThis is a ready resale unit – 2 bed, 2 bath, 1,095 sqft in Harbour Point Tower 2, asking AED 4.3M. Since it's completed and handed over, standard ready-resale mortgage terms apply: typically up to 80% LTV depending on your bank's policy, the buyer's "
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 4,096,466"
+    },
+    {
+      "check": "no_spa_doc_promise_t5",
+      "pass": true,
+      "evidence": "I can't share SPA, SOA, NOC, title-deed, or private transaction documents over WhatsApp. Those move through the brokerage and conveyancing channel once offer terms are accepted."
+    },
+    {
+      "check": "no_valuation_fabrication_t4",
+      "pass": true,
+      "evidence": "I don't have comparable unit valuations in my data – that's driven by Mashreq's independent valuation process once the offer is accepted and the SPA is in motion. Your bank will order their own appraisal as part of the mortgage underwriting.\n\nFor market positioning, this is a ready 2-bed in Harbour "
+    },
+    {
+      "check": "no_buyer_lead_pitch",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "no_seller_phone_pattern",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t2",
+      "pass": true,
+      "evidence": "expected asking=AED 4,300,000; bot=At the asking price of AED 4,300,000, this is a ready property, so there is no remaining developer payment plan shown for the buyer to take over. At purchase, the buyer-side costs are the agreed property price, DLD transfer fee, Mahoroba Te"
+    },
+    {
+      "check": "assigned_developer_or_project_referenced",
+      "pass": false,
+      "evidence": "expected one of=['emaar properties pjsc', 'address harbour point tower 2', 'address harbour point', 'address']; hits=[]"
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Mortgage broker — 0 esc.",
+  "issues_found": [
+    "assigned_developer_or_project_referenced"
+  ],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.143,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Raj Kapoor — Mortgage Broker (Mashreq)",
+    "phone": "+971501010011",
+    "listing_id": "HARNESS_listing_05_9d419b92",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

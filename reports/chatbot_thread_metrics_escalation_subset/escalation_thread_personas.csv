@@ -1,0 +1,3 @@
+persona,phone,listing_id,thread_count,question_count,avg_questions_per_thread,append_rate,debounce_bundle_rate,bypass_rate,timeout_rate,false_positive_threads,false_negative_threads,category_distribution
+David Chen — Conveyancing Lawyer (DIFC firm),+971501010012,HARNESS_listing_05_cdd77fda,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""regulatory_documents"": 1}"
+"Sara — UK expat investor, English",+971501010001,HARNESS_listing_04_413ffb20,1,1,1.0,0.0,0.0,1.0,0.0,0,0,"{""offer"": 1}"

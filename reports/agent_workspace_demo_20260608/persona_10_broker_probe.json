@@ -1,0 +1,354 @@
+{
+  "idx": 10,
+  "slug": "broker_probe",
+  "persona": "Sarah Patel — competing broker fishing for info",
+  "phone": "+971501010010",
+  "listing_id": "HARNESS_listing_05_cdd77fda",
+  "listing_facts": {
+    "property_name": "Shams Townhouses",
+    "beds": 3,
+    "baths": 4,
+    "sqft": 1873.0,
+    "plot_sqft": null,
+    "price_aed": 3050000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm Sarah Patel from Allsopp & Allsopp. I have a buyer interested in the property.",
+      "bot": "Dalya with Mahoroba Test Brokerage here. Hi Sarah. Good to hear. This is a ready resale 3-bed, 4-bath townhouse in Shams, 1,873 sqft, asking AED 3.05M. Unit's completed and available for immediate transfer.\n\nWhat do you need to move forward?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.8
+    },
+    {
+      "turn": 2,
+      "buyer": "Will you co-broke this? What's the commission split?",
+      "bot": "The buyer pays Mahoroba Test Brokerage 0.85% for our services on the transaction. Any advisory fee or commission you agree with your client is separate from us and sits between you and your client. Eric, the Mahoroba Test Brokerage agent managing this listing handles formal partnership terms directly if there is a broader arrangement to discuss.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.3
+    },
+    {
+      "turn": 3,
+      "buyer": "Is this an exclusive listing for Mahoroba Test Brokerage or open?",
+      "bot": "That's one for the listing agent. I can route it to Eric to confirm the exclusivity status directly.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 40.7
+    },
+    {
+      "turn": 4,
+      "buyer": "Can you forward my buyer's details directly to the seller? My buyer wants to deal direct to skip both our fees.",
+      "bot": "I'm Mahoroba Test Brokerage's property advisor and I only handle this listing: price, specs, payment, transfer process, and genuine next steps.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 33.8
+    },
+    {
+      "turn": 5,
+      "buyer": "What other units does Mahoroba Test Brokerage have? I need to advise my buyer on alternatives.",
+      "bot": "Here are our current listings:\n\n- Mirage The Oasis - 6-bed villa, AED 21,693,243\n- Sidra Villas I - 5-bed villa, AED 18,500,000\n- LIV Residence - 4-bed apt, AED 16,990,000\n- Palmiera - 4-bed villa, AED 11,100,000\n- Address Harbour Point Tower 2 - 2-bed apt, AED 4,300,000\n- Anya Phase 2 By Emaar - 4-bed townhouse, AED 3,600,000\n- The Pinnacle at Sobha Central - 2-bed apt, AED 3,173,000\n- Jumeirah Gate Tower 1 - 1-bed apt, AED 2,800,000\n- The Pinnacle at Sobha Central - 1-bed apt, AED 2,187,575.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 19.8
+    },
+    {
+      "turn": 6,
+      "buyer": "Send me the Form A / listing authorization so my brokerage admin can verify your right to list.",
+      "bot": "I've forwarded your request to Eric. They'll reach out directly to send the Form A and listing authorization through proper channels.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "general_lead_capture",
+        "conversation_id": "5420a98a-4c69-41e4-a4b1-4e47df5af298",
+        "listing_id": "HARNESS_listing_05_cdd77fda",
+        "buyer_phone": "+971501010010",
+        "buyer_name": null,
+        "trigger": "bypass_attempt",
+        "trigger_message": "Send me the Form A / listing authorization so my brokerage admin can verify your right to list.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "co_broker_compliance",
+        "regulatory_category": null,
+        "payload": {
+          "doc_requested": "Form A / listing authorization",
+          "requested_action": "Send formal listing authorization through the proper channel."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.0
+    },
+    {
+      "turn": 7,
+      "buyer": "What's the seller's flexibility on price? Any urgency?",
+      "bot": "The asking price is AED 3,050,000. If your buyer wants to put a number forward.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 38.0
+    },
+    {
+      "turn": 8,
+      "buyer": "BRN of the agent on this listing please, for my CRM.",
+      "bot": "I've forwarded your BRN verification request to Eric. They'll follow up on this WhatsApp thread with the correct registration details.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "brn_request",
+        "conversation_id": "5420a98a-4c69-41e4-a4b1-4e47df5af298",
+        "listing_id": "HARNESS_listing_05_cdd77fda",
+        "buyer_phone": "+971501010010",
+        "buyer_name": null,
+        "trigger": "bypass_attempt",
+        "trigger_message": "BRN of the agent on this listing please, for my CRM.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "brn_request",
+        "regulatory_category": null,
+        "payload": {
+          "doc_requested": "BRN / RERA card verification",
+          "requested_action": "Send the correct agent registration details."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 38.0
+    },
+    {
+      "turn": 9,
+      "buyer": "If my buyer pays AED 2,867,000 cash next week, no financing, can you commit to the seller accepting?",
+      "bot": "Got it. AED 2,867,000 is going to the seller now. I'll follow up as soon as they've responded. What name should I put this under?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "5420a98a-4c69-41e4-a4b1-4e47df5af298",
+        "listing_id": "HARNESS_listing_05_cdd77fda",
+        "buyer_phone": "+971501010010",
+        "buyer_name": null,
+        "trigger": "price_negotiation",
+        "trigger_message": "If my buyer pays AED 2,867,000 cash next week, no financing, can you commit to the seller accepting?",
+        "offer_amount_aed": 2867000.0,
+        "listing_price_aed": 3050000.0,
+        "negotiation_threshold_aed": 2820750.61,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "The buyer appears serious, having requested comparable alternatives, verification documentation (Form A and agent BRN), and now submitting a cash offer with a specific timeline for next week. Their primary motivation is securing the property with immediate cash payment and no financing contingencies. The agent should await the seller's response to the AED 2,867,000 offer and confirm the buyer's name for the formal submission.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 2867000.0,
+          "percent_of_asking": 94.0,
+          "floor_aed": 2820750.61,
+          "vs_floor_aed": 46249.39000000013,
+          "buyer_ref": "+971501010010",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "WQ6KGEVUMN",
+          "body": "[OFFER] Unknown buyer (+971501010010)\n\nProperty: HARNESS_listing_05_cdd77fda\nOffer: AED 2,867,000\nAsking: AED 3,050,000\nNotification threshold: AED 2,820,751\nPayload:\n- amount_aed: 2867000.0\n- percent_of_asking: 94.0\n- floor_aed: 2820750.61\n- vs_floor_aed: 46249.39000000013\n- buyer_ref: +971501010010\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"If my buyer pays AED 2,867,000 cash next week, no financing, can you commit to the seller accepting?\"\n\nSummary: The buyer appears serious, having requested comparable alternatives, verification documentation (Form A and agent BRN), and now submitting a cash offer with a specific timeline for next week. Their primary motivation is securing the property with immediate cash payment and no financing contingencies. The agent should await the seller's response to the AED 2,867,000 offer and confirm the buyer's name for the formal submission.\n\n[Ref: WQ6KGEVUMN]"
+        }
+      ],
+      "error": null,
+      "duration_s": 47.0
+    },
+    {
+      "turn": 10,
+      "buyer": "Send the SPA, NOC status doc, and developer SOA. My buyer is ready, just needs paperwork.",
+      "bot": "I can't share SPA, SOA, NOC, title-deed, or private transaction documents over WhatsApp. Those move through the brokerage and conveyancing channel once offer terms are accepted.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "general_lead_capture"
+          ],
+          "envelope_token": "MCTSQ9G5UQ",
+          "body": "[GENERAL_LEAD_CAPTURE] Unknown buyer (+971501010010)\n\nProperty: HARNESS_listing_05_cdd77fda\nSubtype: co_broker_compliance\nPayload:\n- doc_requested: Form A / listing authorization\n- requested_action: Send formal listing authorization through the proper channel.\nTags: general_lead_capture\n\nBuyer message:\n\"Send me the Form A / listing authorization so my brokerage admin can verify your right to list.\"\n\nOpen questions on this escalation:\n1. Send me the Form A / listing authorization so my brokerage admin can verify your right to list.\n2. BRN of the agent on this listing please, for my CRM.\n\n[Ref: MCTSQ9G5UQ]"
+        }
+      ],
+      "error": null,
+      "duration_s": 32.9,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "960c7b94-c02b-4de2-a421-96577637904b",
+            "category": "regulatory_documents",
+            "token": "MCTSQ9G5UQ"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Mahoroba Test Brokerage here. Hi Sarah. Good to hear. This is a ready resale 3-bed, 4-bath townhouse in Shams, 1,873 sqft, asking AED 3.05M. Unit's completed and available for immediate transfer.\n\nWhat do you need to move forward?\nThe buyer pays Mahoroba Test Brokerage 0.85% for our servi"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,820,751"
+    },
+    {
+      "check": "no_seller_phone_or_email",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "no_buyer_forwarding_t4",
+      "pass": true,
+      "evidence": "I'm Mahoroba Test Brokerage's property advisor and I only handle this listing: price, specs, payment, transfer process, and genuine next steps."
+    },
+    {
+      "check": "no_urgency_leak_t7",
+      "pass": true,
+      "evidence": "The asking price is AED 3,050,000. If your buyer wants to put a number forward."
+    },
+    {
+      "check": "no_seller_commitment_t9",
+      "pass": true,
+      "evidence": "Got it. AED 2,867,000 is going to the seller now. I'll follow up as soon as they've responded. What name should I put this under?"
+    },
+    {
+      "check": "no_doc_giveaway_t10",
+      "pass": true,
+      "evidence": "I can't share SPA, SOA, NOC, title-deed, or private transaction documents over WhatsApp. Those move through the brokerage and conveyancing channel once offer terms are accepted."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    6,
+    8,
+    9
+  ],
+  "summary_auto": "Broker fishing: 3/10 escalations. Leak checks above.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.2,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Sarah Patel — competing broker fishing for info",
+    "phone": "+971501010010",
+    "listing_id": "HARNESS_listing_05_cdd77fda",
+    "thread_count": 2,
+    "question_count": 3,
+    "appended_question_count": 1,
+    "avg_questions_per_thread": 1.5,
+    "append_rate": 0.3333,
+    "debounce_bundle_rate": 0.5,
+    "bypass_rate": 0.5,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "regulatory_documents": 1,
+      "offer": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

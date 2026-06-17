@@ -1,0 +1,213 @@
+{
+  "idx": 14,
+  "slug": "lisa_advisor",
+  "persona": "Lisa Park — Independent Property Advisor (Singapore-based)",
+  "phone": "+971501010014",
+  "listing_id": "HARNESS_listing_04_bd2d6707",
+  "listing_facts": {
+    "property_name": "LIV Residence",
+    "beds": 4,
+    "baths": 6,
+    "sqft": 5148.0,
+    "plot_sqft": null,
+    "price_aed": 16990000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm Lisa Park, independent property advisor based in Singapore. I advise UHNW Asian clients on Dubai investments.",
+      "bot": "Dalya with Gemini Realty here. Hi Lisa. Good to connect with you. How can I help with your client's search?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 19.3
+    },
+    {
+      "turn": 2,
+      "buyer": "Can you give me a complete brief on this the property unit — specs, payment, timeline, developer?",
+      "bot": "Here's the full brief on the LIV Residence unit:\n\nUnit specs:\n4 bedrooms, 6 bathrooms, 5,148 sqft built-up area. Ready resale, completed and available for immediate transfer.\n\nPrice & fees:\nAsking price: AED 16,990,000\nDLD transfer fee (government, 4%): AED 679,600\nGemini Realty brokerage (0.85%): AED 144,415\nDocument processing: AED 2,500\nTotal at asking: AED 17,814,015\n\nPayment & timeline:\nThis is a ready resale, so full capital is due at closing. No developer payment plan, the unit is already handed over. NOC and title transfer happen post-SPA, typically 1-5 days. A 30-day close is feasible depending on finance approval and trustee availability.\n\nDeveloper:\nLIV Real Estate Development, boutique luxury developer, established in Dubai's residential market. Known for premium glass-facade waterfront towers in Dubai Marina. Track record includes completed LIV Residence and LIV Marina, with 600+ high-end units delivered. Pipeline includes LIV Lux (Q4 2026), LIV Maritime, and LIV Oceanside.\n\nLocation:\nDubai Marina, waterfront community. 19 min to Dubai Mall, 11 min to Palm Jumeirah, 26-27 min to Dubai International Airport. Direct Metro access (DMCC Red Line), marina walk, dining, retail, yacht club, adjacent to JBR Beach.\n\nOwnership & visa:\nFreehold. Golden Visa eligible (10-year visa for buyer, spouse, children, household staff).",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 26.2
+    },
+    {
+      "turn": 3,
+      "buyer": "What's the projected rental yield and capital appreciation outlook for Dubai Harbour?",
+      "bot": "I don't have rental yield projections or capital appreciation forecasts, that's outside what I can advise on.\n\nFor UHNW portfolio analysis, your client should engage a Dubai real estate investment strategist or analyst firm that models rental comps, occupancy trends, and appreciation by micro-location. They'll have the data on Dubai Marina / Dubai Harbour rental history and forward assumptions your client needs.\n\nWhat I can confirm: this is a ready resale in an established waterfront community with strong liquidity and end-user demand. The rest is investment thesis work between you and your advisors.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 16.3
+    },
+    {
+      "turn": 4,
+      "buyer": "My typical client is investing 5-15M AED, prefers off-plan with low capital lock-up. Does this fit?",
+      "bot": "No, this doesn't fit your client profile.\n\nThis is a ready resale, completed, full capital due at closing. No phased payment plan, no construction completion milestones. For UHNW clients needing low capital lock-up and staged funding, off-plan with developer payment plans is the right vehicle.\n\nLIV has an off-plan pipeline (LIV Lux launching Q4 2026, LIV Maritime, LIV Oceanside), so if your client prefers that structure, I'd recommend we discuss those upcoming projects instead. Off-plan finance in UAE typically runs 40-50% LTV maximum with Tier-1 developer approval, buyer funds around 50% to developer upfront, but the payment schedule spreads over construction.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 16.4
+    },
+    {
+      "turn": 5,
+      "buyer": "Can you provide me a written investment summary I can share with my client?",
+      "bot": "I can't generate investment summaries or pitch materials, that's advisory work between you and your client.\n\nWhat I can do: provide you the unit specs, market positioning, and developer track record (which I've already shared). You build your own thesis and analysis from there.\n\nIf your client moves toward an offer, we'll route it through Dalya and coordinate with the managing agent on legal docs, NOC timeline, and close logistics. But the investment positioning and suitability analysis sits with you.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 17.2
+    },
+    {
+      "turn": 6,
+      "buyer": "If my client buys, do they pay your brokerage commission or do I receive a referral fee?",
+      "bot": "The buyer pays Gemini Realty 0.85% for our services on the transaction. Any advisory fee or commission you agree with your client is separate from us and sits between you and your client. Sophie, the Gemini Realty agent managing this listing handles formal partnership terms directly if there is a broader arrangement to discuss.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 12.6
+    },
+    {
+      "turn": 7,
+      "buyer": "My client values privacy. Can transactions be structured through a corporate entity or trust?",
+      "bot": "That's a legal and tax question I can't advise on. Your client should engage a Dubai real estate lawyer to review corporate ownership structures, trust setups, and any tax or residency implications specific to their situation.\n\nWhat I can confirm: freehold units in Dubai can be held by corporate entities, individuals, or trusts, but the specifics, liability, Golden Visa eligibility, DLD registration requirements, all depend on the structure chosen and UAE law. A lawyer will guide that properly.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 14.6
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Gemini Realty here. Hi Lisa. Good to connect with you. How can I help with your client's search?\nHere's the full brief on the LIV Residence unit:\n\nUnit specs:\n4 bedrooms, 6 bathrooms, 5,148 sqft built-up area. Ready resale, completed and available for immediate transfer.\n\nPrice & fees:\nAs"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 15,960,274"
+    },
+    {
+      "check": "no_yield_projection_t3",
+      "pass": true,
+      "evidence": "I don't have rental yield projections or capital appreciation forecasts, that's outside what I can advise on.\n\nFor UHNW portfolio analysis, your client should engage a Dubai real estate investment strategist or analyst firm that models rental comps, occupancy trends, and appreciation by micro-locati"
+    },
+    {
+      "check": "no_summary_doc_promise_t5",
+      "pass": true,
+      "evidence": "I can't generate investment summaries or pitch materials, that's advisory work between you and your client.\n\nWhat I can do: provide you the unit specs, market positioning, and developer track record (which I've already shared). You build your own thesis and analysis from there.\n\nIf your client moves"
+    },
+    {
+      "check": "referral_fee_handled_t6",
+      "pass": true,
+      "evidence": "The buyer pays Gemini Realty 0.85% for our services on the transaction. Any advisory fee or commission you agree with your client is separate from us and sits between you and your client. Sophie, the Gemini Realty agent managing this listing handles formal partnership terms directly if there is a br"
+    },
+    {
+      "check": "no_corporate_structure_advice_t7",
+      "pass": true,
+      "evidence": "That's a legal and tax question I can't advise on. Your client should engage a Dubai real estate lawyer to review corporate ownership structures, trust setups, and any tax or residency implications specific to their situation.\n\nWhat I can confirm: freehold units in Dubai can be held by corporate ent"
+    },
+    {
+      "check": "assigned_developer_or_project_referenced",
+      "pass": true,
+      "evidence": "expected one of=['liv real estate development (liv developers)', 'liv residence', 'dubai marina']; hits=['liv residence', 'dubai marina']"
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Investment advisor — 0 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.143,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Lisa Park — Independent Property Advisor (Singapore-based)",
+    "phone": "+971501010014",
+    "listing_id": "HARNESS_listing_04_bd2d6707",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

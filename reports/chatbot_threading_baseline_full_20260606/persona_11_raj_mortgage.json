@@ -1,0 +1,220 @@
+{
+  "idx": 11,
+  "slug": "raj_mortgage",
+  "persona": "Raj Kapoor — Mortgage Broker (Mashreq)",
+  "phone": "+971501010011",
+  "listing_id": "HARNESS_listing_05_cdd77fda",
+  "listing_facts": {
+    "property_name": "Shams Townhouses",
+    "beds": 3,
+    "baths": 4,
+    "sqft": 1873.0,
+    "plot_sqft": null,
+    "price_aed": 3050000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm Raj Kapoor, mortgage broker at Mashreq. My client is reviewing this the property unit and asked me to verify financing options.",
+      "bot": "Dalya with Gemini Realty here. Hi Raj, good to connect. For this 3-bed, 4-bath townhouse at Shams. AED 3.05M asking, what specific financing angle does your client want me to clarify? LTV band, developer eligibility, timeline for NOC, or something else?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 26.6
+    },
+    {
+      "turn": 2,
+      "buyer": "Can you confirm: total price, payment plan, and how much is left to pay at handover?",
+      "bot": "At the asking price of AED 3,050,000, this is a ready property, so there is no remaining developer payment plan shown for the buyer to take over. At purchase, the buyer-side costs are the agreed property price, DLD transfer fee, Gemini Realty fee, and any documented transaction line items. The listing agent can verify tenancy, service charge, and closing mechanics before offer stage.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 17.1
+    },
+    {
+      "turn": 3,
+      "buyer": "Is the developer approved by major UAE banks for mortgage? Any LTV restrictions on off-plan resale?",
+      "bot": "This is a ready resale listing, not off-plan, the unit is completed and handed over already. Standard ready-resale LTV terms apply, which typically run 80% maximum depending on the buyer's bank, property value band, and residency status. Your bank (Mashreq) will set the final LTV based on your client's profile and their own policy.\n\nSince this is resale, off-plan financing constraints don't apply here.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 23.2
+    },
+    {
+      "turn": 4,
+      "buyer": "My client is considering a 60% LTV. What's the latest valuation on similar the property units?",
+      "bot": "I don't have comparable valuation data on similar units in the community. That's territory for your bank's valuation team or an independent surveyor, they'll pull recent sales in Shams and similar townhouse developments to set their own mortgage valuation, which may differ from the asking price.\n\nYour client's 60% LTV will depend on whatever Mashreq values the property at, so I'd recommend getting that formal valuation request in once an offer is on the table.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 19.7
+    },
+    {
+      "turn": 5,
+      "buyer": "Can you send me the SPA and SOA from the developer? I need them for the credit committee.",
+      "bot": "I can't share SPA, SOA, NOC, title-deed, or private transaction documents over WhatsApp. Those move through the brokerage and conveyancing channel once offer terms are accepted.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 18.2
+    },
+    {
+      "turn": 6,
+      "buyer": "What's the timeline on NOC? My client wants to know if they can complete financing before handover.",
+      "bot": "NOC and title transfer happen after the SPA is signed, typically a 1-5 day developer turnaround, confirmed by the listing agent once an offer's in.\n\nYour bank will want the NOC in hand before final mortgage drawdown, so the sequence is: offer accepted → SPA signed → NOC issued → mortgage completion. Since this is ready resale, there's no developer handover delay on top of that.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 18.8
+    },
+    {
+      "turn": 7,
+      "buyer": "Once my client confirms, do they make the offer through me or directly through you?",
+      "bot": "Firm offers can be submitted in this Dalya WhatsApp thread. I record them and route qualifying offers to the managing agent.\n\nYour client can instruct you to place the offer here, or you can coordinate directly with me on their behalf, either way works.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 18.2
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Dalya with Gemini Realty here. Hi Raj, good to connect. For this 3-bed, 4-bath townhouse at Shams. AED 3.05M asking, what specific financing angle does your client want me to clarify? LTV band, developer eligibility, timeline for NOC, or something else?\nAt the asking price of AED 3,050,000, this is "
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,820,751"
+    },
+    {
+      "check": "no_spa_doc_promise_t5",
+      "pass": true,
+      "evidence": "I can't share SPA, SOA, NOC, title-deed, or private transaction documents over WhatsApp. Those move through the brokerage and conveyancing channel once offer terms are accepted."
+    },
+    {
+      "check": "no_valuation_fabrication_t4",
+      "pass": true,
+      "evidence": "I don't have comparable valuation data on similar units in the community. That's territory for your bank's valuation team or an independent surveyor, they'll pull recent sales in Shams and similar townhouse developments to set their own mortgage valuation, which may differ from the asking price.\n\nYo"
+    },
+    {
+      "check": "no_buyer_lead_pitch",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "no_seller_phone_pattern",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t2",
+      "pass": true,
+      "evidence": "expected asking=AED 3,050,000; bot=At the asking price of AED 3,050,000, this is a ready property, so there is no remaining developer payment plan shown for the buyer to take over. At purchase, the buyer-side costs are the agreed property price, DLD transfer fee, Gemini Real"
+    },
+    {
+      "check": "assigned_developer_or_project_referenced",
+      "pass": false,
+      "evidence": "expected one of=['nshama', 'shams townhouses', 'town square']; hits=[]"
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "Mortgage broker — 0 esc.",
+  "issues_found": [
+    "assigned_developer_or_project_referenced"
+  ],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.143,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Raj Kapoor — Mortgage Broker (Mashreq)",
+    "phone": "+971501010011",
+    "listing_id": "HARNESS_listing_05_cdd77fda",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "idx": 28,
+  "slug": "threading_rapid_fees",
+  "persona": "Threading control — rapid same-category fee gaps",
+  "phone": "+971501010028",
+  "listing_id": "HARNESS_listing_04_413ffb20",
+  "listing_facts": {
+    "property_name": "The Pinnacle at Sobha Central",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 639.19,
+    "plot_sqft": null,
+    "price_aed": 2187575.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 2062254.55,
+    "offer_threshold_pct": 94.3
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Can you confirm the exact service charges for this unit?",
+      "bot": "Mahoroba Test Brokerage's property advisor here. I don't have the exact service charge in the listing record. I've flagged it for Eric, the agent managing this listing at Mahoroba Test Brokerage to confirm before you rely on it.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "f1a8e1e4-57a8-4f05-aadc-04956867ca81",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010028",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 44.5
+    },
+    {
+      "turn": 2,
+      "buyer": "And are annual maintenance fees already available?",
+      "bot": "I don't have the exact service charge in the listing record. I'm asking Eric to confirm that against current listing and market data.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "f1a8e1e4-57a8-4f05-aadc-04956867ca81",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010028",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 40.6
+    },
+    {
+      "turn": 3,
+      "buyer": "Are owners association fees listed anywhere?",
+      "bot": "I don't have the exact service charge in the listing record. Eric needs to verify that detail before you rely on it.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "f1a8e1e4-57a8-4f05-aadc-04956867ca81",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010028",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?\n3. Are owners association fees listed anywhere?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?\n3. Are owners association fees listed anywhere?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 42.6
+    },
+    {
+      "turn": 4,
+      "buyer": "Can you confirm if maintenance fees are charged separately from service charges?",
+      "bot": "I don't have the exact service charge in the listing record. I've flagged it for Eric to confirm before you rely on it.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "f1a8e1e4-57a8-4f05-aadc-04956867ca81",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010028",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?\n3. Are owners association fees listed anywhere?\n4. Can you confirm if maintenance fees are charged separately from service charges?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?\n3. Are owners association fees listed anywhere?\n4. Can you confirm if maintenance fees are charged separately from service charges?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "RAC2UDYGRK",
+          "body": "[INFO_GAP] Unknown buyer (+971501010028)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- topic: service charge\n- question_digest: 1. Can you confirm the exact service charges for this unit?\n- requested_action: Confirm the missing listing fact and reply to the buyer.\nTags: info_gap\n\nBuyer message:\n\"1. Can you confirm the exact service charges for this unit?\"\n\nOpen questions on this escalation:\n1. Can you confirm the exact service charges for this unit?\n2. And are annual maintenance fees already available?\n3. Are owners association fees listed anywhere?\n4. Can you confirm if maintenance fees are charged separately from service charges?\n\n[Ref: RAC2UDYGRK]"
+        }
+      ],
+      "error": null,
+      "duration_s": 46.3,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "a219f2cb-dfb2-454b-9d06-d5489822927a",
+            "category": "fees_and_charges",
+            "token": "RAC2UDYGRK"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Mahoroba Test Brokerage's property advisor here. I don't have the exact service charge in the listing record. I've flagged it for Eric, the agent managing this listing at Mahoroba Test Brokerage to confirm before you rely on it.\nI don't have the exact service charge in the listing record. I'm asking"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 1,704,859; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,062,255"
+    },
+    {
+      "check": "fee_gap_t1_escalated",
+      "pass": true,
+      "evidence": "turn 1 escalation_triggered=True"
+    },
+    {
+      "check": "fee_gap_t2_escalated",
+      "pass": true,
+      "evidence": "turn 2 escalation_triggered=True"
+    },
+    {
+      "check": "fee_gap_t3_escalated",
+      "pass": true,
+      "evidence": "turn 3 escalation_triggered=True"
+    },
+    {
+      "check": "fee_gap_t4_escalated",
+      "pass": true,
+      "evidence": "turn 4 escalation_triggered=True"
+    },
+    {
+      "check": "initial_bundle_contains_all_fee_questions",
+      "pass": true,
+      "evidence": "missing=[]; agent_messages=1"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['info_gap'], 'envelope_token': 'RAC2UDYGRK', 'body': '[INFO_GAP] Unknown buyer (+971501010028)\\n\\nProperty: HARNESS_listing_04_413ffb20\\nSubtype: listing_fact_gap\\nPayload:\\n- topic"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "summary_auto": "Rapid fee threading control — 4 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Threading control — rapid same-category fee gaps",
+    "phone": "+971501010028",
+    "listing_id": "HARNESS_listing_04_413ffb20",
+    "thread_count": 1,
+    "question_count": 4,
+    "appended_question_count": 3,
+    "avg_questions_per_thread": 4.0,
+    "append_rate": 0.75,
+    "debounce_bundle_rate": 1.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "fees_and_charges": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

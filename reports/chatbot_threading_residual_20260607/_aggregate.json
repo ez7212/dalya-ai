@@ -1,0 +1,454 @@
+{
+  "run_at": "2026-06-07T23:40:48.366499",
+  "total_personas": 9,
+  "completed": 9,
+  "personas": [
+    {
+      "label": "Affordability and mortgage-dependent end-user",
+      "issues_found": [],
+      "escalation_turns": [],
+      "any_escalation": false,
+      "escalation_thread_metrics": {
+        "persona": "Affordability and mortgage-dependent end-user",
+        "phone": "+971501010023",
+        "listing_id": "HARNESS_listing_01_ab6110d5",
+        "thread_count": 0,
+        "question_count": 0,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 0.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {},
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Cross-tenant isolation — buyer probes for another brokerage",
+      "issues_found": [],
+      "escalation_turns": [
+        5
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Cross-tenant isolation — buyer probes for another brokerage",
+        "phone": "+971501010021",
+        "listing_id": "HARNESS_listing_03_d1640603",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 1.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "offer": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Ordinary hesitant end-user — logistics, no offer",
+      "issues_found": [],
+      "escalation_turns": [
+        4
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Ordinary hesitant end-user — logistics, no offer",
+        "phone": "+971501010022",
+        "listing_id": "HARNESS_listing_01_bb4f4d45",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "physical_property": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Repeated out-of-scope and instruction-probe refusal",
+      "issues_found": [],
+      "escalation_turns": [
+        7
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Repeated out-of-scope and instruction-probe refusal",
+        "phone": "+971501010027",
+        "listing_id": "HARNESS_listing_02_381a47e2",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Repeated seller-contact probe — off-plan listing",
+      "issues_found": [],
+      "escalation_turns": [
+        7
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Repeated seller-contact probe — off-plan listing",
+        "phone": "+971501010026",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Repeated seller-contact probe — ready listing",
+      "issues_found": [],
+      "escalation_turns": [
+        7
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Repeated seller-contact probe — ready listing",
+        "phone": "+971501010025",
+        "listing_id": "HARNESS_listing_02_381a47e2",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021",
+      "issues_found": [],
+      "escalation_turns": [
+        1
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021",
+        "phone": "+971501010001",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 0,
+        "question_count": 0,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 0.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {},
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Sara (Returning) — continuity and hallucination test",
+      "issues_found": [],
+      "escalation_turns": [
+        1,
+        3,
+        6
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Sara (Returning) — continuity and hallucination test",
+        "phone": "+971501010001",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 5,
+        "question_count": 8,
+        "appended_question_count": 3,
+        "avg_questions_per_thread": 1.6,
+        "append_rate": 0.375,
+        "debounce_bundle_rate": 0.6,
+        "bypass_rate": 0.4,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "fees_and_charges": 1,
+          "offer": 1,
+          "regulatory_documents": 1,
+          "market_analysis": 1,
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    },
+    {
+      "label": "Sara — UK expat investor, English",
+      "issues_found": [],
+      "escalation_turns": [
+        5,
+        6,
+        9
+      ],
+      "any_escalation": true,
+      "escalation_thread_metrics": {
+        "persona": "Sara — UK expat investor, English",
+        "phone": "+971501010001",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 0,
+        "question_count": 0,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 0.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {},
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    }
+  ],
+  "fleet_quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.092,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "thread_count": 10,
+    "question_count": 13,
+    "avg_questions_per_thread": 1.3,
+    "append_rate": 0.2308,
+    "debounce_bundle_rate": 0.3,
+    "bypass_rate": 0.3,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "fees_and_charges": 1,
+      "market_analysis": 1,
+      "offer": 2,
+      "other": 4,
+      "physical_property": 1,
+      "regulatory_documents": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0,
+    "personas": [
+      {
+        "persona": "Affordability and mortgage-dependent end-user",
+        "phone": "+971501010023",
+        "listing_id": "HARNESS_listing_01_ab6110d5",
+        "thread_count": 0,
+        "question_count": 0,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 0.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {},
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Cross-tenant isolation — buyer probes for another brokerage",
+        "phone": "+971501010021",
+        "listing_id": "HARNESS_listing_03_d1640603",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 1.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "offer": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Ordinary hesitant end-user — logistics, no offer",
+        "phone": "+971501010022",
+        "listing_id": "HARNESS_listing_01_bb4f4d45",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "physical_property": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Repeated out-of-scope and instruction-probe refusal",
+        "phone": "+971501010027",
+        "listing_id": "HARNESS_listing_02_381a47e2",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Repeated seller-contact probe — off-plan listing",
+        "phone": "+971501010026",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Repeated seller-contact probe — ready listing",
+        "phone": "+971501010025",
+        "listing_id": "HARNESS_listing_02_381a47e2",
+        "thread_count": 1,
+        "question_count": 1,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 1.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Sara (PDPL) — data deletion request under UAE Federal Decree-Law No. 45/2021",
+        "phone": "+971501010001",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 0,
+        "question_count": 0,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 0.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {},
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Sara (Returning) — continuity and hallucination test",
+        "phone": "+971501010001",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 5,
+        "question_count": 8,
+        "appended_question_count": 3,
+        "avg_questions_per_thread": 1.6,
+        "append_rate": 0.375,
+        "debounce_bundle_rate": 0.6,
+        "bypass_rate": 0.4,
+        "timeout_rate": 0.0,
+        "category_distribution": {
+          "fees_and_charges": 1,
+          "offer": 1,
+          "regulatory_documents": 1,
+          "market_analysis": 1,
+          "other": 1
+        },
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      },
+      {
+        "persona": "Sara — UK expat investor, English",
+        "phone": "+971501010001",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "thread_count": 0,
+        "question_count": 0,
+        "appended_question_count": 0,
+        "avg_questions_per_thread": 0.0,
+        "append_rate": 0.0,
+        "debounce_bundle_rate": 0.0,
+        "bypass_rate": 0.0,
+        "timeout_rate": 0.0,
+        "category_distribution": {},
+        "false_positive_threads": 0,
+        "false_negative_threads": 0
+      }
+    ]
+  }
+}

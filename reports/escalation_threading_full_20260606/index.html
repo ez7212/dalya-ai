@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dalya Smart Escalation Threading Verification</title>
+  <style>
+    :root {
+      --deep: #0f1923;
+      --ink: #1a2b3c;
+      --slate: #2e4057;
+      --gold: #c9a96e;
+      --sand: #f5efe6;
+      --muted: #a79d92;
+      --sage: #4a7c6f;
+      --danger: #bd5d55;
+      --skip: #9b8a58;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--deep);
+      color: var(--sand);
+      font: 15px/1.55 "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+    }
+    main { width: min(1180px, calc(100vw - 40px)); margin: 0 auto; padding: 40px 0 56px; }
+    h1, h2, h3 { letter-spacing: 0; line-height: 1.2; margin: 0; }
+    h1 { font-size: 32px; max-width: 820px; }
+    h2 { font-size: 20px; margin-top: 34px; }
+    h3 { font-size: 16px; }
+    p { color: var(--muted); margin: 10px 0 0; }
+    a { color: var(--gold); text-decoration: none; }
+    code, pre, .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .hero { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+    .status { border: 1px solid rgba(245,239,230,.14); background: rgba(26,43,60,.72); border-radius: 8px; padding: 16px 18px; min-width: 260px; }
+    .ok { color: var(--sage); }
+    .bad { color: var(--danger); }
+    .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+    .metric { background: var(--ink); border: 1px solid rgba(245,239,230,.1); border-radius: 8px; padding: 16px; }
+    .metric strong { display: block; color: var(--gold); font: 700 24px/1 "JetBrains Mono", monospace; }
+    .metric span { display: block; color: var(--muted); margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: rgba(26,43,60,.55); border-radius: 8px; overflow: hidden; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid rgba(245,239,230,.08); text-align: left; vertical-align: top; }
+    th { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; background: rgba(46,64,87,.7); }
+    tr:last-child td { border-bottom: 0; }
+    .badge { display: inline-block; border-radius: 999px; padding: 3px 8px; color: var(--deep); font-size: 12px; font-weight: 700; }
+    .pass { background: var(--sage); }
+    .fail, .error { background: var(--danger); }
+    .skip { background: var(--skip); }
+    .panel { margin-top: 14px; background: rgba(26,43,60,.55); border: 1px solid rgba(245,239,230,.1); border-radius: 8px; padding: 16px 18px; }
+    ul { margin: 10px 0 0 20px; padding: 0; }
+    pre { white-space: pre-wrap; background: #081017; color: #f6d8d4; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    @media (max-width: 820px) {
+      .hero { display: block; }
+      .status { margin-top: 20px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Dalya Smart Escalation Threading Verification</h1>
+        <p>Generated 2026-06-06 00:31:25 from pytest JUnit output.</p>
+        <p class="mono">PYTHONPATH=$(pwd) venv/bin/pytest -q --junitxml=reports/escalation_threading_full_20260606/junit.xml</p>
+      </div>
+      <div class="status">
+        <h2 class="ok">Test run green</h2>
+        <p>190 tests, 0 failures, 0 errors, 1 skipped.</p>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Test summary">
+      <div class="metric"><strong>190</strong><span>Total tests</span></div>
+      <div class="metric"><strong>189</strong><span>Passed</span></div>
+      <div class="metric"><strong>1</strong><span>Skipped</span></div>
+      <div class="metric"><strong>0</strong><span>Failures</span></div>
+      <div class="metric"><strong>1152.68s</strong><span>Runtime</span></div>
+    </section>
+
+    <section>
+      <h2>Escalation Threading Coverage</h2>
+      <p>The focused harness exercises debounce bundling, token reuse, category splitting, resolution, stale-window new threads, bypass categories, opt-out closure, thread isolation, update formatting, and question-cap truncation.</p>
+      <table>
+        <thead><tr><th>Test</th><th>Status</th><th>Time</th></tr></thead>
+        <tbody><tr><td>test_info_gap_category_mapping_is_keyword_first</td><td><span class="badge pass">passed</span></td><td>11.65s</td></tr><tr><td>test_brn_request_does_not_bypass_debounce</td><td><span class="badge pass">passed</span></td><td>13.05s</td></tr><tr><td>test_create_thread_integrity_error_refetches_and_appends</td><td><span class="badge pass">passed</span></td><td>16.76s</td></tr><tr><td>test_initial_debounce_bundles_same_category_and_update_reuses_agent_token</td><td><span class="badge pass">passed</span></td><td>32.13s</td></tr><tr><td>test_different_category_creates_new_thread_and_new_token</td><td><span class="badge pass">passed</span></td><td>24.92s</td></tr><tr><td>test_same_category_after_thread_resolution_creates_new_thread</td><td><span class="badge pass">passed</span></td><td>32.88s</td></tr><tr><td>test_same_category_after_24h_window_creates_new_thread</td><td><span class="badge pass">passed</span></td><td>29.50s</td></tr><tr><td>test_offer_bypasses_debounce_and_alerts_immediately</td><td><span class="badge pass">passed</span></td><td>14.72s</td></tr><tr><td>test_successful_threaded_initial_send_does_not_fall_through_to_legacy_telegram</td><td><span class="badge pass">passed</span></td><td>15.69s</td></tr><tr><td>test_thread_send_clears_legacy_pending_forwarded_questions</td><td><span class="badge pass">passed</span></td><td>18.78s</td></tr><tr><td>test_opt_out_closes_open_threads</td><td><span class="badge pass">passed</span></td><td>17.04s</td></tr><tr><td>test_reply_to_one_thread_does_not_resolve_other_open_thread</td><td><span class="badge pass">passed</span></td><td>29.06s</td></tr><tr><td>test_update_message_caps_open_questions</td><td><span class="badge pass">passed</span></td><td>19.56s</td></tr><tr><td>test_legacy_null_thread_route_relay_still_succeeds</td><td><span class="badge pass">passed</span></td><td>14.15s</td></tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Locked Decisions</h2>
+      <div class="panel"><ul><li>DB-backed initial debounce: 90s, max 5 min bundle window.</li><li>Update debounce: 30s before sending appended open questions to the same agent token.</li><li>Bypass: offer, legal_general, regulatory_request, and legitimate_conveyancing alert immediately.</li><li>BRN requests map to regulatory_documents but use normal debounce; they should be answerable from brokerage config over time.</li><li>Resolution: one valid agent reply resolves all open questions on that thread.</li><li>Timeout: open/debouncing/updated threads close after 24h since last buyer message.</li><li>Opt-out: buyer opt-out closes open threads for that buyer inside the brokerage.</li><li>Isolation: matching includes brokerage, buyer, listing, category, and open state.</li></ul></div>
+    </section>
+
+    <section>
+      <h2>Failures</h2>
+      <div class="panel"><p>No failures or errors.</p></div>
+    </section>
+
+    <section>
+      <h2>Results By File</h2>
+      <table>
+        <thead><tr><th>File</th><th>Total</th><th>Passed</th><th>Skipped</th><th>Failed</th><th>Errors</th></tr></thead>
+        <tbody><tr><td>tests/test_buyer_preferences.py</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestEscalation.py</td><td>4</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestIdentity.py</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestLanguage.py</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestPricing.py</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestPropertyKnowledge.py</td><td>4</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestSpecialIntentRouting.py</td><td>5</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot/TestViewings.py</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_chatbot_full_test_output.py</td><td>6</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_cross_tenant_isolation.py</td><td>5</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_db_resiliency.py</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_escalation_threading_harness.py</td><td>14</td><td>14</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_foundation_hardening.py</td><td>6</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_harness.py</td><td>4</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_intent_classifier.py</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_listing_enrichment.py</td><td>5</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_morning_hot_list.py</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_multitenant.py</td><td>12</td><td>12</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_remarketing.py</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_response_policy.py</td><td>56</td><td>56</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_safety.py</td><td>5</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_smart_escalation_relay.py</td><td>4</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_spa_parser/TestNOCEligibility.py</td><td>6</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_spa_parser/TestPercentPaidCalculation.py</td><td>6</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_spa_parser/TestSPAParserIntegration.py</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>tests/test_spa_parser/TestSPAParserMocked.py</td><td>5</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_transcription.py</td><td>11</td><td>11</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_unit_profile.py</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_viewing_logistics.py</td><td>6</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>tests/test_voice_notes.py</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td></tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Artifacts</h2>
+      <div class="panel"><ul><li><a href="../../docs/adr/ADR-2026-06-05-smart-escalation-threading.md">ADR</a></li><li><a href="../../docs/adr/AUDIT-2026-06-05-smart-escalation-threading.md">Audit</a></li><li><a href="junit.xml">JUnit XML</a></li><li><a href="../../tests/test_escalation_threading_harness.py">Threading Harness</a></li></ul></div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,310 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dalya.ai/schemas/community-knowledge-base/1.0",
+  "title": "Dalya AI Community Knowledge Base File",
+  "description": "Canonical schema for community knowledge base JSON files used by the Dalya AI property advisor. Each file represents one master development (e.g. Emaar The Oasis, Sobha Seahaven). Files are auto-discovered by app/core/community_data.py at startup.",
+  "type": "object",
+  "required": [
+    "name",
+    "aliases",
+    "developer_keywords",
+    "prompt_data",
+    "metadata"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human-readable display name for the development, e.g. 'The Oasis by Emaar', 'Sobha Seahaven'."
+    },
+    "developer": {
+      "type": "string",
+      "description": "Developer company name. Recommended for display and audit purposes."
+    },
+    "last_updated": {
+      "type": "string",
+      "description": "Legacy field — prefer metadata.last_researched_at for new files. ISO date when the file was last updated.",
+      "format": "date"
+    },
+    "researcher_notes": {
+      "type": "array",
+      "description": "Free-text notes from the researcher about data gaps, confidence levels, and sourcing. Not used in prompt construction but critical for auditing.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "master_development": {
+      "type": "object",
+      "description": "Detailed structured data about the master development. Contains deeply nested research data used for audit and reference. Structure varies by development type (villa community vs tower project). Not directly consumed by prompt_builder — prompt_data is the normalised extraction.",
+      "properties": {
+        "overview": {
+          "type": "object",
+          "description": "Core facts: official name, developer, launch date, unit counts, land area, freehold status, etc."
+        },
+        "location_connectivity": {
+          "type": "object",
+          "description": "Drive times, highway access, metro/tram, transport links."
+        },
+        "shared_amenities": {
+          "type": "object",
+          "description": "Community-level amenities: pools, gyms, parks, retail, etc."
+        },
+        "nearby_infrastructure": {
+          "type": "object",
+          "description": "Schools, healthcare, malls, golf courses, supermarkets within driving distance."
+        },
+        "investment_data": {
+          "type": "object",
+          "description": "Price ranges, golden visa eligibility, projected ROI, DLD transaction data, listings counts."
+        },
+        "developer_profile": {
+          "type": "object",
+          "description": "Developer legal entity, track record, financials, credit rating, flagship communities."
+        }
+      }
+    },
+    "sub_developments": {
+      "type": "object",
+      "description": "Keyed by sub-development slug (e.g. 'palmiera', 'tower_a'). Each entry contains detailed research data for that sub-development plus aliases and prompt_data_overrides used by community_data.py matching logic.",
+      "additionalProperties": {
+        "oneOf": [
+          { "$ref": "#/$defs/sub_development" },
+          { "type": "null" }
+        ]
+      }
+    },
+    "sales_talking_points": {
+      "type": "object",
+      "description": "Pre-written sales narratives for the property advisor. Contains development_level talking points and per_sub_development talking points. Recommended for all files — the advisor produces better responses when these are present.",
+      "properties": {
+        "development_level": {
+          "type": "object",
+          "description": "Master-development-level talking points: headline stats, scarcity arguments, lifestyle pitch, investment pitch, objection handling."
+        },
+        "per_sub_development": {
+          "type": "object",
+          "description": "Keyed by sub-development slug. Each entry contains sub-specific talking points.",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "aliases": {
+      "type": "array",
+      "description": "Case-insensitive strings used to match listings to this knowledge base file. Include the master community name, common abbreviations, and all sub-development names. community_data.py lowercases these and checks if any alias is contained in the listing project name.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "prompt_data": {
+      "$ref": "#/$defs/prompt_data",
+      "description": "Normalised data block consumed by prompt_builder.py to enrich AI advisor responses. This is the primary interface between the knowledge base and the chatbot engine."
+    },
+    "developer_keywords": {
+      "type": "array",
+      "description": "Case-insensitive keywords used for developer-level fallback matching. If no alias matches the listing project name, community_data.py checks whether the listing's developer name contains any of these keywords. Typically just the developer brand name in lowercase, e.g. ['emaar'], ['sobha'].",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata",
+      "description": "Provenance and quality tracking for the knowledge base file."
+    }
+  },
+  "$defs": {
+    "prompt_data": {
+      "type": "object",
+      "description": "Normalised community data for prompt construction. Required fields are those that prompt_builder.py depends on for every listing.",
+      "required": [
+        "developer",
+        "community",
+        "location",
+        "community_amenities",
+        "investment",
+        "nearby"
+      ],
+      "properties": {
+        "developer": {
+          "type": "string",
+          "description": "Developer name as it should appear in advisor responses."
+        },
+        "community": {
+          "type": "string",
+          "description": "Community display name. Set automatically by community_data.py from the top-level 'name' field if not provided."
+        },
+        "location": {
+          "type": "object",
+          "description": "Location summary for the advisor.",
+          "required": ["area"],
+          "properties": {
+            "area": {
+              "type": "string",
+              "description": "Short location label, e.g. 'Dubailand, Dubai', 'Dubai Harbour, Dubai'."
+            },
+            "description": {
+              "type": "string",
+              "description": "One-paragraph location and community description."
+            },
+            "distances": {
+              "type": "object",
+              "description": "Drive time in minutes to key Dubai landmarks. Keys are snake_case landmark names, values are integers (minutes).",
+              "additionalProperties": {
+                "type": ["integer", "string", "null"]
+              }
+            }
+          }
+        },
+        "community_amenities": {
+          "type": "array",
+          "description": "List of community amenities as human-readable strings.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nearby": {
+          "type": "object",
+          "description": "Nearby points of interest grouped by category.",
+          "properties": {
+            "schools": {
+              "type": "array",
+              "description": "Nearby schools with name, distance, and curriculum.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "distance_km": { "type": ["number", "string"] },
+                  "curriculum": { "type": "string" }
+                }
+              }
+            },
+            "healthcare": {
+              "type": "array",
+              "items": { "type": "object" }
+            },
+            "retail": {
+              "type": "array",
+              "items": { "type": "object" }
+            }
+          }
+        },
+        "investment": {
+          "type": "object",
+          "description": "Investment-relevant data for the advisor.",
+          "properties": {
+            "ownership": {
+              "type": "string",
+              "description": "Ownership type, typically 'Freehold'."
+            },
+            "golden_visa_eligible": {
+              "type": "boolean"
+            },
+            "projected_roi_percent": {
+              "type": ["string", "number", "null"],
+              "description": "Projected ROI range as string (e.g. '3.5 to 7') or number."
+            },
+            "branded_premium_note": {
+              "type": ["string", "null"],
+              "description": "Note about branded/developer premium positioning."
+            }
+          }
+        },
+        "sales_talking_points": {
+          "type": "object",
+          "description": "Pre-crafted sales narratives the advisor can draw from. Typically includes scarcity_argument, lifestyle_pitch, investment_pitch keys.",
+          "properties": {
+            "scarcity_argument": { "type": "string" },
+            "lifestyle_pitch": { "type": "string" },
+            "investment_pitch": { "type": "string" }
+          }
+        },
+        "developer_track_record": {
+          "type": ["string", "null"],
+          "description": "One-paragraph developer credibility statement. Recommended."
+        }
+      }
+    },
+    "sub_development": {
+      "type": "object",
+      "description": "A sub-development within the master community (e.g. a specific tower, villa cluster, or phase). Structure of the research data section varies by development type. The aliases and prompt_data_overrides fields are consumed by community_data.py.",
+      "properties": {
+        "aliases": {
+          "type": "array",
+          "description": "Case-insensitive strings for matching listings to this specific sub-development. Most-specific alias wins.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prompt_data_overrides": {
+          "type": "object",
+          "description": "Fields that override or merge into the parent prompt_data when this sub-development is matched. Supports investment_overrides (merged into prompt_data.investment), sales_talking_points (replaces), and sub_community (added). The key 'community' is intentionally ignored — sub-community names go in 'sub_community'.",
+          "properties": {
+            "investment_overrides": {
+              "type": "object",
+              "description": "Merged into prompt_data.investment — individual keys are updated, not replaced."
+            },
+            "sales_talking_points": {
+              "type": "object",
+              "description": "Replaces the parent prompt_data sales_talking_points entirely."
+            },
+            "sub_community": {
+              "type": "string",
+              "description": "Display name for the sub-community, e.g. 'Palmiera', 'Tower A'."
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Provenance and quality tracking. Required on all new files. Existing files without metadata will generate a warning, not an error.",
+      "required": [
+        "schema_version",
+        "last_researched_at",
+        "research_confidence"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "description": "Schema version this file conforms to.",
+          "const": "1.0"
+        },
+        "last_researched_at": {
+          "type": "string",
+          "description": "ISO 8601 datetime when the data was last researched/compiled.",
+          "format": "date-time"
+        },
+        "last_audited_at": {
+          "type": ["string", "null"],
+          "description": "ISO 8601 datetime of last human audit. Null if never audited.",
+          "format": "date-time"
+        },
+        "research_confidence": {
+          "type": "number",
+          "description": "Overall confidence in the data quality, 0.0 (low) to 1.0 (high). Files below 0.5 should be flagged for re-research.",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "description": "URLs of primary sources used during research.",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "default": []
+        },
+        "audit_flags": {
+          "type": "array",
+          "description": "Issues found during the last audit. Empty array means clean audit.",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    }
+  }
+}

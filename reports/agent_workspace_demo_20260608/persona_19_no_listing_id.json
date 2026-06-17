@@ -1,0 +1,185 @@
+{
+  "idx": 19,
+  "slug": "no_listing_id",
+  "persona": "No Listing ID — inbound with empty listing context",
+  "phone": "+971501010019",
+  "listing_id": "",
+  "listing_facts": {
+    "property_name": "Unknown",
+    "beds": null,
+    "baths": null,
+    "sqft": null,
+    "plot_sqft": null,
+    "price_aed": null,
+    "property_type": null,
+    "status": null
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm interested in your properties",
+      "bot": "Hi there! Great to hear. To help me find the right property for you, could you tell me a bit more about what you're looking for?\n\n- What type of property interests you (villa, townhouse, apartment)?\n- How many bedrooms do you need?\n- What's your budget range?\n- Any preferred community or developer?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 19.3
+    },
+    {
+      "turn": 2,
+      "buyer": "I saw a video on Instagram about a property in Dubai Marina. Do you have anything there?",
+      "bot": "I don't have any active listings in Dubai Marina in our current portfolio.\n\nTo help you find the right property, could you tell me a bit more about what you're looking for:\n\n- What type of property interests you (villa, townhouse, apartment)?\n- How many bedrooms do you need?\n- What's your budget range?\n\nOnce I understand your criteria better, I can either find a match in what we represent or have our managing agent reach out with options that fit your needs.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 14.4
+    },
+    {
+      "turn": 3,
+      "buyer": "My friend told me about a villa in some the developer community. Can you remind me which ones you have?",
+      "bot": "I'd be happy to help you narrow this down. We represent several villas from different developers right now:\n\n- Mirage The Oasis by Emaar - 6-bed villa, AED 21,693,243\n- Palmiera by Emaar - 4-bed villa, AED 11,100,000\n- Sidra Villas I - 5-bed villa, AED 18,500,000\n\nDo you remember anything else about the one your friend mentioned, the location, number of bedrooms, or approximate price range?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 14.0
+    },
+    {
+      "turn": 4,
+      "buyer": "OK send me everything you have. I'll review and pick",
+      "bot": "Here are our current listings:\n\n- Mirage The Oasis - 6-bed villa, AED 21,693,243\n- Palmiera - 4-bed villa, AED 11,100,000\n- Anya Phase 2 By Emaar - 4-bed townhouse, AED 3,600,000\n- The Pinnacle at Sobha Central - 2-bed apt, AED 3,173,000\n- Shams Townhouses - 3-bed townhouse, AED 3,050,000\n- The Pinnacle at Sobha Central - 1-bed apt, AED 2,187,575\n- Sidra Villas I - 5-bed villa, AED 18,500,000\n- LIV Residence - 4-bed apt, AED 16,990,000\n- Address Harbour Point Tower 2 - 2-bed apt, AED 4,300,000\n- Jumeirah Gate Tower 1 - 1-bed apt, AED 2,800,000.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 11.7
+    },
+    {
+      "turn": 5,
+      "buyer": "Just give me your top 3 listings with prices",
+      "bot": "Here are 3 of our current listings, ordered by value (highest asking first):\n\n- Mirage The Oasis - 6-bed villa, AED 21,693,243\n- Palmiera - 4-bed villa, AED 11,100,000\n- Anya Phase 2 By Emaar - 4-bed townhouse, AED 3,600,000.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 9.7
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi there! Great to hear. To help me find the right property for you, could you tell me a bit more about what you're looking for?\n\n- What type of property interests you (villa, townhouse, apartment)?\n- How many bedrooms do you need?\n- What's your budget range?\n- Any preferred community or developer?\n"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "skipped: no threshold"
+    },
+    {
+      "check": "no_dubai_marina_fabrication_t2",
+      "pass": true,
+      "evidence": "I don't have any active listings in Dubai Marina in our current portfolio.\n\nTo help you find the right property, could you tell me a bit more about what you're looking for:\n\n- What type of property interests you (villa, townhouse, apartment)?\n- How many bedrooms do you need?\n- What's your budget ran"
+    },
+    {
+      "check": "honest_portfolio_t3",
+      "pass": false,
+      "evidence": "I'd be happy to help you narrow this down. We represent several villas from different developers right now:\n\n- Mirage The Oasis by Emaar - 6-bed villa, AED 21,693,243\n- Palmiera by Emaar - 4-bed villa, AED 11,100,000\n- Sidra Villas I - 5-bed villa, AED 18,500,000\n\nDo you remember anything else about"
+    },
+    {
+      "check": "top3_limit_honored_t5",
+      "pass": true,
+      "evidence": "Here are 3 of our current listings, ordered by value (highest asking first):\n\n- Mirage The Oasis - 6-bed villa, AED 21,693,243\n- Palmiera - 4-bed villa, AED 11,100,000\n- Anya Phase 2 By Emaar - 4-bed townhouse, AED 3,600,000."
+    }
+  ],
+  "any_escalation_triggered": false,
+  "escalation_turns": [],
+  "summary_auto": "No listing-id fallback — 0 esc.",
+  "issues_found": [
+    "honest_portfolio_t3"
+  ],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.4,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "No Listing ID — inbound with empty listing context",
+    "phone": "+971501010019",
+    "listing_id": "",
+    "thread_count": 0,
+    "question_count": 0,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 0.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {},
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

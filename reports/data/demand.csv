@@ -1,0 +1,348 @@
+query,english_gloss,language,intent,stage,demand,source,topic_cluster
+how to sell off-plan property in Dubai,how to sell off-plan property in Dubai,en,informational,Researching,3,SERP,Process & eligibility
+sell off-plan before handover Dubai,sell off-plan before handover Dubai,en,informational,Researching,3,SERP,Process & eligibility
+can you sell off-plan property in Dubai,can you sell off-plan property in Dubai,en,informational,Considering,3,Quora,Process & eligibility
+off-plan resale Dubai process,off-plan resale Dubai process,en,informational,Researching,3,SERP,Process & eligibility
+how to resell off-plan property Dubai,how to resell off-plan property Dubai,en,informational,Researching,3,SERP,Process & eligibility
+SPA assignment Dubai,SPA assignment Dubai,en,informational,Researching,3,PAA,SPA transfer
+assignment of contract Dubai property,assignment of contract Dubai property,en,informational,Researching,2,Publisher,Process & eligibility
+Oqood transfer Dubai,Oqood transfer Dubai,en,informational,Researching,3,SERP,Oqood & DLD mechanics
+Oqood vs title deed,Oqood vs title deed,en,informational,Considering,3,Publisher,Oqood & DLD mechanics
+NOC for selling off-plan Dubai,NOC for selling off-plan Dubai,en,informational,Researching,3,SERP,NOC procedures
+developer NOC fee Dubai,developer NOC fee Dubai,en,commercial-investigational,Researching,3,PAA,NOC procedures
+Emaar NOC fee off-plan,Emaar NOC fee off-plan,en,commercial-investigational,Researching,3,SERP,NOC procedures
+Emaar resale NOC percentage paid,Emaar resale NOC percentage paid,en,commercial-investigational,Researching,2,Publisher,NOC procedures
+Sobha NOC fee,Sobha NOC fee,en,commercial-investigational,Researching,2,Inferred,NOC procedures
+Damac NOC resale fee,Damac NOC resale fee,en,commercial-investigational,Researching,2,SERP,NOC procedures
+Nakheel NOC resale fee,Nakheel NOC resale fee,en,commercial-investigational,Researching,2,Publisher,NOC procedures
+Nakheel novation agreement,Nakheel novation agreement,en,informational,Researching,1,Publisher,Developer-specific rules
+Meraas NOC resale,Meraas NOC resale,en,commercial-investigational,Researching,1,Inferred,NOC procedures
+Azizi NOC resale,Azizi NOC resale,en,commercial-investigational,Researching,1,Inferred,NOC procedures
+Danube Properties NOC resale,Danube Properties NOC resale,en,commercial-investigational,Researching,1,Inferred,NOC procedures
+minimum percentage paid to resell off-plan Dubai,minimum percentage paid to resell off-plan Dubai,en,informational,Researching,3,PAA,Fees & net proceeds
+30% paid can I sell off-plan,30% paid can I sell off-plan,en,informational,Researching,2,Inferred,Fees & net proceeds
+40% paid sell Dubai off-plan,40% paid sell Dubai off-plan,en,informational,Researching,2,Inferred,Fees & net proceeds
+Dubai off-plan payment threshold for resale,Dubai off-plan payment threshold for resale,en,informational,Researching,2,Publisher,Fees & net proceeds
+how long to sell off-plan Dubai,how long to sell off-plan Dubai,en,informational,Frustrated,2,Publisher,Pricing & benchmarking
+off-plan not selling Dubai what to do,off-plan not selling Dubai what to do,en,informational,Frustrated,2,Inferred,Process & eligibility
+Dubai off-plan assignment fee calculator,Dubai off-plan assignment fee calculator,en,transactional,Ready,1,Empty SERP,Fees & net proceeds
+net proceeds Dubai off-plan sale,net proceeds Dubai off-plan sale,en,commercial-investigational,Ready,2,Empty SERP,Fees & net proceeds
+how much will I net selling off-plan Dubai,how much will I net selling off-plan Dubai,en,commercial-investigational,Ready,2,Empty SERP,Fees & net proceeds
+total cost to sell off-plan Dubai,total cost to sell off-plan Dubai,en,commercial-investigational,Researching,2,Publisher,Fees & net proceeds
+DLD transfer fee who pays buyer or seller,DLD transfer fee who pays buyer or seller,en,informational,Researching,3,PAA,Oqood & DLD mechanics
+4% DLD fee split seller buyer,4% DLD fee split seller buyer,en,informational,Researching,3,Publisher,Oqood & DLD mechanics
+DLD 4% waiver off-plan,DLD 4% waiver off-plan,en,informational,Researching,2,Publisher,Oqood & DLD mechanics
+Form F Dubai property sale,Form F Dubai property sale,en,informational,Ready,3,SERP,"Documents & forms (Form F/A, Trakheesi)"
+Form A Dubai seller marketing agreement,Form A Dubai seller marketing agreement,en,informational,Ready,2,Publisher,"Documents & forms (Form F/A, Trakheesi)"
+Trakheesi permit for sellers,Trakheesi permit for sellers,en,informational,Ready,2,Publisher,"Documents & forms (Form F/A, Trakheesi)"
+Trakheesi QR code listing,Trakheesi QR code listing,en,informational,Ready,2,Inferred,"Documents & forms (Form F/A, Trakheesi)"
+how to list my property on Bayut myself,how to list my property on Bayut myself,en,transactional,Ready,2,Publisher,Marketplace / listing channels
+how to list on Property Finder as owner,how to list on Property Finder as owner,en,transactional,Ready,2,Publisher,Marketplace / listing channels
+sell property Dubai without agent,sell property Dubai without agent,en,commercial-investigational,Ready,2,Inferred,Commission — 0.15% vs 2%
+FSBO Dubai for sale by owner,FSBO Dubai for sale by owner,en,commercial-investigational,Ready,1,Empty SERP,Marketplace / listing channels
+Dubai real estate commission 2% who pays,Dubai real estate commission 2% who pays,en,informational,Researching,3,SERP,Commission — 0.15% vs 2%
+seller commission Dubai real estate,seller commission Dubai real estate,en,informational,Researching,3,SERP,Commission — 0.15% vs 2%
+negotiate real estate commission Dubai,negotiate real estate commission Dubai,en,commercial-investigational,Ready,2,Publisher,Commission — 0.15% vs 2%
+low commission real estate broker Dubai,low commission real estate broker Dubai,en,commercial-investigational,Ready,2,Thin SERP,Commission — 0.15% vs 2%
+flat fee real estate broker Dubai,flat fee real estate broker Dubai,en,commercial-investigational,Ready,1,Empty SERP,Commission — 0.15% vs 2%
+how much commission on AED 2M Dubai,how much commission on AED 2M Dubai,en,commercial-investigational,Researching,2,Empty SERP,Commission — 0.15% vs 2%
+VAT on broker commission Dubai,VAT on broker commission Dubai,en,informational,Researching,2,Publisher,Commission — 0.15% vs 2%
+capital gains tax Dubai property,capital gains tax Dubai property,en,informational,Researching,3,SERP,Tax — home-country residual
+capital gains tax Dubai non-resident seller,capital gains tax Dubai non-resident seller,en,informational,Researching,3,SERP,Tax — home-country residual
+do I pay tax selling Dubai property UK,do I pay tax selling Dubai property UK,en,informational,Researching,2,Inferred,Tax — home-country residual
+US tax selling Dubai property expat,US tax selling Dubai property expat,en,informational,Researching,2,Inferred,Tax — home-country residual
+Indian resident selling Dubai property tax,Indian resident selling Dubai property tax,en,informational,Researching,2,Inferred,Tax — home-country residual
+GCC national selling Dubai property,GCC national selling Dubai property,en,informational,Researching,1,Empty SERP,Tax — home-country residual
+power of attorney sell Dubai property remotely,power of attorney sell Dubai property remotely,en,informational,Researching,3,SERP,Remote selling / POA
+sell Dubai property without coming to Dubai,sell Dubai property without coming to Dubai,en,informational,Researching,3,Publisher,Remote selling / POA
+POA notarise Dubai from abroad,POA notarise Dubai from abroad,en,informational,Researching,2,Publisher,Remote selling / POA
+remote seller Dubai property Botim video,remote seller Dubai property Botim video,en,informational,Researching,1,Publisher,Remote selling / POA
+UK notarise POA Dubai property,UK notarise POA Dubai property,en,informational,Researching,1,Inferred,Remote selling / POA
+India attestation POA Dubai property,India attestation POA Dubai property,en,informational,Researching,1,Inferred,Remote selling / POA
+UAE MOFA attestation POA seller,UAE MOFA attestation POA seller,en,informational,Researching,1,Publisher,Remote selling / POA
+UAE bank account required to sell property,UAE bank account required to sell property,en,informational,Researching,2,Publisher,Banking / getting paid
+sell Dubai off-plan at a loss,sell Dubai off-plan at a loss,en,informational,Frustrated,2,Publisher,Payment plan arrears / distress
+off-plan Dubai losing money exit,off-plan Dubai losing money exit,en,informational,Frustrated,2,Inferred,Tax — home-country residual
+payment plan takeover by buyer Dubai,payment plan takeover by buyer Dubai,en,informational,Researching,2,Publisher,Payment plan arrears / distress
+novation agreement Dubai off-plan,novation agreement Dubai off-plan,en,informational,Researching,1,Thin SERP,SPA transfer
+off-plan selling best time before handover,off-plan selling best time before handover,en,informational,Researching,2,Publisher,Process & eligibility
+should I sell off-plan or wait for handover,should I sell off-plan or wait for handover,en,commercial-investigational,Considering,2,Inferred,Process & eligibility
+sell off-plan vs hold Dubai,sell off-plan vs hold Dubai,en,commercial-investigational,Considering,2,Inferred,Process & eligibility
+flipping off-plan Dubai 2026,flipping off-plan Dubai 2026,en,commercial-investigational,Considering,2,SERP,Market context / oversupply
+off-plan oversupply Dubai 2026 sell now,off-plan oversupply Dubai 2026 sell now,en,informational,Considering,2,SERP,Market context / oversupply
+JVC off-plan oversupply sell,JVC off-plan oversupply sell,en,informational,Frustrated,1,Inferred,Market context / oversupply
+Business Bay off-plan resale 2026,Business Bay off-plan resale 2026,en,informational,Researching,1,Inferred,Market context / oversupply
+Azizi Venice resale,Azizi Venice resale,en,commercial-investigational,Researching,1,Inferred,Developer-specific rules
+off-plan Dubai sell mortgaged property,off-plan Dubai sell mortgaged property,en,informational,Researching,2,Publisher,Banking / getting paid
+bank NOC off-plan sale Dubai,bank NOC off-plan sale Dubai,en,informational,Researching,2,Publisher,NOC procedures
+liability letter Dubai property sale,liability letter Dubai property sale,en,informational,Ready,1,Publisher,Banking / getting paid
+cancel off-plan Dubai refund,cancel off-plan Dubai refund,en,informational,Frustrated,3,SERP,Payment plan arrears / distress
+RERA cancel off-plan contract seller,RERA cancel off-plan contract seller,en,informational,Frustrated,2,Publisher,Payment plan arrears / distress
+can developer block my resale Dubai,can developer block my resale Dubai,en,informational,Frustrated,2,Inferred,Payment plan arrears / distress
+developer delay handover seller rights,developer delay handover seller rights,en,informational,Frustrated,2,Publisher,Payment plan arrears / distress
+RERA seller complaint Dubai,RERA seller complaint Dubai,en,informational,Frustrated,1,Inferred,Regulatory / RERA
+how to choose broker to sell off-plan Dubai,how to choose broker to sell off-plan Dubai,en,commercial-investigational,Researching,2,Publisher,Process & eligibility
+broker red flags Dubai selling,broker red flags Dubai selling,en,informational,Researching,2,Publisher,Process & eligibility
+verified broker check Dubai REST,verified broker check Dubai REST,en,informational,Researching,2,Publisher,Oqood & DLD mechanics
+exclusive vs open listing Dubai,exclusive vs open listing Dubai,en,commercial-investigational,Ready,1,Publisher,Marketplace / listing channels
+how to price my off-plan for sale Dubai,how to price my off-plan for sale Dubai,en,informational,Ready,2,Inferred,Pricing & benchmarking
+off-plan resale price benchmark Dubai,off-plan resale price benchmark Dubai,en,informational,Ready,2,Inferred,Pricing & benchmarking
+DLD price per sqft index off-plan,DLD price per sqft index off-plan,en,informational,Ready,1,Inferred,Oqood & DLD mechanics
+Dubai REST app value estimate off-plan,Dubai REST app value estimate off-plan,en,informational,Researching,1,Publisher,Oqood & DLD mechanics
+sell Dubai off-plan fast cash offer,sell Dubai off-plan fast cash offer,en,transactional,Frustrated,2,SERP,Marketplace / listing channels
+iBuyer Dubai property,iBuyer Dubai property,en,commercial-investigational,Frustrated,1,Empty SERP,Marketplace / listing channels
+cash buyer off-plan Dubai,cash buyer off-plan Dubai,en,transactional,Frustrated,2,SERP,Marketplace / listing channels
+Dubai off-plan listing marketplace,Dubai off-plan listing marketplace,en,commercial-investigational,Ready,1,Empty SERP,Marketplace / listing channels
+off-plan resale platform Dubai,off-plan resale platform Dubai,en,commercial-investigational,Ready,1,Empty SERP,Marketplace / listing channels
+sell off-plan online Dubai,sell off-plan online Dubai,en,commercial-investigational,Ready,1,Empty SERP,Marketplace / listing channels
+list off-plan property free Dubai,list off-plan property free Dubai,en,commercial-investigational,Ready,1,Empty SERP,Marketplace / listing channels
+Dubai off-plan seller marketplace AI,Dubai off-plan seller marketplace AI,en,commercial-investigational,Ready,1,Empty SERP,Marketplace / listing channels
+how to sell off-plan Dubai step by step 2026,how to sell off-plan Dubai step by step 2026,en,informational,Researching,3,Publisher,Market context / oversupply
+off-plan resale checklist Dubai,off-plan resale checklist Dubai,en,informational,Ready,2,Publisher,"Documents & forms (Form F/A, Trakheesi)"
+documents to sell off-plan Dubai,documents to sell off-plan Dubai,en,informational,Ready,2,Publisher,"Documents & forms (Form F/A, Trakheesi)"
+passport copy Form A signature match,passport copy Form A signature match,en,informational,Ready,1,Publisher,"Documents & forms (Form F/A, Trakheesi)"
+how much does it cost to sell off-plan Dubai,how much does it cost to sell off-plan Dubai,en,commercial-investigational,Researching,3,SERP,Fees & net proceeds
+developer assignment fee schedule Dubai,developer assignment fee schedule Dubai,en,commercial-investigational,Researching,2,Publisher,Process & eligibility
+2% vs 3% commission split off-plan Dubai,2% vs 3% commission split off-plan Dubai,en,commercial-investigational,Researching,1,Empty SERP,Commission — 0.15% vs 2%
+seller-side agent vs buyer-side Dubai,seller-side agent vs buyer-side Dubai,en,informational,Researching,1,Inferred,Process & eligibility
+sell Dubai off-plan to new buyer different nationality,sell Dubai off-plan to new buyer different nationality,en,informational,Researching,1,Inferred,Process & eligibility
+GCC buyer DLD fee discount,GCC buyer DLD fee discount,en,informational,Researching,1,Inferred,Oqood & DLD mechanics
+first-time seller off-plan Dubai guide,first-time seller off-plan Dubai guide,en,informational,Researching,2,Publisher,Process & eligibility
+exit Dubai off-plan 2 years before handover,exit Dubai off-plan 2 years before handover,en,informational,Considering,2,Inferred,Process & eligibility
+sell off-plan during construction Dubai,sell off-plan during construction Dubai,en,informational,Researching,2,SERP,Process & eligibility
+oversupply 2026 sell now or wait,oversupply 2026 sell now or wait,en,commercial-investigational,Considering,2,SERP,Market context / oversupply
+JVC oversupply 2026 sell off-plan,JVC oversupply 2026 sell off-plan,en,commercial-investigational,Frustrated,1,Inferred,Market context / oversupply
+Business Bay oversupply seller,Business Bay oversupply seller,en,commercial-investigational,Frustrated,1,Inferred,Market context / oversupply
+Dubai South off-plan sell 2026,Dubai South off-plan sell 2026,en,commercial-investigational,Researching,1,Inferred,Market context / oversupply
+off-plan Dubai snag period seller,off-plan Dubai snag period seller,en,informational,Researching,1,Publisher,Market context / oversupply
+DLD Oqood transfer trustee office,DLD Oqood transfer trustee office,en,informational,Ready,2,Publisher,Oqood & DLD mechanics
+registration trustee DLD appointment,registration trustee DLD appointment,en,informational,Ready,2,Publisher,Oqood & DLD mechanics
+Dubai off-plan resale e-contract,Dubai off-plan resale e-contract,en,informational,Ready,1,Publisher,"Documents & forms (Form F/A, Trakheesi)"
+off-plan broker exclusivity agreement,off-plan broker exclusivity agreement,en,commercial-investigational,Ready,1,Inferred,Process & eligibility
+sell off-plan Dubai WhatsApp broker,sell off-plan Dubai WhatsApp broker,en,commercial-investigational,Ready,1,Inferred,Marketplace / listing channels
+بيع عقار على الخارطة قبل التسليم,Selling off-plan before handover,ar,commercial-investigational,Consideration,3,bayut-mybayut-ar,Process & eligibility
+إعادة بيع عقار على المخطط,Resale of off-plan property,ar,commercial-investigational,Consideration,3,bayut+emaratalyoum+luxurysignature,Process & eligibility
+كيفية بيع عقار على الخارطة دبي,How to sell off-plan Dubai,ar,informational,Consideration,3,dxbproperties+bayut,Process & eligibility
+بيع عقار على الخارطة دبي خطوات,Selling off-plan Dubai steps,ar,informational,Consideration,3,dxbproperties,Process & eligibility
+شهادة عدم ممانعة إعمار,Emaar NOC,ar,commercial-investigational,Decision,2,3rd-party-only,NOC procedures
+شهادة عدم ممانعة داماك,Damac NOC,ar,informational,Decision,1,none-specific,NOC procedures
+شهادة عدم ممانعة صوبها,Sobha NOC,ar,informational,Decision,1,empty,NOC procedures
+شهادة عدم ممانعة نخيل,Nakheel NOC,ar,informational,Decision,1,empty,NOC procedures
+ما هي شهادة عدم الممانعة NOC,What is a NOC,ar,informational,Awareness,3,shuraa+amercenter+dari,NOC procedures
+رسوم شهادة عدم الممانعة مطور,NOC fees from developer,ar,commercial-investigational,Decision,2,alaainvest+bayut,NOC procedures
+عمولة الوسيط العقاري في دبي,Broker commission Dubai,ar,commercial-investigational,Consideration,3,bayut+mada+masdarak+arabmls,Commission — 0.15% vs 2%
+كم نسبة عمولة الوكيل العقاري دبي,What percent broker commission,ar,informational,Consideration,3,saudigoall+excel+mada,Commission — 0.15% vs 2%
+من يدفع عمولة العقار دبي,Who pays commission,ar,informational,Awareness,2,excelproperties+mada,Commission — 0.15% vs 2%
+عمولة 2% بيع عقار,2% sale commission,ar,informational,Awareness,2,bayut,Commission — 0.15% vs 2%
+بيع عقار بدون وسيط دبي,Sell without broker Dubai,ar,transactional,Decision,2,bayut-pros-cons,Commission — 0.15% vs 2%
+بيع عقار من المالك مباشرة دبي,Sell direct from owner Dubai,ar,transactional,Decision,2,bayut-filter,Commission — 0.15% vs 2%
+عقد البيع والشراء SPA دبي,SPA Dubai,ar,informational,Consideration,3,tarafholding+fandc+dubizzle,SPA transfer
+التراجع عن اتفاقية البيع والشراء,Rescinding SPA,ar,informational,Decision,2,atblegal,SPA transfer
+تسجيل عقد بيع مبدئي دبي,Initial SPA registration,ar,informational,Decision,2,DLD+bayut,SPA transfer
+تسجيل عقد بيع على المخطط 90 يوم,90-day Oqood registration,ar,informational,Decision,2,bayut+dlp,Oqood & DLD mechanics
+أوقود دبي,Oqood Dubai,ar,informational,Awareness,2,westgate+DLD,Oqood & DLD mechanics
+تسجيل البيع المبدئي دائرة الأراضي,Initial registration DLD,ar,informational,Decision,2,DLD,Oqood & DLD mechanics
+رسوم تحويل ملكية العقار دبي 4%,4% transfer fee Dubai,ar,informational,Decision,3,dxbproperties+westgate+taraf+bayut,Oqood & DLD mechanics
+4% DLD من يدفع البائع المشتري,Who pays DLD 4%,ar,informational,Decision,3,almardinli+bayut,Oqood & DLD mechanics
+رسوم دائرة الأراضي والأملاك 2025,DLD fees 2025,ar,informational,Decision,3,tarafholding+westgate,Oqood & DLD mechanics
+رسوم دائرة الأراضي والأملاك 2026,DLD fees 2026,ar,informational,Decision,2,westgate-only,Oqood & DLD mechanics
+خطة دفع عقار على الخارطة دبي,Off-plan payment plan,ar,commercial-investigational,Awareness,3,excel+dxbproperties,Payment plan arrears / distress
+خطة 1% شهرياً دبي,1% monthly plan,ar,commercial-investigational,Consideration,3,baytealjameel-portal,Payment plan arrears / distress
+خطة دفع ما بعد التسليم,Post-handover plan,ar,commercial-investigational,Consideration,3,developer-sites,Payment plan arrears / distress
+متأخرات خطة الدفع دبي,Payment plan arrears,ar,informational,Decision,2,excel+offplan-dubai,Payment plan arrears / distress
+30% مدفوعة شرط البيع,30% paid threshold,ar,informational,Decision,3,dxbproperties+bayut+offplan+ghafwoods,Fees & net proceeds
+ضريبة بيع العقار دبي,Tax on property sale,ar,informational,Decision,3,apil+propertyfinder-guide,Tax — home-country residual
+ضريبة أرباح رأسمالية دبي,Capital gains tax Dubai,ar,informational,Decision,3,apil+jurists,Tax — home-country residual
+ضريبة العقارات المقيم غير المقيم,Resident vs non-resident tax,ar,informational,Awareness,2,apil-fragments,Tax — home-country residual
+ضريبة الشركات 9% عقار دبي,9% corporate tax property,ar,informational,Decision,2,u.ae+wafeq+alkhaleej,Tax — home-country residual
+ضريبة القيمة المضافة بيع سكني,VAT residential sale,ar,informational,Decision,2,bayut-vat,Tax — home-country residual
+تقييم عقار دبي DLD,DLD valuation,ar,transactional,Decision,2,DLD+dxbproperties,Oqood & DLD mechanics
+التقييم الذكي دائرة الأراضي,DLD Smart Valuation,ar,informational,Decision,1,dxbproperties-only,Oqood & DLD mechanics
+قانون التملك الحر دبي للأجانب,Freehold law foreigners,ar,informational,Awareness,3,bayut+damac+imtilak+shuraa,Regulatory / RERA
+مناطق التملك الحر دبي,Dubai freehold areas,ar,informational,Awareness,3,damac+bayut+selecthouse,Regulatory / RERA
+توكيل بيع عقار دبي,PoA to sell property,ar,informational,Decision,3,poa.ae+privatenotary+barrister+jurists,Remote selling / POA
+توكيل بيع عقار من الخارج,PoA from abroad,ar,transactional,Decision,3,ilaw+poa.ae,Remote selling / POA
+بيع عقار من الخارج دبي,Sell Dubai property from abroad,ar,informational,Decision,3,poa.ae,Remote selling / POA
+بيع عن بعد عقار الإمارات,Remote property sale UAE,ar,informational,Decision,2,thin,Remote selling / POA
+تسجيل وسيط عقاري دبي,Register as broker,ar,informational,Awareness,3,DLD+bayut+mada,Regulatory / RERA
+بطاقة ريرا عقاري دبي,RERA broker card,ar,informational,Awareness,3,DLD+thinkprop+bayut,Regulatory / RERA
+نظام تراخيصي دبي,Trakheesi system,ar,informational,Awareness,3,bayut+damac+dubizzle+DLD,"Documents & forms (Form F/A, Trakheesi)"
+تصريح إعلان عقار دبي,Ad permit property,ar,informational,Decision,3,DLD+bayut,"Documents & forms (Form F/A, Trakheesi)"
+ترخيص تسويق عقار دبي,Marketing permit,ar,informational,Decision,2,DLD,"Documents & forms (Form F/A, Trakheesi)"
+ترخيص Form A B دبي,Form A/B Dubai,ar,informational,Decision,1,english-only,"Documents & forms (Form F/A, Trakheesi)"
+حساب الضمان العقاري دبي,Escrow account Dubai,ar,informational,Awareness,2,bayut+lawingulf+dib+alkhaleej,Banking / getting paid
+قانون 8 لسنة 2007 حساب ضمان,Law 8/2007 escrow,ar,informational,Decision,1,dlp.dubai.gov.ae,Banking / getting paid
+قانون 13 لسنة 2008 السجل العقاري,Law 13/2008 real estate register,ar,informational,Decision,1,dlp.dubai.gov.ae,Regulatory / RERA
+مخاطر شراء عقار على الخارطة,Off-plan purchase risks,ar,informational,Consideration,3,bayut+excel+emaratalyoum,Process & eligibility
+تأخر تسليم العقار دبي,Property handover delay,ar,informational,Decision,2,hhslawyers,Payment plan arrears / distress
+إلغاء مشروع عقاري دبي استرداد,Project cancellation refund,ar,informational,Decision,2,fragmented-legal,Payment plan arrears / distress
+بيع شقة قبل الاستلام ربح دبي,Sell pre-handover for profit,ar,commercial-investigational,Consideration,3,edgerealty+emaratalyoum+damac,Process & eligibility
+فليب عقار دبي,Property flipping,ar,commercial-investigational,Consideration,2,tekce+edgerealty,Process & eligibility
+الإقامة الذهبية عقار 2 مليون,Golden Visa 2M property,ar,transactional,Decision,3,DLD+moet+excel+wasl+gludo,Regulatory / RERA
+الإقامة الذهبية مستثمر عقاري,Golden Visa real estate investor,ar,informational,Decision,3,many,Regulatory / RERA
+دبي الآن بيع عقار تطبيق,Dubai Now app property,ar,transactional,Decision,2,DLD,Regulatory / RERA
+دبي ريست تطبيق عقار,Dubai REST app,ar,informational,Awareness,3,DLD,Oqood & DLD mechanics
+سوق دبي العقاري الإلكتروني,Dubai e-auction market,ar,informational,Decision,1,DLD-mention,Process & eligibility
+الترميز العقاري دبي,Tokenization Dubai,ar,commercial-investigational,Awareness,2,DLD+cryptonews+prypco,Developer-specific rules
+بريبكو منت دبي,Prypco Mint,ar,informational,Awareness,2,DLD-press,Developer-specific rules
+شقق للبيع في دبي من المالك,Apartments for sale direct owner,ar,transactional,Decision,2,bayut-filter,Process & eligibility
+عقار دبي سعودي كويتي قطري,Dubai property Saudi/Kuwaiti/Qatari,ar,commercial-investigational,Awareness,2,haraj+alarabiya,Process & eligibility
+استثمار عقاري دبي 2026,Investment Dubai 2026,ar,commercial-investigational,Awareness,3,albayan+emaratalyoum+sky-arabia,Market context / oversupply
+استثمار خليجي عقار دبي 2026,GCC investor Dubai 2026,ar,informational,Awareness,2,albayan+cnn-business-arabic,Market context / oversupply
+مبيعات عقارات دبي ربع 2026,Dubai property sales Q1 2026,ar,informational,Awareness,3,argaam+alkhaleej+albayan+asharq,Market context / oversupply
+عقار دبي بدون عمولة,Dubai property no commission,ar,transactional,Decision,1,empty,Commission — 0.15% vs 2%
+كيف أبيع شقتي في دبي بدون سمسار,How to sell my Dubai flat without broker,ar,transactional,Decision,1,bayut-fragment,Commission — 0.15% vs 2%
+شلون أبيع شقتي دبي,(Khaleeji) how do I sell my Dubai flat,ar,transactional,Decision,1,zero-seller-content,Process & eligibility
+وش رأيكم الاستثمار العقاري دبي,(Khaleeji) thoughts on Dubai property,ar,informational,Awareness,1,corporate-only,Process & eligibility
+تجربتي بيع شقة دبي,My experience selling Dubai flat,ar,informational,Awareness,1,no-first-person,Process & eligibility
+продажа недвижимости в Дубае до сдачи,selling Dubai property before handover,ru,transactional,MOFU,3,vc.ru/legal/2848220 + dxbproperties.ae/ru,Process & eligibility
+переуступка прав в Дубае,assignment of rights in Dubai,ru,transactional,MOFU,3,vc.ru/legal/2848220,Process & eligibility
+как продать off-plan в Дубае,how to sell off-plan in Dubai,ru,transactional,MOFU,3,tranio.com + prian.ru,Process & eligibility
+продать квартиру Дубай до получения ключей,sell Dubai apt before keys,ru,transactional,MOFU,3,vc.ru/money/1247873,Process & eligibility
+выйти из сделки Дубай недвижимость,exit Dubai property deal,ru,transactional,BOFU,3,vc.ru/legal/2848220,Process & eligibility
+NOC застройщика Дубай,developer NOC Dubai,ru,transactional,MOFU,3,housearch.com/ru,NOC procedures
+NOC Emaar продажа,Emaar NOC for sale,ru,transactional,BOFU,2,properties.emaar.com + forums,NOC procedures
+NOC Damac переуступка,Damac NOC assignment,ru,transactional,BOFU,2,inferred,NOC procedures
+NOC Sobha цена,Sobha NOC cost,ru,transactional,BOFU,2,inferred,NOC procedures
+Oqood сертификат Дубай,Oqood certificate Dubai,ru,informational,MOFU,2,metropolitan.realestate + lexestates.ae,Oqood & DLD mechanics
+DLD Дубай оформление сделки,DLD deal registration,ru,informational,MOFU,2,vc.ru/legal,Oqood & DLD mechanics
+Form F Дубай что это,What is Form F Dubai,ru,transactional,MOFU,3,vc.ru/legal/2854871,"Documents & forms (Form F/A, Trakheesi)"
+SPA договор Дубай off-plan,SPA contract Dubai off-plan,ru,informational,MOFU,3,vc.ru/legal/2856748,SPA transfer
+комиссия риэлтора Дубай продажа,Dubai broker commission for sale,ru,transactional,MOFU,3,prian.ru,Commission — 0.15% vs 2%
+2 процента комиссия агенту Дубай,2% agent commission Dubai,ru,transactional,BOFU,3,prian.ru + axcapital.ae/ru,Commission — 0.15% vs 2%
+НДС на комиссию агента ОАЭ,VAT on agent commission UAE,ru,transactional,BOFU,2,springfieldproperties.ae,Commission — 0.15% vs 2%
+налог на продажу недвижимости в Дубае,Dubai property sale tax,ru,transactional,MOFU,3,tranio.com + goldenbee,Tax — home-country residual
+налог на продажу для нерезидента ОАЭ,non-resident sale tax UAE,ru,transactional,MOFU,3,uae-consulting.com,Tax — home-country residual
+4% DLD transfer fee кто платит,who pays 4% DLD transfer,ru,informational,BOFU,3,goldenbee + uae-consulting,Oqood & DLD mechanics
+налог при продаже Дубай россиянам,tax when Russians sell Dubai,ru,transactional,BOFU,3,mnp.ru + vc.ru,Tax — home-country residual
+3-НДФЛ Дубай продажа квартиры,3-NDFL Dubai apt sale,ru,transactional,BOFU,3,nalog-nalog.ru + consultant.ru,Tax — home-country residual
+30% НДФЛ нерезидент продажа,30% tax non-resident sale,ru,transactional,BOFU,3,vladis.ru,Tax — home-country residual
+CRS Россия ОАЭ недвижимость,CRS RF UAE property,ru,transactional,TOFU,2,irinauae.law + rbc,Tax — home-country residual
+автоматический обмен ФНС ОАЭ,auto exchange FNS UAE,ru,transactional,TOFU,2,jurdefinans.com + rbc,Tax — home-country residual
+ФНС видит счет в ОАЭ,does FNS see UAE account,ru,transactional,BOFU,2,irinauae.law,Tax — home-country residual
+соглашение об избежании двойного налогообложения ОАЭ Россия,RF-UAE DTT,ru,transactional,MOFU,2,relocate-uae.com,Tax — home-country residual
+доверенность на продажу Дубай из России,POA to sell from Russia,ru,transactional,BOFU,3,poa.ae + dubai.mid.ru,Remote selling / POA
+как сделать доверенность в Дубае онлайн,online POA Dubai,ru,transactional,BOFU,2,uae-consulting.com,Remote selling / POA
+eNotary Дубай электронный нотариус,eNotary Dubai,ru,transactional,BOFU,2,uae-consulting.com,Remote selling / POA
+продать недвижимость в Дубае дистанционно,sell Dubai remotely,ru,transactional,MOFU,3,forbes.ru + barnes-moscow,Remote selling / POA
+продать квартиру Дубай из России,sell Dubai apt from Russia,ru,transactional,MOFU,3,forbes.ru + vc.ru,Remote selling / POA
+открыть счет в банке ОАЭ россиянину,open UAE bank account for Russian,ru,transactional,BOFU,3,vc.ru/invest/2303504 + migron.ae,Banking / getting paid
+получить деньги от продажи Дубай россиянину,receive proceeds Russian,ru,transactional,BOFU,3,inferred + adjacent,Banking / getting paid
+счет продавца ОАЭ 2025 правило,UAE seller account 2025 rule,ru,transactional,BOFU,2,goldenbee.estate,Banking / getting paid
+минимум 30% оплачено для переуступки,30% min paid for assignment,ru,transactional,BOFU,3,vc.ru + dxbproperties,Fees & net proceeds
+Emaar 40% оплата для перепродажи,Emaar 40% for resale,ru,transactional,BOFU,2,vc.ru,Developer-specific rules
+сколько стоит продать квартиру Дубай,how much to sell Dubai apt,ru,transactional,MOFU,3,goldenbee + tranio,Fees & net proceeds
+сборы при продаже недвижимости Дубай,Dubai sale fees,ru,transactional,MOFU,3,goldenbee.estate,Fees & net proceeds
+расторжение договора с застройщиком Дубай,rescind contract with developer,ru,transactional,BOFU,2,blog.housebook + emirates.estate,Payment plan arrears / distress
+если не могу платить рассрочку Дубай,can't pay installments Dubai,ru,transactional,BOFU,2,emirates.estate + westgatedubai,Payment plan arrears / distress
+что делать если застройщик не сдает объект,what if developer doesn't deliver,ru,transactional,MOFU,2,blog.housebook,Payment plan arrears / distress
+продажа с убытком Дубай off-plan,sale at loss Dubai off-plan,ru,transactional,BOFU,3,forbes.ru + vc.ru,Tax — home-country residual
+россияне теряют деньги Дубай недвижимость,Russians losing money Dubai,ru,transactional,TOFU,3,forbes.ru + smart-lab,Tax — home-country residual
+рынок Дубай падение 2026,Dubai market fall 2026,ru,transactional,TOFU,2,kommersant + ruinformer,Market context / oversupply
+эскроу счет Дубай как работает,escrow Dubai how it works,ru,informational,MOFU,2,westgatedubai.com/ru,Banking / getting paid
+вторичка vs off-plan Дубай,secondary vs off-plan Dubai,ru,transactional,TOFU,2,vc.ru/invest/2867436,Process & eligibility
+как оценить свою квартиру в Дубае,how to price my apt Dubai,ru,transactional,MOFU,2,goldenbee + vc.ru,Pricing & benchmarking
+калькулятор стоимости недвижимости Дубай,Dubai property value calc,ru,transactional,BOFU,2,goldenbee price index,Fees & net proceeds
+продать квартиру Дубай без риэлтора,sell Dubai apt without agent,ru,transactional,MOFU,2,vc.ru + dvitex (RF context),Commission — 0.15% vs 2%
+как быстро продать квартиру Дубай,how to sell Dubai apt fast,ru,transactional,MOFU,2,goldenbee + axcapital,Process & eligibility
+сколько времени продажа квартиры Дубай,how long to sell Dubai apt,ru,transactional,MOFU,2,goldenbee.estate,Pricing & benchmarking
+документы для продажи Дубай квартиры,docs to sell Dubai apt,ru,transactional,MOFU,3,vc.ru + housedubai,"Documents & forms (Form F/A, Trakheesi)"
+MOU договор Дубай недвижимость,MOU Dubai property,ru,transactional,MOFU,2,vc.ru/legal,"Documents & forms (Form F/A, Trakheesi)"
+налоговый резидент РФ 183 дня продажа,RF tax resident 183 days sale,ru,transactional,BOFU,3,ndflka.ru + nalog-nalog,Tax — home-country residual
+сертификат налогового резидентства ОАЭ,UAE tax residency cert,ru,transactional,BOFU,2,open-offshore + astons,Tax — home-country residual
+9% корпоративный налог ОАЭ продажа,9% corp tax UAE sale,ru,transactional,TOFU,2,uae-consulting.com,Tax — home-country residual
+KYC источник средств Дубай,KYC source of funds Dubai,ru,transactional,BOFU,2,inferred,Banking / getting paid
+санкции Россия недвижимость ОАЭ,sanctions RF UAE property,ru,transactional,TOFU,2,cnbc + vc.ru,Tax — home-country residual
+как вывести деньги из ОАЭ в Россию,move money UAE to RF,ru,transactional,BOFU,3,inferred + adjacent,Banking / getting paid
+купить-продать недвижимость Дубай 2025 статистика,buy-sell stats 2025,ru,transactional,TOFU,2,prian.ru + vc.ru,Market context / oversupply
+застройщики Дубая список надежные,reliable Dubai developers list,ru,informational,TOFU,2,vc.ru + goldenbee,Pricing & benchmarking
+какие районы Дубая быстро продаются,fast-selling Dubai districts,ru,transactional,MOFU,2,inferred,Process & eligibility
+Дубай Marina продать квартиру,sell Dubai Marina apt,ru,transactional,BOFU,2,prian.ru listings,Process & eligibility
+Business Bay переуступка,Business Bay assignment,ru,transactional,BOFU,2,inferred,Process & eligibility
+JVC Damac Lagoons продать,JVC Damac Lagoons sell,ru,transactional,BOFU,2,inferred,Developer-specific rules
+Creek Harbour Emaar перепродажа,Creek Harbour Emaar resale,ru,transactional,BOFU,2,inferred,Developer-specific rules
+Sobha Hartland продать до сдачи,Sobha Hartland sell before,ru,transactional,BOFU,2,vc.ru/invest/2864024,Developer-specific rules
+Дубай инвестиции 2026 убытки обзор,Dubai 2026 loss review,ru,transactional,TOFU,3,forbes.ru + ruinformer,Market context / oversupply
+риэлтор Дубай русскоязычный,Russian-speaking agent Dubai,ru,transactional,MOFU,3,propertyfinder.ae,Marketplace / listing channels
+брокерская лицензия RERA проверить,check RERA broker license,ru,transactional,BOFU,2,inferred,Regulatory / RERA
+Trakheesi permit объявление Дубай,Trakheesi ad permit,ru,transactional,MOFU,1,inferred,"Documents & forms (Form F/A, Trakheesi)"
+как застройщики разводят россиян Дубай,how developers trick Russians,ru,transactional,TOFU,3,YouTube (~93k+ views class),Process & eligibility
+форма Ф продажа Дубай,Form F sale Dubai,ru,transactional,BOFU,3,vc.ru/legal/2854871,"Documents & forms (Form F/A, Trakheesi)"
+продажа квартиры Дубай в ипотеке,sell Dubai apt with mortgage,ru,transactional,BOFU,2,inferred,Banking / getting paid
+mortgage release Дубай продажа,mortgage release Dubai sale,ru,transactional,BOFU,2,inferred,Banking / getting paid
+迪拜期房转售,Dubai off-plan resale,zh,commercial-investigational,Mid,2,obs,Process & eligibility
+迪拜楼花转让,Dubai off-plan transfer (Cantonese term),zh,commercial-investigational,Mid-High,2,inf,Process & eligibility
+迪拜房产 NOC,Dubai property NOC,zh,transactional,High,2,obs,NOC procedures
+迪拜房产 过户流程,Dubai property transfer process,zh,transactional,High,2,obs,Process & eligibility
+迪拜 DLD 土地局,Dubai Land Department,zh,informational,Any,2,obs,Oqood & DLD mechanics
+迪拜 Oqood 阿库德,Dubai Oqood certificate,zh,informational,Mid,2,obs,Oqood & DLD mechanics
+迪拜期房 出售,Sell Dubai off-plan,zh,transactional,High,1,inf,Process & eligibility
+迪拜房产 中介费,Dubai broker commission,zh,informational,Any,3,obs,Commission — 0.15% vs 2%
+迪拜房产 佣金 多少,How much Dubai commission,zh,informational,Any,3,obs,Commission — 0.15% vs 2%
+迪拜买房 中介 收费,Dubai agent fee when buying,zh,informational,Any,3,obs,Commission — 0.15% vs 2%
+迪拜 房产税,Dubai property tax,zh,informational,Any,3,obs,Tax — home-country residual
+迪拜卖房 税,Tax when selling Dubai property,zh,informational,Post,2,obs,Tax — home-country residual
+迪拜 资本利得税,Dubai capital gains tax,zh,informational,Post,2,obs,Tax — home-country residual
+迪拜 印花税,Dubai stamp duty,zh,informational,Any,2,obs,Fees & net proceeds
+迪拜房产 4% 注册费,Dubai 4% DLD registration fee,zh,informational,Mid,3,obs,Oqood & DLD mechanics
+中国人 迪拜 买房,Chinese people buying in Dubai,zh,informational,Awareness,3,obs,Market context / oversupply
+迪拜 黄金签证 200万,Dubai golden visa 2M AED,zh,commercial-investigational,Awareness,3,obs,Regulatory / RERA
+迪拜 黄金签证 房产,Golden visa via property,zh,commercial-investigational,Mid,3,obs,Regulatory / RERA
+迪拜 黄金签证 买房 流程,Golden visa purchase process,zh,transactional,Mid,2,obs,Regulatory / RERA
+迪拜买房攻略,Dubai buying guide,zh,informational,Awareness,3,obs,Process & eligibility
+迪拜买房 流程,Dubai buying process,zh,informational,Mid,3,obs,Process & eligibility
+迪拜 伊玛尔 期房,EMAAR off-plan,zh,commercial-investigational,Mid,2,obs,Developer-specific rules
+迪拜 Sobha 索巴,Sobha developer,zh,commercial-investigational,Mid,2,obs,Developer-specific rules
+迪拜 Damac 达马克,DAMAC,zh,commercial-investigational,Mid,2,obs,Developer-specific rules
+迪拜房产投资 风险,Dubai property investment risk,zh,informational,Awareness,3,obs,Market context / oversupply
+迪拜 房产 骗局,Dubai property scam,zh,informational,Awareness,2,obs,Market context / oversupply
+迪拜 房产 烂尾,Dubai abandoned stalled projects,zh,informational,Post-purchase,2,obs,Payment plan arrears / distress
+迪拜 房产 回报率,Dubai property ROI,zh,informational,Awareness,3,obs,Pricing & benchmarking
+迪拜 租金回报率,Dubai rental yield,zh,informational,Any,3,obs,Pricing & benchmarking
+迪拜房价 2026,Dubai house prices 2026,zh,informational,Awareness,3,obs,Market context / oversupply
+迪拜楼市,Dubai property market,zh,informational,Awareness,3,obs,Market context / oversupply
+迪拜房价 暴跌,Dubai prices crash,zh,informational,Awareness,2,obs,Market context / oversupply
+迪拜 永久产权,Dubai freehold,zh,informational,Any,3,obs,Regulatory / RERA
+迪拜 永久产权 区域,Freehold zones,zh,informational,Mid,2,obs,Regulatory / RERA
+迪拜卖房 海外,Selling Dubai property from overseas,zh,transactional,High,1,inf,Remote selling / POA
+迪拜 房产 委托书,Dubai property POA,zh,transactional,High,2,obs,Remote selling / POA
+人在国外 卖迪拜房,Sell Dubai property while abroad,zh,transactional,High,1,inf,Process & eligibility
+迪拜 海外远程公证 房产,Overseas remote notarization for property,zh,transactional,High,1,obs,Remote selling / POA
+迪拜 期房 付款 进度,Off-plan payment schedule,zh,informational,Pre-purchase,2,obs,Payment plan arrears / distress
+迪拜期房 交房延期,Off-plan handover delay,zh,informational,Post,2,obs,Payment plan arrears / distress
+迪拜 物业费 服务费,Service charges,zh,informational,Post,2,obs,Fees & net proceeds
+迪拜买房 贷款 按揭,Dubai mortgage,zh,informational,Mid,2,obs,Banking / getting paid
+迪拜 公寓 投资,Dubai apartment investment,zh,commercial-investigational,Awareness,3,obs,Process & eligibility
+迪拜 别墅 投资,Dubai villa investment,zh,commercial-investigational,Awareness,2,obs,Process & eligibility
+迪拜 哈利法塔 附近 房产,Burj Khalifa area property,zh,commercial-investigational,Mid,2,obs,Process & eligibility
+小红书 迪拜买房,Xiaohongshu Dubai buying,zh,informational,Awareness,2,obs,Marketplace / listing channels
+दुबई में प्रॉपर्टी कैसे खरीदें,How to buy property in Dubai,hi,informational,TOFU,3,google.co.in autocomplete + AajTak,Process & eligibility
+Dubai property investment India,Dubai property investment from India,hi,informational,TOFU,3,AajTak,Process & eligibility
+NRI Dubai property FEMA LRS rules,FEMA LRS rules for NRIs Dubai,hi,informational,MOFU,3,hindi.business-standard.com,Tax — home-country residual
+दुबई प्रॉपर्टी टैक्स NRI,Dubai property tax NRI,hi,informational,MOFU,2,5paisa Hindi,Tax — home-country residual
+Black Money Act Dubai property,Black Money Act Dubai property,hi,informational,BOFU,2,Business Standard + DineshAarjav,Tax — home-country residual
+ED notice Dubai property India,ED notice Dubai property,hi,informational,BOFU,2,TaxGuru + Sriya,Tax — home-country residual
+Schedule FA ITR foreign property कैसे भरें,How to fill Schedule FA foreign property ITR,hi,informational,BOFU,2,CA-blog ecosystem,Tax — home-country residual
+LRS $250000 Dubai property,LRS limit Dubai property,hi,informational,MOFU,2,Business Standard Hindi,Tax — home-country residual
+DTAA India UAE Dubai property,DTAA India UAE Dubai property,hi,informational,MOFU,2,Tax2Win + ClearTax,Tax — home-country residual
+दुबई में ऑफ-प्लान प्रॉपर्टी,Off-plan property Dubai,hi,informational,TOFU,1,Primo Capital translation,Process & eligibility
+दुबई प्रॉपर्टी बेचना,Selling Dubai property,hi,transactional,BOFU,1,Emirates.estate,Process & eligibility
+Dubai property handover se pehle bechna,Selling Dubai property before handover,hi,transactional,BOFU,1,AajTak,Process & eligibility
+NOC Emaar Dubai Hindi,NOC from Emaar Hindi,hi,transactional,BOFU,1,No native Hindi supply,NOC procedures
+SPA transfer Dubai Hindi,SPA transfer Hindi,hi,transactional,BOFU,1,No native Hindi supply,SPA transfer
+पावर ऑफ अटॉर्नी Dubai property,POA Dubai property,hi,transactional,MOFU,1,Indian POA content only,Remote selling / POA
+Dubai real estate mein invest kaise kare,How to invest in Dubai real estate,hi,informational,TOFU,2,YouTube patterns,Process & eligibility
+भारतीय निवेशक दुबई,Indian investors Dubai,hi,informational,TOFU,3,AajTak + TV9 Hindi,Market context / oversupply
+दुबई गोल्डन वीज़ा प्रॉपर्टी,Dubai Golden Visa property,hi,informational,MOFU,2,Hindi news,Regulatory / RERA
+दुबई प्रॉपर्टी 2026,Dubai property 2026,hi,informational,TOFU,2,Aaj Tak + TV9,Market context / oversupply
+UAE property tax India mein declare,Declaring UAE property in India,hi,informational,BOFU,2,Hindi finance portals,Tax — home-country residual
+दुबई में घर बेचकर पैसा India कैसे लाएं,How to bring money to India after selling Dubai,hi,transactional,BOFU,2,CA-blog FAQs,Tax — home-country residual
+Dubai property Hawala ED scrutiny,Dubai property hawala ED,hi,informational,BOFU,1,the420.in + BS,Tax — home-country residual
+Oqood registration kya hai,What is Oqood,hi,transactional,MOFU,1,Limited Hindi supply,Oqood & DLD mechanics
+दुबई रियल एस्टेट टोकनाइजेशन,Dubai real estate tokenization,hi,informational,TOFU,1,AajTak + AnalyticsInsight Hindi,Developer-specific rules
+क्या NRI दुबई में प्रॉपर्टी खरीद सकते हैं,Can NRIs buy Dubai property,hi,informational,TOFU,2,Quora patterns,Tax — home-country residual
+Dubai property kaise beche,How to sell Dubai property,hi,transactional,BOFU,1,Negligible Hindi supply,Process & eligibility
+दलाली कमीशन दुबई,Broker commission Dubai,hi,informational,MOFU,1,None found,Commission — 0.15% vs 2%
+FAIU notice Dubai property kya hai,What is FAIU notice Dubai property,hi,informational,BOFU,1,English-only supply,Tax — home-country residual
+NRI income tax return Dubai property,NRI ITR Dubai property,hi,informational,BOFU,2,Bajaj Finserv Hindi + ClearTax Hindi,Tax — home-country residual
+RBI rules Dubai property purchase Hindi,RBI rules Dubai property,hi,informational,MOFU,2,BS Hindi + CourtKutchehry,Tax — home-country residual

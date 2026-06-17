@@ -1,0 +1,449 @@
+{
+  "name": "Address Harbour Point",
+  "developer": "Emaar Properties",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "Development comprises two towers (Tower 1: 65 floors, Tower 2: 57 floors per DubaiSage / 53 floors per some sources — floor count varies across sources, treat as approximate).",
+    "Completed circa 2022–2023; 1newhomes.ae lists as 'Ready to move' and sold out at developer level; secondary market active.",
+    "Total unit count cited as 202 serviced apartments (1newhomes.ae) across both towers; DubaiSage notes Tower 2 alone has 57 floors with 1–3BR plus Sky Collection 4–5BR penthouses — figures may reflect different counting methodologies.",
+    "Towers connected by a glass pedestrian bridge per multiple sources.",
+    "Branded residence under Address Hotels + Resorts (Emaar hospitality brand); freehold ownership confirmed.",
+    "No metro station on-site; nearest options Al Jaddaf and Dubai Healthcare City stations; Metro Blue Line extension to Creek Harbour expected ~2029.",
+    "Rental data sourced from Property Finder listings and recent DLD transactions (May–June 2026).",
+    "Projected ROI figures sourced from third-party market commentary (dubaipropertiesinfomation.wordpress.com); not independently verified — treat as indicative.",
+    "School distances from Property Finder area insights (straight-line); actual drive times from luxurymrhaus.ae area guide.",
+    "On-site retail and F&B within the broader Dubai Creek Harbour master community is still maturing as of mid-2026."
+  ],
+  "master_development": {
+    "overview": {
+      "type": "Branded serviced residence — twin tower",
+      "towers": 2,
+      "tower_heights": {
+        "tower_1_floors": 65,
+        "tower_2_floors": "approximately 53–57 (sources vary)"
+      },
+      "unit_types": [
+        "1-bedroom",
+        "2-bedroom",
+        "3-bedroom",
+        "4-bedroom penthouse",
+        "5-bedroom penthouse"
+      ],
+      "total_units_approx": 202,
+      "size_range_sqft": "706–15,231",
+      "completion_status": "Completed (circa 2022–2023)",
+      "brand": "Address Hotels + Resorts (Emaar)",
+      "ownership": "Freehold",
+      "notable_feature": "Two towers connected by a glass pedestrian bridge; serves as visual gateway to Dubai Creek Harbour"
+    },
+    "location_connectivity": {
+      "master_community": "Dubai Creek Harbour (The Lagoons)",
+      "sub_district": "Al Khairan First, Creek Island",
+      "primary_road_access": "Ras Al Khor Road (E44), Al Khail Road (E66)",
+      "metro": {
+        "on_site": false,
+        "nearest_stations": [
+          "Al Jaddaf Metro Station — approx. 10-min drive",
+          "Dubai Healthcare City Metro Station — approx. 12-min drive",
+          "Creek Metro Station — approx. 8-min drive"
+        ],
+        "future_metro": "Metro Blue Line extension to Dubai Creek Harbour expected ~2029"
+      },
+      "marine_transport": "Dubai Creek Harbour Marine Transport Station — approx. 2-min walk",
+      "drive_times": {
+        "downtown_dubai_difc": "approx. 15 min",
+        "dubai_international_airport": "approx. 10 min",
+        "dubai_festival_city_mall": "approx. 10 min",
+        "dubai_marina_jlt": "approx. 30–40 min",
+        "ras_al_khor_wildlife_sanctuary": "approx. 5 min"
+      },
+      "commute_note": "Currently car-dependent for most destinations beyond the immediate waterfront promenade."
+    },
+    "shared_amenities": [
+      "Infinity / temperature-controlled swimming pools",
+      "Children's pool and play area",
+      "State-of-the-art gymnasium / fitness centre",
+      "Spa, sauna, steam room, jacuzzi",
+      "Health club",
+      "24-hour concierge and security / CCTV",
+      "Housekeeping and maintenance services",
+      "Valet parking and covered parking",
+      "Retail and dining outlets (podium level)",
+      "Signature restaurant and destination bar",
+      "F&B outlets and cafés",
+      "Event space",
+      "Business lounge and meeting rooms",
+      "Landscaped gardens and green areas",
+      "Jogging and cycling trails",
+      "Waterfront promenade access (Creek Marina)",
+      "Kids club and playroom",
+      "High-speed elevators and service elevators",
+      "Central air conditioning",
+      "Smart home appliances",
+      "Yoga court",
+      "BBQ areas",
+      "Pets allowed"
+    ],
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "Swiss International Scientific School Dubai (SISD)",
+          "curriculum": "IB / Swiss",
+          "distance_note": "approx. 1.3 km straight-line (Property Finder); approx. 15-min drive (MR HAUS)"
+        },
+        {
+          "name": "Universal American School",
+          "curriculum": "American / IB",
+          "distance_note": "approx. 2.9 km straight-line (Property Finder)"
+        },
+        {
+          "name": "Deira International School",
+          "curriculum": "IB",
+          "distance_note": "approx. 10-min drive (MR HAUS)"
+        },
+        {
+          "name": "Hartland International School",
+          "curriculum": "IB",
+          "distance_note": "approx. 15-min drive (MR HAUS)"
+        },
+        {
+          "name": "New Indian Model School",
+          "curriculum": "Indian",
+          "distance_note": "approx. 3.3 km straight-line (Property Finder)"
+        },
+        {
+          "name": "Gulf Indian High School",
+          "curriculum": "Indian",
+          "distance_note": "approx. 3.3 km straight-line (Property Finder)"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Mediclinic City Hospital",
+          "distance_note": "approx. 1.8 km straight-line (Property Finder); approx. 10-min drive"
+        },
+        {
+          "name": "Rashid Hospital (Government)",
+          "distance_note": "approx. 12-min drive (MR HAUS)"
+        },
+        {
+          "name": "Aster Hospital, Al Qusais",
+          "distance_note": "approx. 15-min drive (MR HAUS)"
+        }
+      ],
+      "retail_dining": [
+        {
+          "name": "Dubai Festival City Mall",
+          "note": "Full retail and dining including IKEA; approx. 10-min drive"
+        },
+        {
+          "name": "Creek Marina promenade",
+          "note": "Cafés and restaurants accessible on foot from towers"
+        },
+        {
+          "name": "Dubai Mall",
+          "note": "approx. 15–20 min drive"
+        }
+      ],
+      "leisure": [
+        {
+          "name": "Ras Al Khor Wildlife Sanctuary",
+          "note": "Flamingo reserve; approx. 5-min drive — genuine area differentiator"
+        },
+        {
+          "name": "Creek Marina boardwalk",
+          "note": "Waterfront walking and cycling directly accessible from towers"
+        },
+        {
+          "name": "Dubai Creek Tower",
+          "note": "Under development; future landmark adjacent to community"
+        }
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "Properties valued AED 2M+ qualify for 10-year UAE Golden Visa. Most 2BR and above units clear this threshold; select 1BR units may also qualify depending on floor and view.",
+      "indicative_rental_yields": {
+        "source": "Third-party market commentary (dubaipropertiesinfomation.wordpress.com) and Property Finder data; not independently audited",
+        "one_bedroom_gross": "approx. 6%–7%",
+        "two_bedroom_gross": "approx. 5.5%–6.5%",
+        "community_average_gross": "approx. 5.7%"
+      },
+      "recent_rental_transactions_aed_per_year": {
+        "source": "Property Finder / DLD data May–June 2026",
+        "one_bedroom": "AED 80,000–150,000",
+        "two_bedroom": "AED 115,000–200,000",
+        "three_bedroom": "AED 200,000+"
+      },
+      "secondary_market_sale_prices": {
+        "source": "Property Finder listings May 2026",
+        "one_bedroom": "AED 2,500,000–3,200,000",
+        "two_bedroom": "AED 2,800,000–3,500,000+",
+        "three_bedroom": "AED 5,750,000+"
+      },
+      "price_per_sqft_note": "Community-wide price per sqft reached approx. AED 2,400–2,500 as of Q3 2025, representing ~28% rise from Q1 2023 per third-party market data.",
+      "service_charges_note": "Branded residence service charges carry a premium vs standard Emaar apartments; buyers should review hotel-service fee structure. Community service charges broadly AED 13–21/sqft per market commentary.",
+      "capital_appreciation_drivers": [
+        "Dubai Creek Tower completion (future landmark)",
+        "Metro Blue Line extension (~2029)",
+        "Ongoing master community build-out (retail, F&B, public amenities)",
+        "Address Hotels brand premium",
+        "Proximity to DXB airport and Downtown"
+      ]
+    },
+    "developer_profile": {
+      "name": "Emaar Properties",
+      "founded": 1997,
+      "headquarters": "Dubai, UAE",
+      "founder": "Mohamed Alabbar",
+      "notable_projects": [
+        "Burj Khalifa",
+        "Dubai Mall",
+        "Dubai Marina",
+        "Dubai Creek Harbour",
+        "Address Hotels + Resorts brand"
+      ],
+      "track_record": "One of the UAE's largest and most established developers; publicly listed on DFM; delivered numerous landmark projects across Dubai and internationally. Address Harbour Point is part of Emaar's branded hospitality-residence portfolio."
+    }
+  },
+  "sub_developments": {
+    "address_harbour_point_tower_2": {
+      "aliases": [
+        "Address Harbour Point Tower 2",
+        "address harbour point tower 2",
+        "AHP Tower 2",
+        "Address Harbour Point T2"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Address Harbour Point Tower 2, Address Harbour Point, Dubai Creek Harbour (The Lagoons), Dubai",
+        "investment_overrides": {
+          "tower_height_floors": "approximately 57 (DubaiSage) / 53 (some sources)",
+          "tower_height_metres": "approximately 239 m / 784 ft (DubaiSage)",
+          "completed": 2023,
+          "unit_types": [
+            "1-bedroom",
+            "2-bedroom",
+            "3-bedroom",
+            "Sky Collection 4-bedroom penthouse",
+            "Sky Collection 5-bedroom penthouse"
+          ],
+          "fully_furnished": true,
+          "serviced": true,
+          "dld_permit_reference": "7178688642",
+          "active_listings_for_rent": "approx. 210 (Property Finder, May 2026)",
+          "sample_rental_prices_aed_per_year": {
+            "one_bedroom": "AED 130,000–140,000 (listed May 2026)",
+            "two_bedroom": "AED 193,000–225,000 (listed May 2026)"
+          },
+          "sample_sale_prices_aed": {
+            "one_bedroom": "AED 2,500,000–3,200,000 (listed May 2026)",
+            "note": "Price per sqft observed at AED 3,176–4,123 in active listings"
+          }
+        },
+        "sales_talking_points": {
+          "headline": "Tower 2 is the taller of the two Address Harbour Point towers, rising ~239 m with panoramic views of Dubai Creek Tower, Burj Khalifa, and the Downtown skyline.",
+          "unique_features": [
+            "Sky Collection penthouses (4–5BR) on upper levels",
+            "Glass pedestrian bridge connecting to Tower 1",
+            "Fully furnished and serviced — move-in ready",
+            "Infinity pool with pool and creek views",
+            "Resident scores of 5/5 across maintenance, staff, gym/pool, child-friendliness, and peace/quiet (Property Finder reviews)"
+          ],
+          "rental_demand": "Tower 2 has the highest rental listing volume in the Address Harbour Point sub-community (~210 active rentals vs ~84 in Tower 1 per Property Finder May 2026), indicating strong liquidity.",
+          "long_term_tenancy": "94.93% of tenants opt for long-term stays; renewal rate ~19.2% (Property Finder data)."
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "Twin-tower branded residence by Emaar in Dubai Creek Harbour — 65 and ~57 floors, completed 2022–2023, freehold, fully furnished serviced apartments from 1BR to full-floor penthouses. Secondary market 1BR from ~AED 2.5M; community price/sqft up ~28% since Q1 2023.",
+      "scarcity_argument": "Original developer stock is sold out. All available units are secondary market resales, meaning buyers are acquiring in a completed, operational building with proven rental demand and no construction risk.",
+      "lifestyle_pitch": "Live in a five-star Address Hotels residence on the Dubai Creek waterfront — concierge, housekeeping, spa, infinity pool, and signature dining all within your building. Step outside to the Creek Marina promenade, with Ras Al Khor flamingo sanctuary 5 minutes away and Downtown Dubai 15 minutes by car.",
+      "investment_pitch": "Gross rental yields of 6–7% on 1BR units and 5.5–6.5% on 2BR units (indicative, third-party data). Strong capital appreciation trajectory driven by Dubai Creek Tower completion, planned Metro Blue Line (~2029), and ongoing master community build-out. Most 2BR+ units clear the AED 2M Golden Visa threshold.",
+      "objection_handling": "Buyers concerned about the community still maturing should note: the immediate Address Harbour Point podium has retail, dining, and full hotel services operational. Dubai Festival City Mall is 10 minutes away for broader retail. The 'still developing' narrative is also the upside — infrastructure not yet priced in."
+    },
+    "per_sub_development": {
+      "address_harbour_point_tower_2": {
+        "headline": "The taller, higher-volume tower — ~239 m, ~57 floors, Sky Collection penthouses, and the deepest rental liquidity pool in the sub-community.",
+        "key_points": [
+          "Highest active rental listing count in Address Harbour Point (~210 units on market, Property Finder May 2026)",
+          "Resident-rated 5/5 across all building quality categories",
+          "Fully furnished and serviced — ideal for investors targeting short or long-term rental",
+          "94.93% long-term tenancy rate; stable income profile",
+          "Sky Collection 4–5BR penthouses available for ultra-luxury buyers"
+        ]
+      }
+    }
+  },
+  "aliases": [
+    "Address Harbour Point",
+    "address harbour point",
+    "Address Harbour Point Tower 2",
+    "The Address Harbour Point",
+    "AHP Dubai Creek Harbour",
+    "Address Harbour Point DCH",
+    "Emaar Address Harbour Point"
+  ],
+  "developer_keywords": [
+    "Emaar",
+    "Emaar Properties",
+    "Address Hotels",
+    "Address Hotels + Resorts",
+    "Emaar Hospitality",
+    "emaar"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties",
+    "community": "Address Harbour Point",
+    "location": {
+      "area": "Dubai Creek Harbour (The Lagoons), Dubai",
+      "description": "Waterfront branded residence at the gateway to Dubai Creek Harbour, positioned on the Creek Marina promenade. Two towers (65F and ~57F) connected by a glass pedestrian bridge, offering unobstructed views of Dubai Creek Tower, Burj Khalifa, and the Downtown skyline.",
+      "distances": {
+        "downtown_dubai_difc": "approx. 15-min drive",
+        "dubai_international_airport": "approx. 10-min drive",
+        "dubai_festival_city_mall": "approx. 10-min drive",
+        "ras_al_khor_wildlife_sanctuary": "approx. 5-min drive",
+        "dubai_marina_jlt": "approx. 30–40-min drive",
+        "al_jaddaf_metro_station": "approx. 10-min drive",
+        "creek_marina_promenade": "direct access on foot"
+      }
+    },
+    "community_amenities": [
+      "Infinity / temperature-controlled swimming pools",
+      "Children's pool and play area",
+      "State-of-the-art gymnasium",
+      "Spa, sauna, steam room, jacuzzi",
+      "24-hour concierge and security",
+      "Housekeeping and maintenance services",
+      "Valet and covered parking",
+      "Signature restaurant and destination bar",
+      "F&B outlets and retail (podium)",
+      "Event space and business lounge",
+      "Landscaped gardens",
+      "Jogging and cycling trails",
+      "Creek Marina waterfront promenade access",
+      "Kids club",
+      "Smart home appliances",
+      "Central air conditioning",
+      "Pets allowed"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "Swiss International Scientific School Dubai (SISD)",
+          "curriculum": "IB / Swiss",
+          "distance": "approx. 1.3 km straight-line; ~15-min drive"
+        },
+        {
+          "name": "Universal American School",
+          "curriculum": "American / IB",
+          "distance": "approx. 2.9 km straight-line"
+        },
+        {
+          "name": "Deira International School",
+          "curriculum": "IB",
+          "distance": "approx. 10-min drive"
+        },
+        {
+          "name": "Hartland International School",
+          "curriculum": "IB",
+          "distance": "approx. 15-min drive"
+        },
+        {
+          "name": "New Indian Model School",
+          "curriculum": "Indian",
+          "distance": "approx. 3.3 km straight-line"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Mediclinic City Hospital",
+          "distance": "approx. 1.8 km straight-line; ~10-min drive"
+        },
+        {
+          "name": "Rashid Hospital (Government)",
+          "distance": "approx. 12-min drive"
+        },
+        {
+          "name": "Aster Hospital, Al Qusais",
+          "distance": "approx. 15-min drive"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Festival City Mall",
+          "note": "Full retail, dining, IKEA; approx. 10-min drive"
+        },
+        {
+          "name": "Creek Marina promenade cafés and restaurants",
+          "note": "Walkable from towers"
+        },
+        {
+          "name": "Dubai Mall",
+          "note": "approx. 15–20-min drive"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": "Indicative 5.5%–7% gross depending on unit type and floor (third-party market data; not independently audited)",
+      "branded_premium_note": "Address Hotels + Resorts branded residence. Carries a purchase price and service charge premium vs standard Emaar apartments. Buyers should review the hotel-service fee structure before purchase. Brand premium supports rental demand and resale liquidity."
+    },
+    "sales_talking_points": {
+      "completed_no_construction_risk": "Both towers delivered 2022–2023; fully operational with hotel services running.",
+      "views": "Unobstructed views of Dubai Creek Tower, Burj Khalifa, Downtown skyline, and Creek waterfront from most units.",
+      "connectivity": "10 min to DXB airport, 15 min to Downtown/DIFC — strategic for business travellers and professionals.",
+      "nature_proximity": "Ras Al Khor Wildlife Sanctuary (flamingo reserve) 5 min away — rare urban nature access.",
+      "rental_liquidity": "295+ active rental listings across Address Harbour Point (Property Finder May 2026); strong tenant demand evidenced by recent DLD transactions.",
+      "capital_growth_catalyst": "Dubai Creek Tower completion, Metro Blue Line (~2029), and master community build-out not yet fully priced in.",
+      "golden_visa": "Most 2BR+ units qualify for 10-year UAE Golden Visa (AED 2M+ threshold).",
+      "community_maturity_caveat": "Dubai Creek Harbour is still maturing — on-site retail beyond the podium and broader community amenities are not yet fully built out."
+    },
+    "developer_track_record": "Emaar Properties (est. 1997, DFM-listed) is one of the UAE's largest developers, responsible for Burj Khalifa, Dubai Mall, Dubai Marina, and the Address Hotels + Resorts brand. Address Harbour Point is part of Emaar's branded hospitality-residence portfolio within its own Dubai Creek Harbour master community."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:30:00.632848+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.propjunction.ae/projects/address-harbour-point",
+      "https://onguae.com/property/serviced-apartments-brand-new-fully-furnished",
+      "https://www.tanamiproperties.com/Projects/Address-Harbour-Point",
+      "https://topaddress.ae/en/projects/the-address-harbour-point-dubai",
+      "https://www.propertyfinder.ae/en/new-projects/emaar-properties/address-harbour-point",
+      "https://www.propertyfinder.ae/en/area-insights/dubai/dubai-creek-harbour-the-lagoons-address-harbour-point-address-harbour-point-tower-2",
+      "https://www.lived.ae/property/address-harbour-point-tower-2",
+      "https://www.propertyfinder.ae/en/rent/dubai/apartments-for-rent-dubai-creek-harbour-the-lagoons-address-harbour-point.html",
+      "https://dubaisage.com/view.php?name=address-harbour-point-tower-2-h4sbe45v8e",
+      "https://1newhomes.ae/address-harbour-point-dubai",
+      "https://www.propertyfinder.ae/en/rent/dubai/properties-for-rent-dubai-creek-harbour-the-lagoons-address-harbour-point.html",
+      "https://luxurymrhaus.ae/communities/address-harbour-point",
+      "https://dubaipropertiesinfomation.wordpress.com/2026/03/17/1-bhk-vs-2-bhk-investment-at-dubai-creek-harbour-a-data-driven-comparison",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-dubai-creek-harbour-the-lagoons-address-harbour-point.html",
+      "https://www.instagram.com/p/DX4RU_NK-kP?__d=1%E5%B1%B1%E4%B8%9C%E6%9E%A3%E5%BA%84%E6%83%B3%E8%A6%81%E6%89%BE%E5%A5%B3%E4%BE%8D%E4%BC%9A%E6%89%80%E5%85%AC%E5%85%B3%3F%2B-%2B%E6%9E%A3%E5%BA%84%E5%A5%B3%E4%BE%8D.%E2%9C%94%EF%B8%8Fbaoyang.bond",
+      "https://www.propertyfinder.ae/en/area-insights/dubai/dubai-creek-harbour-the-lagoons-address-harbour-point",
+      "https://dubaimetrotrain.com/destinations",
+      "https://www.addresshotels.com/en/faq",
+      "https://www.squareyards.ae/area-guide/dubai/dubai-creek-harbour",
+      "https://opr.ae/projects/emaar-the-address-harbour-point-dubai",
+      "https://offplans.com/project/emaar-address-harbour-point-by-emaar-properties",
+      "https://pfd.ae/project/address-harbour-point"
+    ],
+    "audit_flags": [
+      "Tower 2 floor count inconsistent across sources (53F vs 57F) — DubaiSage cites 57F and 239 m height; treat as approximate until official Emaar data confirmed.",
+      "Total unit count of 202 (1newhomes.ae) may refer to serviced apartments only and exclude hotel rooms or penthouses — verify against DLD records.",
+      "Projected ROI figures (5.5%–7%) sourced from third-party blog commentary and Property Finder market data; not independently audited — present as indicative only.",
+      "Service charge per sqft range (AED 13–21) sourced from third-party market commentary; actual Address Harbour Point RERA-registered service charge schedule not confirmed in sources.",
+      "School details (names, curricula, distances) sourced from Property Finder area insights and MR HAUS guide; straight-line vs drive-time distances differ — clarify with buyer.",
+      "Handover / completion date cited as Feb 2023 (propjunction.ae) and 2022 (Property Finder area guide) — minor discrepancy; building is confirmed operational.",
+      "No direct data from the Bayut source listing (https://www.bayut.com/property/details-15014530.html) was available in provided content — included in source_urls per instruction but content not verified.",
+      "Instagram source (Source 15) contained no relevant property data and was disregarded.",
+      "On-site retail and F&B build-out status within broader Dubai Creek Harbour master community is evolving — community maturity caveat should be refreshed regularly.",
+      "Metro Blue Line timeline (~2029) sourced from resident commentary and market analysis; official RTA confirmation not cited in sources."
+    ]
+  }
+}

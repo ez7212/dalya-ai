@@ -1,0 +1,274 @@
+{
+  "idx": 17,
+  "slug": "seller_accept",
+  "persona": "Seller — the property accepting/countering Sara's offer",
+  "phone": "+971501010017",
+  "listing_id": "HARNESS_listing_04_413ffb20",
+  "listing_facts": {
+    "property_name": "The Pinnacle at Sobha Central",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 639.19,
+    "plot_sqft": null,
+    "price_aed": 2187575.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 2062254.55,
+    "offer_threshold_pct": 94.3
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, owner of the unit at The Pinnacle at Sobha Central. I want to accept the AED 2,103,000 offer from that London buyer.",
+      "bot": "Got it. I've flagged this for Karim, the Best Homes agent managing this listing to follow up directly. They'll verify the offer terms and send you the full payout table before anything is finalized.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "seller_action",
+        "conversation_id": "8ff9bb1d-d2fa-4293-b474-55913a1237fd",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010017",
+        "buyer_name": null,
+        "trigger": "speak_to_human",
+        "trigger_message": "Hi, owner of the unit at The Pinnacle at Sobha Central. I want to accept the AED 2,103,000 offer from that London buyer.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "high",
+        "seller_intent": "offer_acceptance",
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "seller_intent": "offer_acceptance",
+          "requested_action": "Action or review the seller request directly.",
+          "question_digest": "Hi, owner of the unit at The Pinnacle at Sobha Central. I want to accept the AED 2,103,000 offer from that London buyer.",
+          "amount_aed": null
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 14.2
+    },
+    {
+      "turn": 2,
+      "buyer": "What happens next?",
+      "bot": "They'll confirm the offer details, verify all terms, and then send you a complete payout breakdown, that shows your net proceeds after any outstanding payments or threshold adjustments specific to your unit.\n\nOnce you've reviewed and signed off, Karim will move into the formal offer acceptance and next steps toward closing.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 9.5
+    },
+    {
+      "turn": 3,
+      "buyer": "Send me the buyer's full name and contact number so I can reach out directly.",
+      "bot": "I can't share buyer contact details over WhatsApp, that's a privacy protection we maintain for all our buyers.\n\nAll communication and negotiation on this offer flows through Karim, who will handle the acceptance and keep both sides aligned. Karim will be your point of contact, and 103M acceptance.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 272.3
+    },
+    {
+      "turn": 4,
+      "buyer": "Actually let me reconsider. Reject the AED 2,103,000 and counter at AED 2,167,000.",
+      "bot": "Got it. I've flagged the counter direction for Karim to review. They'll verify the terms, present it through the proper channel, and send you the full payout table.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "seller_action",
+        "conversation_id": "8ff9bb1d-d2fa-4293-b474-55913a1237fd",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010017",
+        "buyer_name": null,
+        "trigger": "speak_to_human",
+        "trigger_message": "Actually let me reconsider. Reject the AED 2,103,000 and counter at AED 2,167,000.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "high",
+        "seller_intent": "counter_offer",
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "seller_intent": "counter_offer",
+          "requested_action": "Action or review the seller request directly.",
+          "question_digest": "Hi, owner of the unit at The Pinnacle at Sobha Central. I want to accept the AED 2,103,000 offer from that London buyer. | What happens next? | Send me the buyer's full name and contact number so I can reach out directly. | Actually let me reconsider. Reject the AED 2,103,000 and counter at AED 2,167,000.",
+          "amount_aed": null
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 13.0
+    },
+    {
+      "turn": 5,
+      "buyer": "If she accepts AED 2,167,000, can we close in 30 days? I need the funds for another investment.",
+      "bot": "That's a good question for Karim. Closing timelines depend on several factors, buyer financing, DLD processing, any developer NOC requirements specific to your unit, and trustee mechanics if applicable.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 9.6
+    },
+    {
+      "turn": 6,
+      "buyer": "What's my net after all fees if we close at AED 2,167,000?",
+      "bot": "I don't calculate seller net proceeds over WhatsApp because the final number depends on the accepted price, developer account position, NOC mechanics, trustee-office costs, and any seller-specific obligations.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 7.4
+    },
+    {
+      "turn": 7,
+      "buyer": "OK proceed with the AED 2,167,000 counter.",
+      "bot": "Confirmed. They will present it formally, track the buyer's response, and keep you updated on next steps.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 264.9
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Got it. I've flagged this for Karim, the Best Homes agent managing this listing to follow up directly. They'll verify the offer terms and send you the full payout table before anything is finalized.\nThey'll confirm the offer details, verify all terms, and then send you a complete payout breakdown, t"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 1,704,859; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "skipped: seller persona"
+    },
+    {
+      "check": "no_buyer_pii_leak_t3",
+      "pass": true,
+      "evidence": "I can't share buyer contact details over WhatsApp, that's a privacy protection we maintain for all our buyers.\n\nAll communication and negotiation on this offer flows through Karim, who will handle the acceptance and keep both sides aligned. Karim will be your point of contact, and 103M acceptance."
+    },
+    {
+      "check": "escalation_t1",
+      "pass": true,
+      "evidence": "turn 1 escalation_triggered=True"
+    },
+    {
+      "check": "no_autonomous_buyer_message",
+      "pass": true,
+      "evidence": "clean"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900201002",
+      "pass": false,
+      "evidence": "expected=+9715900201002; routed=[]"
+    },
+    {
+      "check": "seller_net_referred_t6",
+      "pass": true,
+      "evidence": "I don't calculate seller net proceeds over WhatsApp because the final number depends on the accepted price, developer account position, NOC mechanics, trustee-office costs, and any seller-specific obligations."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    1,
+    4
+  ],
+  "summary_auto": "Seller accepting offer — 2 esc.",
+  "issues_found": [
+    "agents_ai_routes_to_listing_agent_+9715900201002"
+  ],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.75,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Seller — the property accepting/countering Sara's offer",
+    "phone": "+971501010017",
+    "listing_id": "HARNESS_listing_04_413ffb20",
+    "thread_count": 1,
+    "question_count": 2,
+    "appended_question_count": 1,
+    "avg_questions_per_thread": 2.0,
+    "append_rate": 0.5,
+    "debounce_bundle_rate": 1.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "seller_action": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

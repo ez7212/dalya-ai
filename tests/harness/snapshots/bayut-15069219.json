@@ -1,0 +1,69 @@
+{
+  "scrape": {
+    "agent_email": null,
+    "agent_license": null,
+    "agent_name": null,
+    "agent_phone": null,
+    "amenities": [
+      "Building",
+      "Health and Fitness"
+    ],
+    "asking_price_aed": 3173000.0,
+    "bathrooms": 3,
+    "bedrooms": 2,
+    "broker_license": null,
+    "broker_name": null,
+    "building_or_project": "{'completionDetails': {'startDate': None, 'completionDate': 1956427200.0, 'completionPercentage': None}, 'state': 'active', 'id': 11066411, 'title': 'The Pinnacle at Sobha Central', 'title_l1': '\u0630\u0627 \u0628\u064a\u0646\u0627\u0643\u0644 \u0641\u064a \u0634\u0648\u0628\u0627 \u0633\u0646\u062a\u0631\u0627\u0644', 'title_l2': 'The Pinnacle at Sobha Central', 'title_l3': 'The Pinnacle at Sobha Central', 'externalID': '3575', 'completionStatus': 'under-construction', 'agency': {'externalID': '551', 'name': 'Sobha Realty', 'name_l1': '\u0645\u062c\u0645\u0648\u0639\u0629 \u0634\u0648\u0628\u0627', 'name_l2': 'Sobha Realty', 'name_l3': 'Sobha Realty', 'slug': 'sobha-realty', 'slug_l1': '\u0645\u062c\u0645\u0648\u0639\u0629-\u0634\u0648\u0628\u0627', 'slug_l2': 'sobha-realty', 'slug_l3': 'sobha-realty'}}",
+    "community": "Sobha Central",
+    "completion_status": "under-construction",
+    "description": "Bluefin Real Estate proudly presents a 2-Bedroom Apartment in The Pinnacle \u2013 Dubai, offering a perfect blend of comfort, space, and convenience in a well-connected location. \n\nThis spacious 2-bedroom apartment is thoughtfully designed with a functional layout, featuring a bright living and dining area, well-sized bedrooms, a fitted kitchen, and modern bathrooms. Large windows allow natural light to fill the space, creating a warm and inviting home environment ideal for families. \n\nThe Pinnacle provides residents with essential lifestyle amenities including a swimming pool, fully equipped gym, 24/7 security, and dedicated parking, ensuring a comfortable and secure living experience. \nLocated in a prime area, the building offers easy access to supermarkets, schools, restaurants, and public transport, along with seamless connectivity to major roads and key destinations across Dubai. \n\nProperty Highlights:\nSpacious 2-bedroom apartmentBright and functional layoutWell-maintained buildingSwimming pool & gym24/7 security and parkingClose to daily conveniences and transport\nThe Pinnacle \u2013 comfortable family living in a convenient Dubai location.",
+    "developer": null,
+    "furnishing": "unfurnished",
+    "handover_date": null,
+    "image_urls": [
+      "https://images.bayut.com/thumbnails/839945207-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945208-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945209-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945210-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945211-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945212-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945213-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945214-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945215-800x600.webp",
+      "https://images.bayut.com/thumbnails/839945216-800x600.webp"
+    ],
+    "latitude": 25.060754026418,
+    "listing_reference": "ST-106926-lsixGY",
+    "listing_title": "60/40 Payment plan | 2% DLD Wavier | Great Investment",
+    "longitude": 55.131609930587,
+    "permit_number": "71892500269",
+    "permit_validation_url": null,
+    "plot_size_sqft": null,
+    "portal_listing_id": "15069219",
+    "portal_reference": "11608933",
+    "price_per_sqft_aed": 34222.33,
+    "property_type": "Apartments",
+    "purpose": "sale",
+    "raw_extracts": {
+      "rapidapi": true
+    },
+    "size_sqft": 92.71723392000001,
+    "source": "bayut",
+    "source_url": "https://www.bayut.com/property/details-15069219.html",
+    "subcommunity": "The Pinnacle at Sobha Central",
+    "unit_number": null
+  },
+  "scraped_at": "2026-05-30T14:49:13Z",
+  "source": "bayut",
+  "source_url": "https://www.bayut.com/property/details-15069219.html",
+  "verification": {
+    "asking_price_aed": 3173000.0,
+    "bedrooms": 2,
+    "community_or_building": "Sobha Central",
+    "handover_quarter": "2031-Q4",
+    "image_count": 10,
+    "missing_fields": [],
+    "property_type": "off_plan",
+    "size_sqft": 92.71723392000001
+  }
+}

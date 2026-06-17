@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dalya · B2B AI infrastructure for Dubai real estate brokerages</title>
+  <meta name="description" content="Dalya handles the work between deals so your agents close more of them. Built for Dubai brokerages." />
+  <link rel="stylesheet" href="../applications/_tokens.css" />
+  <style>
+    /* ─────────────────────────────────────────────────────────────────────
+     * Marketing homepage v4 — visually dense, product-led, tighter type scale
+     *
+     * Reference posture: Mercury / Attio / Linear — product surface is
+     * 60% of the visual content, marketing copy is 40%. Type scale is
+     * disciplined to five sizes. Section backgrounds alternate to break
+     * the white-on-white drift.
+     * ───────────────────────────────────────────────────────────────────── */
+
+    html, body {
+      background: var(--color-surface-0);
+      overflow-x: hidden;
+    }
+
+    /* ── Type scale — five sizes only ── */
+    .t-display  { font-size: 60px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; color: var(--color-text-1); }
+    .t-section  { font-size: 40px; font-weight: 700; letter-spacing: -0.02em;  line-height: 1.1;  color: var(--color-text-1); }
+    .t-eyebrow  { font-size: 11px; font-weight: 600; letter-spacing: 0.12em;   text-transform: uppercase; color: var(--color-text-3); }
+    .t-large    { font-size: 18px; font-weight: 400; letter-spacing: -0.005em; line-height: 1.5;  color: var(--color-text-2); }
+    .t-body     { font-size: 15px; font-weight: 400; letter-spacing: 0;        line-height: 1.55; color: var(--color-text-2); }
+    .t-small    { font-size: 13px; font-weight: 400; letter-spacing: 0;        line-height: 1.5;  color: var(--color-text-3); }
+
+    @media (max-width: 720px) {
+      .t-display { font-size: 40px; }
+      .t-section { font-size: 28px; }
+      .t-large   { font-size: 16px; }
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav);
+      background: rgba(250, 250, 249, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border-hairline);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav-wordmark {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-brand-500);
+      letter-spacing: -0.015em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+    }
+    @media (max-width: 720px) { .nav-links { display: none; } }
+    .nav-link {
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-2);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: color 120ms, background 120ms;
+    }
+    .nav-link:hover { color: var(--color-text-1); background: var(--color-surface-1); }
+    .nav-cta {
+      padding: 7px 14px;
+      background: var(--color-brand-600);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 120ms;
+    }
+    .nav-cta:hover { background: var(--color-brand-700); }
+
+    /* ── Sections ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section { padding: 96px 0; }
+    .section-tight { padding: 64px 0; }
+    .bg-1 { background: var(--color-surface-1); }
+    .bg-0 { background: var(--color-surface-0); }
+    .section-divider {
+      height: 1px;
+      background: var(--color-border-hairline);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 120ms, border-color 120ms;
+    }
+    .btn-primary { background: var(--color-brand-600); color: white; }
+    .btn-primary:hover { background: var(--color-brand-700); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-text-1);
+      border-color: var(--color-border-default);
+    }
+    .btn-secondary:hover { background: var(--color-surface-1); }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * HERO — copy left, floating product visual right
+     * ════════════════════════════════════════════════════════════════════ */
+    .hero {
+      padding: 96px 0 64px;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (min-width: 960px) {
+      .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 64px; }
+    }
+    .hero-copy h1 {
+      margin-bottom: 20px;
+      max-width: 560px;
+    }
+    .hero-sub {
+      margin-bottom: 28px;
+      max-width: 540px;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Hero visual: floating stack of product UI cards */
+    .hero-visual {
+      position: relative;
+      height: 480px;
+      display: none;
+    }
+    @media (min-width: 960px) { .hero-visual { display: block; } }
+
+    .floating-card {
+      position: absolute;
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: 12px;
+      box-shadow: var(--shadow-overlay-lg);
+      overflow: hidden;
+    }
+
+    .float-conversation {
+      top: 0;
+      left: 0;
+      width: 340px;
+      transform: rotate(-2deg);
+      z-index: 2;
+    }
+    .float-alert {
+      top: 140px;
+      left: 280px;
+      width: 360px;
+      transform: rotate(2.5deg);
+      z-index: 3;
+    }
+    .float-stat {
+      top: 320px;
+      left: 60px;
+      width: 280px;
+      transform: rotate(-1.5deg);
+      z-index: 1;
+    }
+
+    /* Conversation card content (mini chat) */
+    .mini-chat-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--color-border-hairline);
+      background: var(--color-surface-1);
+    }
+    .mini-chat-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-brand-100);
+      color: var(--color-brand-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .mini-chat-name { font-size: 12px; font-weight: 600; color: var(--color-text-1); }
+    .mini-chat-time { font-size: 10px; color: var(--color-text-3); margin-left: auto; font-feature-settings: "tnum"; }
+    .mini-chat-body { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .mini-bubble {
+      font-size: 12px;
+      padding: 6px 9px;
+      border-radius: 6px;
+      max-width: 86%;
+      line-height: 1.4;
+      color: var(--color-text-1);
+    }
+    .mini-bubble.them {
+      background: var(--color-surface-2);
+      align-self: flex-start;
+    }
+    .mini-bubble.dalya {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-left: 2px solid var(--color-brand-500);
+      align-self: flex-start;
+    }
+
+    /* Alert card */
+    .mini-alert-head {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-border-hairline);
+    }
+    .mini-alert-pill {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--color-success-700);
+      background: var(--color-success-100);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .mini-alert-time { font-size: 11px; color: var(--color-text-3); margin-left: auto; font-feature-settings: "tnum"; }
+    .mini-alert-body { padding: 14px; }
+    .mini-alert-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-text-3); font-weight: 600; margin-bottom: 4px; }
+    .mini-alert-amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-1);
+      font-variant-numeric: tabular-nums slashed-zero;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .mini-alert-sub { font-size: 11px; color: var(--color-text-2); }
+
+    /* Stat card */
+    .mini-stat-body { padding: 14px; }
+    .mini-stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-text-3); font-weight: 600; margin-bottom: 4px; }
+    .mini-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-1);
+      font-variant-numeric: tabular-nums slashed-zero;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 4px;
+    }
+    .mini-stat-delta { font-size: 11px; color: var(--color-success-700); font-weight: 500; font-feature-settings: "tnum"; }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * FRAME — the empowerment-not-replacement statement
+     * ════════════════════════════════════════════════════════════════════ */
+    .frame { border-top: 1px solid var(--color-border-hairline); border-bottom: 1px solid var(--color-border-hairline); }
+    .frame-inner { padding: 56px 0; max-width: 880px; }
+    .frame-text {
+      font-size: 24px;
+      color: var(--color-text-1);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+    }
+    @media (max-width: 720px) { .frame-text { font-size: 19px; } }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * STATS — big numbers, evidence
+     * ════════════════════════════════════════════════════════════════════ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 720px) { .stats-row { grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border-hairline); border: 1px solid var(--color-border-hairline); border-radius: 12px; overflow: hidden; } }
+    .stat-card {
+      background: var(--color-surface-0);
+      padding: 32px 28px;
+    }
+    .stat-num {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--color-brand-500);
+      font-variant-numeric: tabular-nums slashed-zero;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .stat-headline {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-1);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .stat-body {
+      font-size: 14px;
+      color: var(--color-text-2);
+      line-height: 1.5;
+    }
+    .stat-footnote {
+      font-size: 11px;
+      color: var(--color-text-3);
+      margin-top: 12px;
+      font-style: italic;
+    }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * TWO SURFACES — iframes
+     * ════════════════════════════════════════════════════════════════════ */
+    .surfaces {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    @media (min-width: 900px) { .surfaces { grid-template-columns: 1fr 1fr; } }
+    .surface-card {
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-overlay-md);
+    }
+    .surface-head { padding: 16px 20px; border-bottom: 1px solid var(--color-border-hairline); }
+    .surface-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-brand-500);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .surface-title { font-size: 18px; font-weight: 600; color: var(--color-text-1); letter-spacing: -0.01em; margin-bottom: 4px; }
+    .surface-desc { font-size: 13px; color: var(--color-text-2); line-height: 1.5; }
+    .surface-preview {
+      position: relative;
+      height: 360px;
+      overflow: hidden;
+      background: var(--color-surface-1);
+      border-top: 1px solid var(--color-border-hairline);
+    }
+    .surface-preview iframe {
+      width: 1440px;
+      height: 720px;
+      border: 0;
+      transform: scale(0.5);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+    .surface-foot {
+      padding: 12px 20px;
+      border-top: 1px solid var(--color-border-hairline);
+      background: var(--color-surface-1);
+    }
+    .surface-foot a { font-size: 12px; color: var(--color-link); text-decoration: none; font-weight: 500; }
+    .surface-foot a:hover { text-decoration: underline; }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * PILLARS — each card has a mini product snippet
+     * ════════════════════════════════════════════════════════════════════ */
+    .pillars {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    @media (min-width: 720px) { .pillars { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1100px) { .pillars { grid-template-columns: repeat(3, 1fr); } }
+    .pillar {
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pillar-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-brand-500);
+      letter-spacing: 0.04em;
+      font-weight: 500;
+    }
+    .pillar-title { font-size: 17px; font-weight: 600; color: var(--color-text-1); letter-spacing: -0.01em; }
+    .pillar-desc { font-size: 13px; color: var(--color-text-2); line-height: 1.5; }
+    .pillar-visual {
+      margin-top: auto;
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Mini snippet styles (per-pillar) */
+    .snippet-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--color-text-2); }
+    .snippet-row .lbl { color: var(--color-text-3); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .snippet-num { font-variant-numeric: tabular-nums slashed-zero; font-weight: 600; color: var(--color-text-1); }
+    .snippet-pill {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .snippet-pill.success { background: var(--color-success-100); color: var(--color-success-700); }
+    .snippet-pill.brand { background: var(--color-brand-50); color: var(--color-brand-700); }
+    .snippet-pill.warning { background: var(--color-warning-100); color: var(--color-warning-700); }
+
+    /* Specific snippet variations */
+    .snippet-bubble {
+      font-size: 11px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      max-width: 92%;
+      line-height: 1.4;
+    }
+    .snippet-bubble.buyer { background: var(--color-surface-2); align-self: flex-start; }
+    .snippet-bubble.dalya { background: var(--color-surface-0); border: 1px solid var(--color-border-hairline); border-left: 2px solid var(--color-brand-500); align-self: flex-start; }
+
+    .snippet-hotlist-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 6px;
+      font-size: 11px;
+      border-radius: 4px;
+    }
+    .snippet-hotlist-row .name { font-weight: 500; color: var(--color-text-1); flex: 1; }
+    .snippet-hotlist-row .time { color: var(--color-text-3); font-size: 10px; font-variant-numeric: tabular-nums; }
+    .snippet-hotlist-row .dot { width: 5px; height: 5px; border-radius: 50%; }
+    .snippet-hotlist-row .dot.hot { background: var(--color-error-500); }
+    .snippet-hotlist-row .dot.warm { background: var(--color-brand-500); }
+    .snippet-hotlist-row.is-top { background: var(--color-surface-2); }
+
+    .snippet-calendar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+    .snippet-cal-slot {
+      font-size: 9px;
+      padding: 4px 2px;
+      text-align: center;
+      border-radius: 3px;
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      color: var(--color-text-3);
+      font-variant-numeric: tabular-nums;
+    }
+    .snippet-cal-slot.booked { background: var(--color-brand-500); color: white; border-color: var(--color-brand-500); font-weight: 600; }
+    .snippet-cal-slot.suggested { background: var(--color-brand-50); color: var(--color-brand-700); border-color: var(--color-brand-100); }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * HOW WE SHIP — with sample alert mockup
+     * ════════════════════════════════════════════════════════════════════ */
+    .ship-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    @media (min-width: 900px) { .ship-grid { grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; } }
+    .ship-body p { margin-top: 16px; }
+    .ship-body p:first-of-type { margin-top: 0; }
+    .ship-body strong { color: var(--color-text-1); font-weight: 600; }
+    .ship-visual {
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: 12px;
+      box-shadow: var(--shadow-overlay-md);
+      overflow: hidden;
+    }
+    .ship-visual-head {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-border-hairline);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-surface-1);
+    }
+    .ship-visual-head .channel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-success-500); animation: pulse-dot 1600ms ease-in-out infinite; }
+    .ship-visual-head .channel { font-size: 11px; color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
+    .ship-visual-head .channel-meta { font-size: 11px; color: var(--color-text-3); margin-left: auto; font-feature-settings: "tnum"; }
+    .ship-visual-body { padding: 20px; }
+    .ship-visual-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .ship-visual-row .key { color: var(--color-text-3); width: 90px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+    .ship-visual-row .val { color: var(--color-text-1); font-weight: 500; }
+    .ship-visual-row .val.mono { font-family: var(--font-mono); font-feature-settings: "tnum", "ss01"; }
+    .ship-visual-amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-1);
+      font-variant-numeric: tabular-nums slashed-zero;
+      letter-spacing: -0.01em;
+      margin: 8px 0 4px;
+    }
+    .ship-visual-bottom {
+      padding: 12px 20px;
+      border-top: 1px solid var(--color-border-hairline);
+      background: var(--color-surface-1);
+      display: flex;
+      gap: 8px;
+    }
+    .ship-visual-bottom .mini-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .ship-visual-bottom .mini-btn.primary { background: var(--color-brand-600); color: white; }
+    .ship-visual-bottom .mini-btn.ghost { background: transparent; color: var(--color-text-2); }
+
+    /* ════════════════════════════════════════════════════════════════════
+     * TRUST + CLOSE + FOOTER
+     * ════════════════════════════════════════════════════════════════════ */
+    .trust {
+      border-top: 1px solid var(--color-border-hairline);
+      background: var(--color-surface-0);
+      padding: 28px 24px;
+    }
+    .trust-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-text-3);
+      font-weight: 600;
+    }
+    .trust-item::before {
+      content: "·";
+      margin-right: 6px;
+      color: var(--color-success-500);
+      font-weight: 700;
+    }
+    .trust-item:first-child::before { content: ""; margin: 0; }
+
+    .close {
+      text-align: center;
+      padding: 96px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .close h2 { margin-bottom: 16px; }
+    .close p { margin-bottom: 24px; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+    .footer {
+      border-top: 1px solid var(--color-border-hairline);
+      background: var(--color-surface-1);
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--color-text-3);
+    }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { color: var(--color-text-3); text-decoration: none; }
+    .footer-links a:hover { color: var(--color-text-1); }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-wordmark">dalya</a>
+      <div class="nav-links">
+        <a href="/brokerages" class="nav-link">For brokerages</a>
+        <a href="/agents" class="nav-link">For agents</a>
+        <a href="/how-it-works" class="nav-link">How it works</a>
+        <a href="/about" class="nav-link">About</a>
+      </div>
+      <a href="/contact" class="nav-cta">Talk to us</a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="container hero">
+    <div class="hero-grid">
+
+      <div class="hero-copy">
+        <div class="t-eyebrow" style="margin-bottom: 16px;">Built for Dubai brokerages</div>
+        <h1 class="t-display">Your agents close more deals.</h1>
+        <p class="hero-sub t-large">Dalya is the AI infrastructure that handles the work between deals. Buyer qualification, viewing logistics, listing acquisition, midnight WhatsApp replies. Your team's selling time goes to selling.</p>
+        <div class="hero-cta-row">
+          <a href="/contact" class="btn btn-primary">Talk to us</a>
+          <a href="/how-it-works" class="btn btn-secondary">See how it works</a>
+        </div>
+      </div>
+
+      <!-- Floating product visual -->
+      <div class="hero-visual">
+
+        <!-- Conversation card -->
+        <div class="floating-card float-conversation">
+          <div class="mini-chat-head">
+            <div class="mini-chat-avatar">SM</div>
+            <div class="mini-chat-name">Sara Mohammed</div>
+            <div class="mini-chat-time">14:21</div>
+          </div>
+          <div class="mini-chat-body">
+            <div class="mini-bubble them">My offer is AED 17M cash. Can we close in 30 days?</div>
+            <div class="mini-bubble dalya">AED 17,000,000 noted. Passing this to the seller now and circling back once they've reviewed.</div>
+          </div>
+        </div>
+
+        <!-- Alert card -->
+        <div class="floating-card float-alert">
+          <div class="mini-alert-head">
+            <span class="mini-alert-pill">Offer · above threshold</span>
+            <span class="mini-alert-time">14:23</span>
+          </div>
+          <div class="mini-alert-body">
+            <div class="mini-alert-label">Offer received</div>
+            <div class="mini-alert-amount">AED 17,000,000</div>
+            <div class="mini-alert-sub">Sara Mohammed · Palace Villas Ostra · Cash · 30-day close requested</div>
+          </div>
+        </div>
+
+        <!-- Stat card -->
+        <div class="floating-card float-stat">
+          <div class="mini-stat-body">
+            <div class="mini-stat-label">Revenue per agent</div>
+            <div class="mini-stat-value">+34%</div>
+            <div class="mini-stat-delta">vs same team, last 90 days</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ FRAME ════ -->
+  <div class="frame">
+    <div class="container frame-inner">
+      <div class="t-eyebrow" style="margin-bottom: 10px;">The frame</div>
+      <p class="frame-text">
+        Dalya is infrastructure your agents work in, not software that replaces them. We do the work that shouldn't take your best agents' time. Repetitive questions, late-night WhatsApp replies, viewing coordination, follow-up nudges. So they spend their day where their margin actually is. Closing deals.
+      </p>
+    </div>
+  </div>
+
+  <!-- ════ STATS / EVIDENCE ════ -->
+  <section class="bg-1">
+    <div class="container section-tight">
+      <div class="t-eyebrow" style="margin-bottom: 10px;">The outcome shape</div>
+      <h2 class="t-section" style="margin-bottom: 12px; max-width: 760px;">Empowerment, not replacement.</h2>
+      <p class="t-large" style="max-width: 680px; margin-bottom: 40px;">A better agent day means more deals closed. Same headcount, bigger book. Top brokers stay where their work is good.</p>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num">+34%</div>
+          <div class="stat-headline">More deals per agent.</div>
+          <p class="stat-body">Agents stop losing hours to repetitive work. The same team closes a bigger book.</p>
+          <div class="stat-footnote">Target outcome · measured against pre-Dalya baseline at design-partner brokerages</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2.1×</div>
+          <div class="stat-headline">Top agent retention.</div>
+          <p class="stat-body">The best brokers in Dubai leave when their day is grinding work. Take the grinding away, they renew.</p>
+          <div class="stat-footnote">Modeled across Dubai brokerage retention benchmarks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">24/7</div>
+          <div class="stat-headline">Buyer engagement.</div>
+          <p class="stat-body">Every WhatsApp inquiry answered the minute it lands. English, Arabic, Russian, Hindi. Above-threshold offers escalate immediately.</p>
+          <div class="stat-footnote">Live across every active listing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ TWO SURFACES (with live iframes) ════ -->
+  <section class="container section">
+    <div class="t-eyebrow" style="margin-bottom: 10px;">The platform</div>
+    <h2 class="t-section" style="margin-bottom: 12px; max-width: 760px;">Two views. One data layer.</h2>
+    <p class="t-large" style="max-width: 680px;">Owners see the brokerage. Agents work the day. Both built against the same shared listing, conversation, and offer data.</p>
+
+    <div class="surfaces">
+      <article class="surface-card">
+        <div class="surface-head">
+          <div class="surface-eyebrow">For agents · mobile + desktop</div>
+          <div class="surface-title">The day-to-day.</div>
+          <p class="surface-desc">Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation thread with the AI's draft ready before the agent replies.</p>
+        </div>
+        <div class="surface-preview">
+          <iframe src="../applications/agent-desktop.html" loading="lazy" title="Agent working surface"></iframe>
+        </div>
+        <div class="surface-foot">
+          <a href="../applications/agent-desktop.html" target="_blank">Open the live mockup →</a>
+        </div>
+      </article>
+
+      <article class="surface-card">
+        <div class="surface-head">
+          <div class="surface-eyebrow">For owners · desktop</div>
+          <div class="surface-title">Where your business actually stands.</div>
+          <p class="surface-desc">Revenue per agent. Listings in flight. Offers above threshold. Buyer engagement velocity. The dashboard reports. It does not advise.</p>
+        </div>
+        <div class="surface-preview">
+          <iframe src="../applications/owner-dashboard.html" loading="lazy" title="Brokerage owner dashboard"></iframe>
+        </div>
+        <div class="surface-foot">
+          <a href="../applications/owner-dashboard.html" target="_blank">Open the live mockup →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ════ PILLARS — each with a product snippet ════ -->
+  <section class="bg-1">
+    <div class="container section">
+      <div class="t-eyebrow" style="margin-bottom: 10px;">What Dalya handles</div>
+      <h2 class="t-section" style="margin-bottom: 12px; max-width: 760px;">Six pillars. One platform.</h2>
+      <p class="t-large" style="max-width: 680px;">Every pillar maps to a workflow your agents already do, and to time you've watched them lose. We do it once, for everyone, in the background.</p>
+
+      <div class="pillars">
+
+        <!-- Pillar 1 -->
+        <div class="pillar">
+          <div class="pillar-num">01 / Buyers</div>
+          <div class="pillar-title">Buyer engagement</div>
+          <p class="pillar-desc">A 24/7 multilingual responder grounded in the actual documents. Above-threshold offers escalate immediately. The rest get handled without your agents being awake.</p>
+          <div class="pillar-visual">
+            <div class="snippet-bubble buyer">Is this villa still available?</div>
+            <div class="snippet-bubble dalya">Yes — 5BD Palace Villas Ostra. Asking AED 17,253,444. What's drawing you to it?</div>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="pillar">
+          <div class="pillar-num">02 / Viewings</div>
+          <div class="pillar-title">Viewing logistics</div>
+          <p class="pillar-desc">Time slots, Ejari notice for tenanted units, building access, calendar invites, post-viewing capture. End to end, by the time your agent gets in the car.</p>
+          <div class="pillar-visual">
+            <div class="snippet-row"><span class="lbl">Wed</span></div>
+            <div class="snippet-calendar">
+              <div class="snippet-cal-slot">10:00</div>
+              <div class="snippet-cal-slot booked">11:30</div>
+              <div class="snippet-cal-slot suggested">14:00</div>
+              <div class="snippet-cal-slot">15:30</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="pillar">
+          <div class="pillar-num">03 / Listings</div>
+          <div class="pillar-title">Listing acquisition</div>
+          <p class="pillar-desc">DLD ownership tenure, capital-gain signal, building velocity, comparable transactions. Per-owner outreach drafts grounded in that owner's specific unit.</p>
+          <div class="pillar-visual">
+            <div class="snippet-row"><span class="lbl">Owner since</span><span class="snippet-num">2019</span></div>
+            <div class="snippet-row"><span class="lbl">Bought at</span><span class="snippet-num">AED 1.8M</span></div>
+            <div class="snippet-row"><span class="lbl">Comparable</span><span class="snippet-num">AED 2.3M</span><span class="snippet-pill success">+28%</span></div>
+          </div>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="pillar">
+          <div class="pillar-num">04 / Workflow</div>
+          <div class="pillar-title">Daily agent workflow</div>
+          <p class="pillar-desc">A morning hot list ranking who to call. Draft-and-send when the agent is in the loop. Follow-up nudges when a buyer goes quiet.</p>
+          <div class="pillar-visual">
+            <div class="snippet-hotlist-row is-top"><span class="dot hot"></span><span class="name">Sara Mohammed</span><span class="time">14:23</span></div>
+            <div class="snippet-hotlist-row"><span class="dot warm"></span><span class="name">Tom Henderson</span><span class="time">13:51</span></div>
+            <div class="snippet-hotlist-row"><span class="dot warm"></span><span class="name">+971 50 101 0012</span><span class="time">12:04</span></div>
+          </div>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="pillar">
+          <div class="pillar-num">05 / Negotiation</div>
+          <div class="pillar-title">Negotiation support</div>
+          <p class="pillar-desc">Comparables on demand. Seller flexibility signals. Suggested counters. Your agent decides. Dalya surfaces the inputs.</p>
+          <div class="pillar-visual">
+            <div class="snippet-row"><span class="lbl">Offer</span><span class="snippet-num">AED 16.5M</span><span class="snippet-pill warning">−4.4%</span></div>
+            <div class="snippet-row"><span class="lbl">3 comps</span><span class="snippet-num">AED 17.1M avg</span></div>
+            <div class="snippet-row"><span class="lbl">Suggest</span><span class="snippet-num">Counter 17.0M</span></div>
+          </div>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="pillar">
+          <div class="pillar-num">06 / Sellers</div>
+          <div class="pillar-title">Seller-side workflow</div>
+          <p class="pillar-desc">Weekly seller updates auto-drafted with seven days of context. The agent reviews and sends with one tap. Friday afternoons stop disappearing.</p>
+          <div class="pillar-visual">
+            <div class="snippet-row"><span class="lbl">This week</span></div>
+            <div class="snippet-row"><span class="lbl">Views</span><span class="snippet-num">14</span><span class="lbl" style="margin-left:auto;">Offers</span><span class="snippet-num">2</span></div>
+            <div class="snippet-row"><span class="lbl">Top</span><span class="snippet-num">AED 17.0M</span><span class="snippet-pill brand">Above ask</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ HOW WE SHIP — with sample alert mockup ════ -->
+  <section class="container section">
+    <div class="ship-grid">
+      <div>
+        <div class="t-eyebrow" style="margin-bottom: 10px;">How we ship</div>
+        <h2 class="t-section" style="margin-bottom: 20px;">Design partnerships, not enterprise sales.</h2>
+        <div class="ship-body t-large">
+          <p>We work with one brokerage at a time, deep, for sixty to ninety days. Every listing your team signs in that window runs through Dalya. Every WhatsApp inquiry routes through the bot.</p>
+          <p>We sit on weekly calls with your owners and your top agents. You get the platform. We get the feedback that tells us where to build next.</p>
+          <p><strong>Pricing is deferred.</strong> We don't charge during the design partnership. Once your agents would mutiny if we took the product away, we negotiate. Until then, the only thing we're optimising for is whether you want to keep using it.</p>
+        </div>
+      </div>
+
+      <!-- Sample alert — this is what owners actually see -->
+      <div class="ship-visual">
+        <div class="ship-visual-head">
+          <span class="channel-dot"></span>
+          <span class="channel">Live · Telegram alert</span>
+          <span class="channel-meta">14:23 GST</span>
+        </div>
+        <div class="ship-visual-body">
+          <div class="t-eyebrow" style="margin-bottom: 8px;">Offer received · above threshold</div>
+          <div class="ship-visual-amount">AED 17,000,000</div>
+          <div class="ship-visual-row"><span class="key">Buyer</span><span class="val">Sara Mohammed</span></div>
+          <div class="ship-visual-row"><span class="key">Listing</span><span class="val">Palace Villas Ostra · 2805</span></div>
+          <div class="ship-visual-row"><span class="key">Asking</span><span class="val mono">AED 17,253,444</span></div>
+          <div class="ship-visual-row"><span class="key">Threshold</span><span class="val mono">AED 16,894,000</span></div>
+          <div class="ship-visual-row"><span class="key">Terms</span><span class="val">Cash · 30-day close requested</span></div>
+        </div>
+        <div class="ship-visual-bottom">
+          <span class="mini-btn primary">Accept</span>
+          <span class="mini-btn ghost">Counter</span>
+          <span class="mini-btn ghost">Decline</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ TRUST STRIP ════ -->
+  <div class="trust">
+    <div class="trust-inner">
+      <span class="trust-item">RERA licensed via Mahoroba Realty</span>
+      <span class="trust-item">UAE PDPL compliant</span>
+      <span class="trust-item">EN · AR · RU · HI</span>
+      <span class="trust-item">Dubai-based</span>
+    </div>
+  </div>
+
+  <!-- ════ CLOSING CTA ════ -->
+  <section class="close">
+    <div class="t-eyebrow" style="margin-bottom: 16px;">Currently in design partnership</div>
+    <h2 class="t-section">Run a 60-day pilot with us.</h2>
+    <p class="t-large">You give us your listings and your team's feedback. We give you the platform. No pricing conversation until your agents are using it daily.</p>
+    <a href="/contact" class="btn btn-primary">Talk to us</a>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Mahoroba Realty · operating Dalya · RERA licensed</span>
+      <div class="footer-links">
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

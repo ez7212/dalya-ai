@@ -1,0 +1,294 @@
+{
+  "idx": 3,
+  "slug": "priya",
+  "persona": "Priya Sharma — Indian expat, Hinglish code-switching",
+  "phone": "+971501010003",
+  "listing_id": "HARNESS_listing_03_d8351536",
+  "listing_facts": {
+    "property_name": "Anya Phase 2 By Emaar",
+    "beds": 4,
+    "baths": 5,
+    "sqft": 2700.0,
+    "plot_sqft": null,
+    "price_aed": 3600000.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 50,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 3514761.22,
+    "offer_threshold_pct": 97.6
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "hi! kya yeh property still available hai? saw on insta",
+      "bot": "Hi! Yes, the Anya Phase 2 townhouse is still available at AED 3,600,000. It's a 4-bed, 5-bath, 2,700 sqft unit under construction in Arabian Ranches 3, handing over October 2026.\n\nI'm Dalya with Mahoroba Test Brokerage. What else would you like to know about it?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 43.8
+    },
+    {
+      "turn": 2,
+      "buyer": "We're looking for forever home na. 4-5 BR chahiye, 3 kids",
+      "bot": "Perfect fit then, 4 beds, 5 baths gives you good space for the kids. Arabian Ranches 3 is exactly that kind of community, family-oriented, gated, lots of green space and amenities. Pool, kids' play areas, skate park, sports courts, jogging tracks.\n\nLocation-wise you're about 25 min to Downtown, 23 min to the airport, close to Global Village and the golf club. Schools nearby include Ranches Primary (8 min drive, UK curriculum, KHDA Very Good rating), GEMS options a bit further out.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 29.7
+    },
+    {
+      "turn": 3,
+      "buyer": "Schools important — DPS or GEMS nearby?",
+      "bot": "Ranches Primary is your closest option - 8 min drive, UK curriculum, KHDA Very Good rating. It's in Arabian Ranches 2, so very local to you.\n\nFor GEMS schools, the nearest ones are GEMS Wellington Academy in Silicon Oasis (about 20 min) and GEMS Winchester and GEMS FirstPoint further out. Worth reaching out to them directly on curriculum and admission timelines, especially if your kids have specific year groups in mind.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 51.1
+    },
+    {
+      "turn": 4,
+      "buyer": "Bachchon ke liye safe community chahiye. Is it gated? CCTV vagairah?",
+      "bot": "Bilkul, it's a gated community with 24/7 security - that's standard across Arabian Ranches 3. CCTV coverage, controlled access points, security patrols.\n\nIt's designed as a family-focused neighbourhood, so safety and controlled entry are core. Private gardens per unit, covered parking, maid's rooms - setup is very residential and secure.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 47.9
+    },
+    {
+      "turn": 5,
+      "buyer": "Pricing kya hai? And what's the loan situation — can I get mortgage on this?",
+      "bot": "The asking price is AED 3,600,000. Off-plan mortgage is possible only in a narrower set of cases. Banks typically cap it around 50% LTV, the buyer usually needs to have paid about 50% to the developer first, the developer normally needs to be Tier-1 bank-approved, and many banks want 40-50% construction completion before they consider it.\n\nA mortgage advisor should confirm the exact bank policy before you make an offer.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 36.2
+    },
+    {
+      "turn": 6,
+      "buyer": "Husband works in JLT, kitna time lagega commute mein from the community?",
+      "bot": "JLT is about 31 min by car from Anya Phase 2 By Emaar, ~42 km, in typical traffic. Exact time varies with the hour and your start point.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 41.6
+    },
+    {
+      "turn": 7,
+      "buyer": "Builder kaun hai? the developer reliable hai na? handover kab hai?",
+      "bot": "Emaar Properties is one of Dubai's established developers, with landmark projects including Downtown Dubai and Burj Khalifa. Handover is October 2026. Still verify the SPA and title/NOC position before you commit.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 39.7
+    },
+    {
+      "turn": 8,
+      "buyer": "What's included — parking, maid room, kya kya?",
+      "bot": "Yes to all three:\n\n- Covered parking within the property\n- Maid's room\n- Private garden per unit\n\nThe unit is 2,700 sqft built-up, so plenty of space for a family of five.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 44.1
+    },
+    {
+      "turn": 9,
+      "buyer": "Best offer on AED 3,585,000 cash, no financing needed. Kya bolte ho?",
+      "bot": "AED 3,585,000, got it. Passing this to the seller now and circling back once they've reviewed. Please send your name so I can attach it to the offer.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "57e9a7bf-977c-49a9-8b05-df7277f77037",
+        "listing_id": "HARNESS_listing_03_d8351536",
+        "buyer_phone": "+971501010003",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "Best offer on AED 3,585,000 cash, no financing needed. Kya bolte ho?",
+        "offer_amount_aed": 3585000.0,
+        "listing_price_aed": 3600000.0,
+        "negotiation_threshold_aed": 3514761.22,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "**PROPERTY INQUIRY SUMMARY**\n\n1. **Buyer seriousness**: The buyer demonstrated strong intent through detailed due diligence questions covering mortgage eligibility, commute logistics, developer reputation, handover timeline, and unit amenities (parking, maid's room, garden), concluding with a cash offer of AED 3,585,000.\n\n2. **Stated constraints & context**: Buyer is relocating with a family of five, has a spouse working in JLT, requires mortgage-free financing, and prioritizes practical features like covered parking and maid's room; move timeline appears linked to October 2026 handover.\n\n3. **Recommended next action**: Submit the cash offer (AED 3,585,000) to the seller immediately with buyer's contact details; once seller responds, confirm mortgage is not a contingency and expedite SPA review and title/NOC verification to maintain momentum.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 3585000.0,
+          "percent_of_asking": 99.6,
+          "floor_aed": 3514761.22,
+          "vs_floor_aed": 70238.7799999998,
+          "buyer_ref": "+971501010003",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "16TQOJX0CQ",
+          "body": "[OFFER] Unknown buyer (+971501010003)\n\nProperty: HARNESS_listing_03_d8351536\nOffer: AED 3,585,000\nAsking: AED 3,600,000\nNotification threshold: AED 3,514,761\nPayload:\n- amount_aed: 3585000.0\n- percent_of_asking: 99.6\n- floor_aed: 3514761.22\n- vs_floor_aed: 70238.7799999998\n- buyer_ref: +971501010003\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"Best offer on AED 3,585,000 cash, no financing needed. Kya bolte ho?\"\n\nSummary: **PROPERTY INQUIRY SUMMARY**\n\n1. **Buyer seriousness**: The buyer demonstrated strong intent through detailed due diligence questions covering mortgage eligibility, commute logistics, developer reputation, handover timeline, and unit amenities (parking, maid's room, garden), concluding with a cash offer of AED 3,585,000.\n\n2. **Stated constraints & context**: Buyer is relocating with a family of five, has a spouse working in JLT, requires mortgage-free financing, and prioritizes practical features like covered parking and maid's room; move timeline appears linked to October 2026 handover.\n\n3. **Recommended next action**: Submit the cash offer (AED 3,585,000) to the seller immediately with buyer's contact details; once seller responds, confirm mortgage is not a contingency and expedite SPA review and title/NOC verification to maintain momentum.\n\n[Ref: 16TQOJX0CQ]"
+        }
+      ],
+      "error": null,
+      "duration_s": 55.6
+    },
+    {
+      "turn": 10,
+      "buyer": "OK thanks, will speak to husband. WhatsApp number share karo direct please?",
+      "bot": "I'm Mahoroba Test Brokerage's property advisor and I only handle this listing: price, specs, payment, transfer process, and genuine next steps.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 31.7
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi! Yes, the Anya Phase 2 townhouse is still available at AED 3,600,000. It's a 4-bed, 5-bath, 2,700 sqft unit under construction in Arabian Ranches 3, handing over October 2026.\n\nI'm Dalya with Mahoroba Test Brokerage. What else would you like to know about it?\nPerfect fit then, 4 beds, 5 baths giv"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 2,787,779; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 3,514,761"
+    },
+    {
+      "check": "offer_escalation_t9",
+      "pass": true,
+      "evidence": "turn 9 escalation_triggered=True"
+    },
+    {
+      "check": "no_seller_phone_t10",
+      "pass": true,
+      "evidence": "I'm Mahoroba Test Brokerage's property advisor and I only handle this listing: price, specs, payment, transfer process, and genuine next steps."
+    },
+    {
+      "check": "no_language_lecture",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['at_or_above'], 'envelope_token': '16TQOJX0CQ', 'body': '[OFFER] Unknown buyer (+971501010003)\\n\\nProperty: HARNESS_listing_03_d8351536\\nOffer: AED 3,585,000\\nAsking: AED 3,600,000\\"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t5",
+      "pass": true,
+      "evidence": "expected asking=AED 3,600,000; bot=The asking price is AED 3,600,000. Off-plan mortgage is possible only in a narrower set of cases. Banks typically cap it around 50% LTV, the buyer usually needs to have paid about 50% to the developer first, the developer normally needs to "
+    },
+    {
+      "check": "assigned_developer_or_project_referenced",
+      "pass": true,
+      "evidence": "expected one of=['emaar properties', 'anya phase 2 by emaar', 'anya', 'anya']; hits=['emaar properties', 'anya phase 2 by emaar', 'anya', 'anya']"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    9
+  ],
+  "summary_auto": "1/10 turns escalated.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.1,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Priya Sharma — Indian expat, Hinglish code-switching",
+    "phone": "+971501010003",
+    "listing_id": "HARNESS_listing_03_d8351536",
+    "thread_count": 1,
+    "question_count": 1,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 1.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "offer": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

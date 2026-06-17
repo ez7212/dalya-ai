@@ -1,0 +1,306 @@
+{
+  "idx": 30,
+  "slug": "threading_cross_category",
+  "persona": "Threading control — category isolation",
+  "phone": "+971501010030",
+  "listing_id": "HARNESS_listing_04_413ffb20",
+  "listing_facts": {
+    "property_name": "The Pinnacle at Sobha Central",
+    "beds": 1,
+    "baths": 2,
+    "sqft": 639.19,
+    "plot_sqft": null,
+    "price_aed": 2187575.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 30,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 2062254.55,
+    "offer_threshold_pct": 94.3
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Can you confirm the exact service charges for this unit?",
+      "bot": "Mahoroba Test Brokerage's property advisor here. I don't have the exact service charge in the listing record. I've flagged it for Eric, the Mahoroba Test Brokerage agent managing this listing to confirm before you rely on it.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "3e9b363c-87cf-4196-af75-560016f93ad7",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010030",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "service charge",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 37.4
+    },
+    {
+      "turn": 2,
+      "buyer": "Can you confirm the exact floor level and view?",
+      "bot": "I don't have the exact floor level, and view and orientation in the listing record. I'm asking Eric to confirm that against current listing and market data.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "3e9b363c-87cf-4196-af75-560016f93ad7",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010030",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "1. Can you confirm the exact service charges for this unit?\n2. Can you confirm the exact floor level and view?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "listing_fact_gap",
+        "regulatory_category": null,
+        "payload": {
+          "topic": "floor level, and view and orientation",
+          "question_digest": "1. Can you confirm the exact service charges for this unit?\n2. Can you confirm the exact floor level and view?",
+          "requested_action": "Confirm the missing listing fact and reply to the buyer."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 45.4
+    },
+    {
+      "turn": 3,
+      "buyer": "Can you confirm the security, CCTV, and access control details?",
+      "bot": "I don't have the specific security system, CCTV coverage, or access-control details for this unit in the listing record. Those are standard in Sobha Central, resident-only lobbies, building access control, but the exact spec varies by tower and floor.\n\nI've flagged this for Eric to confirm the precise setup for this unit before you commit.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "general_lead_capture",
+        "conversation_id": "3e9b363c-87cf-4196-af75-560016f93ad7",
+        "listing_id": "HARNESS_listing_04_413ffb20",
+        "buyer_phone": "+971501010030",
+        "buyer_name": null,
+        "trigger": "general_enquiry",
+        "trigger_message": "Can you confirm the security, CCTV, and access control details?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "promise_kept",
+        "regulatory_category": null,
+        "payload": {
+          "requested_action": "Follow up because the buyer-facing reply promised a handoff.",
+          "question_digest": "Can you confirm the security, CCTV, and access control details?"
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "2F7BZ25HEV",
+          "body": "[INFO_GAP] Unknown buyer (+971501010030)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- topic: service charge\n- question_digest: 1. Can you confirm the exact service charges for this unit?\n- requested_action: Confirm the missing listing fact and reply to the buyer.\nTags: info_gap\n\nBuyer message:\n\"1. Can you confirm the exact service charges for this unit?\"\n\n[Ref: 2F7BZ25HEV]"
+        },
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "QHWWHQQUWS",
+          "body": "[INFO_GAP] Unknown buyer (+971501010030)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: listing_fact_gap\nPayload:\n- topic: floor level, and view and orientation\n- question_digest: 1. Can you confirm the exact service charges for this unit?\n2. Can you confirm the exact floor level and view?\n- requested_action: Confirm the missing listing fact and reply to the buyer.\nTags: info_gap\n\nBuyer message:\n\"1. Can you confirm the exact service charges for this unit?\n2. Can you confirm the exact floor level and view?\"\n\nOpen questions on this escalation:\n1. Can you confirm the exact service charges for this unit?\n2. Can you confirm the exact floor level and view?\n\n[Ref: QHWWHQQUWS]"
+        },
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "general_lead_capture"
+          ],
+          "envelope_token": "DWAVZIE0A",
+          "body": "[GENERAL_LEAD_CAPTURE] Unknown buyer (+971501010030)\n\nProperty: HARNESS_listing_04_413ffb20\nSubtype: promise_kept\nPayload:\n- requested_action: Follow up because the buyer-facing reply promised a handoff.\n- question_digest: Can you confirm the security, CCTV, and access control details?\nTags: general_lead_capture\n\nBuyer message:\n\"Can you confirm the security, CCTV, and access control details?\"\n\n[Ref: DWAVZIE0A]"
+        }
+      ],
+      "error": null,
+      "duration_s": 32.1,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "023ed0f8-9b06-4472-8187-5c720be9ed6b",
+            "category": "fees_and_charges",
+            "token": "2F7BZ25HEV"
+          },
+          {
+            "action": "initial_sent",
+            "thread_id": "0ba46ad3-09bb-4aaf-8689-a6f65d2eff7f",
+            "category": "physical_property",
+            "token": "QHWWHQQUWS"
+          },
+          {
+            "action": "initial_sent",
+            "thread_id": "bf6dabcc-e540-483d-bd5c-85cbdbd73df6",
+            "category": "building_amenities",
+            "token": "DWAVZIE0A"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Mahoroba Test Brokerage's property advisor here. I don't have the exact service charge in the listing record. I've flagged it for Eric, the Mahoroba Test Brokerage agent managing this listing to confirm before you rely on it.\nI don't have the exact floor level, and view and orientation in the listin"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 1,704,859; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 2,062,255"
+    },
+    {
+      "check": "fees_gap_escalated",
+      "pass": true,
+      "evidence": "turn 1 escalation_triggered=True"
+    },
+    {
+      "check": "physical_gap_escalated",
+      "pass": true,
+      "evidence": "turn 2 escalation_triggered=True"
+    },
+    {
+      "check": "document_gap_escalated",
+      "pass": true,
+      "evidence": "turn 3 escalation_triggered=True"
+    },
+    {
+      "check": "cross_category_messages_include_each_topic",
+      "pass": true,
+      "evidence": "missing=[]; agent_messages=3"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['info_gap'], 'envelope_token': '2F7BZ25HEV', 'body': '[INFO_GAP] Unknown buyer (+971501010030)\\n\\nProperty: HARNESS_listing_04_413ffb20\\nSubtype: listing_fact_gap\\nPayload:\\n- topic"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    1,
+    2,
+    3
+  ],
+  "summary_auto": "Cross-category threading control — 3 esc.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Threading control — category isolation",
+    "phone": "+971501010030",
+    "listing_id": "HARNESS_listing_04_413ffb20",
+    "thread_count": 3,
+    "question_count": 4,
+    "appended_question_count": 1,
+    "avg_questions_per_thread": 1.3333,
+    "append_rate": 0.25,
+    "debounce_bundle_rate": 0.3333,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "fees_and_charges": 1,
+      "physical_property": 1,
+      "building_amenities": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

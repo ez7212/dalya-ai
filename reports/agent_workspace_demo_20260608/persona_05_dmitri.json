@@ -1,0 +1,437 @@
+{
+  "idx": 5,
+  "slug": "dmitri",
+  "persona": "Dmitri Volkov — Russian, broken English with typos",
+  "phone": "+971501010005",
+  "listing_id": "HARNESS_listing_02_7cdd1b00",
+  "listing_facts": {
+    "property_name": "Mirage The Oasis",
+    "beds": 6,
+    "baths": 7,
+    "sqft": 15757.0,
+    "plot_sqft": null,
+    "price_aed": 21693243.0,
+    "property_type": "off_plan",
+    "status": "Under Construction",
+    "paid_to_developer_pct": 40,
+    "noc_threshold_pct": 40,
+    "offer_threshold_aed": 20749669.05,
+    "offer_threshold_pct": 95.7
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "hello prce??",
+      "bot": "Hi there. I'm Dalya from Mahoroba Test Brokerage.\n\nThe asking price on Mirage The Oasis is AED 21,693,243 for this 6-bed, 7-bath villa.\n\nWho am I speaking with?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 30.7
+    },
+    {
+      "turn": 2,
+      "buyer": "wht is asking pricee, cash buyer no problm",
+      "bot": "AED 21,693,243.\n\nAs a cash buyer, you'd settle the remaining developer payments (AED 13,015,946) directly to Emaar across the remaining milestones through handover in April 2028. You'd also cover the DLD transfer fee (4% of asking: AED 867,730) and our brokerage fee (0.85%: AED 184,393) at closing.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 50.1
+    },
+    {
+      "turn": 3,
+      "buyer": "HOW MNY BEDROOM",
+      "bot": "6 bedrooms, 7 bathrooms, 15,757 sqft built-up area.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 40.7
+    },
+    {
+      "turn": 4,
+      "buyer": "develper good?? my friend say the developer is OK",
+      "bot": "Emaar is one of Dubai's established developers, with landmark projects including Downtown Dubai and Burj Khalifa. Handover is April 2028. Still verify the SPA and title/NOC position before you commit.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 36.9
+    },
+    {
+      "turn": 5,
+      "buyer": "vyu of sea?",
+      "bot": "The Oasis is a water-centric community with crystal lagoons and man-made beaches, but I don't have the specific unit orientation or sea-view details in the listing data.\n\nI can send you the official developer renders and floor plans, they'll show the layout and views clearly.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "info_gap",
+        "conversation_id": "6f6c4972-8b8c-4a4c-8bf9-ea1e3daa96d7",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "unknown",
+        "trigger_message": "vyu of sea?",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "materials_request",
+        "regulatory_category": null,
+        "payload": {
+          "materials": [
+            "floor_plan",
+            "renders",
+            "brochure"
+          ],
+          "requested_action": "Send the promised floor plans, renders, brochure, or listing media to the buyer.",
+          "question_digest": "vyu of sea?"
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 39.6
+    },
+    {
+      "turn": 6,
+      "buyer": "kanI come tomorow saturday",
+      "bot": "This is an off-plan property under construction, physical viewings aren't available yet.\n\nI can send you the official developer renders and floor plans right now, they give a clear picture of the finishes and layout.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "materials_request",
+        "conversation_id": "6f6c4972-8b8c-4a4c-8bf9-ea1e3daa96d7",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "viewing_request",
+        "trigger_message": "kanI come tomorow saturday",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": null,
+        "escalation_subtype": "off_plan_materials",
+        "regulatory_category": null,
+        "payload": {
+          "materials": [
+            "floor_plan",
+            "renders",
+            "brochure"
+          ],
+          "requested_action": "Send off-plan floor plans, renders, or brochure instead of scheduling a physical viewing."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 56.0
+    },
+    {
+      "turn": 7,
+      "buyer": "noc redy or not",
+      "bot": "NOC eligible, this unit can be transferred now. Once you make an offer and the SPA is signed, the developer NOC typically comes through in 1-5 days, then title transfers at the RERA trustees office.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 47.0
+    },
+    {
+      "turn": 8,
+      "buyer": "ok AED 20,853,000 cash final pls",
+      "bot": "Got it, AED 20,853,000. I'll forward to the seller and follow up with their response. What name should I put this under?",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "6f6c4972-8b8c-4a4c-8bf9-ea1e3daa96d7",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "ok AED 20,853,000 cash final pls",
+        "offer_amount_aed": 20853000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "The buyer demonstrated genuine interest through specific technical questions about the developer's track record, NOC eligibility, and timeline, culminating in a firm cash offer of AED 20,853,000. Their main constraints appear to be construction timeline verification and clarity on transfer procedures; motivation and financial background are not stated. Recommend obtaining the buyer's full name/entity details to formally present the offer to the seller and proceed with SPA preparation once accepted.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 20853000.0,
+          "percent_of_asking": 96.1,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 103330.94999999925,
+          "buyer_ref": "+971501010005",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "YSJJWX8B21",
+          "body": "[OFFER] Unknown buyer (+971501010005)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 20,853,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 20853000.0\n- percent_of_asking: 96.1\n- floor_aed: 20749669.05\n- vs_floor_aed: 103330.94999999925\n- buyer_ref: +971501010005\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"ok AED 20,853,000 cash final pls\"\n\nSummary: The buyer demonstrated genuine interest through specific technical questions about the developer's track record, NOC eligibility, and timeline, culminating in a firm cash offer of AED 20,853,000. Their main constraints appear to be construction timeline verification and clarity on transfer procedures; motivation and financial background are not stated. Recommend obtaining the buyer's full name/entity details to formally present the offer to the seller and proceed with SPA preparation once accepted.\n\n[Ref: YSJJWX8B21]"
+        }
+      ],
+      "error": null,
+      "duration_s": 52.3
+    },
+    {
+      "turn": 9,
+      "buyer": "AED 21,165,000 last offer cash today",
+      "bot": "AED 21,165,000 noted. Sending this over to the seller now. I'll be back to you with their response shortly. Send your name and I'll keep the offer record clean.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "offer",
+        "conversation_id": "6f6c4972-8b8c-4a4c-8bf9-ea1e3daa96d7",
+        "listing_id": "HARNESS_listing_02_7cdd1b00",
+        "buyer_phone": "+971501010005",
+        "buyer_name": null,
+        "trigger": "offer_submission",
+        "trigger_message": "AED 21,165,000 last offer cash today",
+        "offer_amount_aed": 21165000.0,
+        "listing_price_aed": 21693243.0,
+        "negotiation_threshold_aed": 20749669.05,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": "[REVISED OFFER] Buyer revised offer upward: AED 20,853,000 → AED 21,165,000.\n\nBuyer enquired about Mirage The Oasis Unit . Submitted offer of AED 21,165,000 against AED 21,693,243 asking (2.4% below). Escalation triggered — review conversation for context.",
+        "priority": "high",
+        "seller_intent": null,
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "amount_aed": 21165000.0,
+          "percent_of_asking": 97.6,
+          "floor_aed": 20749669.05,
+          "vs_floor_aed": 415330.94999999925,
+          "buyer_ref": "+971501010005",
+          "engagement_gate_passed": true,
+          "quality_flags": []
+        }
+      },
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "at_or_above"
+          ],
+          "envelope_token": "XP9IYTFAEC",
+          "body": "[OFFER] Unknown buyer (+971501010005)\n\nProperty: HARNESS_listing_02_7cdd1b00\nOffer: AED 21,165,000\nAsking: AED 21,693,243\nNotification threshold: AED 20,749,669\nPayload:\n- amount_aed: 21165000.0\n- percent_of_asking: 97.6\n- floor_aed: 20749669.05\n- vs_floor_aed: 415330.94999999925\n- buyer_ref: +971501010005\n- engagement_gate_passed: True\nTags: at_or_above\n\nBuyer message:\n\"AED 21,165,000 last offer cash today\"\n\nSummary: [REVISED OFFER] Buyer revised offer upward: AED 20,853,000 → AED 21,165,000.\n\nBuyer enquired about Mirage The Oasis Unit . Submitted offer of AED 21,165,000 against AED 21,693,243 asking (2.4% below). Escalation triggered — review conversation for context.\n\n[Ref: XP9IYTFAEC]"
+        }
+      ],
+      "error": null,
+      "duration_s": 56.6
+    },
+    {
+      "turn": 10,
+      "buyer": "give me ownr whatsap no agent fee pls",
+      "bot": "I'm Mahoroba Test Brokerage's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "info_gap"
+          ],
+          "envelope_token": "GM5TRQ6PKR",
+          "body": "[INFO_GAP] Unknown buyer (+971501010005)\n\nProperty: HARNESS_listing_02_7cdd1b00\nSubtype: materials_request\nPayload:\n- materials: ['floor_plan', 'renders', 'brochure']\n- requested_action: Send the promised floor plans, renders, brochure, or listing media to the buyer.\n- question_digest: vyu of sea?\nTags: info_gap\n\nBuyer message:\n\"vyu of sea?\"\n\n[Ref: GM5TRQ6PKR]"
+        },
+        {
+          "to_agent_phone": "+971500009003",
+          "from_agents_ai_number": "+971500009002",
+          "tags": [
+            "materials_request"
+          ],
+          "envelope_token": "CEV9IR7WCT",
+          "body": "[MATERIALS_REQUEST] Unknown buyer (+971501010005)\n\nProperty: HARNESS_listing_02_7cdd1b00\nSubtype: off_plan_materials\nPayload:\n- materials: ['floor_plan', 'renders', 'brochure']\n- requested_action: Send off-plan floor plans, renders, or brochure instead of scheduling a physical viewing.\nTags: materials_request\n\nBuyer message:\n\"kanI come tomorow saturday\"\n\n[Ref: CEV9IR7WCT]"
+        }
+      ],
+      "error": null,
+      "duration_s": 48.6,
+      "threading_flush": {
+        "actions": [
+          {
+            "action": "initial_sent",
+            "thread_id": "fe9d367d-d88f-4117-8650-de7b694b179c",
+            "category": "physical_property",
+            "token": "GM5TRQ6PKR"
+          },
+          {
+            "action": "initial_sent",
+            "thread_id": "a9b1569e-7317-40f2-b390-f4a3fed926a3",
+            "category": "regulatory_documents",
+            "token": "CEV9IR7WCT"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi there. I'm Dalya from Mahoroba Test Brokerage.\n\nThe asking price on Mirage The Oasis is AED 21,693,243 for this 6-bed, 7-bath villa.\n\nWho am I speaking with?\nAED 21,693,243.\n\nAs a cash buyer, you'd settle the remaining developer payments (AED 13,015,946) directly to Emaar across the remaining mil"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "confidential=AED 16,900,368; clean"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "skipped: not ready"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "plot unknown"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 20,749,669"
+    },
+    {
+      "check": "viewing_escalation_t6",
+      "pass": true,
+      "evidence": "turn 6 escalation_triggered=True"
+    },
+    {
+      "check": "noc_substantive_t7",
+      "pass": true,
+      "evidence": "NOC eligible, this unit can be transferred now. Once you make an offer and the SPA is signed, the developer NOC typically comes through in 1-5 days, then title transfers at the RERA trustees office."
+    },
+    {
+      "check": "offer_escalation_t8_or_t9",
+      "pass": true,
+      "evidence": "t8=True t9=True"
+    },
+    {
+      "check": "no_seller_phone_t10",
+      "pass": true,
+      "evidence": "I'm Mahoroba Test Brokerage's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process."
+    },
+    {
+      "check": "fee_not_waived_t10",
+      "pass": true,
+      "evidence": "I'm Mahoroba Test Brokerage's property advisor. I can't share seller contact details, but I can answer questions here or route a serious offer through the proper transaction process."
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+971500009003",
+      "pass": true,
+      "evidence": "expected=+971500009003; routed=[{'to_agent_phone': '+971500009003', 'from_agents_ai_number': '+971500009002', 'tags': ['at_or_above'], 'envelope_token': 'YSJJWX8B21', 'body': '[OFFER] Unknown buyer (+971501010005)\\n\\nProperty: HARNESS_listing_02_7cdd1b00\\nOffer: AED 20,853,000\\nAsking: AED 21,693,24"
+    },
+    {
+      "check": "assigned_asking_price_quoted_t1",
+      "pass": true,
+      "evidence": "expected asking=AED 21,693,243; bot=Hi there. I'm Dalya from Mahoroba Test Brokerage.\n\nThe asking price on Mirage The Oasis is AED 21,693,243 for this 6-bed, 7-bath villa.\n\nWho am I speaking with?"
+    },
+    {
+      "check": "assigned_developer_or_project_referenced",
+      "pass": true,
+      "evidence": "expected one of=['emaar', 'mirage the oasis', 'the oasis by emaar', 'mirage']; hits=['emaar', 'mirage the oasis', 'mirage']"
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    5,
+    6,
+    8,
+    9
+  ],
+  "summary_auto": "4/10 turns escalated.",
+  "issues_found": [],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.2,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Dmitri Volkov — Russian, broken English with typos",
+    "phone": "+971501010005",
+    "listing_id": "HARNESS_listing_02_7cdd1b00",
+    "thread_count": 4,
+    "question_count": 4,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.5,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "regulatory_documents": 1,
+      "physical_property": 1,
+      "offer": 2
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}

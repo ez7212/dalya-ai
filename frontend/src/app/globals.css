@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+@theme {
+  /* ════════════════════════════════════════════════════════════════════
+   * LEGACY TOKENS — used by the dashboard + Mahoroba consumer surfaces.
+   * Kept until those surfaces are migrated to the new brand system.
+   * Do not use in new components — pick from the B2B tokens below.
+   * ════════════════════════════════════════════════════════════════════ */
+  --color-gold:     #C9A96E;
+  --color-gold-lt:  #DFC49A;
+  --color-gold-dk:  #B08848;
+  --color-copper:   #B87333;
+  --color-ink:      #1A2B3C;
+  --color-slate:    #2E4057;
+  --color-deep:     #0F1923;
+  --color-sand:     #F5EFE6;
+  --color-n-50:     #FAFAF8;
+  --color-n-200:    #E8E0D5;
+  --color-n-300:    #C9BFB3;
+  --color-n-500:    #A89F98;
+  --color-n-700:    #706860;
+
+  /* ════════════════════════════════════════════════════════════════════
+   * B2B BRAND TOKENS — Phase 1-3 locked. Use these for marketing site
+   * and for the next dashboard migration pass. Slate blue replaces gold
+   * as the sole brand-driven UI color (per brand/PHASE-1-LOCK.md).
+   * Mirrors brand/applications/_tokens.css.
+   * ════════════════════════════════════════════════════════════════════ */
+
+  /* Brand scale */
+  --color-brand-50:  #EEF2F7;
+  --color-brand-100: #D6E0EC;
+  --color-brand-200: #B0C2D7;
+  --color-brand-300: #86A0BD;
+  --color-brand-400: #5F7DA2;
+  --color-brand-500: #3D5A80;  /* primary — wordmark, focus rings, links, selected */
+  --color-brand-600: #324B6B;  /* top-tier CTA rest state (3-5 across product) */
+  --color-brand-700: #283C56;  /* brand-600 pressed state */
+  --color-brand-800: #1F2E41;
+  --color-brand-900: #1B2A3F;
+
+  /* Neutral scale — warm-leaning, light-default */
+  --color-neutral-0:   #FFFFFF;
+  --color-neutral-50:  #FAFAF9;  /* surface-0 (page background) */
+  --color-neutral-100: #F4F4F2;  /* surface-1 (card) */
+  --color-neutral-200: #E8E8E5;  /* border-hairline */
+  --color-neutral-300: #D6D6D2;  /* border-default */
+  --color-neutral-400: #A8A8A2;
+  --color-neutral-500: #7B7B76;  /* text-3 (muted) */
+  --color-neutral-600: #5C5C57;  /* text-2 (secondary) */
+  --color-neutral-700: #3D3D39;  /* text-1 (primary body) */
+  --color-neutral-800: #232320;  /* heavy emphasis, headings */
+  --color-neutral-900: #161613;
+
+  /* Semantic colors */
+  --color-success-50:  #E8F0EE;
+  --color-success-100: #D0E1DD;
+  --color-success-500: #4A7C6F;   /* sage — verified, NOC eligible, live */
+  --color-success-600: #3D6A5E;
+  --color-success-700: #2F5048;
+  --color-success-800: #1F3530;
+  --color-warning-50:  #FBF1E8;
+  --color-warning-100: #F4DFC8;
+  --color-warning-500: #B7793A;   /* copper — NOC pending, countered */
+  --color-warning-700: #7A4F25;
+  --color-warning-800: #503517;
+  --color-error-50:    #F7E8E5;
+  --color-error-100:   #EFCFC8;
+  --color-error-500:   #B84838;
+  --color-error-600:   #9D3829;
+  --color-error-700:   #7A2A1F;
+  --color-error-800:   #50180F;
+
+  /* Semantic aliases */
+  --color-surface-0:       var(--color-neutral-50);
+  --color-surface-1:       var(--color-neutral-100);
+  --color-surface-2:       var(--color-neutral-200);
+  --color-surface-overlay: var(--color-neutral-0);
+  --color-text-1:    var(--color-neutral-700);
+  --color-text-2:    var(--color-neutral-600);
+  --color-text-3:    var(--color-neutral-500);
+  --color-border-hairline: var(--color-neutral-200);
+  --color-border-default:  var(--color-neutral-300);
+  --color-border-strong:   var(--color-neutral-400);
+
+  /* Interactive aliases */
+  --color-link:       var(--color-brand-500);
+  --color-link-hover: var(--color-brand-600);
+
+  /* Sage shorthand (legacy compat) */
+  --color-sage:     #4A7C6F;
+  --color-sage-lt:  #6BA898;
+
+  /* Fonts */
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), monospace;
+  --font-inter: 'Inter', system-ui, sans-serif;
+
+  /* Radii */
+  --radius: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Motion (Phase 2 locked) */
+  --duration-fast: 80ms;
+  --duration-base: 120ms;
+  --duration-medium: 180ms;
+  --duration-slow: 220ms;
+  --ease-out-brand: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background: var(--color-surface-0, #FAFAF9);
+  color: var(--color-text-1, #3D3D39);
+  font-family: var(--font-inter), var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.editorial { letter-spacing: -0.025em; }
+
+.nav-glass {
+  background: rgba(15, 25, 35, 0.80);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #C9A96E 0%, #B08848 100%);
+  color: #1A2B3C;
+  font-weight: 600;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  display: inline-block;
+}
+.btn-gold:hover { opacity: 0.92; }
+.btn-gold:active { transform: scale(0.98); }
+
+.btn-ghost {
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  color: #C9A96E;
+  transition: background 0.15s ease;
+  display: inline-block;
+}
+.btn-ghost:hover { background: rgba(201, 169, 110, 0.08); }
+
+.surface-1 { background: #1A2B3C; }
+.surface-2 { background: #2E4057; }
+
+.ghost-border { border: 1px solid rgba(201, 169, 110, 0.12); }
+
+.shadow-ambient {
+  box-shadow: 0 20px 50px -12px rgba(26, 43, 60, 0.45),
+              0 8px 16px -4px rgba(26, 43, 60, 0.30);
+}
+.shadow-gold { box-shadow: 0 4px 20px rgba(201, 169, 110, 0.18); }
+
+.hero-overlay {
+  background: linear-gradient(
+    105deg,
+    rgba(15, 25, 35, 0.88) 0%,
+    rgba(15, 25, 35, 0.55) 55%,
+    rgba(15, 25, 35, 0.18) 100%
+  );
+}
+
+.badge-verified {
+  background: rgba(201, 169, 110, 0.15);
+  border: 1px solid rgba(201, 169, 110, 0.30);
+  color: #C9A96E;
+}
+
+.badge-sage {
+  background: rgba(74, 124, 111, 0.20);
+  border: 1px solid rgba(74, 124, 111, 0.35);
+  color: #6BA898;
+}
+
+.progress-bar {
+  background: rgba(201, 169, 110, 0.18);
+  border-radius: 9999px;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #C9A96E, #DFC49A);
+  border-radius: 9999px;
+  height: 100%;
+}
+.progress-fill-copper {
+  background: linear-gradient(90deg, #B87333, #C9A96E);
+  border-radius: 9999px;
+  height: 100%;
+}
+
+.whatsapp-bg { background: #E5DDD5; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+ * B2B MARKETING SURFACE — applied to .marketing-surface wrapper.
+ * Overrides the body's dark default so marketing renders light.
+ * The dashboard at /dashboard keeps the dark body — it picks up the
+ * legacy tokens above and will migrate in a later pass.
+ * ══════════════════════════════════════════════════════════════════════ */
+.marketing-surface {
+  background: var(--color-surface-0);
+  color: var(--color-text-1);
+  font-family: var(--font-inter), var(--font-sans);
+  min-height: 100vh;
+}
+.marketing-surface ::selection {
+  background: var(--color-brand-500);
+  color: white;
+}
+
+/* Brand-driven button (slate blue) */
+.btn-brand {
+  background: var(--color-brand-600);
+  color: white;
+  font-weight: 500;
+  transition: background var(--duration-base) var(--ease-out-brand);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-brand:hover { background: var(--color-brand-700); }
+.btn-brand:active { background: var(--color-brand-700); }
+
+/* Secondary outline button */
+.btn-outline {
+  background: transparent;
+  color: var(--color-text-1);
+  border: 1px solid var(--color-border-default);
+  font-weight: 500;
+  transition: background var(--duration-base), border-color var(--duration-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-outline:hover {
+  background: var(--color-surface-1);
+  border-color: var(--color-neutral-400);
+}
+
+/* Type scale utilities for marketing */
+.t-display { font-size: 60px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; color: var(--color-text-1); }
+.t-section { font-size: 40px; font-weight: 700; letter-spacing: -0.02em;  line-height: 1.1;  color: var(--color-text-1); }
+.t-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em;   text-transform: uppercase; color: var(--color-text-3); }
+.t-large   { font-size: 18px; font-weight: 400; letter-spacing: -0.005em; line-height: 1.5;  color: var(--color-text-2); }
+.t-body    { font-size: 15px; font-weight: 400; line-height: 1.55; color: var(--color-text-2); }
+.t-small   { font-size: 13px; font-weight: 400; line-height: 1.5;  color: var(--color-text-3); }
+
+@media (max-width: 720px) {
+  .t-display { font-size: 40px; }
+  .t-section { font-size: 28px; }
+  .t-large   { font-size: 16px; }
+}
+
+/* Numerals — for AED and stat values */
+.tabular-aed {
+  font-feature-settings: "tnum", "ss01";
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* Pulse — for live indicators */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(0.85); }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 1600ms ease-in-out infinite;
+}
+
+/* Marketing surface shadows (overlay-only per Phase 2 spec) */
+.shadow-card-sm { box-shadow: 0 1px 2px 0 rgba(35, 35, 32, 0.06), 0 1px 1px 0 rgba(35, 35, 32, 0.04); }
+.shadow-card-md { box-shadow: 0 4px 8px -2px rgba(35, 35, 32, 0.08), 0 2px 4px -2px rgba(35, 35, 32, 0.06); }
+.shadow-card-lg { box-shadow: 0 12px 24px -6px rgba(35, 35, 32, 0.10), 0 4px 8px -2px rgba(35, 35, 32, 0.06); }
+
+/* Form input (marketing) */
+.marketing-surface .input {
+  width: 100%;
+  background: var(--color-surface-0);
+  border: 1px solid var(--color-border-hairline);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--color-text-1);
+  font-family: inherit;
+  transition: border-color var(--duration-base), box-shadow var(--duration-base);
+}
+.marketing-surface .input::placeholder {
+  color: var(--color-text-3);
+}
+.marketing-surface .input:focus {
+  outline: none;
+  border-color: var(--color-brand-500);
+  box-shadow: 0 0 0 3px rgba(61, 90, 128, 0.12);
+}
+.marketing-surface textarea.input {
+  resize: vertical;
+  min-height: 84px;
+}

@@ -1,0 +1,15 @@
+{
+  "run_id": "2026-06-08_003117",
+  "brokerage_id": "test-chatbot-brokerage",
+  "brokerage_name": "Mahoroba Test Brokerage",
+  "agent_user_id": "df53e1fb-29e7-4d9f-8f28-a12cfc3f7b02",
+  "agent_name": "Eric",
+  "conversations": 26,
+  "messages": 409,
+  "offers": 19,
+  "escalation_threads": 35,
+  "resolved_agent_reply_threads": 2,
+  "open_agent_routes": 33,
+  "hot_list_assignments": 26,
+  "lead_tasks": 26
+}

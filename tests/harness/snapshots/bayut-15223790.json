@@ -1,0 +1,70 @@
+{
+  "scrape": {
+    "agent_email": null,
+    "agent_license": null,
+    "agent_name": null,
+    "agent_phone": null,
+    "amenities": [
+      "Building",
+      "Laundry and Kitchen",
+      "Miscellaneous"
+    ],
+    "asking_price_aed": 21693243.0,
+    "bathrooms": 7,
+    "bedrooms": 6,
+    "broker_license": null,
+    "broker_name": null,
+    "building_or_project": "{'completionDetails': {'startDate': 1711915200.0, 'completionDate': 1845921600.0, 'completionPercentage': 31.0}, 'state': 'active', 'id': 6049188, 'title': 'Mirage The Oasis', 'title_l1': '\u0645\u064a\u0631\u0627\u062c \u0630\u0627 \u0623\u0648\u064a\u0633\u064a\u0633', 'title_l2': 'Mirage The Oasis', 'title_l3': 'Mirage The Oasis', 'externalID': '1402', 'completionStatus': 'under-construction', 'agency': {'externalID': '12', 'name': 'Emaar', 'name_l1': '\u0625\u0639\u0645\u0627\u0631 \u0627\u0644\u0639\u0642\u0627\u0631\u064a\u0629', 'name_l2': 'Emaar', 'name_l3': 'Emaar', 'slug': 'emaar', 'slug_l1': '\u0625\u0639\u0645\u0627\u0631-\u0627\u0644\u0639\u0642\u0627\u0631\u064a\u0629', 'slug_l2': 'emaar', 'slug_l3': 'emaar'}}",
+    "community": "The Oasis by Emaar",
+    "completion_status": "under-construction",
+    "description": "Fam Property is proud to introduce an extraordinary 6 bedroom ultra luxury villa in The Oasis Mirage, the latest and most prestigious development in Emaar s iconic Dubailand community. Designed for discerning homeowners who seek unparalleled elegance, privacy, and exclusivity, this magnificent villa is a true masterpiece of architecture and sophistication. \n\nProperty Details:\n\nType: 6 Bedroom Villa\nLayout: 4 Levels (including Basement & Rooftop)\nBuilt Up Area: 15,757 sq. ft. \nKey Features:\n\nGrand living spaces with finely crafted interiors\nExpansive terrace with panoramic views\nPrivate infinity pool & lush landscaped garden\nDedicated staff quarters & spacious garage\nBespoke finishes and contemporary design\n\nExclusive Features & Amenities:\n\nWaterfront Living\nWellness & Leisure\nFitness & Sports\nFamily Friendly\nRetail & Dining\nGreen Living\nPremium Gated Community\n\nPrime Location & Connectivity:\n\nDowntown Dubai 20 minutes\nDubai Marina 20 minutes\nDXB International Airport 30 minutes\nDWC Airport 25 minutes\n\nExperience the pinnacle of luxury waterfront living at The Oasis Mirage. This is more than a home it's a statement of prestige, designed for those who seek grandeur, serenity, and the finest lifestyle Dubai has to offer.",
+    "developer": null,
+    "furnishing": "unfurnished",
+    "handover_date": null,
+    "image_urls": [
+      "https://images.bayut.com/thumbnails/838661634-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661635-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661636-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661637-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661638-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661639-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661640-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661641-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661642-800x600.webp",
+      "https://images.bayut.com/thumbnails/838661643-800x600.webp"
+    ],
+    "latitude": 25.002579983956,
+    "listing_reference": "B-May-Eighteen-Twenty-Six-VS-129344",
+    "listing_title": "Big Plot | Investor Deal | Next to Amenities",
+    "longitude": 55.213102854507,
+    "permit_number": "65600470028",
+    "permit_validation_url": null,
+    "plot_size_sqft": 1463.87320128,
+    "portal_listing_id": "15223790",
+    "portal_reference": "11761001",
+    "price_per_sqft_aed": 14819.07,
+    "property_type": "Villas",
+    "purpose": "sale",
+    "raw_extracts": {
+      "rapidapi": true
+    },
+    "size_sqft": 1463.87320128,
+    "source": "bayut",
+    "source_url": "https://www.bayut.com/property/details-15223790.html",
+    "subcommunity": "Mirage The Oasis",
+    "unit_number": null
+  },
+  "scraped_at": "2026-05-30T14:49:12Z",
+  "source": "bayut",
+  "source_url": "https://www.bayut.com/property/details-15223790.html",
+  "verification": {
+    "asking_price_aed": 21693243.0,
+    "bedrooms": 6,
+    "community_or_building": "The Oasis by Emaar",
+    "handover_quarter": "2028-Q2",
+    "image_count": 10,
+    "missing_fields": [],
+    "property_type": "off_plan",
+    "size_sqft": 1463.87320128
+  }
+}

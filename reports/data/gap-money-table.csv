@@ -1,0 +1,81 @@
+topic_cluster,language,demand_score,supply_score,gap_score,language_weight,priority_score,dalya_strategic_fit,recommended,intent_type,notes
+Marketplace / listing channels,en,6.2,2,4.2,1.0,5.88,1.4,TRUE,transactional,No guide on 'list your off-plan without an agent' — EMPTY — 0H 4M 9L queries; 13 total
+Banking / getting paid,ru,7.2,2,5.2,0.7,5.46,1.5,TRUE,transactional,EMPTY from brokerage voice; VC.ru + MIGRON hold it from diaspora angle — 3H 5M 0L queries; 8 total
+Tax — home-country residual,ru,10.0,5,5.0,0.7,5.25,1.5,TRUE,informational,3-НДФЛ/CRS owned by legal blogs; brokerage voice EMPTY — biggest RU opportunity — 8H 7M 0L queries; 15 total
+NOC procedures,en,8.0,4,4.0,1.0,5.2,1.3,TRUE,commercial-investigational,Generic NOC guides exist; no developer-by-developer fee table — gap — 3H 5M 3L queries; 11 total
+Fees & net proceeds,en,7.0,4,3.0,1.0,4.2,1.4,TRUE,commercial-investigational,DLD fees covered verbally; no seller calculator — gap — 2H 6M 1L queries; 9 total
+Tax — home-country residual,en,6.0,3,3.0,1.0,3.9,1.3,TRUE,informational,US covered (TaxesForExpats); UK/India/GCC fragmented — 2H 4M 1L queries; 7 total
+Payment plan arrears / distress,ar,6.2,3,3.2,0.9,3.46,1.2,TRUE,informational,Excel + fragmented legal; consequences explainer missing — 3H 3M 0L queries; 6 total
+Process & eligibility,ar,9.9,6,3.9,0.9,3.16,0.9,TRUE,informational,DXB+Bayut-AR cover basics; not journey-framed — 6H 3M 4L queries; 13 total
+NOC procedures,ar,4.7,2,2.7,0.9,3.16,1.3,TRUE,commercial-investigational,EMPTY: no Emaar/Damac/Sobha/Nakheel Arabic NOC guide — highest-intent gap — 1H 2M 3L queries; 6 total
+Process & eligibility,ru,9.9,5,4.9,0.7,3.09,0.9,TRUE,informational,VC.ru legal + 2 brokerages; no canonical brokerage guide — 6H 5M 0L queries; 11 total
+Commission — 0.15% vs 2%,en,6.8,5,1.8,1.0,2.7,1.5,TRUE,commercial-investigational,Rate explained; 0.15% framing owned by nobody — core Dalya lane — 2H 5M 2L queries; 9 total
+Tax — home-country residual,ar,5.3,3,2.3,0.9,2.69,1.3,TRUE,informational,APIL + Al Khaleej fragments; resident-vs-non-resident definitive explainer missing — 2H 3M 0L queries; 5 total
+Developer-specific rules,ar,3.0,1,2.0,0.9,1.98,1.1,FALSE,commercial-investigational,EMPTY (Dalya's biggest Arabic opening per research) — 0H 2M 0L queries; 2 total
+Regulatory / RERA,ar,8.2,6,2.2,0.9,1.78,0.9,FALSE,informational,Trakheesi well-covered by Bayut/Dubizzle/DLD; competitive — 6H 1M 1L queries; 8 total
+Commission — 0.15% vs 2%,ar,6.3,5,1.3,0.9,1.76,1.5,FALSE,commercial-investigational,Commission at 2% covered; 0.15% framing absent — 2H 4M 2L queries; 8 total
+Payment plan arrears / distress,en,5.4,4,1.4,1.0,1.68,1.2,FALSE,informational,Buyer-cancellation dominant; seller distress missing — 1H 5M 0L queries; 6 total
+Developer-specific rules,ru,4.0,2,2.0,0.7,1.54,1.1,FALSE,commercial-investigational,Emaar-40% mentioned; others unaddressed in Russian — 0H 4M 0L queries; 4 total
+Oqood & DLD mechanics,ar,8.3,7,1.3,0.9,1.52,1.3,FALSE,informational,DLD service catalog + Westgate + Taraf; competitive — 4H 5M 1L queries; 10 total
+Remote selling / POA,ru,5.7,4,1.7,0.7,1.43,1.2,FALSE,transactional,Fragments exist; integrated 'sell from Moscow without flying' playbook missing — 3H 2M 0L queries; 5 total
+Tax — home-country residual,hi,8.9,4,4.9,0.2,1.37,1.4,FALSE,informational,BS Hindi has one FEMA piece; Hinglish wedge is real — ED/FAIU compliance — 1H 11M 2L queries; 14 total
+Process & eligibility,zh,7.7,4,3.7,0.4,1.33,0.9,FALSE,informational,Buyer-framed only; no seller-exit guide — 3H 5M 2L queries; 10 total
+NOC procedures,ru,4.4,3,1.4,0.7,1.27,1.3,FALSE,commercial-investigational,Housearch generic; Emaar-only mentioned; Damac/Sobha/Nakheel almost nothing — 1H 3M 0L queries; 4 total
+Fees & net proceeds,ru,5.2,4,1.2,0.7,1.18,1.4,FALSE,commercial-investigational,Goldenbee covers fees; no calculator for distressed exit — 3H 1M 0L queries; 4 total
+Regulatory / RERA,zh,5.7,3,2.7,0.4,0.97,0.9,FALSE,informational,Golden Visa saturated; RERA thin — 3H 2M 0L queries; 5 total
+Process & eligibility,en,10.0,9,1.0,1.0,0.9,0.9,FALSE,informational,Bayut/PF/Provident/Betterhomes saturated; template-uniform — 5H 11M 3L queries; 19 total
+Marketplace / listing channels,ru,2.9,2,0.9,0.7,0.88,1.4,FALSE,transactional,Listings only on portals; propertyfinder/bayut lack RU blog — 1H 0M 0L queries; 1 total
+Commission — 0.15% vs 2%,ru,4.8,4,0.8,0.7,0.84,1.5,FALSE,commercial-investigational,Prian explains 2%; no 'save AED while underwater' framing — 2H 2M 0L queries; 4 total
+Pricing & benchmarking,en,3.5,3,0.5,1.0,0.65,1.3,FALSE,commercial-investigational,Edwards & Towers exit guide; no public AVM — 0H 3M 0L queries; 3 total
+Process & eligibility,hi,5.3,2,3.3,0.2,0.59,0.9,FALSE,informational,Observed machine-translations only; structurally unwinnable in pure Hindi — 2H 1M 4L queries; 7 total
+Remote selling / POA,zh,3.0,2,1.0,0.4,0.48,1.2,FALSE,transactional,Near-empty; overseas-seller path uncontested — 0H 1M 2L queries; 3 total
+Oqood & DLD mechanics,zh,3.9,3,0.9,0.4,0.47,1.3,FALSE,informational,阿库德 niche but rising; very thin — 1H 2M 0L queries; 3 total
+Tax — home-country residual,zh,3.9,3,0.9,0.4,0.47,1.3,FALSE,informational,Generic 'no tax Dubai'; CRS+遣返 angle empty — 1H 2M 0L queries; 3 total
+Pricing & benchmarking,ru,3.5,3,0.5,0.7,0.45,1.3,FALSE,commercial-investigational,Goldenbee index only; no seller-facing valuation tool — 0H 3M 0L queries; 3 total
+"Documents & forms (Form F/A, Trakheesi)",ru,5.5,5,0.5,0.7,0.42,1.2,FALSE,informational,Form F via VC.ru; Form A/Trakheesi thin — 3H 1M 1L queries; 5 total
+Commission — 0.15% vs 2%,zh,4.7,4,0.7,0.4,0.42,1.5,FALSE,commercial-investigational,Uniform 2%-buyer-paid; seller-side commission savings absent — 3H 0M 0L queries; 3 total
+Commission — 0.15% vs 2%,hi,2.2,1,1.2,0.2,0.36,1.5,FALSE,commercial-investigational,Zero organic Hindi supply on commission; wedge lives inside compliance pieces — 0H 0M 1L queries; 1 total
+NOC procedures,hi,2.2,1,1.2,0.2,0.31,1.3,FALSE,commercial-investigational,Zero native Hindi NOC content; English supply dominates — 0H 0M 1L queries; 1 total
+SPA transfer,hi,2.2,1,1.2,0.2,0.31,1.3,FALSE,informational,Empty — 0H 0M 1L queries; 1 total
+Oqood & DLD mechanics,hi,2.2,1,1.2,0.2,0.31,1.3,FALSE,informational,Effectively empty — 0H 0M 1L queries; 1 total
+Regulatory / RERA,hi,2.5,1,1.5,0.2,0.27,0.9,FALSE,informational,News-framed only; procedural empty — 0H 1M 0L queries; 1 total
+Developer-specific rules,hi,2.2,1,1.2,0.2,0.26,1.1,FALSE,commercial-investigational,Zero dedicated coverage — 0H 0M 1L queries; 1 total
+Banking / getting paid,zh,2.5,2,0.5,0.4,0.26,1.3,FALSE,transactional,Near-empty — 0H 1M 0L queries; 1 total
+Payment plan arrears / distress,zh,3.5,3,0.5,0.4,0.24,1.2,FALSE,informational,Lagoon-19 news only; procedural absent — 0H 3M 0L queries; 3 total
+Remote selling / POA,hi,2.2,2,0.2,0.2,0.05,1.2,FALSE,transactional,All Indian-POA content; zero Dubai-specific Hindi POA — 0H 0M 1L queries; 1 total
+"Documents & forms (Form F/A, Trakheesi)",hi,1,1,0,0.2,0.0,1.2,FALSE,informational,Empty — no observed queries
+Fees & net proceeds,hi,1,1,0,0.2,0.0,1.4,FALSE,commercial-investigational,Empty — no observed queries
+Payment plan arrears / distress,hi,1,1,0,0.2,0.0,1.2,FALSE,informational,Not observed — no observed queries
+Pricing & benchmarking,hi,1,1,0,0.2,0.0,1.3,FALSE,commercial-investigational,Empty — no observed queries
+Marketplace / listing channels,hi,1,1,0,0.2,0.0,1.4,FALSE,transactional,No Hindi portal edition; empty — no observed queries
+Oqood & DLD mechanics,ru,3.9,4,-0.1,0.7,-0.09,1.3,FALSE,informational,"Fragmented; Metropolitan has buy-side, no seller-side Oqood — 1H 2M 0L queries; 3 total"
+Pricing & benchmarking,zh,3.8,4,-0.2,0.4,-0.1,1.3,FALSE,commercial-investigational,ROI/yield ubiquitous; seller pricing missing — 2H 0M 0L queries; 2 total
+"Documents & forms (Form F/A, Trakheesi)",en,5.9,6,-0.1,1.0,-0.12,1.2,FALSE,informational,Form F covered; Form A weak; Trakheesi moderate — 1H 5M 2L queries; 8 total
+NOC procedures,zh,2.5,3,-0.5,0.4,-0.26,1.3,FALSE,commercial-investigational,Broker pages explain NOC abstractly; no developer tables — 0H 1M 0L queries; 1 total
+Marketplace / listing channels,zh,2.5,3,-0.5,0.4,-0.28,1.4,FALSE,transactional,Bayut zh is listings-only; Juwai thin; gap — 0H 1M 0L queries; 1 total
+Market context / oversupply,zh,6.6,8,-1.4,0.4,-0.28,0.5,FALSE,informational,新浪/澎湃/36氪 dominate; Zhihu skeptical cluster; saturated — 4H 2M 0L queries; 6 total
+Regulatory / RERA,ru,2.5,3,-0.5,0.7,-0.32,0.9,FALSE,informational,Metropolitan has RERA explainer; thin beyond that — 0H 1M 0L queries; 1 total
+Market context / oversupply,hi,3.4,7,-3.6,0.2,-0.36,0.5,FALSE,informational,AajTak/TV9/Patrika/IndiaTV — saturated news — 1H 1M 0L queries; 2 total
+Payment plan arrears / distress,ru,3.5,4,-0.5,0.7,-0.42,1.2,FALSE,informational,Housebook + emirates.estate cover risk; seller handholding missing — 0H 3M 0L queries; 3 total
+"Documents & forms (Form F/A, Trakheesi)",zh,1,2,-1,0.4,-0.48,1.2,FALSE,informational,Empty — no observed queries
+Banking / getting paid,hi,1,3,-2,0.2,-0.52,1.3,FALSE,transactional,Bring-money-to-India angle covered by CA blogs; Dubai-exit-specific empty — no observed queries
+"Documents & forms (Form F/A, Trakheesi)",ar,4.5,5,-0.5,0.9,-0.54,1.2,FALSE,informational,Form A/B Arabic = EMPTY; Trakheesi competitive — 2H 1M 1L queries; 4 total
+Developer-specific rules,zh,3.5,5,-1.5,0.4,-0.66,1.1,FALSE,commercial-investigational,dubaiemaar.cn dominates brand SERP; long-tail resale/NOC open — 0H 3M 0L queries; 3 total
+Market context / oversupply,ru,3.9,6,-2.1,0.7,-0.73,0.5,FALSE,informational,Forbes + Kommersant — Forbes.ru 'Слезинка инвестора' owns narrative — 1H 2M 0L queries; 3 total
+Remote selling / POA,en,5.3,6,-0.7,1.0,-0.84,1.2,FALSE,transactional,EGSH + Sara Advocates; no country-by-country attestation chain — 2H 1M 4L queries; 7 total
+Remote selling / POA,ar,5.2,6,-0.8,0.9,-0.86,1.2,FALSE,transactional,POA.ae + Private Notary; GCC-specific missing — 3H 1M 0L queries; 4 total
+Oqood & DLD mechanics,en,8.3,9,-0.7,1.0,-0.91,1.3,FALSE,informational,EGSH + Bayut + Pearlshire saturated; legal-firm dominance — 4H 4M 3L queries; 11 total
+SPA transfer,zh,1,3,-2,0.4,-1.04,1.3,FALSE,informational,Very thin — no observed queries
+Market context / oversupply,en,5.9,8,-2.1,1.0,-1.05,0.5,FALSE,informational,Khaleej Times + Knight Frank + Prelaunch — saturated — 1H 3M 6L queries; 10 total
+Fees & net proceeds,zh,3.0,5,-2.0,0.4,-1.12,1.4,FALSE,commercial-investigational,4% DLD repeated everywhere; net-proceeds math absent — 0H 2M 0L queries; 2 total
+Marketplace / listing channels,ar,1,2,-1,0.9,-1.26,1.4,FALSE,transactional,Bayut-filter pages; no standalone guide — no observed queries
+Banking / getting paid,ar,2.8,4,-1.2,0.9,-1.4,1.3,FALSE,transactional,Escrow + law refs; seller-proceeds chain missing — 0H 1M 1L queries; 2 total
+Developer-specific rules,en,2.5,4,-1.5,1.0,-1.65,1.1,FALSE,commercial-investigational,Thin — no per-developer NOC+%paid+timing table — 0H 0M 2L queries; 2 total
+SPA transfer,ru,2.9,5,-2.1,0.7,-1.91,1.3,FALSE,informational,VC.ru owns with deep legal pieces — 1H 0M 0L queries; 1 total
+Market context / oversupply,ar,4.3,9,-4.7,0.9,-2.12,0.5,FALSE,informational,Al Bayan + Al Khaleej + Asharq — saturated news — 2H 1M 0L queries; 3 total
+Banking / getting paid,en,3.2,5,-1.8,1.0,-2.34,1.3,FALSE,transactional,Mortgaged-property sale covered; broader banking friction absent — 0H 2M 1L queries; 3 total
+Pricing & benchmarking,ar,1,3,-2,0.9,-2.34,1.3,FALSE,commercial-investigational,DLD valuation procedural; seller AVM missing — no observed queries
+SPA transfer,ar,3.9,6,-2.1,0.9,-2.46,1.3,FALSE,informational,Taraf/ATB cover; lane open for seller-exit framing — 1H 2M 0L queries; 3 total
+Regulatory / RERA,en,2.2,5,-2.8,1.0,-2.52,0.9,FALSE,informational,Trakheesi + RERA explainers moderate; seller rulebook missing — 0H 0M 1L queries; 1 total
+Fees & net proceeds,ar,2.9,6,-3.1,0.9,-3.91,1.4,FALSE,commercial-investigational,Westgate/Taraf cover 2025; 2026 + calculator = gap — 1H 0M 0L queries; 1 total
+SPA transfer,en,3.1,7,-3.9,1.0,-5.07,1.3,FALSE,informational,EGSH + Form F sites cover; moderate-saturated — 1H 0M 1L queries; 2 total

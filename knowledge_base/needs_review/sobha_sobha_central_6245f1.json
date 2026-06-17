@@ -1,0 +1,532 @@
+{
+  "name": "Sobha Central",
+  "developer": "Sobha Realty",
+  "last_updated": "2026-05-30",
+  "researcher_notes": [
+    "Sobha Central is a mixed-use development on Sheikh Zayed Road comprising six high-rise residential towers with a retail podium, community zones, and an urban park on the podium level.",
+    "Six confirmed tower names from Sobha Realty's official website: The Pinnacle, The Eden, The Mirage, The Tranquil, The Serene, and The Horizon. Harness listings reference 'The Pinnacle at Sobha Central' specifically.",
+    "The Mirage was launched after Sobha Central reached AED 3.5 billion in sales (Arabian Business, Nov 2025), indicating strong absorption.",
+    "Property Finder and Harper Wellington list The Horizon and The Tranquil with Q4 2029 handover and a 60/40 payment plan. The Horizon launch price cited at AED 1.52M–1.68M for 1-bed units.",
+    "Sobha Realty Metro Station (Red Line, formerly DAMAC Properties Metro Station) is located on Sheikh Zayed Road between Dubai Marina and JLT — the brochure states Sobha Central is within walking distance of Jebel Ali Metro Station; sources reference both stations in the vicinity. Exact walking distance to each station is unverified.",
+    "The official brochure references a dedicated fly-out bridge from the second-floor podium and two dedicated traffic lanes, described as rare infrastructure for a residential mixed-use project.",
+    "Propsearch.ae notes 50 DLD sale transactions recorded for Sobha Central as of research date; the project is off-plan with first completion targeted December 2029.",
+    "Drive-time estimates sourced from Propsearch.ae: ~26 min to Dubai Mall, ~18 min to Palm Jumeirah, ~23 min to Burj Al Arab, ~20 min to The Walk JBR, ~34 min to DXB, ~30 min to Al Maktoum International Airport.",
+    "Schools data from Propsearch.ae: five British curriculum schools within 5 km (notably Arcadia Global School rated 4.7/5 and Dubai British School Jumeirah Park rated 4.2/5); one Indian curriculum school within 5 km (Delhi Private School Dubai); no American curriculum schools within 5 km but five within 10 km.",
+    "ROI figures from the LinkedIn article (Source 10) appear to be from a third-party promotional piece and cite unverified sources; they have been flagged and excluded from investment data. No verified DLD rental yield data exists for Sobha Central itself as the project is off-plan.",
+    "The LinkedIn article (Source 10) places Sobha Central in 'Al Furjan' — this conflicts with the official brochure and Sobha Realty's own materials which place it on Sheikh Zayed Road near JLT/Jebel Ali. The Al Furjan reference is likely erroneous and has been disregarded.",
+    "Property Finder lists The Horizon under 'Jebel Ali' area classification; Sobha's brochure references proximity to Jebel Ali Metro Station. The broader address is Sheikh Zayed Road, with JLT and Jebel Ali as the nearest classified districts.",
+    "Sobha Realty reported AED 30 billion (~USD 8.17bn) in 2025 sales, 30% YoY growth (Arabian Business, Jan 2026).",
+    "Sobha completed a USD 750 million green sukuk in Sep 2025 — the largest ever by a real estate developer."
+  ],
+  "master_development": {
+    "overview": {
+      "type": "Mixed-use master development",
+      "description": "Sobha Central is a large-scale mixed-use development on Sheikh Zayed Road, Dubai's most prominent urban corridor. It comprises six elegantly designed high-rise residential towers integrated with a retail podium, an urban park on the podium level, commercial spaces, and extensive leisure amenities. The development is positioned as a self-sustained high-living community blending design, connectivity, and functionality.",
+      "towers": [
+        "The Pinnacle",
+        "The Eden",
+        "The Mirage",
+        "The Tranquil",
+        "The Serene",
+        "The Horizon"
+      ],
+      "unit_types": "1- and 2-bedroom apartments",
+      "ownership": "Freehold",
+      "status": "Off-plan; first completion targeted December 2029",
+      "payment_plan_example": "60/40 (confirmed for The Tranquil and The Horizon); 20/40/40 also referenced for The Horizon on Property Finder",
+      "government_fee": "4% DLD transfer fee",
+      "sales_milestone": "AED 3.5 billion in sales recorded prior to The Mirage launch (Nov 2025)"
+    },
+    "location_connectivity": {
+      "address": "Sheikh Zayed Road, Dubai",
+      "area_classification": "Jebel Ali / Jumeirah Lake Towers corridor",
+      "road_access": [
+        "Direct frontage on Sheikh Zayed Road",
+        "Access to Al Khail Road",
+        "Dedicated fly-out bridge from second-floor podium for direct city exit",
+        "Dedicated ramp-in for arrivals from Abu Dhabi direction"
+      ],
+      "metro": "Walking distance to Sobha Realty Metro Station (Red Line, formerly DAMAC Properties Metro Station) and proximity to Jebel Ali Metro Station — exact walking distances unverified",
+      "tram": "Dubai Tram accessible via Sobha Realty Metro Station interchange for Dubai Marina area",
+      "drive_times_approx": {
+        "dubai_mall": "~26 minutes",
+        "palm_jumeirah": "~18 minutes",
+        "burj_al_arab": "~23 minutes",
+        "the_walk_jbr": "~20 minutes",
+        "dxb_airport": "~34 minutes",
+        "al_maktoum_airport": "~30 minutes",
+        "dubai_marina": "short drive",
+        "difc": "accessible via SZR",
+        "downtown_dubai": "accessible via SZR",
+        "business_bay": "accessible via SZR"
+      },
+      "bus": "RTA feeder buses serve the JLT and Marina areas near Sobha Realty Metro Station"
+    },
+    "shared_amenities": {
+      "confirmed_from_brochure": [
+        "Urban park on podium level",
+        "Business centre",
+        "Fitness areas / commercial gym",
+        "Grand prayer hall",
+        "Retail podium with supermarket and boutiques",
+        "Landscaped courtyards",
+        "Outdoor sports facilities (football pitch visible in renderings)",
+        "Jogging tracks",
+        "Leisure lounges",
+        "Meditation room",
+        "Shaded green zones",
+        "Resident-only lobbies",
+        "Spa and salons (representational — subject to approvals)",
+        "Children's adventure mounds and play areas",
+        "Projection playground (representational)",
+        "Bubble lounge (representational)",
+        "Rooftop retreats",
+        "BBQ areas",
+        "Swimming pool with fountain",
+        "Co-working / inspiration spaces"
+      ],
+      "disclaimer": "Amenities are representational and subject to local authority approvals. Developer reserves right to make changes without prior notice."
+    },
+    "nearby_infrastructure": {
+      "schools": {
+        "british_within_5km": [
+          {
+            "name": "Arcadia Global School",
+            "curriculum": "British",
+            "rating": "4.7/5 (WhichSchoolAdvisor readers)",
+            "distance_note": "within 5 km"
+          },
+          {
+            "name": "Dubai British School Jumeirah Park",
+            "curriculum": "British",
+            "rating": "4.2/5 (WhichSchoolAdvisor readers)",
+            "distance_note": "within 5 km"
+          }
+        ],
+        "indian_within_5km": [
+          {
+            "name": "Delhi Private School Dubai",
+            "curriculum": "Indian (CBSE)",
+            "distance_note": "within 5 km"
+          }
+        ],
+        "american_note": "No American curriculum schools within 5 km; five within 10 km per Propsearch.ae"
+      },
+      "healthcare": [
+        {
+          "name": "Aster Medical Centre",
+          "note": "Referenced as nearby; exact distance unverified"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "note": "Referenced as nearby; exact distance unverified"
+        }
+      ],
+      "retail": [
+        {
+          "name": "On-site retail podium",
+          "note": "Integrated within Sobha Central — supermarket, cafes, boutiques"
+        },
+        {
+          "name": "JLT retail and dining cluster",
+          "note": "Walking distance via metro station pedestrian bridges"
+        },
+        {
+          "name": "Dubai Marina Mall",
+          "note": "Short drive; accessible via metro/tram"
+        }
+      ],
+      "business_hubs_nearby": [
+        "Dubai Media City",
+        "Dubai Internet City",
+        "Dubai Marina",
+        "DIFC",
+        "Downtown Dubai",
+        "Business Bay"
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "dld_transactions_recorded": "50 sale transactions as of research date (Propsearch.ae)",
+      "projected_roi_percent": null,
+      "roi_note": "No verified rental yield data available for Sobha Central; project is off-plan with first handover targeted Q4 2029. ROI figures cited in third-party promotional content are unverified and excluded.",
+      "price_range_indicative": {
+        "the_tranquil_from": "AED 1,480,000 (1–2 bed)",
+        "the_horizon_from": "AED 1,520,283–1,680,000 (1–2 bed)",
+        "note": "Prices subject to change; contact developer or agent for current availability"
+      },
+      "sales_milestone": "AED 3.5 billion in sales prior to The Mirage launch (Nov 2025, Arabian Business)",
+      "market_context": "Jebel Ali area average sale prices increased 74.9% YoY with 2,988 transactions in past 12 months (Property Finder); Sobha Realty reported AED 30bn in 2025 group sales, 30% YoY growth"
+    },
+    "developer_profile": {
+      "name": "Sobha Realty",
+      "founded": 1976,
+      "founder": "PNC Menon",
+      "chairman": "Ravi Menon",
+      "model": "Backward Integration — in-house design, engineering, manufacturing, construction, and delivery",
+      "presence": "UAE, Oman, Bahrain, Brunei, India",
+      "notable_achievements": [
+        "USD 750 million green sukuk completed Sep 2025 — largest ever by a real estate developer, dual-listed on London Stock Exchange and Nasdaq Dubai",
+        "AED 30 billion (~USD 8.17bn) in 2025 sales, 30% YoY growth",
+        "Strategic partnership with Emirates NBD for integrated home financing (Apr 2026)",
+        "Sobha Sanctuary — AED 50 billion master development launched Jan 2026"
+      ],
+      "dubai_communities": [
+        "Sobha Central",
+        "Sobha Hartland",
+        "Sobha Hartland II",
+        "Sobha One",
+        "Sobha SeaHaven",
+        "Sobha Reserve",
+        "Sobha Orbis",
+        "Sobha Solis",
+        "Sobha Sanctuary",
+        "Sobha Elwood",
+        "The S",
+        "Verde by Sobha"
+      ]
+    }
+  },
+  "sub_developments": {
+    "the_pinnacle": {
+      "aliases": [
+        "The Pinnacle",
+        "The Pinnacle at Sobha Central",
+        "Pinnacle Sobha Central"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "The Pinnacle at Sobha Central",
+        "investment_overrides": {
+          "note": "One of six towers within Sobha Central. Specific pricing and handover date not confirmed in available sources. Refer to master development investment data."
+        },
+        "sales_talking_points": {
+          "headline": "The Pinnacle is one of six towers forming Sobha Central's iconic Sheikh Zayed Road skyline presence.",
+          "key_points": [
+            "Part of a AED 3.5 billion+ sales milestone development",
+            "Freehold ownership on Dubai's most prestigious corridor",
+            "Backed by Sobha Realty's backward integration quality guarantee",
+            "Shared access to full Sobha Central amenity suite including urban park, gym, retail podium, and prayer hall"
+          ]
+        }
+      }
+    },
+    "the_eden": {
+      "aliases": [
+        "The Eden",
+        "The Eden at Sobha Central"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "The Eden at Sobha Central",
+        "investment_overrides": {
+          "note": "Specific pricing and handover date not confirmed in available sources."
+        },
+        "sales_talking_points": {
+          "headline": "The Eden — one of six towers at Sobha Central on Sheikh Zayed Road.",
+          "key_points": [
+            "Freehold 1–2 bedroom apartments",
+            "Full access to Sobha Central's integrated amenities",
+            "Prime SZR address with metro accessibility"
+          ]
+        }
+      }
+    },
+    "the_mirage": {
+      "aliases": [
+        "The Mirage",
+        "The Mirage at Sobha Central"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "The Mirage at Sobha Central",
+        "investment_overrides": {
+          "note": "Launched Nov 2025 after AED 3.5 billion sales milestone. Specific pricing not confirmed in available sources."
+        },
+        "sales_talking_points": {
+          "headline": "The Mirage — the latest tower launched at Sobha Central, reflecting strong project momentum.",
+          "key_points": [
+            "Launched after AED 3.5 billion in project-wide sales (Arabian Business, Nov 2025)",
+            "Demonstrates high absorption and buyer confidence",
+            "Freehold on Sheikh Zayed Road"
+          ]
+        }
+      }
+    },
+    "the_tranquil": {
+      "aliases": [
+        "The Tranquil",
+        "The Tranquil at Sobha Central"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "The Tranquil at Sobha Central",
+        "investment_overrides": {
+          "starting_price_aed": 1480000,
+          "handover": "Q4 2029",
+          "payment_plan": "60/40"
+        },
+        "sales_talking_points": {
+          "headline": "The Tranquil — 1–2 bed apartments from AED 1.48M with Q4 2029 handover.",
+          "key_points": [
+            "60/40 payment plan",
+            "Freehold ownership",
+            "Panoramic views from Sheikh Zayed Road address",
+            "Access to full Sobha Central amenity suite"
+          ]
+        }
+      }
+    },
+    "the_serene": {
+      "aliases": [
+        "The Serene",
+        "The Serene at Sobha Central"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "The Serene at Sobha Central",
+        "investment_overrides": {
+          "note": "Specific pricing and handover date not confirmed in available sources."
+        },
+        "sales_talking_points": {
+          "headline": "The Serene — one of six towers at Sobha Central on Sheikh Zayed Road.",
+          "key_points": [
+            "Freehold 1–2 bedroom apartments",
+            "Full access to Sobha Central's integrated amenities"
+          ]
+        }
+      }
+    },
+    "the_horizon": {
+      "aliases": [
+        "The Horizon",
+        "The Horizon at Sobha Central"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "The Horizon at Sobha Central",
+        "investment_overrides": {
+          "starting_price_aed": 1520283,
+          "handover": "Q4 2029",
+          "payment_plan": "60/40 or 20/40/40",
+          "recent_transactions": [
+            {
+              "type": "1 bed",
+              "price_aed": 2030820,
+              "area_sqft": 744,
+              "date": "2026-05-21"
+            },
+            {
+              "type": "2 bed",
+              "price_aed": 2589696,
+              "area_sqft": 922,
+              "date": "2026-05-15"
+            }
+          ]
+        },
+        "sales_talking_points": {
+          "headline": "The Horizon — 1–2 bed apartments from AED 1.52M with Q4 2029 handover and active DLD transaction history.",
+          "key_points": [
+            "Recent DLD transactions confirm active secondary market interest pre-handover",
+            "1-bed units from 568–781 sqft; 2-bed units from 936–1,553 sqft",
+            "60/40 or 20/40/40 payment plan options",
+            "Freehold on Sheikh Zayed Road",
+            "Walking distance to Sobha Realty Metro Station (Red Line)"
+          ]
+        }
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "Six-tower mixed-use development on Sheikh Zayed Road; AED 3.5 billion+ in sales recorded; Q4 2029 first handover; 50 DLD transactions already registered.",
+      "scarcity_argument": "Sobha Central occupies a rare Sheikh Zayed Road address with freehold ownership, dedicated podium-level urban park, and infrastructure-grade road access (fly-out bridge, dedicated ramp) typically reserved for landmark commercial hubs — a genuine first in Dubai's mixed-use landscape per the developer.",
+      "lifestyle_pitch": "Live at the intersection of Dubai's most iconic corridor and a self-contained urban village: rooftop retreats, an urban park, a grand prayer hall, a retail mall, fitness facilities, and jogging tracks — all within your building complex, with Dubai Marina, DIFC, and Downtown Dubai minutes away.",
+      "investment_pitch": "Freehold on Sheikh Zayed Road with metro walkability, backed by a developer that posted AED 30 billion in 2025 sales and completed a USD 750 million green sukuk. The Jebel Ali area recorded 74.9% YoY price growth. Strong pre-handover DLD transaction activity signals market confidence.",
+      "objection_handling": "For buyers concerned about off-plan risk: Sobha Realty's backward integration model — in-house design, manufacturing, and construction — reduces third-party execution risk. The developer has a multi-decade track record across Dubai and internationally, and has already achieved AED 3.5 billion in Sobha Central sales, demonstrating deep market validation."
+    },
+    "per_sub_development": {
+      "the_pinnacle": "Flagship tower name for Sobha Central; ideal entry point for buyers seeking the brand's most recognised sub-address within the community.",
+      "the_tranquil": "Confirmed pricing from AED 1.48M with 60/40 plan and Q4 2029 handover — one of the more accessible entry points in the community.",
+      "the_horizon": "Most transaction data available; recent DLD sales at AED 2.03M–2.59M confirm active market. Widest range of floor plan types (568–1,553 sqft).",
+      "the_mirage": "Launched after AED 3.5 billion milestone — latest release signals continued project momentum and potential for early-buyer capital appreciation."
+    }
+  },
+  "aliases": [
+    "Sobha Central",
+    "sobha central",
+    "The Pinnacle at Sobha Central",
+    "Sobha Central SZR",
+    "Sobha Central Sheikh Zayed Road",
+    "The Horizon at Sobha Central",
+    "The Tranquil at Sobha Central",
+    "The Mirage at Sobha Central",
+    "The Eden at Sobha Central",
+    "The Serene at Sobha Central",
+    "The Pinnacle Sobha"
+  ],
+  "developer_keywords": [
+    "Sobha Realty",
+    "Sobha",
+    "Sobha Group",
+    "backward integration",
+    "PNC Menon",
+    "Ravi Menon",
+    "Sobha luxury",
+    "Sobha off-plan",
+    "Sobha Dubai",
+    "sobha"
+  ],
+  "prompt_data": {
+    "developer": "Sobha Realty",
+    "community": "Sobha Central",
+    "location": {
+      "area": "Sheikh Zayed Road, Jebel Ali / JLT corridor, Dubai",
+      "description": "Sobha Central sits directly on Sheikh Zayed Road — Dubai's primary urban spine — offering residents unparalleled connectivity to Downtown Dubai, DIFC, Dubai Marina, and Business Bay. The development is near the Sobha Realty Metro Station (Red Line) and Jebel Ali Metro Station, with the Dubai Tram accessible via the metro interchange. A dedicated fly-out bridge from the podium and a dedicated ramp-in provide rare infrastructure-grade road access.",
+      "distances": {
+        "dubai_mall": "~26 min drive",
+        "palm_jumeirah": "~18 min drive",
+        "burj_al_arab": "~23 min drive",
+        "the_walk_jbr": "~20 min drive",
+        "dxb_airport": "~34 min drive",
+        "al_maktoum_airport": "~30 min drive",
+        "metro_station": "Walking distance to Sobha Realty Metro Station (Red Line) — exact distance unverified",
+        "note": "Drive times sourced from Propsearch.ae and are approximate"
+      }
+    },
+    "community_amenities": [
+      "Urban park on podium level",
+      "Business centre",
+      "Commercial gym / fitness areas",
+      "Grand prayer hall",
+      "Retail podium with supermarket and boutiques",
+      "Landscaped courtyards",
+      "Outdoor sports facilities including football pitch",
+      "Jogging tracks",
+      "Leisure lounges",
+      "Meditation room",
+      "Shaded green zones",
+      "Resident-only lobbies",
+      "Spa and salons (representational)",
+      "Children's play areas and adventure mounds",
+      "Rooftop retreats",
+      "BBQ areas",
+      "Swimming pool",
+      "Co-working spaces"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "Arcadia Global School",
+          "curriculum": "British",
+          "rating": "4.7/5 (WhichSchoolAdvisor)",
+          "distance_note": "within 5 km"
+        },
+        {
+          "name": "Dubai British School Jumeirah Park",
+          "curriculum": "British",
+          "rating": "4.2/5 (WhichSchoolAdvisor)",
+          "distance_note": "within 5 km"
+        },
+        {
+          "name": "Delhi Private School Dubai",
+          "curriculum": "Indian (CBSE)",
+          "rating": null,
+          "distance_note": "within 5 km"
+        },
+        {
+          "name": "American curriculum schools",
+          "curriculum": "American",
+          "rating": null,
+          "distance_note": "None within 5 km; five within 10 km per Propsearch.ae"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "Aster Medical Centre",
+          "type": "Medical centre",
+          "distance_note": "Nearby — exact distance unverified"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "type": "Hospital",
+          "distance_note": "Nearby — exact distance unverified"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Sobha Central retail podium",
+          "type": "On-site integrated retail, supermarket, cafes, boutiques",
+          "distance_note": "Within development"
+        },
+        {
+          "name": "JLT retail and dining cluster",
+          "type": "Mixed retail and F&B",
+          "distance_note": "Walking distance via metro pedestrian bridges"
+        },
+        {
+          "name": "Dubai Marina Mall",
+          "type": "Shopping mall",
+          "distance_note": "Short drive or metro/tram"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "projected_roi_percent": null,
+      "branded_premium_note": "Sobha Realty's backward integration model — controlling design, manufacturing, and construction in-house — is cited as a quality and delivery differentiator. The developer reported AED 30 billion in 2025 sales and completed a USD 750 million green sukuk, the largest ever by a real estate developer."
+    },
+    "sales_talking_points": {
+      "location": "Only mixed-use freehold development with direct Sheikh Zayed Road frontage, metro walkability, and infrastructure-grade road access (dedicated podium fly-out bridge) in this corridor.",
+      "developer_credibility": "Sobha Realty's backward integration model, AED 30bn in 2025 sales, and USD 750M green sukuk demonstrate financial strength and delivery capability.",
+      "community_depth": "Six towers, an urban park, a retail mall, a grand prayer hall, and a full amenity suite create a self-contained community — not just a tower.",
+      "momentum": "AED 3.5 billion in sales before The Mirage launch; 50 DLD transactions already registered; recent secondary market activity on The Horizon pre-handover.",
+      "connectivity": "Red Line metro walkability, Dubai Tram access, and direct SZR frontage place residents within 20–34 minutes of all major Dubai destinations."
+    },
+    "developer_track_record": "Sobha Realty was founded in 1976 by PNC Menon and pioneered the backward integration model in real estate — maintaining in-house control over design, engineering, manufacturing, construction, and delivery. The company operates across UAE, Oman, Bahrain, Brunei, and India. In Dubai, its portfolio spans Sobha Hartland, Sobha Hartland II, Sobha One, Sobha SeaHaven, Sobha Reserve, Sobha Orbis, Sobha Solis, Sobha Sanctuary, Sobha Elwood, and Sobha Central. In 2025, the group reported AED 30 billion in sales (30% YoY growth) and completed a USD 750 million green sukuk — the largest ever by a real estate developer — dual-listed on the London Stock Exchange and Nasdaq Dubai."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-05-30T15:40:49.938457+00:00",
+    "last_audited_at": null,
+    "research_confidence": 0.72,
+    "source_urls": [
+      "https://www.noorishraquae.com/blog/sobha-realty-projects-dubai",
+      "https://sobhadubaiprojects.com",
+      "https://www.sobhasolismotorcity.info/connectivity.html",
+      "https://sobharealty.com/media-center/blogs/how-to-maximize-roi-with-dubai-tax-free-real-estate-market",
+      "https://propsearch.ae/dubai-property-developers/sobha-realty",
+      "https://harperwellington.com/communities/sobha-central",
+      "https://continentalclub.ae/roi-analysis-of-apartment-in-sobha-one-dld-data-and-real-deals-3",
+      "https://propsearch.ae/dubai/sobha-central",
+      "https://sobharealty.com",
+      "https://www.linkedin.com/pulse/sobha-central-prices-present-exceptional-value-dubais-property-gxdxf",
+      "https://sobharealty.com/sites/default/files/2025-05/Sobha%20Central%20Brochure.pdf%202.pdf",
+      "https://sobharealtyapartments.mystrikingly.com/blog/sobha-central-location-dubai-connectivity-lifestyle-investment-benefits",
+      "https://www.propertyfinder.ae/en/new-projects/sobha-realty/the-horizon",
+      "https://propsearch.ae/dubai/sobha-central/schools",
+      "https://khaleejemirates.com/sobha-realty-metro-station-location-guide-reach-dubais-top-spots",
+      "https://bookcardubai.com/sobha-realty-metro-station",
+      "https://www.sobhasolismotorcity.info/schools-near-sobha-solis-and-up-town-motor-city.html",
+      "https://www.hartlandinternational.com",
+      "https://www.youtube.com/watch?v=bgk4vez1V0E",
+      "https://central-residences-dubai.com",
+      "https://www.bayut.com/for-sale/property/dubai/sheikh-zayed-road/sobha-central/the-horizon-at-sobha-central",
+      "https://dubaipropertiesinfomation.wordpress.com/2025/12/19/sobha-the-pinnacle-at-sobha-central-luxury-living-in-jebel-ali-dubai",
+      "https://whitecollarrealty.com/residential_property/sobha-central-dubai",
+      "https://www.bayut.com/buildings/the-horizon-at-sobha-central",
+      "https://www.propertyfinder.ae/en/buy/dubai/apartments-for-sale-jebel-ali-sobha-central.html",
+      "https://www.bayut.com/for-sale/apartments/dubai/sheikh-zayed-road/sobha-central",
+      "https://sobharealty.com/sobha-communities/sobha-central",
+      "https://www.instagram.com/p/DSp0aNmCKUX"
+    ],
+    "audit_flags": [
+      "Exact walking distance from Sobha Central to Sobha Realty Metro Station and Jebel Ali Metro Station is unverified — brochure states 'within walking distance of Jebel Ali Metro Station' without a specific distance",
+      "ROI/yield projections for Sobha Central are unavailable — project is off-plan with no DLD rental data; third-party promotional ROI figures (LinkedIn Source 10) are unverified and excluded",
+      "Pricing for The Pinnacle, The Eden, The Mirage, and The Serene towers is not confirmed in available sources",
+      "Handover dates for The Pinnacle, The Eden, The Mirage, and The Serene are not individually confirmed — Q4 2029 is confirmed only for The Tranquil and The Horizon",
+      "Healthcare facility distances are unverified — Aster and Mediclinic Parkview referenced in Property Finder content without confirmed proximity data",
+      "School fee and rating data sourced from WhichSchoolAdvisor via Propsearch.ae — individual school names beyond Arcadia Global School and Dubai British School Jumeirah Park not listed in source",
+      "LinkedIn article (Source 10) contains unverified claims including Al Furjan location, specific ROI percentages, and guaranteed rental yields — treated as unreliable promotional content",
+      "Bayut listing URLs provided as source but listing content was not directly accessible in research; used as reference only",
+      "The Horizon area classification varies across sources (Jebel Ali per Property Finder; JLT per some third-party descriptions) — official Sobha materials reference Sheikh Zayed Road address without a specific sub-district",
+      "No verified DLD transaction data available for The Pinnacle specifically — 50 total Sobha Central transactions per Propsearch.ae but not broken down by tower"
+    ]
+  }
+}

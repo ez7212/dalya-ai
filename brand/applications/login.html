@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in to Dalya — three audiences</title>
+  <link rel="stylesheet" href="./_tokens.css" />
+  <style>
+    /* ─────────────────────────────────────────────────────────────────────
+     * Three sign-in variants for three audiences:
+     *   1. Seller       /signin/seller   — property owners listing their unit
+     *   2. Agent        /signin/agent    — entry-level agents and team leads
+     *   3. Brokerage    /signin/broker   — brokerage owners overseeing teams
+     *
+     * Same auth form, same Supabase backend. The sub-headline + post-auth
+     * redirect differ per audience. Pre-fills the URL path based on the
+     * landing entry point.
+     * ───────────────────────────────────────────────────────────────────── */
+
+    body {
+      min-height: 100vh;
+      background: var(--color-neutral-200);
+      padding: var(--space-16) 0;
+    }
+
+    .preview-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-16);
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-16);
+    }
+    @media (min-width: 1024px) {
+      .preview-row { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .preview-frame {
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-3);
+      padding: var(--space-16);
+      min-height: 640px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: var(--space-16);
+      position: relative;
+    }
+    .preview-label {
+      position: absolute;
+      top: -10px;
+      left: var(--space-12);
+      padding: 2px var(--space-6);
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-1);
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 600;
+    }
+    .preview-url {
+      position: absolute;
+      top: -10px;
+      right: var(--space-12);
+      padding: 2px var(--space-6);
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-hairline);
+      border-radius: var(--radius-1);
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Wordmark ── */
+    .brand { text-align: center; }
+    .brand-wordmark {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-brand-500);
+      letter-spacing: -0.015em;
+      display: inline-block;
+    }
+    .brand-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      margin-top: var(--space-4);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      font-weight: 500;
+    }
+
+    /* ── Card body ── */
+    .auth-card {
+      max-width: 360px;
+      width: 100%;
+      margin: 0 auto;
+      align-self: center;
+      padding: var(--space-12) 0;
+    }
+    .auth-title {
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--color-text-1);
+      letter-spacing: var(--tracking-tight);
+      text-align: center;
+      margin-bottom: var(--space-4);
+    }
+    .auth-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+    .auth-sub strong {
+      color: var(--color-text-1);
+      font-weight: 600;
+    }
+
+    /* ── Form ── */
+    .form { display: grid; gap: var(--space-10); }
+    .field { display: grid; gap: var(--space-4); }
+    .field label {
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-text-3);
+      font-weight: 500;
+    }
+    .field input {
+      height: var(--input-height-md);
+      padding: 0 var(--space-10);
+      background: var(--color-surface-0);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-2);
+      font: inherit;
+      font-size: var(--text-sm);
+      color: var(--color-text-1);
+      transition: border-color var(--duration-base) var(--ease-out),
+                  box-shadow var(--duration-base) var(--ease-out);
+    }
+    .field input::placeholder { color: var(--color-text-3); }
+    .field input:focus {
+      outline: none;
+      border-color: var(--color-brand-500);
+      box-shadow: 0 0 0 3px var(--color-brand-50);
+    }
+    .field-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+    }
+    .field-help {
+      font-size: var(--text-2xs);
+      color: var(--color-link);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .field-help:hover { text-decoration: underline; }
+
+    /* ── Buttons ── */
+    .btn {
+      height: var(--button-height-md);
+      padding: 0 var(--space-12);
+      border-radius: var(--radius-2);
+      border: 1px solid transparent;
+      font: inherit;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--duration-base) var(--ease-out),
+                  border-color var(--duration-base) var(--ease-out);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+    }
+    .btn-primary { background: var(--color-brand-600); color: white; }
+    .btn-primary:hover { background: var(--color-brand-700); }
+    .btn-google {
+      background: var(--color-surface-0);
+      color: var(--color-text-1);
+      border-color: var(--color-border-default);
+    }
+    .btn-google:hover { background: var(--color-surface-1); border-color: var(--color-border-strong); }
+
+    .google-g {
+      width: 16px; height: 16px;
+      display: inline-block;
+      background: conic-gradient(from 0deg, #4285F4, #34A853, #FBBC04, #EA4335, #4285F4);
+      border-radius: 50%;
+      mask: radial-gradient(white 35%, transparent 38%);
+      -webkit-mask: radial-gradient(white 35%, transparent 38%);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      color: var(--color-text-3);
+      font-size: var(--text-2xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      font-weight: 500;
+      margin: var(--space-4) 0;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--color-border-hairline);
+    }
+
+    .switch {
+      text-align: center;
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      margin-top: var(--space-12);
+    }
+    .switch a {
+      color: var(--color-link);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .switch a:hover { text-decoration: underline; }
+
+    .switch-cross {
+      text-align: center;
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      margin-top: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border-hairline);
+    }
+    .switch-cross a {
+      color: var(--color-text-2);
+      text-decoration: none;
+    }
+    .switch-cross a:hover { color: var(--color-text-1); text-decoration: underline; }
+    .switch-cross a + a { margin-left: var(--space-8); }
+
+    .footer {
+      text-align: center;
+      font-size: var(--text-2xs);
+      color: var(--color-text-3);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      font-weight: 500;
+      display: flex;
+      gap: var(--space-12);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .footer .item::before {
+      content: "·";
+      color: var(--color-success-500);
+      margin-right: var(--space-4);
+      font-weight: 700;
+    }
+    .footer .item:first-child::before { content: ""; margin: 0; }
+    .footer a { color: var(--color-text-3); text-decoration: none; }
+    .footer a:hover { color: var(--color-text-1); }
+  </style>
+</head>
+<body>
+
+  <div style="max-width: 1280px; margin: 0 auto var(--space-12); padding: 0 var(--space-16);">
+    <h1 style="font-size: var(--text-2xl); font-weight: 600; color: var(--color-text-1); letter-spacing: var(--tracking-tight);">Sign in · three audience variants</h1>
+    <p style="font-size: var(--text-xs); color: var(--color-text-3); margin-top: var(--space-4); max-width: 720px;">
+      Same form, same Supabase auth backend. Audience determines the sub-headline copy and the post-login redirect. The URL path frames the experience: <code style="font-family: var(--font-mono); padding: 1px 4px; background: var(--color-surface-1); border-radius: var(--radius-1);">/signin/seller</code>, <code style="font-family: var(--font-mono); padding: 1px 4px; background: var(--color-surface-1); border-radius: var(--radius-1);">/signin/agent</code>, <code style="font-family: var(--font-mono); padding: 1px 4px; background: var(--color-surface-1); border-radius: var(--radius-1);">/signin/broker</code>.
+    </p>
+  </div>
+
+  <div class="preview-row">
+
+    <!-- ═══════════ SELLER ═══════════ -->
+    <div class="preview-frame">
+      <span class="preview-label">Seller</span>
+      <span class="preview-url">/signin/seller</span>
+
+      <div class="brand">
+        <span class="brand-wordmark">dalya</span>
+        <div class="brand-sub">Off-plan resale by Mahoroba Realty</div>
+      </div>
+
+      <div class="auth-card">
+        <h1 class="auth-title">Sign in</h1>
+        <p class="auth-sub">List your off-plan unit. <strong>0.15% commission, RERA-licensed.</strong></p>
+
+        <form class="form">
+          <button type="button" class="btn btn-google">
+            <span class="google-g"></span>
+            Continue with Google
+          </button>
+
+          <div class="divider">or</div>
+
+          <div class="field">
+            <label for="se-email">Email</label>
+            <input type="email" id="se-email" placeholder="you@example.com" required />
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="se-pw">Password</label>
+              <a href="#forgot" class="field-help">Forgot?</a>
+            </div>
+            <input type="password" id="se-pw" placeholder="At least 8 characters" required minlength="8" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+
+        <p class="switch">
+          First time selling with Dalya? <a href="#upload">Upload your SPA</a>
+        </p>
+
+        <p class="switch-cross">
+          I'm <a href="/signin/agent">an agent</a> · <a href="/signin/broker">a brokerage owner</a>
+        </p>
+      </div>
+
+      <div class="footer">
+        <span class="item">RERA licensed</span>
+        <span class="item">Mahoroba Realty</span>
+      </div>
+    </div>
+
+    <!-- ═══════════ AGENT ═══════════ -->
+    <div class="preview-frame">
+      <span class="preview-label">Agent</span>
+      <span class="preview-url">/signin/agent</span>
+
+      <div class="brand">
+        <span class="brand-wordmark">dalya</span>
+        <div class="brand-sub">Off-plan resale infrastructure</div>
+      </div>
+
+      <div class="auth-card">
+        <h1 class="auth-title">Sign in</h1>
+        <p class="auth-sub">Conversations, listings, and your pipeline.</p>
+
+        <form class="form">
+          <button type="button" class="btn btn-google">
+            <span class="google-g"></span>
+            Continue with Google
+          </button>
+
+          <div class="divider">or</div>
+
+          <div class="field">
+            <label for="ag-email">Email</label>
+            <input type="email" id="ag-email" placeholder="you@brokerage.com" required />
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="ag-pw">Password</label>
+              <a href="#forgot" class="field-help">Forgot?</a>
+            </div>
+            <input type="password" id="ag-pw" placeholder="At least 8 characters" required minlength="8" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+
+        <p class="switch">
+          Joining a new brokerage on Dalya? <a href="#request-invite">Request an invite</a>
+        </p>
+
+        <p class="switch-cross">
+          I'm <a href="/signin/seller">a seller</a> · <a href="/signin/broker">a brokerage owner</a>
+        </p>
+      </div>
+
+      <div class="footer">
+        <span class="item">RERA licensed</span>
+        <span class="item">Mahoroba Realty</span>
+      </div>
+    </div>
+
+    <!-- ═══════════ BROKERAGE OWNER ═══════════ -->
+    <div class="preview-frame">
+      <span class="preview-label">Brokerage</span>
+      <span class="preview-url">/signin/broker</span>
+
+      <div class="brand">
+        <span class="brand-wordmark">dalya</span>
+        <div class="brand-sub">Brokerage infrastructure</div>
+      </div>
+
+      <div class="auth-card">
+        <h1 class="auth-title">Sign in</h1>
+        <p class="auth-sub">Performance, team, and listings across your brokerage.</p>
+
+        <form class="form">
+          <button type="button" class="btn btn-google">
+            <span class="google-g"></span>
+            Continue with Google
+          </button>
+
+          <div class="divider">or</div>
+
+          <div class="field">
+            <label for="br-email">Email</label>
+            <input type="email" id="br-email" placeholder="owner@yourbrokerage.com" required />
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="br-pw">Password</label>
+              <a href="#forgot" class="field-help">Forgot?</a>
+            </div>
+            <input type="password" id="br-pw" placeholder="At least 8 characters" required minlength="8" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+
+        <p class="switch">
+          New brokerage on Dalya? <a href="#contact">Talk to Eric</a>
+        </p>
+
+        <p class="switch-cross">
+          I'm <a href="/signin/seller">a seller</a> · <a href="/signin/agent">an agent</a>
+        </p>
+      </div>
+
+      <div class="footer">
+        <span class="item">RERA licensed</span>
+        <span class="item">Mahoroba Realty</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

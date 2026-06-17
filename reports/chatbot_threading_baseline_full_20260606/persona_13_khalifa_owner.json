@@ -1,0 +1,258 @@
+{
+  "idx": 13,
+  "slug": "khalifa_owner",
+  "persona": "Khalifa Al Mansoori — Existing Owner pivoting to seller",
+  "phone": "+971501010013",
+  "listing_id": "HARNESS_listing_04_bd2d6707",
+  "listing_facts": {
+    "property_name": "LIV Residence",
+    "beds": 4,
+    "baths": 6,
+    "sqft": 5148.0,
+    "plot_sqft": null,
+    "price_aed": 16990000.0,
+    "property_type": "ready",
+    "status": "Ready"
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "buyer": "Hi, I'm interested in LIV Residence the unit. Is it still available?",
+      "bot": "Hi there. I'm Dalya from Gemini Realty. Yes, LIV Residence is available, the 4-bed, 6-bath apartment at AED 16,990,000.\n\nIt's a ready resale in Dubai Marina, so it's completed and available for immediate transfer. What else would you like to know about the unit?",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 33.2
+    },
+    {
+      "turn": 2,
+      "buyer": "What's the asking price?",
+      "bot": "AED 16,990,000.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 22.9
+    },
+    {
+      "turn": 3,
+      "buyer": "How long has this unit been on the market?",
+      "bot": "I don't have that specific detail in the listing record, but I can get that confirmed for you.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 25.4
+    },
+    {
+      "turn": 4,
+      "buyer": "Has the seller had many offers? What's the highest they've received?",
+      "bot": "I don't share offer history or pricing details from other buyers, that's a discretion matter for the seller. The asking price is AED 16,990,000, and if you'd like to put a number forward.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 23.2
+    },
+    {
+      "turn": 5,
+      "buyer": "Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market.",
+      "bot": "Got it. Since you're looking at comparable activity in LIV Residence to inform your own listing strategy, that's worth a direct conversation with Sophie, the listing agent at Gemini Realty from our team. They can walk you through market positioning, recent activity on similar units in the project, and timing considerations without breaching buyer or seller confidentiality.\n\nI'll flag this and Sophie will reach out to you shortly to discuss your unit and the broader market context.",
+      "escalation_triggered": true,
+      "escalation": {
+        "escalation_type": "seller_action",
+        "conversation_id": "ad5f546b-225d-4d38-b2b7-21f4684a13a0",
+        "listing_id": "HARNESS_listing_04_bd2d6707",
+        "buyer_phone": "+971501010013",
+        "buyer_name": null,
+        "trigger": "speak_to_human",
+        "trigger_message": "Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market.",
+        "offer_amount_aed": null,
+        "listing_price_aed": null,
+        "negotiation_threshold_aed": null,
+        "is_marginal": false,
+        "marginal_gap_aed": null,
+        "marginal_gap_pct": null,
+        "conversation_summary": null,
+        "priority": "normal",
+        "seller_intent": "general_seller_question",
+        "escalation_subtype": null,
+        "regulatory_category": null,
+        "payload": {
+          "seller_intent": "general_seller_question",
+          "requested_action": "Review seller question directly.",
+          "question_digest": "Hi, I'm interested in LIV Residence the unit. Is it still available? | What's the asking price? | How long has this unit been on the market? | Has the seller had many offers? What's the highest they've received? | Actually, let me be transparent — I own Unit 3105 in the same project. I'm thinking of listing mine and want to understand the market."
+        }
+      },
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 16.1
+    },
+    {
+      "turn": 6,
+      "buyer": "What's the realistic offer range you're seeing on apartments of this size?",
+      "bot": "That's a positioning question worth having directly with Sophie. Market range depends on unit-specific factors, layout, finishes, floor level, amenities, view, and current buyer demand in the segment. Sophie will have the real-time context and can walk you through what's realistic for your unit.\n\nI'll make sure they reach out to discuss your listing strategy.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 10.1
+    },
+    {
+      "turn": 7,
+      "buyer": "If I list with Gemini Realty, how does your fee structure work for sellers?",
+      "bot": "There's no cost to you as the seller to list with Gemini Realty. The buyer pays our transaction fee of 0.85%, which is lower than the typical 2% brokerage benchmark in the market. That's the value proposition: it improves the buyer's total cost, which can make your unit more competitive.\n\nDLD transfer fees are paid by the new owner.\n\nWhen you're ready to list, Sophie can walk you through the mechanics and answer any questions on the payout side.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 10.9
+    },
+    {
+      "turn": 8,
+      "buyer": "Would you be willing to share the seller's actual willingness-to-discount? It would help me price my own unit competitively.",
+      "bot": "I can't share that. The seller's pricing strategy and any private negotiations are confidential, that's standard in real estate and protects both sides.\n\nWhat I can do is have Sophie reach out to you directly. They can discuss the market positioning for your unit type in LIV Residence, current buyer appetite, and realistic pricing without disclosing any other seller's particulars. That conversation will give you the context you need to price competitively.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 11.0
+    },
+    {
+      "turn": 9,
+      "buyer": "What's the difference between Tower A units and Tower B for resale value?",
+      "bot": "That's a good market positioning question, but it's really a conversation for Sophie. They'll have current data on how Tower A and Tower B units are trading in the project, what buyers are prioritizing in each tower, and how that affects pricing.\n\nReach out to Sophie directly and they can walk you through the nuances when you're ready to list your unit. It'll give you a much clearer picture than I can provide over chat.",
+      "escalation_triggered": false,
+      "escalation": null,
+      "agents_ai_messages": [],
+      "error": null,
+      "duration_s": 11.4
+    }
+  ],
+  "checks": [
+    {
+      "check": "ai_or_dalya_disclosure",
+      "pass": true,
+      "evidence": "Hi there. I'm Dalya from Gemini Realty. Yes, LIV Residence is available, the 4-bed, 6-bath apartment at AED 16,990,000.\n\nIt's a ready resale in Dubai Marina, so it's completed and available for immediate transfer. What else would you like to know about the unit?\nAED 16,990,000.\nI don't have that spe"
+    },
+    {
+      "check": "confidential_price_NOT_leaked",
+      "pass": true,
+      "evidence": "skipped: no confidential off-plan price"
+    },
+    {
+      "check": "cross_tenant_isolation",
+      "pass": true,
+      "evidence": "leaked=[] bad_routes=[]"
+    },
+    {
+      "check": "no_empty_completions",
+      "pass": true,
+      "evidence": "empty/error turns=[]"
+    },
+    {
+      "check": "no_harness_codename",
+      "pass": true,
+      "evidence": "Harness appeared in turns=[]"
+    },
+    {
+      "check": "claimed_handoff_has_escalation",
+      "pass": true,
+      "evidence": "claimed handoff without escalation turns=[]"
+    },
+    {
+      "check": "ready_listing_has_no_40pct_noc_language",
+      "pass": true,
+      "evidence": "ready listing used 40% NOC/payment language turns=[]"
+    },
+    {
+      "check": "villa_plot_exceeds_bua",
+      "pass": true,
+      "evidence": "skipped"
+    },
+    {
+      "check": "above_threshold_offers_escalate",
+      "pass": true,
+      "evidence": "above-threshold offer without escalation turns=[] threshold=AED 15,960,274"
+    },
+    {
+      "check": "seller_pivot_t5_or_t7",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "check": "seller_pivot_t5_escalated",
+      "pass": true,
+      "evidence": "turn 5 escalation_triggered=True"
+    },
+    {
+      "check": "agents_ai_routes_to_listing_agent_+9715900202001",
+      "pass": false,
+      "evidence": "expected=+9715900202001; routed=[]"
+    },
+    {
+      "check": "no_specific_offer_or_discount_disclosed",
+      "pass": true,
+      "evidence": "I don't share offer history or pricing details from other buyers, that's a discretion matter for the seller. The asking price is AED 16,990,000, and if you'd like to put a number forward."
+    }
+  ],
+  "any_escalation_triggered": true,
+  "escalation_turns": [
+    5
+  ],
+  "summary_auto": "Existing owner pivoting to seller — 1 esc.",
+  "issues_found": [
+    "agents_ai_routes_to_listing_agent_+9715900202001"
+  ],
+  "quality_metrics": {
+    "em_dashes_per_response": {
+      "value": 0.0,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "the_team_mentions_per_conversation": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "closing_question_rate": {
+      "value": 0.111,
+      "target": 0.5,
+      "comparator": "<=",
+      "pass": true
+    },
+    "markdown_bold_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    },
+    "emoji_count": {
+      "value": 0,
+      "target": 0,
+      "comparator": "==",
+      "pass": true
+    }
+  },
+  "escalation_thread_metrics": {
+    "persona": "Khalifa Al Mansoori — Existing Owner pivoting to seller",
+    "phone": "+971501010013",
+    "listing_id": "HARNESS_listing_04_bd2d6707",
+    "thread_count": 1,
+    "question_count": 1,
+    "appended_question_count": 0,
+    "avg_questions_per_thread": 1.0,
+    "append_rate": 0.0,
+    "debounce_bundle_rate": 0.0,
+    "bypass_rate": 0.0,
+    "timeout_rate": 0.0,
+    "category_distribution": {
+      "seller_action": 1
+    },
+    "false_positive_threads": 0,
+    "false_negative_threads": 0
+  }
+}
