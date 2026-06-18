@@ -580,7 +580,7 @@ export function HowWeShip() {
               className="text-[11px] uppercase tracking-widest font-semibold"
               style={{ color: 'var(--color-text-3)' }}
             >
-              Escalation · needs you
+              Escalation · 6 minutes ago
             </span>
             <span
               className="ml-auto text-[11px] tabular-aed"
@@ -696,7 +696,7 @@ export function WhatsAppBridge() {
                   className="text-[12px] px-2.5 py-1.5 rounded-lg leading-snug max-w-[85%]"
                   style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-1)' }}
                 >
-                  Is the 2-bed still available? Looking to move in next month.
+                  Have a buyer looking for a 4 bedroom villa - have anything I can show him?
                 </div>
                 <div className="self-end max-w-[88%]">
                   <div
@@ -713,7 +713,7 @@ export function WhatsAppBridge() {
                       border: '1px solid var(--color-brand-100)',
                     }}
                   >
-                    Yes — available now. I can set up a viewing this week. What day suits you?
+                    I have one in Dubai Hills and two in Arabian Ranches. Which area does he prefer?
                   </div>
                 </div>
               </div>
