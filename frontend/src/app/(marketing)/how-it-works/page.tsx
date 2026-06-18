@@ -223,7 +223,7 @@ function SnippetListing() {
         <FactRow k="Threshold" v="AED 16,894,000" mono />
         <FactRow k="Handover" v="2029-09-30" mono />
         <FactRow k="Tenure" v="Off-plan resale" />
-        <FactRow k="Agent" v="Eric Lead Broker" />
+        <FactRow k="Agent" v="Alice · Lead Broker" />
         <FactRow k="DLD reg." v="In progress" />
       </div>
     </>

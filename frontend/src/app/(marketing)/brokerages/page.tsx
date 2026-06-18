@@ -107,7 +107,7 @@ export default function BrokeragesPage() {
                     AED 17,000,000
                   </div>
                   <div className="text-[11px]" style={{ color: 'var(--color-text-2)' }}>
-                    Sara Mohammed · Palace Villas Ostra · routed to Eric
+                    Sara Mohammed · Palace Villas Ostra · routed to Alice
                   </div>
                 </div>
               </FloatingCard>

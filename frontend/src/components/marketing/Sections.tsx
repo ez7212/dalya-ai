@@ -53,19 +53,16 @@ export function StatsRow() {
             measure="First response"
             value="Under 60s"
             body="Every buyer message is answered, qualified, and logged while the lead is still warm — EN · AR · RU · HI, day or night."
-            footnote="24/7 · every inbound message"
           />
           <StatCard
             measure="Morning hot list"
             value="Ranked & ready"
             body="Each agent opens to a ranked queue of who to call, with buyer context and the next action already attached."
-            footnote="Refreshed before the day starts"
           />
           <StatCard
             measure="Smart escalation"
             value="Drafted & routed"
             body="Offers surface immediately with negotiation drafts, and the right agent is notified the moment they're needed."
-            footnote="Across every active listing"
           />
         </div>
       </div>
@@ -77,12 +74,10 @@ function StatCard({
   measure,
   value,
   body,
-  footnote,
 }: {
   measure: string
   value: string
   body: string
-  footnote: string
 }) {
   return (
     <div
@@ -103,12 +98,6 @@ function StatCard({
       </div>
       <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
         {body}
-      </p>
-      <p
-        className="text-[11px] mt-3 italic"
-        style={{ color: 'var(--color-text-3)' }}
-      >
-        {footnote}
       </p>
     </div>
   )
@@ -409,7 +398,7 @@ function SnippetEscalation() {
     <>
       <SnippetRow label="Question" value="Close in 30 days?" pillText="Escalated" pillKind="brand" />
       <SnippetRow label="Offer" value="AED 17.0M" pillText="Above threshold" pillKind="success" />
-      <SnippetRow label="Routed to" value="Eric · Lead Broker" />
+      <SnippetRow label="Routed to" value="Alice · Lead Broker" />
     </>
   )
 }
