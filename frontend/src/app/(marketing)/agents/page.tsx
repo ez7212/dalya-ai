@@ -294,6 +294,7 @@ export default function AgentsPage() {
             eyebrow="For agents · mobile + desktop"
             title="The agent day."
             desc="Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation history and suggested reply ready before the agent follows up."
+            img="/brand-mockups/agent-desktop.png"
             src="/brand-mockups/agent-desktop.html"
           />
         </div>

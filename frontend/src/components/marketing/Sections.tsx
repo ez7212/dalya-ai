@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 /* ════════════════════════════════════════════════════════════════════
  * FRAME — the agent-improvement statement
@@ -49,20 +50,20 @@ export function StatsRow() {
           style={{ borderColor: 'var(--color-border-hairline)', background: 'var(--color-border-hairline)' }}
         >
           <StatCard
-            num="<60s"
-            headline="Faster first response."
+            measure="First response"
+            value="Under 60s"
             body="WhatsApp inquiries are answered, qualified, and logged while the lead is still warm."
             footnote="Pilot target · measured from inbound inquiry to first useful response"
           />
           <StatCard
-            num="1 list"
-            headline="Clear morning priority."
+            measure="Morning priority"
+            value="One ranked list"
             body="Each agent starts with a ranked hot list, buyer context, and recommended next action."
             footnote="Daily workflow metric · measured by active follow-ups completed"
           />
           <StatCard
-            num="Live"
-            headline="Offer escalation."
+            measure="Offer escalation"
+            value="Surfaced live"
             body="Above-threshold offers are surfaced immediately with listing, buyer, terms, and context."
             footnote="Operational metric · measured across every active listing"
           />
@@ -73,32 +74,32 @@ export function StatsRow() {
 }
 
 function StatCard({
-  num,
-  headline,
+  measure,
+  value,
   body,
   footnote,
 }: {
-  num: string
-  headline: string
+  measure: string
+  value: string
   body: string
   footnote: string
 }) {
   return (
     <div
-      className="px-7 py-8"
+      className="px-7 py-8 flex flex-col"
       style={{ background: 'var(--color-surface-0)' }}
     >
       <div
-        className="text-5xl font-bold tabular-aed leading-none mb-3"
-        style={{ color: 'var(--color-brand-500)', letterSpacing: '-0.025em' }}
+        className="text-[11px] uppercase tracking-widest font-bold mb-2"
+        style={{ color: 'var(--color-brand-500)' }}
       >
-        {num}
+        {measure}
       </div>
       <div
-        className="text-lg font-semibold mb-1.5"
-        style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
+        className="text-[26px] font-semibold tabular-aed leading-tight mb-2"
+        style={{ color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}
       >
-        {headline}
+        {value}
       </div>
       <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
         {body}
@@ -114,7 +115,7 @@ function StatCard({
 }
 
 /* ════════════════════════════════════════════════════════════════════
- * SURFACES — two iframes showing the actual product
+ * SURFACES — crisp product screenshots (was: scaled iframes)
  * ════════════════════════════════════════════════════════════════════ */
 
 export function Surfaces() {
@@ -133,12 +134,14 @@ export function Surfaces() {
           eyebrow="For agents · mobile + desktop"
           title="The agent day."
           desc="Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation history and suggested reply ready before the agent follows up."
+          img="/brand-mockups/agent-desktop.png"
           src="/brand-mockups/agent-desktop.html"
         />
         <SurfaceCard
           eyebrow="For owners · desktop"
           title="The brokerage view."
           desc="Revenue per agent. Listings in flight. Offers above threshold. Buyer engagement velocity. The dashboard makes the operating picture visible."
+          img="/brand-mockups/owner-dashboard.png"
           src="/brand-mockups/owner-dashboard.html"
         />
       </div>
@@ -150,11 +153,13 @@ export function SurfaceCard({
   eyebrow,
   title,
   desc,
+  img,
   src,
 }: {
   eyebrow: string
   title: string
   desc: string
+  img: string
   src: string
 }) {
   return (
@@ -186,24 +191,19 @@ export function SurfaceCard({
         </p>
       </div>
       <div
-        className="relative h-[360px] overflow-hidden border-t"
+        className="relative border-t overflow-hidden"
         style={{
           background: 'var(--color-surface-1)',
           borderColor: 'var(--color-border-hairline)',
+          aspectRatio: '1280 / 600',
         }}
       >
-        <iframe
-          src={src}
-          loading="lazy"
-          title={title}
-          className="absolute top-0 left-0 border-0"
-          style={{
-            width: '1440px',
-            height: '720px',
-            transform: 'scale(0.5)',
-            transformOrigin: 'top left',
-            pointerEvents: 'none',
-          }}
+        <Image
+          src={img}
+          alt={`${title} — Dalya product preview`}
+          fill
+          sizes="(max-width: 1024px) 100vw, 600px"
+          className="object-cover object-top"
         />
       </div>
       <div
@@ -242,9 +242,12 @@ export function Pillars() {
           the next action obvious, and the follow-up easier to complete.
         </p>
 
+        {/* Bento: wide cards (text beside snippet) alternate L/R against
+            narrow stacked cards, breaking the uniform 3-up grid rhythm. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
 
           <Pillar
+            wide
             num="01 / Buyers"
             title="Buyer engagement"
             desc="A 24/7 multilingual responder grounded in the actual documents. Routine questions are answered, serious signals are tagged, and agents wake up to an organized queue."
@@ -263,12 +266,14 @@ export function Pillars() {
             snippet={<SnippetListings />}
           />
           <Pillar
+            wide
             num="04 / Workflow"
             title="Daily agent workflow"
             desc="A morning hot list ranking who to call. Draft-and-send when the agent is in the loop. Follow-up nudges when a buyer goes quiet."
             snippet={<SnippetHotlist />}
           />
           <Pillar
+            wide
             num="05 / Negotiation"
             title="Negotiation support"
             desc="Comparables on demand. Seller flexibility signals. Suggested counters. Your agent decides. Dalya surfaces the inputs."
@@ -292,12 +297,63 @@ function Pillar({
   title,
   desc,
   snippet,
+  wide = false,
 }: {
   num: string
   title: string
   desc: string
   snippet: React.ReactNode
+  wide?: boolean
 }) {
+  const heading = (
+    <div>
+      <div
+        className="text-[11px] font-medium font-mono tracking-wide mb-3"
+        style={{ color: 'var(--color-brand-500)' }}
+      >
+        {num}
+      </div>
+      <h3
+        className="text-base font-semibold mb-1"
+        style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
+      >
+        {title}
+      </h3>
+      <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
+        {desc}
+      </p>
+    </div>
+  )
+
+  const snippetBox = (
+    <div
+      className="rounded-lg p-3 min-h-[100px] flex flex-col justify-center gap-1.5"
+      style={{
+        background: 'var(--color-surface-1)',
+        border: '1px solid var(--color-border-hairline)',
+      }}
+    >
+      {snippet}
+    </div>
+  )
+
+  // Wide cards span two columns and read horizontally (text │ snippet),
+  // giving the section a different beat from the stacked narrow cards.
+  if (wide) {
+    return (
+      <div
+        className="rounded-xl p-5 lg:p-6 lg:col-span-2 flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:items-stretch"
+        style={{
+          background: 'var(--color-surface-0)',
+          border: '1px solid var(--color-border-hairline)',
+        }}
+      >
+        {heading}
+        {snippetBox}
+      </div>
+    )
+  }
+
   return (
     <div
       className="rounded-xl p-5 flex flex-col gap-4"
@@ -306,32 +362,8 @@ function Pillar({
         border: '1px solid var(--color-border-hairline)',
       }}
     >
-      <div
-        className="text-[11px] font-medium font-mono tracking-wide"
-        style={{ color: 'var(--color-brand-500)' }}
-      >
-        {num}
-      </div>
-      <div>
-        <h3
-          className="text-base font-semibold mb-1"
-          style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
-        >
-          {title}
-        </h3>
-        <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-          {desc}
-        </p>
-      </div>
-      <div
-        className="mt-auto rounded-lg p-3 min-h-[100px] flex flex-col justify-center gap-1.5"
-        style={{
-          background: 'var(--color-surface-1)',
-          border: '1px solid var(--color-border-hairline)',
-        }}
-      >
-        {snippet}
-      </div>
+      {heading}
+      <div className="mt-auto">{snippetBox}</div>
     </div>
   )
 }

@@ -182,6 +182,7 @@ export default function BrokeragesPage() {
             eyebrow="For owners · desktop"
             title="The brokerage view."
             desc="Revenue per agent. Offers above threshold. Listings in flight. Buyer engagement velocity. The dashboard makes the operating picture visible without a manual weekly spreadsheet."
+            img="/brand-mockups/owner-dashboard.png"
             src="/brand-mockups/owner-dashboard.html"
           />
         </div>

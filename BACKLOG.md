@@ -67,6 +67,10 @@ Eight workstreams closing the gaps from the June 10 MVP review, ordered by agent
 
 Open questions to answer before P2 starts (full list in the spec): Luqman's actual lead delivery path (decides DAL-163 Path 2), first-touch template variants (submit this week), voice reply mode B1 vs B2, relay hold window, hot-buyer push threshold, transcription confidence threshold, Twilio sandbox `Forwarded` flag availability.
 
+### Marketing site
+
+- [x] **DAL-178: Marketing site positioning fix + composition/proof/stats refresh.** Shipped 2026-06-18: removed all "Mahoroba Realty" references from the marketing surface (`frontend/src/app/(marketing)` + `components/marketing` + the two linked mockups), reworded to "each listing is operated by a RERA-licensed brokerage" since Dalya is software not the licensee. Design pass from a `/critique` review: Pillars section rebuilt as an alternating wide/narrow bento (breaks the uniform 3-up grid); pilot-scorecard stat row de-templated (`<60s / 1 list / Live` → honest measure→value cards, no non-numbers at big-number scale); illegible `scale(0.5)` pointer-events-none dashboard iframes replaced with crisp 2× screenshots via `next/image` (legible on mobile, no CLS, lazy, not falsely interactive) across homepage + agents + brokerages. Verification: `tsc --noEmit` clean, `eslint` clean, all 6 marketing routes 200, no horizontal overflow at 390/1440. *(Linear: Done)* Note: `.impeccable.md` is stale (describes retired navy/gold consumer design) — flagged for separate cleanup.
+
 ## Foundation hardening (B2B-blocking)
 
 Status: backend foundation complete for the current MVP. The next epics can build on these primitives without inventing their own access, compliance, aggregation, or brokerage-config rules. Remaining work is product-surface polish, not a blocker for Hot List / Smart Escalation / Viewing Logistics.
