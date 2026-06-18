@@ -60,9 +60,9 @@ export function StatsRow() {
             body="Each agent opens to a ranked queue of who to call, the conversation summary, and the next action already drafted."
           />
           <StatCard
-            measure="Smart escalation"
-            value="Drafted & routed"
-            body="Offers surface immediately with negotiation drafts, and the right agent is notified the moment they're needed."
+            measure="Viewing logistics"
+            value="Booked & confirmed"
+            body="Slots proposed, tenant and buyer confirmed, calendar invite sent — the back-and-forth handled before the agent arrives."
           />
         </div>
       </div>
@@ -124,6 +124,8 @@ export function Surfaces() {
           title="The agent dashboard."
           desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
           img="/brand-mockups/agent-dashboard.png"
+
+          mobileImg="/brand-mockups/agent-mobile.png"
           src="/brand-mockups/agent-dashboard.html"
         />
       </div>
@@ -136,12 +138,14 @@ export function SurfaceCard({
   title,
   desc,
   img,
+  mobileImg,
   src,
 }: {
   eyebrow: string
   title: string
   desc: string
   img: string
+  mobileImg?: string
   src: string
 }) {
   return (
@@ -172,8 +176,10 @@ export function SurfaceCard({
           {desc}
         </p>
       </div>
+      {/* Desktop: full landscape surface. Hidden on mobile when a portrait
+          mobile mockup is available (a shrunk desktop dashboard is illegible). */}
       <div
-        className="relative border-t overflow-hidden"
+        className={`relative border-t overflow-hidden ${mobileImg ? 'hidden md:block' : ''}`}
         style={{
           background: 'var(--color-surface-1)',
           borderColor: 'var(--color-border-hairline)',
@@ -190,6 +196,29 @@ export function SurfaceCard({
           className="object-cover object-top"
         />
       </div>
+      {mobileImg && (
+        <div
+          className="md:hidden flex justify-center px-6 py-7 border-t"
+          style={{
+            background: 'var(--color-surface-1)',
+            borderColor: 'var(--color-border-hairline)',
+          }}
+        >
+          <div
+            className="relative w-[260px] rounded-xl overflow-hidden shadow-card-md"
+            style={{ aspectRatio: '390 / 760', border: '1px solid var(--color-border-hairline)' }}
+          >
+            <Image
+              src={mobileImg}
+              alt={`${title} — Dalya on mobile`}
+              fill
+              sizes="260px"
+              unoptimized
+              className="object-cover object-top"
+            />
+          </div>
+        </div>
+      )}
       <div
         className="px-5 py-3 border-t"
         style={{
@@ -776,7 +805,7 @@ export function ClosingCTA() {
   return (
     <section className="text-center max-w-[720px] mx-auto px-6 py-24">
       <div className="t-eyebrow mb-4">See it on your listings</div>
-      <h2 className="t-section mb-4">Give every agent a system that never sleeps.</h2>
+      <h2 className="t-section mb-4">Put Dalya to work on your listings.</h2>
       <p className="t-large mb-6 max-w-[540px] mx-auto">
         Bring your listings and your toughest buyer conversations. We&apos;ll show you the
         working surface your agents wake up to — and how much of the day it handles before

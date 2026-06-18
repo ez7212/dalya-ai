@@ -295,6 +295,8 @@ export default function AgentsPage() {
             title="The agent dashboard."
             desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
             img="/brand-mockups/agent-dashboard.png"
+
+            mobileImg="/brand-mockups/agent-mobile.png"
             src="/brand-mockups/agent-dashboard.html"
           />
         </div>

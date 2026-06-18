@@ -115,15 +115,25 @@ export default function BrokeragesPage() {
               {/* Morning hot list */}
               <FloatingCard top="330px" left="120px" width="300px" rotate="-1deg" z={1}>
                 <div className="p-4" style={{ background: 'var(--color-surface-0)' }}>
-                  <div className="t-eyebrow mb-1">Morning hot list</div>
-                  <div
-                    className="text-[34px] font-bold tabular-aed leading-none mb-2"
-                    style={{ color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}
-                  >
-                    6 to call
-                  </div>
-                  <div className="text-[11px]" style={{ color: 'var(--color-text-3)' }}>
-                    ranked, with buyer context attached
+                  <div className="t-eyebrow mb-2.5">Morning hot list</div>
+                  <div className="flex flex-col gap-2">
+                    {[
+                      { n: '3', label: 'To call' },
+                      { n: '2', label: 'Escalated questions' },
+                      { n: '4', label: 'New buyers' },
+                    ].map((r) => (
+                      <div key={r.label} className="flex items-baseline gap-2">
+                        <span
+                          className="text-[16px] font-bold tabular-aed leading-none"
+                          style={{ color: 'var(--color-brand-600)' }}
+                        >
+                          {r.n}
+                        </span>
+                        <span className="text-[11px] leading-snug" style={{ color: 'var(--color-text-2)' }}>
+                          {r.label}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </FloatingCard>
@@ -165,6 +175,8 @@ export default function BrokeragesPage() {
             title="The agent dashboard."
             desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
             img="/brand-mockups/agent-dashboard.png"
+
+            mobileImg="/brand-mockups/agent-mobile.png"
             src="/brand-mockups/agent-dashboard.html"
           />
         </div>
@@ -180,32 +192,32 @@ export default function BrokeragesPage() {
             team. No manual roll-up. No retrofitted CRM hygiene project.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Editorial numbered list — deliberately not a uniform card grid */}
+          <div className="border-t" style={{ borderColor: 'var(--color-border-hairline)' }}>
             {WORKFLOWS.map((m, i) => (
-              <article
+              <div
                 key={m.label}
-                className="rounded-xl p-5 flex flex-col gap-2"
-                style={{
-                  background: 'var(--color-surface-0)',
-                  border: '1px solid var(--color-border-hairline)',
-                }}
+                className="grid grid-cols-[44px_1fr] md:grid-cols-[72px_1fr] gap-4 md:gap-10 py-6 border-b"
+                style={{ borderColor: 'var(--color-border-hairline)' }}
               >
-                <span
-                  className="text-[11px] font-mono"
+                <div
+                  className="text-[20px] font-mono leading-none pt-1"
                   style={{ color: 'var(--color-brand-500)' }}
                 >
                   {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3
-                  className="text-base font-semibold"
-                  style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
-                >
-                  {m.label}
-                </h3>
-                <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-                  {m.note}
-                </p>
-              </article>
+                </div>
+                <div className="max-w-[760px]">
+                  <h3
+                    className="text-lg font-semibold mb-1"
+                    style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
+                  >
+                    {m.label}
+                  </h3>
+                  <p className="text-[15px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
+                    {m.note}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>

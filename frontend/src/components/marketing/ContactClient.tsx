@@ -64,6 +64,7 @@ export function ContactClient() {
   const [listings, setListings] = useState('')
   const [focus, setFocus] = useState<Focus>('All of the above')
   const [notes, setNotes] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -82,6 +83,7 @@ export function ContactClient() {
       .join('\n')
     const url = `mailto:hello@dalya.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     window.location.href = url
+    setSubmitted(true)
   }
 
   return (
@@ -240,6 +242,22 @@ export function ContactClient() {
                 We respond within two working days.
               </span>
             </div>
+
+            {submitted && (
+              <div
+                className="mt-4 flex items-start gap-2 rounded-lg px-3.5 py-3 text-[13px] leading-snug"
+                style={{ background: 'var(--color-success-100)', color: 'var(--color-success-700)' }}
+                role="status"
+                aria-live="polite"
+              >
+                <span className="font-bold mt-px">✓</span>
+                <span>
+                  Your email is ready to send in your mail app. If nothing opened, write to{' '}
+                  <a href="mailto:hello@dalya.ai" className="underline">hello@dalya.ai</a>. We reply
+                  within two working days.
+                </span>
+              </div>
+            )}
           </form>
 
           {/* Sidebar */}
@@ -374,7 +392,7 @@ export function ContactClient() {
             </p>
           </div>
           <Link
-            href="mailto:hello@dalya.ai?subject=Dalya%20design%20partnership"
+            href="mailto:hello@dalya.ai?subject=Dalya%20demo%20request"
             className="btn-outline rounded-lg px-5 py-2.5 text-sm whitespace-nowrap"
           >
             hello@dalya.ai
