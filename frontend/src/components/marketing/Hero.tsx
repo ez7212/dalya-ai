@@ -117,9 +117,9 @@ export function Hero() {
               <div className="p-3.5" style={{ background: 'var(--color-surface-0)' }}>
                 <div className="t-eyebrow mb-2.5">Morning hot list</div>
                 <div className="flex flex-col gap-2">
-                  <HotItem n="3" label="to call" />
-                  <HotItem n="2" label="escalated questions · approve drafts" />
-                  <HotItem n="4" label="additions to buyer contacts" />
+                  <HotItem n="3" label="To call" />
+                  <HotItem n="2" label="Escalated questions" />
+                  <HotItem n="4" label="New buyers" />
                 </div>
               </div>
             </FloatingCard>
