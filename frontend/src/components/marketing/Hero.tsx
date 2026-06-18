@@ -115,7 +115,7 @@ export function Hero() {
               z={1}
             >
               <div className="p-3.5" style={{ background: 'var(--color-surface-0)' }}>
-                <div className="t-eyebrow mb-1">Owner metric</div>
+                <div className="t-eyebrow mb-1">Morning hot list</div>
                 <div
                   className="text-[28px] font-bold tabular-aed leading-none mb-1"
                   style={{
@@ -123,13 +123,13 @@ export function Hero() {
                     letterSpacing: '-0.02em',
                   }}
                 >
-                  Revenue / agent
+                  6 to call
                 </div>
                 <div
-                  className="text-[11px] font-medium tabular-aed"
-                  style={{ color: 'var(--color-success-700)' }}
+                  className="text-[11px] font-medium"
+                  style={{ color: 'var(--color-brand-700)' }}
                 >
-                  tracked against your baseline
+                  ranked, with buyer context
                 </div>
               </div>
             </FloatingCard>

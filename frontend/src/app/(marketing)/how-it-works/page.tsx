@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Workflow — Dalya',
   description:
-    'How Dalya fits into a Dubai brokerage: connect listings and WhatsApp, qualify buyers, brief agents, escalate serious offers, coordinate viewings, and report what changed.',
+    'How Dalya fits into a Dubai brokerage: connect listings and WhatsApp, qualify buyers, brief agents, escalate serious offers, coordinate viewings, and keep follow-up tight.',
 }
 
 const STEPS: Array<{
@@ -34,20 +34,20 @@ const STEPS: Array<{
   {
     label: '04 · Escalate',
     title: 'Escalate serious offers',
-    body: 'Above-threshold offers and high-intent buyer signals move immediately to the agent and owner view with terms, buyer, and history attached. The escalation is deterministic. The bot promise matches the system action.',
+    body: 'Above-threshold offers and high-intent buyer signals move immediately to the right agent with terms, buyer, and history attached. The escalation is deterministic. The bot promise matches the system action.',
     snippet: <SnippetAlert />,
   },
   {
     label: '05 · Coordinate',
     title: 'Coordinate the operational work',
-    body: 'Viewing windows, building access, Ejari notice for tenanted units, post-viewing follow-up, and seller updates stay in the same workflow instead of scattering across WhatsApp threads and notebooks.',
+    body: 'Viewing windows, building access, Ejari notice for tenanted units, and post-viewing follow-up stay in the same workflow instead of scattering across WhatsApp threads and notebooks.',
     snippet: <SnippetCalendar />,
   },
   {
-    label: '06 · Report',
-    title: 'Report what changed',
-    body: 'Owners see pipeline quality, response speed, agent activity, offer movement, and revenue-per-agent signals from the same underlying data. Same numbers your team is acting on, in the same shape every Monday.',
-    snippet: <SnippetMetric />,
+    label: '06 · Follow up',
+    title: 'Keep the follow-up tight',
+    body: 'Buyers who go quiet resurface on the morning hot list with a review-only draft ready. The agent edits and sends in one tap, so the trail never goes cold — and nothing sends without them.',
+    snippet: <SnippetFollowup />,
   },
 ]
 
@@ -62,8 +62,8 @@ export default function WorkflowPage() {
         </h1>
         <p className="t-large max-w-[720px]">
           Dalya sits around the brokerage workflow your team already runs. It captures the
-          buyer signal, gives the agent useful context, and gives owners a clean view of
-          what is happening across the book.
+          buyer signal, gives the agent useful context, and keeps every serious conversation
+          moving toward a deal.
         </p>
       </section>
 
@@ -71,7 +71,7 @@ export default function WorkflowPage() {
       <div className="border-t border-b" style={{ borderColor: 'var(--color-border-hairline)' }}>
         <div className="max-w-[1180px] mx-auto px-6 lg:px-8 py-10">
           <div className="flex flex-wrap items-center gap-3 text-[13px]">
-            {['Connect', 'Route', 'Brief', 'Escalate', 'Coordinate', 'Report'].map((s, i) => (
+            {['Connect', 'Route', 'Brief', 'Escalate', 'Coordinate', 'Follow up'].map((s, i) => (
               <span key={s} className="flex items-center gap-3">
                 <span
                   className="px-2.5 py-1 rounded-md text-[11px] uppercase tracking-widest font-bold"
@@ -401,43 +401,43 @@ function SnippetCalendar() {
   )
 }
 
-function SnippetMetric() {
+function SnippetFollowup() {
   return (
     <div className="p-5 grid grid-cols-2 gap-5" style={{ background: 'var(--color-surface-0)' }}>
       <div>
-        <div className="t-eyebrow mb-2">Revenue / agent · 30d</div>
+        <div className="t-eyebrow mb-2">Morning hot list</div>
         <div
           className="text-[32px] font-bold tabular-aed leading-none mb-2"
           style={{ color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}
         >
-          AED 187k
+          6 to call
         </div>
         <span
-          className="text-[11px] px-1.5 py-0.5 rounded font-bold tabular-aed"
-          style={{
-            background: 'var(--color-success-100)',
-            color: 'var(--color-success-700)',
-          }}
-        >
-          +12% vs baseline
-        </span>
-      </div>
-      <div>
-        <div className="t-eyebrow mb-2">Speed to response</div>
-        <div
-          className="text-[32px] font-bold tabular-aed leading-none mb-2"
-          style={{ color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}
-        >
-          47s
-        </div>
-        <span
-          className="text-[11px] px-1.5 py-0.5 rounded font-bold tabular-aed"
+          className="text-[11px] px-1.5 py-0.5 rounded font-bold"
           style={{
             background: 'var(--color-brand-50)',
             color: 'var(--color-brand-700)',
           }}
         >
-          across 12 agents
+          ranked by signal
+        </span>
+      </div>
+      <div>
+        <div className="t-eyebrow mb-2">Follow-up drafts</div>
+        <div
+          className="text-[32px] font-bold tabular-aed leading-none mb-2"
+          style={{ color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}
+        >
+          3 ready
+        </div>
+        <span
+          className="text-[11px] px-1.5 py-0.5 rounded font-bold"
+          style={{
+            background: 'var(--color-success-100)',
+            color: 'var(--color-success-700)',
+          }}
+        >
+          review-only
         </span>
       </div>
     </div>

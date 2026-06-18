@@ -6,14 +6,14 @@ import Link from 'next/link'
 type Focus =
   | 'Buyer response speed'
   | 'Viewing coordination'
-  | 'Listing acquisition'
+  | 'Serious-offer escalation'
   | 'Follow-up discipline'
   | 'All of the above'
 
 const FOCUS_OPTIONS: Focus[] = [
   'Buyer response speed',
   'Viewing coordination',
-  'Listing acquisition',
+  'Serious-offer escalation',
   'Follow-up discipline',
   'All of the above',
 ]
@@ -295,7 +295,7 @@ export function ContactClient() {
               <div className="t-eyebrow mb-2">Pricing</div>
               <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
                 We do not charge during the design partnership. Pricing is negotiated once your
-                agents use it daily and the operating picture is clearer. The only thing we
+                agents use it daily and the day is measurably sharper. The only thing we
                 optimise for is whether your team wants to keep it.
               </p>
             </div>

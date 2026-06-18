@@ -30,7 +30,7 @@ const TIMELINE = [
     year: '2026 · today',
     label: 'Now',
     title: 'Design partnerships',
-    body: 'We are running hands-on pilots with a small number of Dubai brokerages. Pricing waits until the agent day is measurably sharper and the operating picture is clearer.',
+    body: 'We are running hands-on pilots with a small number of Dubai brokerages. Pricing waits until the agent day is measurably sharper.',
   },
 ]
 
@@ -44,8 +44,8 @@ const PRINCIPLES = [
     body: 'The product makes buyer context, listing data, and next actions easier to use. The relationship, judgment, negotiation, and close still belong to the agent.',
   },
   {
-    title: 'Owners get operating visibility',
-    body: 'Brokerage owners see response speed, pipeline quality, listing activity, serious offers, and revenue-per-agent signals without waiting for manual updates.',
+    title: 'Owners get a faster team',
+    body: 'The brokerage owner buys Dalya because every agent handles buyers faster, escalates serious offers to the right person, and keeps follow-up tight — a sharper team without adding headcount.',
   },
   {
     title: 'Regulatory awareness from day one',
@@ -79,8 +79,8 @@ export default function AboutPage() {
         </h1>
         <p className="t-large max-w-[720px]">
           Dalya started inside a working brokerage. The product now helps brokerages make
-          every agent faster, better briefed, and easier to manage across buyer
-          conversations, viewings, listing activity, and offers.
+          every agent faster and better briefed across buyer conversations, serious-offer
+          escalation, follow-up, and viewings.
         </p>
       </section>
 

@@ -40,9 +40,9 @@ export function StatsRow() {
         <div className="t-eyebrow mb-2.5">The pilot scorecard</div>
         <h2 className="t-section mb-3 max-w-[760px]">Measure whether agents get sharper.</h2>
         <p className="t-large max-w-[680px] mb-10">
-          The first sixty days are not about software adoption theatre. We track the operating
-          metrics brokerage owners already care about: speed to response, serious conversations,
-          and revenue per agent.
+          The first sixty days are not about software adoption theatre. We track the signals
+          that move an agent&apos;s day: how fast buyers get a useful response, whether serious
+          conversations reach the right agent, and whether follow-ups actually go out.
         </p>
 
         <div
@@ -122,27 +122,20 @@ export function Surfaces() {
   return (
     <section className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
       <div className="t-eyebrow mb-2.5">The platform</div>
-        <h2 className="t-section mb-3 max-w-[760px]">Agents work faster. Owners see why.</h2>
+        <h2 className="t-section mb-3 max-w-[760px]">The agent&apos;s working surface.</h2>
         <p className="t-large max-w-[680px]">
-        The agent surface turns buyer conversations into a practical work queue. The owner
-        dashboard shows pipeline health, response speed, and revenue per agent from the same
-        listing, conversation, and offer data.
+        Dalya turns buyer conversations into a practical work queue: who to call this
+        morning, the briefing for each one, and the suggested reply ready before the agent
+        follows up.
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
+      <div className="mt-10">
         <SurfaceCard
           eyebrow="For agents · mobile + desktop"
           title="The agent day."
           desc="Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation history and suggested reply ready before the agent follows up."
           img="/brand-mockups/agent-desktop.png"
           src="/brand-mockups/agent-desktop.html"
-        />
-        <SurfaceCard
-          eyebrow="For owners · desktop"
-          title="The brokerage view."
-          desc="Revenue per agent. Listings in flight. Offers above threshold. Buyer engagement velocity. The dashboard makes the operating picture visible."
-          img="/brand-mockups/owner-dashboard.png"
-          src="/brand-mockups/owner-dashboard.html"
         />
       </div>
     </section>
@@ -235,55 +228,42 @@ export function Pillars() {
   return (
     <section style={{ background: 'var(--color-surface-1)' }}>
       <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
-        <div className="t-eyebrow mb-2.5">What Dalya improves</div>
-        <h2 className="t-section mb-3 max-w-[760px]">The workflows around every deal.</h2>
+        <div className="t-eyebrow mb-2.5">What Dalya does today</div>
+        <h2 className="t-section mb-3 max-w-[760px]">Four workflows, live in the pilot.</h2>
         <p className="t-large max-w-[680px]">
-          Every pillar maps to a job your agents already do. Dalya makes the inputs visible,
+          Each one maps to a job your agents already do. Dalya makes the inputs visible,
           the next action obvious, and the follow-up easier to complete.
         </p>
 
         {/* Bento: wide cards (text beside snippet) alternate L/R against
-            narrow stacked cards, breaking the uniform 3-up grid rhythm. */}
+            narrow stacked cards, breaking the uniform grid rhythm. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
 
           <Pillar
             wide
             num="01 / Buyers"
-            title="Buyer engagement"
-            desc="A 24/7 multilingual responder grounded in the actual documents. Routine questions are answered, serious signals are tagged, and agents wake up to an organized queue."
+            title="24/7 inquiry concierge"
+            desc="A multilingual responder (EN · AR · RU · HI) grounded in the actual listing documents. Routine questions are answered, voice notes are transcribed, serious signals are tagged, and agents wake up to an organized queue."
             snippet={<SnippetChat />}
           />
           <Pillar
-            num="02 / Viewings"
-            title="Viewing logistics"
-            desc="Time slots, Ejari notice for tenanted units, building access, calendar invites, and post-viewing capture, organized before the agent steps into the viewing."
-            snippet={<SnippetCalendar />}
+            num="02 / Escalation"
+            title="Smart escalation"
+            desc="Serious or unanswerable questions and above-threshold offers route to the right agent — on WhatsApp or the dashboard. The agent replies, and it relays straight back to the buyer."
+            snippet={<SnippetEscalation />}
           />
           <Pillar
-            num="03 / Listings"
-            title="Listing acquisition"
-            desc="DLD ownership tenure, capital-gain signal, building velocity, comparable transactions. Per-owner outreach drafts grounded in that owner's specific unit."
-            snippet={<SnippetListings />}
-          />
-          <Pillar
-            wide
-            num="04 / Workflow"
-            title="Daily agent workflow"
-            desc="A morning hot list ranking who to call. Draft-and-send when the agent is in the loop. Follow-up nudges when a buyer goes quiet."
+            num="03 / Workflow"
+            title="Hot list & follow-ups"
+            desc="A morning hot list ranking who to call. Review-only follow-up drafts when a buyer goes quiet. The agent edits and sends in one tap — Dalya never sends on its own."
             snippet={<SnippetHotlist />}
           />
           <Pillar
             wide
-            num="05 / Negotiation"
-            title="Negotiation support"
-            desc="Comparables on demand. Seller flexibility signals. Suggested counters. Your agent decides. Dalya surfaces the inputs."
-            snippet={<SnippetNegotiation />}
-          />
-          <Pillar
-            num="06 / Sellers"
-            title="Seller-side workflow"
-            desc="Weekly seller updates auto-drafted with seven days of context. The agent reviews and sends with one tap. Friday afternoons stop disappearing."
-            snippet={<SnippetSeller />}
+            num="04 / Viewings"
+            title="Viewing logistics"
+            desc="Slot proposals, Ejari notice for tenanted units, building access, tenant and buyer confirmation, calendar invites, pre-viewing briefs, and post-viewing capture — organized before the agent steps into the viewing."
+            snippet={<SnippetCalendar />}
           />
 
         </div>
@@ -424,12 +404,12 @@ function SnippetCalendar() {
   )
 }
 
-function SnippetListings() {
+function SnippetEscalation() {
   return (
     <>
-      <SnippetRow label="Owner since" value="2019" />
-      <SnippetRow label="Bought at" value="AED 1.8M" />
-      <SnippetRow label="Comparable" value="AED 2.3M" pillText="+28%" pillKind="success" />
+      <SnippetRow label="Question" value="Close in 30 days?" pillText="Escalated" pillKind="brand" />
+      <SnippetRow label="Offer" value="AED 17.0M" pillText="Above threshold" pillKind="success" />
+      <SnippetRow label="Routed to" value="Eric · Lead Broker" />
     </>
   )
 }
@@ -440,31 +420,6 @@ function SnippetHotlist() {
       <HotlistRow name="Sara Mohammed" time="14:23" kind="hot" isTop />
       <HotlistRow name="Tom Henderson" time="13:51" kind="warm" />
       <HotlistRow name="+971 50 101 0012" time="12:04" kind="warm" />
-    </>
-  )
-}
-
-function SnippetNegotiation() {
-  return (
-    <>
-      <SnippetRow label="Offer" value="AED 16.5M" pillText="−4.4%" pillKind="warning" />
-      <SnippetRow label="3 comps" value="AED 17.1M avg" />
-      <SnippetRow label="Suggest" value="Counter 17.0M" />
-    </>
-  )
-}
-
-function SnippetSeller() {
-  return (
-    <>
-      <div className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: 'var(--color-text-3)' }}>This week</div>
-      <div className="flex items-center gap-2 text-[11px]">
-        <span style={{ color: 'var(--color-text-3)' }} className="text-[10px] uppercase tracking-widest font-semibold">Views</span>
-        <span className="tabular-aed font-semibold" style={{ color: 'var(--color-text-1)' }}>14</span>
-        <span style={{ color: 'var(--color-text-3)' }} className="ml-auto text-[10px] uppercase tracking-widest font-semibold">Offers</span>
-        <span className="tabular-aed font-semibold" style={{ color: 'var(--color-text-1)' }}>2</span>
-      </div>
-      <SnippetRow label="Top" value="AED 17.0M" pillText="Above ask" pillKind="brand" />
     </>
   )
 }
@@ -570,8 +525,8 @@ export function HowWeShip() {
             <p>
               <strong style={{ color: 'var(--color-text-1)' }}>Pricing is deferred.</strong>{' '}
               We don&apos;t charge during the design partnership. Once your agents use it daily
-              and the owner dashboard shows a clearer operating picture, we negotiate. Until
-              then, the only thing we&apos;re optimising for is whether the team wants to keep it.
+              and the day is measurably sharper, we negotiate. Until then, the only thing
+              we&apos;re optimising for is whether the team wants to keep it.
             </p>
           </div>
         </div>
