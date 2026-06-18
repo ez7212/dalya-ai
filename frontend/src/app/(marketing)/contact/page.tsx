@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { ContactClient } from '@/components/marketing/ContactClient'
 
 export const metadata: Metadata = {
-  title: 'Apply for Design Partnership — Dalya',
+  title: 'Book a Demo — Dalya',
   description:
-    'Apply to run a 60-day Dalya design partnership for your Dubai real estate brokerage. Pricing waits until the agent day is sharper.',
+    'Book a demo of Dalya on your own Dubai brokerage listings — see the agent hot list, smart escalation, and follow-up drafts in action.',
 }
 
 export default function ContactPage() {

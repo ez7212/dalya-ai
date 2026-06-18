@@ -3,98 +3,82 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-type Focus =
-  | 'Buyer response speed'
-  | 'Viewing coordination'
-  | 'Listing acquisition'
-  | 'Follow-up discipline'
-  | 'All of the above'
-
-const FOCUS_OPTIONS: Focus[] = [
-  'Buyer response speed',
-  'Viewing coordination',
-  'Listing acquisition',
-  'Follow-up discipline',
-  'All of the above',
-]
-
 const TIMELINE = [
   {
-    label: 'Week 0',
-    title: 'Application review',
-    body: 'We read your application within two working days. If we are a fit, we schedule a thirty-minute call with you and one of your senior agents.',
+    label: 'Step 1',
+    title: 'You reach out',
+    body: 'Tell us about your brokerage and where your agents lose the most time. We reply within two working days.',
   },
   {
-    label: 'Week 1',
-    title: 'Listing and workflow setup',
-    body: 'Active listings, documents, and your WhatsApp inquiry surface are connected. We brief your agents on what the working surface does and does not do.',
+    label: 'Step 2',
+    title: 'A demo on your listings',
+    body: 'A thirty-minute walkthrough on your own listings and a real WhatsApp thread, so you see exactly what your agents would wake up to.',
   },
   {
-    label: 'Week 2 – 8',
-    title: 'Live partnership',
-    body: 'Your team uses the product daily. We sit weekly with your owners and top agents. Every gap goes into the build queue. Every win is measured.',
+    label: 'Step 3',
+    title: 'Setup',
+    body: 'We connect your active listings, documents, and WhatsApp inquiry surface, and brief your agents on the working surface.',
   },
   {
-    label: 'Week 9',
-    title: 'Operating review and pricing',
-    body: 'We compare the operating baseline against the pilot scorecard, then negotiate pricing if your team wants to keep the platform.',
+    label: 'Step 4',
+    title: 'Live with your team',
+    body: 'Your agents run their day on Dalya — hot list, escalations, follow-ups, and viewings — with us close by as you roll it out across the team.',
   },
 ]
 
 const GOOD_FIT = [
   'You operate a Dubai real estate brokerage or sales team.',
   'You have active listings and WhatsApp inquiry flow.',
-  'Your agents will use the product during the pilot.',
-  'You can give weekly feedback on what is sharper or slower.',
+  'Your agents will use the product day to day.',
 ]
 
-const NOT_A_FIT = [
-  'Pure investor introducer with no active brokerage book.',
-  'Looking for a lead-generation channel rather than a working surface.',
-  'Cannot commit an owner or team lead to a weekly review call.',
-]
+type Status = 'idle' | 'sending' | 'ok' | 'error'
 
 export function ContactClient() {
   const [brokerage, setBrokerage] = useState('')
   const [name, setName] = useState('')
-  const [role, setRole] = useState('')
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [teamSize, setTeamSize] = useState('')
-  const [listings, setListings] = useState('')
-  const [focus, setFocus] = useState<Focus>('All of the above')
   const [notes, setNotes] = useState('')
+  const [company, setCompany] = useState('') // honeypot — must stay empty
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const subject = `Dalya design partnership: ${brokerage || 'application'}`
-    const body = [
-      `Brokerage: ${brokerage}`,
-      `Contact: ${name}${role ? ' · ' + role : ''}`,
-      `Email: ${email}`,
-      phone ? `Phone: ${phone}` : null,
-      `Team size: ${teamSize}`,
-      `Active listings: ${listings}`,
-      `Primary focus: ${focus}`,
-      notes ? `\nNotes:\n${notes}` : null,
-    ]
-      .filter(Boolean)
-      .join('\n')
-    const url = `mailto:hello@dalya.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    window.location.href = url
+    if (status === 'sending' || status === 'ok') return
+    setStatus('sending')
+    setErrorMsg('')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, brokerage, notes, company }),
+      })
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string }
+        setErrorMsg(data.error || 'Something went wrong. Please try again.')
+        setStatus('error')
+        return
+      }
+      setStatus('ok')
+    } catch {
+      setErrorMsg('Network error — please try again, or email us directly.')
+      setStatus('error')
+    }
   }
 
   return (
     <>
       {/* ── HERO ───────────────────────────────────────────── */}
       <section className="max-w-[1180px] mx-auto px-6 lg:px-8 pt-20 pb-10 lg:pt-28 lg:pb-14">
-        <div className="t-eyebrow mb-4">Design partnership</div>
+        <div className="t-eyebrow mb-4">Book a demo</div>
         <h1 className="t-display max-w-[820px] mb-5">
-          Run Dalya with your brokerage for 60 days.
+          See Dalya run a day of buyer work on your listings.
         </h1>
         <p className="t-large max-w-[720px]">
-          We are taking a small number of Dubai brokerages through hands-on pilots.
-          Pricing waits until the product is used daily and the operating metrics are clear.
+          Tell us about your brokerage and we&apos;ll show you the working surface your agents
+          wake up to — the hot list, the escalations, and the follow-ups already drafted before
+          anyone arrives.
         </p>
       </section>
 
@@ -104,13 +88,13 @@ export function ContactClient() {
           {/* Form column */}
           <form
             onSubmit={handleSubmit}
-            className="rounded-xl p-6 lg:p-8 shadow-card-sm"
+            className="relative rounded-xl p-6 lg:p-8 shadow-card-sm"
             style={{
               background: 'var(--color-surface-0)',
               border: '1px solid var(--color-border-hairline)',
             }}
           >
-            <div className="t-eyebrow mb-2">Application</div>
+            <div className="t-eyebrow mb-2">Demo request</div>
             <h2
               className="text-xl font-semibold mb-6"
               style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
@@ -119,35 +103,13 @@ export function ContactClient() {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <Field label="Brokerage name" required>
-                <input
-                  type="text"
-                  required
-                  value={brokerage}
-                  onChange={(e) => setBrokerage(e.target.value)}
-                  placeholder="Mahoroba Realty"
-                  className="input"
-                />
-              </Field>
               <Field label="Your name" required>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Luqman Al-Mansouri"
-                  className="input"
-                />
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <Field label="Your role">
-                <input
-                  type="text"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  placeholder="Owner · Team lead · Senior broker"
+                  placeholder="Your Name"
                   className="input"
                 />
               </Field>
@@ -163,82 +125,86 @@ export function ContactClient() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-              <Field label="WhatsApp">
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+971 50 ..."
-                  className="input"
-                />
-              </Field>
-              <Field label="Team size">
+            <div className="mb-4">
+              <Field label="Brokerage name" required>
                 <input
                   type="text"
-                  value={teamSize}
-                  onChange={(e) => setTeamSize(e.target.value)}
-                  placeholder="12 agents"
-                  className="input"
-                />
-              </Field>
-              <Field label="Active listings">
-                <input
-                  type="text"
-                  value={listings}
-                  onChange={(e) => setListings(e.target.value)}
-                  placeholder="80 secondary · 40 off-plan"
+                  required
+                  value={brokerage}
+                  onChange={(e) => setBrokerage(e.target.value)}
+                  placeholder="Your brokerage's name"
                   className="input"
                 />
               </Field>
             </div>
 
-            <Field label="Primary focus during the pilot">
-              <div className="flex flex-wrap gap-2 mt-1">
-                {FOCUS_OPTIONS.map((opt) => {
-                  const active = focus === opt
-                  return (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => setFocus(opt)}
-                      className="text-[12px] font-medium rounded-md px-3 py-1.5 transition-colors"
-                      style={{
-                        background: active ? 'var(--color-brand-500)' : 'var(--color-surface-1)',
-                        color: active ? 'white' : 'var(--color-text-2)',
-                        border: `1px solid ${active ? 'var(--color-brand-500)' : 'var(--color-border-hairline)'}`,
-                      }}
-                    >
-                      {opt}
-                    </button>
-                  )
-                })}
-              </div>
-            </Field>
-
-            <div className="mt-4 mb-6">
-              <Field label="Anything else">
+            <div className="mb-6">
+              <Field label="Anything else (optional)">
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  rows={4}
-                  placeholder="The workflow you most want to fix. Anything unusual about your book. Your timeline."
+                  rows={3}
+                  placeholder="The workflow you most want to fix, your team size, or anything unusual about your book."
                   className="input"
                 />
               </Field>
+            </div>
+
+            {/* Honeypot — hidden from people, catches bots. */}
+            <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden">
+              <label>
+                Company
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                />
+              </label>
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
               <button
                 type="submit"
-                className="btn-brand rounded-lg px-5 py-2.5 text-sm"
+                disabled={status === 'sending' || status === 'ok'}
+                className="btn-brand rounded-lg px-5 py-2.5 text-sm disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Submit application
+                {status === 'sending' ? 'Sending…' : status === 'ok' ? 'Sent ✓' : 'Book a demo'}
               </button>
               <span className="text-[12px]" style={{ color: 'var(--color-text-3)' }}>
                 We respond within two working days.
               </span>
             </div>
+
+            {status === 'ok' && (
+              <div
+                className="mt-4 flex items-start gap-2 rounded-lg px-3.5 py-3 text-[13px] leading-snug"
+                style={{ background: 'var(--color-success-100)', color: 'var(--color-success-700)' }}
+                role="status"
+                aria-live="polite"
+              >
+                <span className="font-bold mt-px">✓</span>
+                <span>
+                  Thanks — your request is in. We&apos;ll reply within two working days.
+                </span>
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div
+                className="mt-4 flex items-start gap-2 rounded-lg px-3.5 py-3 text-[13px] leading-snug"
+                style={{ background: 'var(--color-error-100)', color: 'var(--color-error-700)' }}
+                role="alert"
+                aria-live="assertive"
+              >
+                <span className="font-bold mt-px">!</span>
+                <span>
+                  {errorMsg} You can also email us at{' '}
+                  <a href="mailto:eric@dalya.ae" className="underline">eric@dalya.ae</a>.
+                </span>
+              </div>
+            )}
           </form>
 
           {/* Sidebar */}
@@ -267,36 +233,14 @@ export function ContactClient() {
             <div
               className="rounded-xl p-5"
               style={{
-                background: 'var(--color-surface-1)',
-                border: '1px solid var(--color-border-hairline)',
-              }}
-            >
-              <div className="t-eyebrow mb-3">Not a fit yet</div>
-              <ul className="flex flex-col gap-2.5">
-                {NOT_A_FIT.map((item) => (
-                  <li key={item} className="flex gap-2 text-[13px] leading-snug" style={{ color: 'var(--color-text-2)' }}>
-                    <span
-                      className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: 'var(--color-warning-500)' }}
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div
-              className="rounded-xl p-5"
-              style={{
                 background: 'var(--color-surface-0)',
                 border: '1px solid var(--color-border-hairline)',
               }}
             >
               <div className="t-eyebrow mb-2">Pricing</div>
               <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-                We do not charge during the design partnership. Pricing is negotiated once your
-                agents use it daily and the operating picture is clearer. The only thing we
-                optimise for is whether your team wants to keep it.
+                Pricing scales with your team. We&apos;ll walk through it on the demo, once
+                you&apos;ve seen what Dalya does for your agents day to day.
               </p>
             </div>
           </aside>
@@ -306,11 +250,11 @@ export function ContactClient() {
       {/* ── TIMELINE ────────────────────────────────────────── */}
       <section style={{ background: 'var(--color-surface-1)' }}>
         <div className="max-w-[1180px] mx-auto px-6 lg:px-8 py-20">
-          <div className="t-eyebrow mb-2.5">What happens after you apply</div>
-          <h2 className="t-section mb-3 max-w-[720px]">A clear sixty-day arc.</h2>
+          <div className="t-eyebrow mb-2.5">What happens after you reach out</div>
+          <h2 className="t-section mb-3 max-w-[720px]">From first message to live in four steps.</h2>
           <p className="t-large max-w-[660px] mb-10">
-            No procurement theatre, no slide deck cadence. The pilot is structured so we know
-            within nine weeks whether the agent day got sharper.
+            No procurement theatre, no slide deck cadence. You see Dalya on your own listings
+            first, then decide.
           </p>
 
           <ol
@@ -370,15 +314,14 @@ export function ContactClient() {
           <div className="max-w-[640px]">
             <div className="t-eyebrow mb-2">Prefer email</div>
             <p className="text-[15px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-              Send the same details directly. We treat the inbox application and the form
-              application the same.
+              Send the same details directly. We treat an email and the form the same.
             </p>
           </div>
           <Link
-            href="mailto:hello@dalya.ai?subject=Dalya%20design%20partnership"
+            href="mailto:eric@dalya.ae?subject=Dalya%20demo%20request"
             className="btn-outline rounded-lg px-5 py-2.5 text-sm whitespace-nowrap"
           >
-            hello@dalya.ai
+            eric@dalya.ae
           </Link>
         </div>
       </section>

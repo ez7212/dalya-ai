@@ -22,7 +22,7 @@ export function Hero() {
                 href="/contact"
                 className="btn-brand rounded-lg px-5 py-2.5 text-sm"
               >
-                Apply for design partnership
+                Book a demo
               </Link>
               <Link
                 href="/how-it-works"
@@ -106,30 +106,20 @@ export function Hero() {
               </div>
             </FloatingCard>
 
-            {/* Card: stat */}
+            {/* Card: morning hot list */}
             <FloatingCard
               top="320px"
               left="60px"
-              width="280px"
+              width="290px"
               rotate="-1.5deg"
               z={1}
             >
               <div className="p-3.5" style={{ background: 'var(--color-surface-0)' }}>
-                <div className="t-eyebrow mb-1">Owner metric</div>
-                <div
-                  className="text-[28px] font-bold tabular-aed leading-none mb-1"
-                  style={{
-                    color: 'var(--color-text-1)',
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  Revenue / agent
-                </div>
-                <div
-                  className="text-[11px] font-medium tabular-aed"
-                  style={{ color: 'var(--color-success-700)' }}
-                >
-                  tracked against your baseline
+                <div className="t-eyebrow mb-2.5">Morning hot list</div>
+                <div className="flex flex-col gap-2">
+                  <HotItem n="3" label="To call" />
+                  <HotItem n="2" label="Escalated questions" />
+                  <HotItem n="4" label="New buyers" />
                 </div>
               </div>
             </FloatingCard>
@@ -237,6 +227,25 @@ function MiniBubble({
       style={styles}
     >
       {children}
+    </div>
+  )
+}
+
+function HotItem({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="flex items-baseline gap-2">
+      <span
+        className="text-[16px] font-bold tabular-aed leading-none"
+        style={{ color: 'var(--color-brand-600)' }}
+      >
+        {n}
+      </span>
+      <span
+        className="text-[11px] leading-snug"
+        style={{ color: 'var(--color-text-2)' }}
+      >
+        {label}
+      </span>
     </div>
   )
 }

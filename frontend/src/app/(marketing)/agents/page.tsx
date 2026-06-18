@@ -75,15 +75,15 @@ export default function AgentsPage() {
               </p>
               <div className="flex flex-wrap gap-3 items-center">
                 <Link href="/contact" className="btn-brand rounded-lg px-5 py-2.5 text-sm">
-                  Apply for design partnership
+                  Book a demo
                 </Link>
                 <Link
-                  href="/brand-mockups/agent-desktop.html"
+                  href="/brand-mockups/agent-dashboard.html"
                   target="_blank"
                   rel="noreferrer"
                   className="btn-outline rounded-lg px-5 py-2.5 text-sm"
                 >
-                  Open the agent mockup
+                  Open the dashboard mockup
                 </Link>
               </div>
             </div>
@@ -292,9 +292,12 @@ export default function AgentsPage() {
         <div className="max-w-[820px]">
           <SurfaceCard
             eyebrow="For agents · mobile + desktop"
-            title="The agent day."
-            desc="Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation history and suggested reply ready before the agent follows up."
-            src="/brand-mockups/agent-desktop.html"
+            title="The agent dashboard."
+            desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
+            img="/brand-mockups/agent-dashboard.png"
+
+            mobileImg="/brand-mockups/agent-mobile.png"
+            src="/brand-mockups/agent-dashboard.html"
           />
         </div>
       </section>
@@ -343,13 +346,13 @@ export default function AgentsPage() {
       {/* ── CLOSING CTA ──────────────────────────────────── */}
       <section className="text-center max-w-[720px] mx-auto px-6 py-24">
         <div className="t-eyebrow mb-4">Want this for your team?</div>
-        <h2 className="t-section mb-4">Run a 60-day pilot with us.</h2>
+        <h2 className="t-section mb-4">See it on a real day of buyer work.</h2>
         <p className="t-large mb-6 max-w-[540px] mx-auto">
-          We work with one brokerage at a time, deep, for sixty to ninety days. Your agents
-          get the platform. We get the feedback that tells us where to build next.
+          Bring your listings and your busiest WhatsApp threads. We&apos;ll show you the hot
+          list your agents wake up to and how much of the day is already handled.
         </p>
         <Link href="/contact" className="btn-brand rounded-lg px-5 py-2.5 text-sm">
-          Apply for design partnership
+          Book a demo
         </Link>
       </section>
     </>
