@@ -744,7 +744,7 @@ export function WhatsAppBridge() {
             >
               <p>
                 Link your existing WhatsApp number, conversations, and contacts. Nothing moves.
-                Your buyers keep messaging the number they already have.
+                Your buyers and other agents keep messaging the number they already have.
               </p>
               <p>
                 Dalya watches every incoming message, prepares a ready-to-send draft grounded in
