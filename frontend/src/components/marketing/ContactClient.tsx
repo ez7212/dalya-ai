@@ -32,27 +32,39 @@ const GOOD_FIT = [
   'Your agents will use the product day to day.',
 ]
 
+type Status = 'idle' | 'sending' | 'ok' | 'error'
+
 export function ContactClient() {
   const [brokerage, setBrokerage] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [notes, setNotes] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [company, setCompany] = useState('') // honeypot — must stay empty
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const subject = `Dalya demo request: ${brokerage || 'brokerage'}`
-    const body = [
-      `Brokerage: ${brokerage}`,
-      `Contact: ${name}`,
-      `Email: ${email}`,
-      notes ? `\nNotes:\n${notes}` : null,
-    ]
-      .filter(Boolean)
-      .join('\n')
-    const url = `mailto:hello@dalya.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    window.location.href = url
-    setSubmitted(true)
+    if (status === 'sending' || status === 'ok') return
+    setStatus('sending')
+    setErrorMsg('')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, brokerage, notes, company }),
+      })
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string }
+        setErrorMsg(data.error || 'Something went wrong. Please try again.')
+        setStatus('error')
+        return
+      }
+      setStatus('ok')
+    } catch {
+      setErrorMsg('Network error — please try again, or email us directly.')
+      setStatus('error')
+    }
   }
 
   return (
@@ -76,7 +88,7 @@ export function ContactClient() {
           {/* Form column */}
           <form
             onSubmit={handleSubmit}
-            className="rounded-xl p-6 lg:p-8 shadow-card-sm"
+            className="relative rounded-xl p-6 lg:p-8 shadow-card-sm"
             style={{
               background: 'var(--color-surface-0)',
               border: '1px solid var(--color-border-hairline)',
@@ -138,19 +150,34 @@ export function ContactClient() {
               </Field>
             </div>
 
+            {/* Honeypot — hidden from people, catches bots. */}
+            <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden">
+              <label>
+                Company
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                />
+              </label>
+            </div>
+
             <div className="flex flex-wrap items-center gap-4">
               <button
                 type="submit"
-                className="btn-brand rounded-lg px-5 py-2.5 text-sm"
+                disabled={status === 'sending' || status === 'ok'}
+                className="btn-brand rounded-lg px-5 py-2.5 text-sm disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Book a demo
+                {status === 'sending' ? 'Sending…' : status === 'ok' ? 'Sent ✓' : 'Book a demo'}
               </button>
               <span className="text-[12px]" style={{ color: 'var(--color-text-3)' }}>
                 We respond within two working days.
               </span>
             </div>
 
-            {submitted && (
+            {status === 'ok' && (
               <div
                 className="mt-4 flex items-start gap-2 rounded-lg px-3.5 py-3 text-[13px] leading-snug"
                 style={{ background: 'var(--color-success-100)', color: 'var(--color-success-700)' }}
@@ -159,9 +186,22 @@ export function ContactClient() {
               >
                 <span className="font-bold mt-px">✓</span>
                 <span>
-                  Your email is ready to send in your mail app. If nothing opened, write to{' '}
-                  <a href="mailto:hello@dalya.ai" className="underline">hello@dalya.ai</a>. We reply
-                  within two working days.
+                  Thanks — your request is in. We&apos;ll reply within two working days.
+                </span>
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div
+                className="mt-4 flex items-start gap-2 rounded-lg px-3.5 py-3 text-[13px] leading-snug"
+                style={{ background: 'var(--color-error-100)', color: 'var(--color-error-700)' }}
+                role="alert"
+                aria-live="assertive"
+              >
+                <span className="font-bold mt-px">!</span>
+                <span>
+                  {errorMsg} You can also email us at{' '}
+                  <a href="mailto:eric@dalya.ae" className="underline">eric@dalya.ae</a>.
                 </span>
               </div>
             )}
@@ -278,10 +318,10 @@ export function ContactClient() {
             </p>
           </div>
           <Link
-            href="mailto:hello@dalya.ai?subject=Dalya%20demo%20request"
+            href="mailto:eric@dalya.ae?subject=Dalya%20demo%20request"
             className="btn-outline rounded-lg px-5 py-2.5 text-sm whitespace-nowrap"
           >
-            hello@dalya.ai
+            eric@dalya.ae
           </Link>
         </div>
       </section>
