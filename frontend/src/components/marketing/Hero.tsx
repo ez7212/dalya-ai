@@ -22,7 +22,7 @@ export function Hero() {
                 href="/contact"
                 className="btn-brand rounded-lg px-5 py-2.5 text-sm"
               >
-                Apply for design partnership
+                Book a demo
               </Link>
               <Link
                 href="/how-it-works"

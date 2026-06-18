@@ -37,12 +37,12 @@ export function StatsRow() {
   return (
     <section style={{ background: 'var(--color-surface-1)' }}>
       <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-16">
-        <div className="t-eyebrow mb-2.5">The pilot scorecard</div>
-        <h2 className="t-section mb-3 max-w-[760px]">Measure whether agents get sharper.</h2>
+        <div className="t-eyebrow mb-2.5">Always on</div>
+        <h2 className="t-section mb-3 max-w-[760px]">The intelligent system that never sleeps.</h2>
         <p className="t-large max-w-[680px] mb-10">
-          The first sixty days are not about software adoption theatre. We track the signals
-          that move an agent&apos;s day: how fast buyers get a useful response, whether serious
-          conversations reach the right agent, and whether follow-ups actually go out.
+          It answers the 2am inquiry, qualifies the buyer, and flags the serious ones. It drafts
+          the follow-up before the trail goes cold and escalates the offer the moment it matters.
+          Every agent walks in already briefed — working like your sharpest one.
         </p>
 
         <div
@@ -52,20 +52,20 @@ export function StatsRow() {
           <StatCard
             measure="First response"
             value="Under 60s"
-            body="WhatsApp inquiries are answered, qualified, and logged while the lead is still warm."
-            footnote="Pilot target · measured from inbound inquiry to first useful response"
+            body="Every buyer message is answered, qualified, and logged while the lead is still warm — EN · AR · RU · HI, day or night."
+            footnote="24/7 · every inbound message"
           />
           <StatCard
-            measure="Morning priority"
-            value="One ranked list"
-            body="Each agent starts with a ranked hot list, buyer context, and recommended next action."
-            footnote="Daily workflow metric · measured by active follow-ups completed"
+            measure="Morning hot list"
+            value="Ranked & ready"
+            body="Each agent opens to a ranked queue of who to call, with buyer context and the next action already attached."
+            footnote="Refreshed before the day starts"
           />
           <StatCard
-            measure="Offer escalation"
-            value="Surfaced live"
-            body="Above-threshold offers are surfaced immediately with listing, buyer, terms, and context."
-            footnote="Operational metric · measured across every active listing"
+            measure="Smart escalation"
+            value="Drafted & routed"
+            body="Offers surface immediately with negotiation drafts, and the right agent is notified the moment they're needed."
+            footnote="Across every active listing"
           />
         </div>
       </div>
@@ -122,20 +122,20 @@ export function Surfaces() {
   return (
     <section className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
       <div className="t-eyebrow mb-2.5">The platform</div>
-        <h2 className="t-section mb-3 max-w-[760px]">The agent&apos;s working surface.</h2>
+        <h2 className="t-section mb-3 max-w-[760px]">The agent&apos;s entire day, on one screen.</h2>
         <p className="t-large max-w-[680px]">
-        Dalya turns buyer conversations into a practical work queue: who to call this
-        morning, the briefing for each one, and the suggested reply ready before the agent
-        follows up.
+        One dashboard that encompasses every facet of an agent&apos;s daily workflow — the
+        morning hot list, today&apos;s viewings, live conversations, drafts awaiting review, and
+        every listing they manage. They open it and start working.
       </p>
 
       <div className="mt-10">
         <SurfaceCard
           eyebrow="For agents · mobile + desktop"
-          title="The agent day."
-          desc="Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation history and suggested reply ready before the agent follows up."
-          img="/brand-mockups/agent-desktop.png"
-          src="/brand-mockups/agent-desktop.html"
+          title="The agent dashboard."
+          desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
+          img="/brand-mockups/agent-dashboard.png"
+          src="/brand-mockups/agent-dashboard.html"
         />
       </div>
     </section>
@@ -229,7 +229,7 @@ export function Pillars() {
     <section style={{ background: 'var(--color-surface-1)' }}>
       <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
         <div className="t-eyebrow mb-2.5">What Dalya does today</div>
-        <h2 className="t-section mb-3 max-w-[760px]">Four workflows, live in the pilot.</h2>
+        <h2 className="t-section mb-3 max-w-[760px]">Four workflows, working right now.</h2>
         <p className="t-large max-w-[680px]">
           Each one maps to a job your agents already do. Dalya makes the inputs visible,
           the next action obvious, and the follow-up easier to complete.
@@ -499,7 +499,7 @@ function HotlistRow({
 }
 
 /* ════════════════════════════════════════════════════════════════════
- * HOW WE SHIP — design partnerships + sample alert mockup
+ * NEVER MISSES — always-on escalation + sample alert mockup
  * ════════════════════════════════════════════════════════════════════ */
 
 export function HowWeShip() {
@@ -507,26 +507,25 @@ export function HowWeShip() {
     <section className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
         <div>
-          <div className="t-eyebrow mb-2.5">How we ship</div>
-          <h2 className="t-section mb-5">Design partnerships, not enterprise sales.</h2>
+          <div className="t-eyebrow mb-2.5">Never misses the moment</div>
+          <h2 className="t-section mb-5">The work happens whether you&apos;re watching or not.</h2>
           <div
             className="text-[17px] leading-relaxed flex flex-col gap-4"
             style={{ color: 'var(--color-text-2)' }}
           >
             <p>
-              We work with one brokerage at a time, deep, for sixty to ninety days.
-              Every listing your team signs in that window runs through Dalya.
-              Every WhatsApp inquiry is captured, qualified, and routed into the agent workflow.
+              A serious offer lands at midnight. Dalya surfaces it instantly with a negotiation
+              draft, and the right agent&apos;s phone lights up — listing, buyer, terms, and
+              context already attached.
             </p>
             <p>
-              We sit on weekly calls with your owners and your top agents.
-              You get the platform. We get the feedback that tells us where to build next.
+              The buyer who went quiet for six days gets a follow-up drafted before the trail
+              goes cold. The 2am question gets a grounded answer. Nothing waits for morning.
             </p>
             <p>
-              <strong style={{ color: 'var(--color-text-1)' }}>Pricing is deferred.</strong>{' '}
-              We don&apos;t charge during the design partnership. Once your agents use it daily
-              and the day is measurably sharper, we negotiate. Until then, the only thing
-              we&apos;re optimising for is whether the team wants to keep it.
+              <strong style={{ color: 'var(--color-text-1)' }}>Your agents stay in control.</strong>{' '}
+              Dalya does the work around the deal and hands it over ready to send. The
+              relationship, the judgment, and the close still belong to the agent.
             </p>
           </div>
         </div>
@@ -676,17 +675,18 @@ export function TrustStrip() {
 export function ClosingCTA() {
   return (
     <section className="text-center max-w-[720px] mx-auto px-6 py-24">
-      <div className="t-eyebrow mb-4">Currently in design partnership</div>
-      <h2 className="t-section mb-4">Run a 60-day pilot with us.</h2>
+      <div className="t-eyebrow mb-4">See it on your listings</div>
+      <h2 className="t-section mb-4">Give every agent a system that never sleeps.</h2>
       <p className="t-large mb-6 max-w-[540px] mx-auto">
-        You give us active listings, agent feedback, and the operating baseline. We give your
-        team the platform and measure whether the day gets sharper.
+        Bring your listings and your toughest buyer conversations. We&apos;ll show you the
+        working surface your agents wake up to — and how much of the day it handles before
+        they arrive.
       </p>
       <Link
         href="/contact"
         className="btn-brand rounded-lg px-5 py-2.5 text-sm"
       >
-        Apply for design partnership
+        Book a demo
       </Link>
     </section>
   )

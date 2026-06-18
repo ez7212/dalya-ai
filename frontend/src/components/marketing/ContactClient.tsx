@@ -20,31 +20,31 @@ const FOCUS_OPTIONS: Focus[] = [
 
 const TIMELINE = [
   {
-    label: 'Week 0',
-    title: 'Application review',
-    body: 'We read your application within two working days. If we are a fit, we schedule a thirty-minute call with you and one of your senior agents.',
+    label: 'Step 1',
+    title: 'You reach out',
+    body: 'Tell us about your brokerage and where your agents lose the most time. We reply within two working days.',
   },
   {
-    label: 'Week 1',
-    title: 'Listing and workflow setup',
-    body: 'Active listings, documents, and your WhatsApp inquiry surface are connected. We brief your agents on what the working surface does and does not do.',
+    label: 'Step 2',
+    title: 'A demo on your listings',
+    body: 'A thirty-minute walkthrough on your own listings and a real WhatsApp thread, so you see exactly what your agents would wake up to.',
   },
   {
-    label: 'Week 2 – 8',
-    title: 'Live partnership',
-    body: 'Your team uses the product daily. We sit weekly with your owners and top agents. Every gap goes into the build queue. Every win is measured.',
+    label: 'Step 3',
+    title: 'Setup',
+    body: 'We connect your active listings, documents, and WhatsApp inquiry surface, and brief your agents on the working surface.',
   },
   {
-    label: 'Week 9',
-    title: 'Operating review and pricing',
-    body: 'We compare the operating baseline against the pilot scorecard, then negotiate pricing if your team wants to keep the platform.',
+    label: 'Step 4',
+    title: 'Live with your team',
+    body: 'Your agents run their day on Dalya — hot list, escalations, follow-ups, and viewings — with us close by as you roll it out across the team.',
   },
 ]
 
 const GOOD_FIT = [
   'You operate a Dubai real estate brokerage or sales team.',
   'You have active listings and WhatsApp inquiry flow.',
-  'Your agents will use the product during the pilot.',
+  'Your agents will use the product day to day.',
   'You can give weekly feedback on what is sharper or slower.',
 ]
 
@@ -67,7 +67,7 @@ export function ContactClient() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const subject = `Dalya design partnership: ${brokerage || 'application'}`
+    const subject = `Dalya demo request: ${brokerage || 'brokerage'}`
     const body = [
       `Brokerage: ${brokerage}`,
       `Contact: ${name}${role ? ' · ' + role : ''}`,
@@ -88,13 +88,14 @@ export function ContactClient() {
     <>
       {/* ── HERO ───────────────────────────────────────────── */}
       <section className="max-w-[1180px] mx-auto px-6 lg:px-8 pt-20 pb-10 lg:pt-28 lg:pb-14">
-        <div className="t-eyebrow mb-4">Design partnership</div>
+        <div className="t-eyebrow mb-4">Book a demo</div>
         <h1 className="t-display max-w-[820px] mb-5">
-          Run Dalya with your brokerage for 60 days.
+          See Dalya run a day of buyer work on your listings.
         </h1>
         <p className="t-large max-w-[720px]">
-          We are taking a small number of Dubai brokerages through hands-on pilots.
-          Pricing waits until the product is used daily and the operating metrics are clear.
+          Tell us about your brokerage and we&apos;ll show you the working surface your agents
+          wake up to — the hot list, the escalations, and the follow-ups already drafted before
+          anyone arrives.
         </p>
       </section>
 
@@ -110,7 +111,7 @@ export function ContactClient() {
               border: '1px solid var(--color-border-hairline)',
             }}
           >
-            <div className="t-eyebrow mb-2">Application</div>
+            <div className="t-eyebrow mb-2">Demo request</div>
             <h2
               className="text-xl font-semibold mb-6"
               style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
@@ -193,7 +194,7 @@ export function ContactClient() {
               </Field>
             </div>
 
-            <Field label="Primary focus during the pilot">
+            <Field label="Where your team loses the most time">
               <div className="flex flex-wrap gap-2 mt-1">
                 {FOCUS_OPTIONS.map((opt) => {
                   const active = focus === opt
@@ -233,7 +234,7 @@ export function ContactClient() {
                 type="submit"
                 className="btn-brand rounded-lg px-5 py-2.5 text-sm"
               >
-                Submit application
+                Book a demo
               </button>
               <span className="text-[12px]" style={{ color: 'var(--color-text-3)' }}>
                 We respond within two working days.
@@ -294,9 +295,8 @@ export function ContactClient() {
             >
               <div className="t-eyebrow mb-2">Pricing</div>
               <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-                We do not charge during the design partnership. Pricing is negotiated once your
-                agents use it daily and the day is measurably sharper. The only thing we
-                optimise for is whether your team wants to keep it.
+                Pricing scales with your team. We&apos;ll walk through it on the demo, once
+                you&apos;ve seen what Dalya does for your agents day to day.
               </p>
             </div>
           </aside>
@@ -306,11 +306,11 @@ export function ContactClient() {
       {/* ── TIMELINE ────────────────────────────────────────── */}
       <section style={{ background: 'var(--color-surface-1)' }}>
         <div className="max-w-[1180px] mx-auto px-6 lg:px-8 py-20">
-          <div className="t-eyebrow mb-2.5">What happens after you apply</div>
-          <h2 className="t-section mb-3 max-w-[720px]">A clear sixty-day arc.</h2>
+          <div className="t-eyebrow mb-2.5">What happens after you reach out</div>
+          <h2 className="t-section mb-3 max-w-[720px]">From first message to live in four steps.</h2>
           <p className="t-large max-w-[660px] mb-10">
-            No procurement theatre, no slide deck cadence. The pilot is structured so we know
-            within nine weeks whether the agent day got sharper.
+            No procurement theatre, no slide deck cadence. You see Dalya on your own listings
+            first, then decide.
           </p>
 
           <ol
@@ -370,8 +370,7 @@ export function ContactClient() {
           <div className="max-w-[640px]">
             <div className="t-eyebrow mb-2">Prefer email</div>
             <p className="text-[15px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-              Send the same details directly. We treat the inbox application and the form
-              application the same.
+              Send the same details directly. We treat an email and the form the same.
             </p>
           </div>
           <Link

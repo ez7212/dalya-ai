@@ -76,7 +76,7 @@ export function MarketingNav() {
             href="/contact"
             className="btn-brand px-3.5 py-1.5 rounded-lg text-[13px]"
           >
-            Apply for pilot
+            Book a demo
           </Link>
         </div>
 
@@ -124,7 +124,7 @@ export function MarketingNav() {
               onClick={() => setOpen(false)}
               className="btn-brand rounded-lg px-6 py-3 text-sm w-full text-center"
             >
-              Apply for pilot
+              Book a demo
             </Link>
             <Link
               href="/login"

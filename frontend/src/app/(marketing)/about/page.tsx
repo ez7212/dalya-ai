@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'About Dalya',
   description:
-    'Dalya is the agent operating layer for Dubai brokerages, built inside a working RERA-licensed firm and now running as a B2B design partnership programme.',
+    'Dalya is the agent operating layer for Dubai brokerages, built inside a working RERA-licensed firm and now the daily operating layer for agents at Dubai brokerages.',
 }
 
 const TIMELINE = [
@@ -29,8 +29,8 @@ const TIMELINE = [
   {
     year: '2026 · today',
     label: 'Now',
-    title: 'Design partnerships',
-    body: 'We are running hands-on pilots with a small number of Dubai brokerages. Pricing waits until the agent day is measurably sharper.',
+    title: 'Live with Dubai brokerages',
+    body: 'Dalya now runs the daily buyer workflow for agents at Dubai brokerages — qualification, escalation, the morning hot list, and viewing logistics, every day.',
   },
 ]
 
@@ -277,14 +277,14 @@ export default function AboutPage() {
 
       {/* ── CLOSING CTA ─────────────────────────────────── */}
       <section className="text-center max-w-[720px] mx-auto px-6 py-24">
-        <div className="t-eyebrow mb-4">Currently in design partnership</div>
-        <h2 className="t-section mb-4">Run a 60-day pilot with us.</h2>
+        <div className="t-eyebrow mb-4">See it on your listings</div>
+        <h2 className="t-section mb-4">Give your agents a system that never sleeps.</h2>
         <p className="t-large mb-6 max-w-[540px] mx-auto">
-          We are running design partnerships with small-to-medium Dubai brokerages before
-          publishing pricing. The goal is simple: prove the agent day gets sharper.
+          See Dalya run a real day of buyer work on your own listings — the hot list, the
+          escalations, the follow-ups already drafted before your agents arrive.
         </p>
         <Link href="/contact" className="btn-brand rounded-lg px-5 py-2.5 text-sm">
-          Apply for pilot
+          Book a demo
         </Link>
       </section>
     </>

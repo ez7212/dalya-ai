@@ -25,7 +25,7 @@ const SILOED = [
 const AGGREGATED = [
   'Anonymized buyer language patterns that improve qualification accuracy',
   'Anonymized response-quality signals that improve the working surface',
-  'Aggregate operating benchmarks across the design partnership cohort',
+  'Aggregate operating benchmarks across brokerages on the platform',
 ]
 
 export default function BrokeragesPage() {
@@ -48,7 +48,7 @@ export default function BrokeragesPage() {
               </p>
               <div className="flex flex-wrap gap-3 items-center">
                 <Link href="/contact" className="btn-brand rounded-lg px-5 py-2.5 text-sm">
-                  Apply for design partnership
+                  Book a demo
                 </Link>
                 <Link href="/agents" className="btn-outline rounded-lg px-5 py-2.5 text-sm">
                   See the agent workflow
@@ -162,10 +162,10 @@ export default function BrokeragesPage() {
         <div className="max-w-[820px]">
           <SurfaceCard
             eyebrow="For agents · mobile + desktop"
-            title="The agent day."
-            desc="Hot list of who to call this morning. Pre-call buyer briefing one tap away. Conversation history and suggested reply ready before the agent follows up."
-            img="/brand-mockups/agent-desktop.png"
-            src="/brand-mockups/agent-desktop.html"
+            title="The agent dashboard."
+            desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
+            img="/brand-mockups/agent-dashboard.png"
+            src="/brand-mockups/agent-dashboard.html"
           />
         </div>
       </section>
@@ -297,14 +297,14 @@ export default function BrokeragesPage() {
 
       {/* ── CLOSING CTA ──────────────────────────────────── */}
       <section className="text-center max-w-[720px] mx-auto px-6 py-24">
-        <div className="t-eyebrow mb-4">Currently in design partnership</div>
-        <h2 className="t-section mb-4">Run a 60-day pilot with us.</h2>
+        <div className="t-eyebrow mb-4">See it on your listings</div>
+        <h2 className="t-section mb-4">Make every agent your sharpest agent.</h2>
         <p className="t-large mb-6 max-w-[540px] mx-auto">
-          You give us active listings, agent feedback, and the operating baseline. We give your
-          team the platform and measure whether the day gets sharper.
+          Bring your listings and your toughest buyer conversations. We&apos;ll show you exactly
+          what your team wakes up to — and how much of the day Dalya handles before they arrive.
         </p>
         <Link href="/contact" className="btn-brand rounded-lg px-5 py-2.5 text-sm">
-          Apply for design partnership
+          Book a demo
         </Link>
       </section>
     </>

@@ -177,13 +177,13 @@ export default function WorkflowPage() {
       {/* ── CLOSING CTA ─────────────────────────────────── */}
       <section className="text-center max-w-[720px] mx-auto px-6 py-24">
         <div className="t-eyebrow mb-4">Ready to see it on your book?</div>
-        <h2 className="t-section mb-4">Run a 60-day pilot with us.</h2>
+        <h2 className="t-section mb-4">Watch it run on your own listings.</h2>
         <p className="t-large mb-6 max-w-[540px] mx-auto">
-          Your team is the design partner. Your listings and your inquiry flow shape what
-          gets built next.
+          Bring your listings and your inquiry flow. We&apos;ll show you the whole loop — from
+          inbound message to a briefed agent — on your own book.
         </p>
         <Link href="/contact" className="btn-brand rounded-lg px-5 py-2.5 text-sm">
-          Apply for design partnership
+          Book a demo
         </Link>
       </section>
     </>
