@@ -4,6 +4,7 @@ import {
   StatsRow,
   Surfaces,
   Pillars,
+  WhatsAppBridge,
   HowWeShip,
   TrustStrip,
   ClosingCTA,
@@ -17,6 +18,7 @@ export default function Home() {
       <StatsRow />
       <Surfaces />
       <Pillars />
+      <WhatsAppBridge />
       <HowWeShip />
       <TrustStrip />
       <ClosingCTA />

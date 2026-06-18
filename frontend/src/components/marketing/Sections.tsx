@@ -52,12 +52,12 @@ export function StatsRow() {
           <StatCard
             measure="First response"
             value="Under 60s"
-            body="Every buyer message is answered, qualified, and logged while the lead is still warm — EN · AR · RU · HI, day or night."
+            body="Every buyer message is answered, qualified, and logged while the lead is still warm — day or night."
           />
           <StatCard
             measure="Morning hot list"
             value="Ranked & ready"
-            body="Each agent opens to a ranked queue of who to call, with buyer context and the next action already attached."
+            body="Each agent opens to a ranked queue of who to call, the conversation summary, and the next action already drafted."
           />
           <StatCard
             measure="Smart escalation"
@@ -111,8 +111,8 @@ export function Surfaces() {
   return (
     <section className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
       <div className="t-eyebrow mb-2.5">The platform</div>
-        <h2 className="t-section mb-3 max-w-[760px]">The agent&apos;s entire day, on one screen.</h2>
-        <p className="t-large max-w-[680px]">
+      <h2 className="t-section mb-3 max-w-[760px]">The agent&apos;s entire day, on one screen.</h2>
+      <p className="t-large max-w-[680px]">
         One dashboard that encompasses every facet of an agent&apos;s daily workflow — the
         morning hot list, today&apos;s viewings, live conversations, drafts awaiting review, and
         every listing they manage. They open it and start working.
@@ -184,7 +184,9 @@ export function SurfaceCard({
           src={img}
           alt={`${title} — Dalya product preview`}
           fill
-          sizes="(max-width: 1024px) 100vw, 600px"
+          sizes="(max-width: 1024px) 100vw, 1232px"
+          quality={95}
+          unoptimized
           className="object-cover object-top"
         />
       </div>
@@ -232,7 +234,7 @@ export function Pillars() {
             wide
             num="01 / Buyers"
             title="24/7 inquiry concierge"
-            desc="A multilingual responder (EN · AR · RU · HI) grounded in the actual listing documents. Routine questions are answered, voice notes are transcribed, serious signals are tagged, and agents wake up to an organized queue."
+            desc="A multilingual responder grounded in the actual listing documents. Routine questions are answered, voice notes are transcribed, serious signals are tagged, and agents wake up to an organized queue."
             snippet={<SnippetChat />}
           />
           <Pillar
@@ -357,7 +359,7 @@ function SnippetChat() {
           borderLeft: '2px solid var(--color-brand-500)',
         }}
       >
-        Yes, 5BD Palace Villas Ostra. Asking AED 17,253,444. What&apos;s drawing you to it?
+        Yes, 5BD Palace Villas Ostra. Asking AED 17,253,444. Would you like to schedule a viewing?
       </div>
     </>
   )
@@ -366,7 +368,7 @@ function SnippetChat() {
 function SnippetCalendar() {
   return (
     <>
-      <div className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: 'var(--color-text-3)' }}>Wed</div>
+      <div className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: 'var(--color-text-3)' }}>Wed · proposed slots</div>
       <div className="grid grid-cols-4 gap-1">
         {[
           { label: '10:00', kind: 'empty' as const },
@@ -388,6 +390,13 @@ function SnippetCalendar() {
             {s.label}
           </div>
         ))}
+      </div>
+      <div
+        className="flex items-center gap-1.5 mt-1 text-[10px] px-2 py-1.5 rounded-md leading-snug"
+        style={{ background: 'var(--color-success-100)', color: 'var(--color-success-700)' }}
+      >
+        <span className="font-bold">✓</span>
+        <span>Confirmed · Sara, Wed 14:00 — calendar invite &amp; tenant notice sent</span>
       </div>
     </>
   )
@@ -519,7 +528,7 @@ export function HowWeShip() {
           </div>
         </div>
 
-        {/* Sample Telegram alert mockup */}
+        {/* Escalated-message mockup */}
         <div
           className="rounded-xl overflow-hidden shadow-card-md"
           style={{
@@ -536,13 +545,13 @@ export function HowWeShip() {
           >
             <span
               className="w-1.5 h-1.5 rounded-full animate-pulse-dot"
-              style={{ background: 'var(--color-success-500)' }}
+              style={{ background: 'var(--color-warning-500)' }}
             />
             <span
               className="text-[11px] uppercase tracking-widest font-semibold"
               style={{ color: 'var(--color-text-3)' }}
             >
-              Live · Telegram alert
+              Escalation · needs you
             </span>
             <span
               className="ml-auto text-[11px] tabular-aed"
@@ -552,18 +561,28 @@ export function HowWeShip() {
             </span>
           </div>
           <div className="p-5">
-            <div className="t-eyebrow mb-2">Offer received · above threshold</div>
-            <div
-              className="text-2xl font-bold tabular-aed mb-3"
-              style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
-            >
-              AED 17,000,000
+            <div className="t-eyebrow mb-1">New question from Mark</div>
+            <div className="text-[12px] mb-3" style={{ color: 'var(--color-text-3)' }}>
+              Address Residences Sky View · 2-bed apartment
             </div>
-            <KeyValRow k="Buyer" v="Sara Mohammed" />
-            <KeyValRow k="Listing" v="Palace Villas Ostra · 2805" />
-            <KeyValRow k="Asking" v="AED 17,253,444" mono />
-            <KeyValRow k="Threshold" v="AED 16,894,000" mono />
-            <KeyValRow k="Terms" v="Cash · 30-day close requested" />
+            <div
+              className="text-[13px] px-3 py-2 rounded-lg leading-snug mb-4"
+              style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-1)' }}
+            >
+              &ldquo;Are there tenants living there? We&apos;d like to move in at the beginning of next month.&rdquo;
+            </div>
+            <div className="t-eyebrow mb-1.5">Draft response</div>
+            <div
+              className="text-[13px] px-3 py-2 rounded-lg leading-snug"
+              style={{
+                background: 'var(--color-surface-1)',
+                color: 'var(--color-text-1)',
+                border: '1px solid var(--color-border-hairline)',
+                borderLeft: '2px solid var(--color-brand-500)',
+              }}
+            >
+              &ldquo;Available for move-in ASAP. Can arrange a viewing tomorrow — what time works?&rdquo;
+            </div>
           </div>
           <div
             className="px-5 py-3 flex gap-2 border-t"
@@ -577,13 +596,13 @@ export function HowWeShip() {
               className="text-xs px-3 py-1.5 font-medium"
               style={{ color: 'var(--color-text-2)' }}
             >
-              Counter
+              Edit
             </span>
             <span
               className="text-xs px-3 py-1.5 font-medium"
               style={{ color: 'var(--color-text-2)' }}
             >
-              Decline
+              Re-draft
             </span>
           </div>
         </div>
@@ -592,26 +611,118 @@ export function HowWeShip() {
   )
 }
 
-function KeyValRow({ k, v, mono }: { k: string; v: string; mono?: boolean }) {
+/* ════════════════════════════════════════════════════════════════════
+ * WHATSAPP BRIDGE — keep your number; Dalya drafts, you one-tap send
+ * ════════════════════════════════════════════════════════════════════ */
+
+export function WhatsAppBridge() {
   return (
-    <div className="flex items-baseline gap-2 mb-1.5 text-[13px]">
-      <span
-        className="w-[90px] text-[11px] uppercase tracking-wide font-semibold"
-        style={{ color: 'var(--color-text-3)' }}
-      >
-        {k}
-      </span>
-      <span
-        className="font-medium"
-        style={{
-          color: 'var(--color-text-1)',
-          fontFamily: mono ? 'var(--font-mono)' : undefined,
-          fontFeatureSettings: mono ? '"tnum", "ss01"' : undefined,
-        }}
-      >
-        {v}
-      </span>
-    </div>
+    <section style={{ background: 'var(--color-surface-1)' }}>
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+          {/* WhatsApp chat mock */}
+          <div className="order-2 lg:order-1">
+            <div
+              className="rounded-xl overflow-hidden shadow-card-md mx-auto max-w-[380px]"
+              style={{
+                background: 'var(--color-surface-0)',
+                border: '1px solid var(--color-border-hairline)',
+              }}
+            >
+              <div
+                className="px-4 py-3 flex items-center gap-2.5 border-b"
+                style={{
+                  background: 'var(--color-surface-1)',
+                  borderColor: 'var(--color-border-hairline)',
+                }}
+              >
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold"
+                  style={{ background: 'var(--color-brand-100)', color: 'var(--color-brand-700)' }}
+                >
+                  MK
+                </div>
+                <div>
+                  <div className="text-xs font-semibold" style={{ color: 'var(--color-text-1)' }}>Mark</div>
+                  <div className="text-[10px] tabular-aed" style={{ color: 'var(--color-text-3)' }}>+971 50 412 0098 · WhatsApp</div>
+                </div>
+                <span
+                  className="ml-auto text-[9px] uppercase tracking-widest font-bold px-1.5 py-0.5 rounded"
+                  style={{ background: 'var(--color-success-100)', color: 'var(--color-success-700)' }}
+                >
+                  Your number
+                </span>
+              </div>
+
+              <div className="p-3.5 flex flex-col gap-2.5" style={{ background: 'var(--color-surface-0)' }}>
+                <div
+                  className="text-[12px] px-2.5 py-1.5 rounded-lg leading-snug max-w-[85%]"
+                  style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-1)' }}
+                >
+                  Is the 2-bed still available? Looking to move in next month.
+                </div>
+                <div className="self-end max-w-[88%]">
+                  <div
+                    className="text-[9px] uppercase tracking-widest font-bold mb-1 text-right"
+                    style={{ color: 'var(--color-brand-500)' }}
+                  >
+                    Dalya draft
+                  </div>
+                  <div
+                    className="text-[12px] px-2.5 py-1.5 rounded-lg leading-snug"
+                    style={{
+                      background: 'var(--color-brand-50)',
+                      color: 'var(--color-text-1)',
+                      border: '1px solid var(--color-brand-100)',
+                    }}
+                  >
+                    Yes — available now. I can set up a viewing this week. What day suits you?
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="px-3.5 py-2.5 flex items-center gap-2 border-t"
+                style={{
+                  background: 'var(--color-surface-1)',
+                  borderColor: 'var(--color-border-hairline)',
+                }}
+              >
+                <span className="flex-1 text-[11px]" style={{ color: 'var(--color-text-3)' }}>
+                  Edit, or send as-is…
+                </span>
+                <span className="btn-brand text-xs rounded-full px-4 py-1.5">Send</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Copy */}
+          <div className="order-1 lg:order-2">
+            <div className="t-eyebrow mb-2.5">Works on your number</div>
+            <h2 className="t-section mb-5">Keep your WhatsApp. Keep your contacts.</h2>
+            <div
+              className="text-[17px] leading-relaxed flex flex-col gap-4"
+              style={{ color: 'var(--color-text-2)' }}
+            >
+              <p>
+                Link your existing WhatsApp number, conversations, and contacts. Nothing moves.
+                Your buyers keep messaging the number they already have.
+              </p>
+              <p>
+                Dalya watches every incoming message, prepares a ready-to-send draft grounded in
+                the listing, and surfaces it the moment it lands.
+              </p>
+              <p>
+                <strong style={{ color: 'var(--color-text-1)' }}>One tap to send</strong> — straight
+                through the WhatsApp app, in your voice, from your number.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
   )
 }
 
