@@ -159,32 +159,32 @@ export default function AboutPage() {
           build queue every week.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Editorial numbered list — not a uniform card grid */}
+        <div className="border-t" style={{ borderColor: 'var(--color-border-hairline)' }}>
           {PRINCIPLES.map((p, i) => (
-            <article
+            <div
               key={p.title}
-              className="rounded-xl p-6"
-              style={{
-                background: 'var(--color-surface-1)',
-                border: '1px solid var(--color-border-hairline)',
-              }}
+              className="grid grid-cols-[44px_1fr] md:grid-cols-[72px_1fr] gap-4 md:gap-10 py-6 border-b"
+              style={{ borderColor: 'var(--color-border-hairline)' }}
             >
               <div
-                className="text-[11px] font-mono mb-3"
+                className="text-[20px] font-mono leading-none pt-1"
                 style={{ color: 'var(--color-brand-500)' }}
               >
                 0{i + 1}
               </div>
-              <h3
-                className="text-lg font-semibold mb-2"
-                style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
-              >
-                {p.title}
-              </h3>
-              <p className="text-[14px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-                {p.body}
-              </p>
-            </article>
+              <div className="max-w-[760px]">
+                <h3
+                  className="text-lg font-semibold mb-1"
+                  style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
+                >
+                  {p.title}
+                </h3>
+                <p className="text-[15px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
+                  {p.body}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -251,34 +251,46 @@ export default function AboutPage() {
           retrofitted later.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <TrustCard
-            label="RERA"
-            value="Per listing"
-            note="Every listing on the platform is operated by a RERA-licensed Dubai brokerage."
-          />
-          <TrustCard
-            label="UAE PDPL"
-            value="Compliant"
-            note="Per-brokerage data isolation, audit trail, and contractual data boundaries."
-          />
-          <TrustCard
-            label="Languages"
-            value="EN · AR · RU · HI"
-            note="Buyer-facing responder operates natively in four languages out of the box."
-          />
-          <TrustCard
-            label="Base"
-            value="Dubai"
-            note="Working with Dubai brokerages on Dubai listings. Not a remote SaaS team."
-          />
+        {/* Divided strip rather than four boxes */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t"
+          style={{ borderColor: 'var(--color-border-hairline)' }}
+        >
+          {[
+            { label: 'RERA', value: 'Per listing', note: 'Every listing on the platform is operated by a RERA-licensed Dubai brokerage.' },
+            { label: 'UAE PDPL', value: 'Compliant', note: 'Per-brokerage data isolation, audit trail, and contractual data boundaries.' },
+            { label: 'Languages', value: 'EN · AR · RU · HI', note: 'Buyer-facing responder operates natively in four languages out of the box.' },
+            { label: 'Base', value: 'Dubai', note: 'Working with Dubai brokerages on Dubai listings. Not a remote SaaS team.' },
+          ].map((t) => (
+            <div
+              key={t.label}
+              className="py-6 lg:px-6 border-b lg:border-b-0 lg:border-l lg:first:border-l-0 lg:first:pl-0"
+              style={{ borderColor: 'var(--color-border-hairline)' }}
+            >
+              <div
+                className="text-[11px] uppercase tracking-widest font-bold mb-1.5"
+                style={{ color: 'var(--color-text-3)' }}
+              >
+                {t.label}
+              </div>
+              <div
+                className="text-xl font-bold mb-1"
+                style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
+              >
+                {t.value}
+              </div>
+              <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
+                {t.note}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* ── CLOSING CTA ─────────────────────────────────── */}
       <section className="text-center max-w-[720px] mx-auto px-6 py-24">
         <div className="t-eyebrow mb-4">See it on your listings</div>
-        <h2 className="t-section mb-4">Give your agents a system that never sleeps.</h2>
+        <h2 className="t-section mb-4">See it on a real day of buyer work.</h2>
         <p className="t-large mb-6 max-w-[540px] mx-auto">
           See Dalya run a real day of buyer work on your own listings — the hot list, the
           escalations, the follow-ups already drafted before your agents arrive.
@@ -288,41 +300,5 @@ export default function AboutPage() {
         </Link>
       </section>
     </>
-  )
-}
-
-function TrustCard({
-  label,
-  value,
-  note,
-}: {
-  label: string
-  value: string
-  note: string
-}) {
-  return (
-    <article
-      className="rounded-xl p-5 flex flex-col gap-2"
-      style={{
-        background: 'var(--color-surface-1)',
-        border: '1px solid var(--color-border-hairline)',
-      }}
-    >
-      <div
-        className="text-[11px] uppercase tracking-widest font-bold"
-        style={{ color: 'var(--color-text-3)' }}
-      >
-        {label}
-      </div>
-      <div
-        className="text-xl font-bold"
-        style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
-      >
-        {value}
-      </div>
-      <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-text-2)' }}>
-        {note}
-      </p>
-    </article>
   )
 }

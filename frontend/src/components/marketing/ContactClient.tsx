@@ -3,21 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-type Focus =
-  | 'Buyer response speed'
-  | 'Viewing coordination'
-  | 'Serious-offer escalation'
-  | 'Follow-up discipline'
-  | 'All of the above'
-
-const FOCUS_OPTIONS: Focus[] = [
-  'Buyer response speed',
-  'Viewing coordination',
-  'Serious-offer escalation',
-  'Follow-up discipline',
-  'All of the above',
-]
-
 const TIMELINE = [
   {
     label: 'Step 1',
@@ -45,24 +30,12 @@ const GOOD_FIT = [
   'You operate a Dubai real estate brokerage or sales team.',
   'You have active listings and WhatsApp inquiry flow.',
   'Your agents will use the product day to day.',
-  'You can give weekly feedback on what is sharper or slower.',
-]
-
-const NOT_A_FIT = [
-  'Pure investor introducer with no active brokerage book.',
-  'Looking for a lead-generation channel rather than a working surface.',
-  'Cannot commit an owner or team lead to a weekly review call.',
 ]
 
 export function ContactClient() {
   const [brokerage, setBrokerage] = useState('')
   const [name, setName] = useState('')
-  const [role, setRole] = useState('')
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [teamSize, setTeamSize] = useState('')
-  const [listings, setListings] = useState('')
-  const [focus, setFocus] = useState<Focus>('All of the above')
   const [notes, setNotes] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
@@ -71,12 +44,8 @@ export function ContactClient() {
     const subject = `Dalya demo request: ${brokerage || 'brokerage'}`
     const body = [
       `Brokerage: ${brokerage}`,
-      `Contact: ${name}${role ? ' · ' + role : ''}`,
+      `Contact: ${name}`,
       `Email: ${email}`,
-      phone ? `Phone: ${phone}` : null,
-      `Team size: ${teamSize}`,
-      `Active listings: ${listings}`,
-      `Primary focus: ${focus}`,
       notes ? `\nNotes:\n${notes}` : null,
     ]
       .filter(Boolean)
@@ -122,16 +91,6 @@ export function ContactClient() {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <Field label="Brokerage name" required>
-                <input
-                  type="text"
-                  required
-                  value={brokerage}
-                  onChange={(e) => setBrokerage(e.target.value)}
-                  placeholder="Your brokerage's name"
-                  className="input"
-                />
-              </Field>
               <Field label="Your name" required>
                 <input
                   type="text"
@@ -139,18 +98,6 @@ export function ContactClient() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Luqman Al-Mansouri"
-                  className="input"
-                />
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <Field label="Your role">
-                <input
-                  type="text"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  placeholder="Owner · Team lead · Senior broker"
                   className="input"
                 />
               </Field>
@@ -166,66 +113,26 @@ export function ContactClient() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-              <Field label="WhatsApp">
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+971 50 ..."
-                  className="input"
-                />
-              </Field>
-              <Field label="Team size">
+            <div className="mb-4">
+              <Field label="Brokerage name" required>
                 <input
                   type="text"
-                  value={teamSize}
-                  onChange={(e) => setTeamSize(e.target.value)}
-                  placeholder="12 agents"
-                  className="input"
-                />
-              </Field>
-              <Field label="Active listings">
-                <input
-                  type="text"
-                  value={listings}
-                  onChange={(e) => setListings(e.target.value)}
-                  placeholder="80 secondary · 40 off-plan"
+                  required
+                  value={brokerage}
+                  onChange={(e) => setBrokerage(e.target.value)}
+                  placeholder="Your brokerage's name"
                   className="input"
                 />
               </Field>
             </div>
 
-            <Field label="Where your team loses the most time">
-              <div className="flex flex-wrap gap-2 mt-1">
-                {FOCUS_OPTIONS.map((opt) => {
-                  const active = focus === opt
-                  return (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => setFocus(opt)}
-                      className="text-[12px] font-medium rounded-md px-3 py-1.5 transition-colors"
-                      style={{
-                        background: active ? 'var(--color-brand-500)' : 'var(--color-surface-1)',
-                        color: active ? 'white' : 'var(--color-text-2)',
-                        border: `1px solid ${active ? 'var(--color-brand-500)' : 'var(--color-border-hairline)'}`,
-                      }}
-                    >
-                      {opt}
-                    </button>
-                  )
-                })}
-              </div>
-            </Field>
-
-            <div className="mt-4 mb-6">
-              <Field label="Anything else">
+            <div className="mb-6">
+              <Field label="Anything else (optional)">
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  rows={4}
-                  placeholder="The workflow you most want to fix. Anything unusual about your book. Your timeline."
+                  rows={3}
+                  placeholder="The workflow you most want to fix, your team size, or anything unusual about your book."
                   className="input"
                 />
               </Field>
@@ -276,27 +183,6 @@ export function ContactClient() {
                     <span
                       className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
                       style={{ background: 'var(--color-success-500)' }}
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: 'var(--color-surface-1)',
-                border: '1px solid var(--color-border-hairline)',
-              }}
-            >
-              <div className="t-eyebrow mb-3">Not a fit yet</div>
-              <ul className="flex flex-col gap-2.5">
-                {NOT_A_FIT.map((item) => (
-                  <li key={item} className="flex gap-2 text-[13px] leading-snug" style={{ color: 'var(--color-text-2)' }}>
-                    <span
-                      className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: 'var(--color-warning-500)' }}
                     />
                     <span>{item}</span>
                   </li>

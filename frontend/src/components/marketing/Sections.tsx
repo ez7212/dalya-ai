@@ -614,11 +614,12 @@ export function HowWeShip() {
             </div>
           </div>
           <div
-            className="px-5 py-3 flex gap-2 border-t"
+            className="px-5 py-3 flex items-center gap-2 border-t"
             style={{
               background: 'var(--color-surface-1)',
               borderColor: 'var(--color-border-hairline)',
             }}
+            aria-hidden="true"
           >
             <span className="btn-brand text-xs rounded-md px-3 py-1.5">Accept</span>
             <span
@@ -632,6 +633,12 @@ export function HowWeShip() {
               style={{ color: 'var(--color-text-2)' }}
             >
               Re-draft
+            </span>
+            <span
+              className="ml-auto text-[9px] uppercase tracking-widest font-semibold"
+              style={{ color: 'var(--color-text-3)' }}
+            >
+              Preview
             </span>
           </div>
         </div>
@@ -717,6 +724,7 @@ export function WhatsAppBridge() {
                   background: 'var(--color-surface-1)',
                   borderColor: 'var(--color-border-hairline)',
                 }}
+                aria-hidden="true"
               >
                 <span className="flex-1 text-[11px]" style={{ color: 'var(--color-text-3)' }}>
                   Edit, or send as-is…
