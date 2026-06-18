@@ -5,10 +5,8 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const NAV_LINKS = [
-  { label: 'For brokerages', href: '/brokerages' },
   { label: 'For agents', href: '/agents' },
   { label: 'Workflow', href: '/how-it-works' },
-  { label: 'About', href: '/about' },
 ]
 
 export function MarketingNav() {
