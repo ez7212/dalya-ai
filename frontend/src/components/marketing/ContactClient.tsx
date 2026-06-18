@@ -125,7 +125,7 @@ export function ContactClient() {
                   required
                   value={brokerage}
                   onChange={(e) => setBrokerage(e.target.value)}
-                  placeholder="Mahoroba Realty"
+                  placeholder="Your brokerage's name"
                   className="input"
                 />
               </Field>

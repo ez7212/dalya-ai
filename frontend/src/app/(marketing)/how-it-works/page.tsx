@@ -150,7 +150,7 @@ export default function WorkflowPage() {
       >
         <div className="max-w-[1280px] mx-auto px-6 py-7 flex flex-wrap gap-6 justify-center items-center">
           {[
-            'RERA licensed via Mahoroba Realty',
+            'Listings operated by RERA-licensed brokerages',
             'UAE PDPL compliant',
             'EN · AR · RU · HI',
             'Dubai-based',

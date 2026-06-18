@@ -11,8 +11,8 @@ const TIMELINE = [
   {
     year: '2024',
     label: 'Founded',
-    title: 'Mahoroba Realty opens in Dubai',
-    body: 'A working brokerage with RERA licensure becomes the operating foundation. Every later product decision is shaped by what actually happens inside a Dubai brokerage day.',
+    title: 'Founded inside a working Dubai brokerage',
+    body: 'A working RERA-licensed brokerage becomes the operating foundation. Every later product decision is shaped by what actually happens inside a Dubai brokerage day.',
   },
   {
     year: '2025',
@@ -49,7 +49,7 @@ const PRINCIPLES = [
   },
   {
     title: 'Regulatory awareness from day one',
-    body: 'Dalya is operated by Mahoroba Realty, a Dubai RERA-licensed brokerage, and is designed with PDPL, audit trails, and brokerage-specific data boundaries in mind.',
+    body: 'Every listing on the platform is operated by a RERA-licensed Dubai brokerage. Dalya is designed with PDPL, audit trails, and brokerage-specific data boundaries in mind.',
   },
 ]
 
@@ -246,15 +246,16 @@ export default function AboutPage() {
         <div className="t-eyebrow mb-2.5">Operating context</div>
         <h2 className="t-section mb-3 max-w-[720px]">Licensed, regulated, Dubai-based.</h2>
         <p className="t-large max-w-[680px] mb-10">
-          Dalya is operated by Mahoroba Realty. Regulatory posture and data boundaries are
-          baked into the product rather than retrofitted later.
+          Every listing on the platform is operated by a RERA-licensed Dubai brokerage.
+          Regulatory posture and data boundaries are baked into the product rather than
+          retrofitted later.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <TrustCard
             label="RERA"
-            value="Licensed"
-            note="Operated under Mahoroba Realty, RERA-licensed Dubai brokerage."
+            value="Per listing"
+            note="Every listing on the platform is operated by a RERA-licensed Dubai brokerage."
           />
           <TrustCard
             label="UAE PDPL"

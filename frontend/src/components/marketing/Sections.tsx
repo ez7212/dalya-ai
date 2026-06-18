@@ -646,7 +646,7 @@ function KeyValRow({ k, v, mono }: { k: string; v: string; mono?: boolean }) {
 
 export function TrustStrip() {
   const items = [
-    'RERA licensed via Mahoroba Realty',
+    'Listings operated by RERA-licensed brokerages',
     'UAE PDPL compliant',
     'EN · AR · RU · HI',
     'Dubai-based',
@@ -719,7 +719,7 @@ export function MarketingFooter() {
       }}
     >
       <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-6 flex flex-wrap gap-4 justify-between text-[11px]" style={{ color: 'var(--color-text-3)' }}>
-        <span>© 2026 Mahoroba Realty · operating Dalya · RERA licensed</span>
+        <span>© 2026 Dalya · AI infrastructure for Dubai brokerages</span>
         <div className="flex gap-4">
           <Link href="/contact" style={{ color: 'var(--color-text-3)' }}>Contact</Link>
         </div>
