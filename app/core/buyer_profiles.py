@@ -28,9 +28,11 @@ from app.db.session import safe_commit
 from app.models.db_models import (
     DBBrokerageBuyerProfile,
     DBBuyerProfileField,
+    DBListingInquiry,
     DBConversation,
     DBMessage,
 )
+from app.schemas.conversation import BuyerProfile, ListingInquiry
 
 logger = logging.getLogger(__name__)
 
@@ -222,6 +224,58 @@ def effective_fields(db: Session, profile: DBBrokerageBuyerProfile) -> dict:
             }
         snapshot[field] = item
     return snapshot
+
+
+def profile_to_schema(
+    db: Session,
+    profile: DBBrokerageBuyerProfile,
+) -> BuyerProfile:
+    """Convert a tenant-scoped buyer profile without reading legacy/global profile state."""
+    fields = effective_fields(db, profile)
+    budget_field = fields.get("budget_max_aed") or fields.get("budget_min_aed") or {}
+    bedroom_field = fields.get("bedrooms") or {}
+    area_field = fields.get("target_areas") or {}
+    bedroom_value = bedroom_field.get("value")
+    area_value = area_field.get("value")
+    bedroom_preferences = (
+        list(bedroom_value)
+        if isinstance(bedroom_value, list)
+        else ([int(bedroom_value)] if isinstance(bedroom_value, int) else [])
+    )
+    area_preferences = (
+        list(area_value)
+        if isinstance(area_value, list)
+        else ([str(area_value)] if area_value else [])
+    )
+    inquiries = (
+        db.query(DBListingInquiry)
+        .filter(
+            DBListingInquiry.brokerage_id == profile.brokerage_id,
+            DBListingInquiry.buyer_phone == profile.buyer_phone,
+        )
+        .order_by(DBListingInquiry.first_contact.asc())
+        .all()
+    )
+    return BuyerProfile(
+        phone=profile.buyer_phone,
+        name=profile.name,
+        budget_aed=budget_field.get("value"),
+        bedroom_preferences=bedroom_preferences,
+        area_preferences=area_preferences,
+        purpose=None,
+        listings_inquired=[
+            ListingInquiry(
+                listing_id=item.listing_id,
+                project=item.project,
+                unit_number=item.unit_number,
+                price_aed=item.price_aed,
+                first_contact=item.first_contact,
+            )
+            for item in inquiries
+        ],
+        created_at=profile.created_at,
+        updated_at=profile.updated_at,
+    )
 
 
 # ── Rules-layer extraction on the message-processing path ──────────────────────

@@ -88,7 +88,10 @@ def save_listing(
 
 
 def get_listing(db: Session, listing_id: str) -> Optional[DBListing]:
-    return db.get(DBListing, listing_id)
+    row = db.get(DBListing, listing_id)
+    if not row or not row.brokerage_id:
+        return None
+    return row
 
 
 def get_listings_for_seller(db: Session, seller_id: str) -> list[DBListing]:
@@ -172,6 +175,16 @@ def get_listing_stats_fast(db: Session, listing_id: str) -> dict:
     """
     # Single query: conversation summary with per-conversation message counts,
     # ordered by most recent, limited to 20 for the active_buyers list.
+    listing = db.get(DBListing, listing_id)
+    if not listing or not listing.brokerage_id:
+        return {
+            "listing_id": listing_id,
+            "total_conversations": 0,
+            "total_messages": 0,
+            "escalated_leads": 0,
+            "active_buyers": [],
+        }
+
     rows = db.execute(
         select(
             DBConversation.conversation_id,
@@ -183,6 +196,7 @@ def get_listing_stats_fast(db: Session, listing_id: str) -> dict:
         )
         .outerjoin(DBMessage, DBMessage.conversation_id == DBConversation.conversation_id)
         .where(DBConversation.listing_id == listing_id)
+        .where(DBConversation.brokerage_id == listing.brokerage_id)
         .group_by(
             DBConversation.conversation_id,
             DBConversation.buyer_phone,
@@ -219,7 +233,7 @@ def get_listing_stats_fast(db: Session, listing_id: str) -> dict:
 
 def get_spa(db: Session, listing_id: str) -> Optional[SPAParseResult]:
     row = db.get(DBListing, listing_id)
-    if not row:
+    if not row or not row.brokerage_id:
         return None
     return SPAParseResult.model_validate(row.spa_data)
 
@@ -230,41 +244,41 @@ def get_or_create_conversation(
     db: Session,
     buyer_phone: str,
     listing_id: str,
-) -> DBConversation:
+) -> Optional[DBConversation]:
     """
     One conversation per buyer per listing.
     Keyed by phone + listing_id combination.
     """
+    listing = db.get(DBListing, listing_id)
+    if not listing or not listing.brokerage_id:
+        return None
+
     existing = (
         db.query(DBConversation)
-        .filter_by(buyer_phone=buyer_phone, listing_id=listing_id)
+        .filter_by(buyer_phone=buyer_phone, listing_id=listing_id, brokerage_id=listing.brokerage_id)
         .first()
     )
     if existing:
-        listing = db.get(DBListing, listing_id)
-        if listing:
-            changed = False
-            if listing.brokerage_id and existing.brokerage_id != listing.brokerage_id:
-                existing.brokerage_id = listing.brokerage_id
-                changed = True
-            if listing.assigned_agent_id and existing.assigned_agent_id != listing.assigned_agent_id:
-                existing.assigned_agent_id = listing.assigned_agent_id
-                changed = True
-            if changed:
-                existing.updated_at = datetime.utcnow()
-                safe_commit(db)
-                db.refresh(existing)
-            get_or_create_lead_assignment(db, existing)
+        if existing.brokerage_id and existing.brokerage_id != listing.brokerage_id:
+            return None
+        changed = False
+        if listing.assigned_agent_id and existing.assigned_agent_id != listing.assigned_agent_id:
+            existing.assigned_agent_id = listing.assigned_agent_id
+            changed = True
+        if changed:
+            existing.updated_at = datetime.utcnow()
+            safe_commit(db)
+            db.refresh(existing)
+        get_or_create_lead_assignment(db, existing)
         return existing
 
     import uuid
-    listing = db.get(DBListing, listing_id)
     conv = DBConversation(
         conversation_id=str(uuid.uuid4()),
         listing_id=listing_id,
         buyer_phone=buyer_phone,
-        brokerage_id=listing.brokerage_id if listing and listing.brokerage_id else None,
-        assigned_agent_id=listing.assigned_agent_id if listing and listing.assigned_agent_id else None,
+        brokerage_id=listing.brokerage_id,
+        assigned_agent_id=listing.assigned_agent_id if listing.assigned_agent_id else None,
     )
     db.add(conv)
     safe_commit(db)
@@ -351,15 +365,21 @@ def update_conversation(
 
 
 def get_conversation(db: Session, conversation_id: str) -> Optional[DBConversation]:
-    return db.get(DBConversation, conversation_id)
+    row = db.get(DBConversation, conversation_id)
+    if not row or not row.brokerage_id:
+        return None
+    return row
 
 
 def get_conversations_for_listing(
     db: Session, listing_id: str
 ) -> list[DBConversation]:
+    listing = db.get(DBListing, listing_id)
+    if not listing or not listing.brokerage_id:
+        return []
     return (
         db.query(DBConversation)
-        .filter_by(listing_id=listing_id)
+        .filter_by(listing_id=listing_id, brokerage_id=listing.brokerage_id)
         .order_by(DBConversation.updated_at.desc())
         .all()
     )
@@ -462,15 +482,24 @@ def add_listing_inquiry(
     project: str,
     unit_number: str,
     price_aed: float,
+    brokerage_id: Optional[str] = None,
 ) -> None:
     """Add a listing to a buyer's inquiry history if not already there."""
+    listing = db.get(DBListing, listing_id)
+    if not brokerage_id:
+        brokerage_id = listing.brokerage_id if listing and listing.brokerage_id else None
+    if not brokerage_id:
+        return None
+    if listing and listing.brokerage_id and listing.brokerage_id != brokerage_id:
+        return None
     existing = (
         db.query(DBListingInquiry)
-        .filter_by(buyer_phone=buyer_phone, listing_id=listing_id)
+        .filter_by(buyer_phone=buyer_phone, listing_id=listing_id, brokerage_id=brokerage_id)
         .first()
     )
     if not existing:
         inquiry = DBListingInquiry(
+            brokerage_id=brokerage_id,
             buyer_phone=buyer_phone,
             listing_id=listing_id,
             project=project,
