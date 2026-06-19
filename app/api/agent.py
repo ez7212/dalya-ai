@@ -19,10 +19,13 @@ from sqlalchemy.orm import Session
 from app.core.auth import CurrentUser, get_current_user
 from app.core.brokerage_access import (
     can_view_conversation,
+    capture_requested_brokerage_context,
+    current_requested_brokerage_id,
     grant_conversation_access,
     is_managing_agent,
     record_compliance_event,
     reassign_conversation,
+    resolve_request_brokerage_context,
 )
 from app.core.brokerage_config import (
     apply_brokerage_config_update,
@@ -48,7 +51,7 @@ from app.models.db_models import (
     DBMessage,
 )
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 
 
 class AgentContext(BaseModel):
@@ -146,32 +149,15 @@ class InspectionNotesCreate(BaseModel):
 
 
 def _agent_context(user: CurrentUser, db: Session) -> AgentContext:
-    member = (
-        db.query(DBBrokerageMember)
-        .filter(
-            DBBrokerageMember.user_id == user.id,
-            DBBrokerageMember.status == "active",
-        )
-        .order_by(DBBrokerageMember.created_at.asc())
-        .first()
+    context = resolve_request_brokerage_context(
+        db,
+        user,
+        current_requested_brokerage_id(),
     )
-    if member:
-        return AgentContext(
-            brokerage_id=member.brokerage_id,
-            user_id=user.id,
-            role=member.role,
-        )
-
-    if os.getenv("ALLOW_DEFAULT_BROKERAGE_CONTEXT") == "true":
-        return AgentContext(
-            brokerage_id=os.getenv("DEFAULT_BROKERAGE_ID", "dalya-internal"),
-            user_id=user.id,
-            role="agent",
-        )
-
-    raise HTTPException(
-        status_code=403,
-        detail="No active brokerage membership for this user",
+    return AgentContext(
+        brokerage_id=context.brokerage_id,
+        user_id=context.user_id,
+        role=context.role or "agent",
     )
 
 
@@ -722,7 +708,6 @@ async def buyer_card(
     from app.core.buyer_profiles import effective_fields
     from app.core.offers import serialize_offer
     from app.models.db_models import (
-        DBBuyerProfile,
         DBBuyerSuppression,
         DBEscalationThread,
         DBOffer,
@@ -743,7 +728,6 @@ async def buyer_card(
         .count()
         > 0
     )
-    legacy = db.get(DBBuyerProfile, profile.buyer_phone)
     viewings = (
         db.query(DBViewing)
         .filter(
@@ -788,7 +772,7 @@ async def buyer_card(
             "name": profile.name,
             "phone": profile.buyer_phone,  # full on the card; masked in lists
             "language": profile.language,
-            "source": profile.source or (legacy.lead_source if legacy else None),
+            "source": profile.source,
             "opted_out": opted_out,
         },
         "qualification": effective_fields(db, profile),

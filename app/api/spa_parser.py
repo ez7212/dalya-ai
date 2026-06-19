@@ -3,13 +3,20 @@ load_dotenv()
 
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 
 from app.core.auth import CurrentUser, get_current_user
+from app.core.brokerage_access import (
+    capture_requested_brokerage_context,
+    current_requested_brokerage_id,
+    resolve_request_brokerage_context,
+)
 from app.core.runtime_config import debug_routes_enabled
+from app.db.session import get_db
 from app.core.spa_parser import SPAParser
 from app.schemas.spa import SPAParseResponse
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 parser = SPAParser()
 
 ALLOWED_CONTENT_TYPES = {
@@ -21,10 +28,19 @@ ALLOWED_CONTENT_TYPES = {
 MAX_FILE_SIZE_MB = 20
 
 
+def _require_active_brokerage_member(user: CurrentUser, db: Session) -> None:
+    resolve_request_brokerage_context(
+        db,
+        user,
+        current_requested_brokerage_id(),
+    )
+
+
 @router.post("/parse-spa", response_model=SPAParseResponse)
 async def parse_spa(
     file: UploadFile = File(...),
     user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ):
     """
     Upload a Sales Purchase Agreement (PDF or image).
@@ -35,6 +51,8 @@ async def parse_spa(
     - PII (passport, Emirates ID, phone, email) is deliberately excluded from response
     - Returns parse_confidence score — flag anything below 0.7 for manual review
     """
+    _require_active_brokerage_member(user, db)
+
     # Validate content type
     if file.content_type not in ALLOWED_CONTENT_TYPES:
         raise HTTPException(
@@ -66,23 +84,11 @@ async def parse_spa(
     if result.data and result.data.parse_confidence < 0.7:
         headers["X-Parse-Warning"] = "low-confidence-extraction-manual-review-recommended"
 
-    # Duplicate detection: if stable ID already exists, return existing data without overwriting
-    if result.success and result.data and result.listing_id:
-        from app.db.session import SessionLocal
-        from app.db import crud
-        with SessionLocal() as db:
-            existing = crud.get_listing(db, result.listing_id)
-            if existing:
-                return JSONResponse(
-                    content={
-                        **result.model_dump(exclude_none=False),
-                        "already_exists": True,
-                        "message": "This SPA has already been uploaded. Existing listing returned — no changes made.",
-                    },
-                    headers=headers,
-                )
-            crud.save_listing(db, listing_id=result.listing_id, spa=result.data)
-
+    # DAL-170B: parsing is intentionally read-only. The legacy global
+    # listing_id duplicate check/save path leaked cross-brokerage existence
+    # because listings.listing_id is currently the primary key. Tenant-scoped
+    # listing creation stays on the authenticated /listings route until
+    # DAL-170C/D add the required tenant-safe identity constraints.
     return JSONResponse(
         content=result.model_dump(exclude_none=False),
         headers=headers,

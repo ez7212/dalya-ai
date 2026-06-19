@@ -9,7 +9,14 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core.auth import CurrentUser, get_current_user
-from app.core.brokerage_access import can_view_conversation, is_managing_agent, record_compliance_event
+from app.core.brokerage_access import (
+    can_view_conversation,
+    capture_requested_brokerage_context,
+    current_requested_brokerage_id,
+    is_managing_agent,
+    record_compliance_event,
+    resolve_request_brokerage_context,
+)
 from app.core.google_calendar import (
     CalendarProviderError,
     calendar_provider,
@@ -52,7 +59,7 @@ from app.models.db_models import (
     DBViewing,
 )
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 
 
 class AgentContext(BaseModel):
@@ -160,28 +167,16 @@ def _iso(value: Optional[datetime]) -> Optional[str]:
 
 
 def _agent_context(user: CurrentUser, db: Session) -> AgentContext:
-    member = (
-        db.query(DBBrokerageMember)
-        .filter(
-            DBBrokerageMember.user_id == user.id,
-            DBBrokerageMember.status == "active",
-        )
-        .order_by(DBBrokerageMember.created_at.asc())
-        .first()
+    context = resolve_request_brokerage_context(
+        db,
+        user,
+        current_requested_brokerage_id(),
     )
-    if member:
-        return AgentContext(
-            brokerage_id=member.brokerage_id,
-            user_id=user.id,
-            role=member.role,
-        )
-    if os.getenv("ALLOW_DEFAULT_BROKERAGE_CONTEXT") == "true":
-        return AgentContext(
-            brokerage_id=os.getenv("DEFAULT_BROKERAGE_ID", "dalya-internal"),
-            user_id=user.id,
-            role="agent",
-        )
-    raise HTTPException(status_code=403, detail="No active brokerage membership for this user")
+    return AgentContext(
+        brokerage_id=context.brokerage_id,
+        user_id=context.user_id,
+        role=context.role or "agent",
+    )
 
 
 def _listing_or_404(db: Session, listing_id: str, ctx: AgentContext) -> DBListing:

@@ -24,6 +24,13 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.core.auth import CurrentUser, get_current_user
+from app.core.brokerage_access import (
+    BrokerageContext,
+    capture_requested_brokerage_context,
+    current_requested_brokerage_id,
+    is_managing_agent,
+    resolve_request_brokerage_context,
+)
 from app.core.brokerage_resolver import list_approved_brokerages
 from app.core.listing_scraper import scrape_any
 from app.core.ready_property_knowledge import (
@@ -41,7 +48,7 @@ from app.models.db_models import (
     DBListingKnowledgeSummary,
 )
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 logger = logging.getLogger(__name__)
 
 
@@ -140,32 +147,46 @@ def _slugify_community(value: Optional[str]) -> Optional[str]:
     return cleaned or None
 
 
-def _ensure_member_brokerage(user_id: str, db: Session) -> DBBrokerageMember:
+def _ensure_member_brokerage(user: CurrentUser, db: Session) -> BrokerageContext:
     """Resolve the authenticated user's active brokerage membership."""
+    return resolve_request_brokerage_context(
+        db,
+        user,
+        current_requested_brokerage_id(),
+    )
+
+
+def _get_scoped_listing(listing_id: str, user: CurrentUser, db: Session) -> tuple[DBListing, BrokerageContext]:
+    listing = db.get(DBListing, listing_id)
+    if not listing:
+        raise HTTPException(status_code=404, detail="Listing not found.")
+    member = _ensure_member_brokerage(user, db)
+    if listing.brokerage_id != member.brokerage_id:
+        raise HTTPException(status_code=403, detail="Listing is not under your brokerage.")
+    return listing, member
+
+
+def _require_assignable_listing_agent(
+    db: Session,
+    *,
+    brokerage_id: str,
+    acting_user_id: str,
+    acting_role: Optional[str],
+    target_user_id: str,
+) -> None:
+    if target_user_id != acting_user_id and not is_managing_agent(acting_role):
+        raise HTTPException(status_code=403, detail="Managing-agent access required to assign listings to another agent.")
     member = (
-        db.query(DBBrokerageMember)
+        db.query(DBBrokerageMember.member_id)
         .filter(
-            DBBrokerageMember.user_id == user_id,
+            DBBrokerageMember.brokerage_id == brokerage_id,
+            DBBrokerageMember.user_id == target_user_id,
             DBBrokerageMember.status == "active",
         )
         .first()
     )
     if not member:
-        raise HTTPException(
-            status_code=403,
-            detail="No active brokerage membership found. Complete agent onboarding first.",
-        )
-    return member
-
-
-def _get_scoped_listing(listing_id: str, user: CurrentUser, db: Session) -> tuple[DBListing, DBBrokerageMember]:
-    listing = db.get(DBListing, listing_id)
-    if not listing:
-        raise HTTPException(status_code=404, detail="Listing not found.")
-    member = _ensure_member_brokerage(user.id, db)
-    if listing.brokerage_id != member.brokerage_id:
-        raise HTTPException(status_code=403, detail="Listing is not under your brokerage.")
-    return listing, member
+        raise HTTPException(status_code=403, detail="Managing agent must be an active member of this brokerage.")
 
 
 def _serialize_document(doc: DBListingDocument) -> dict[str, Any]:
@@ -281,13 +302,14 @@ async def approved_brokerages(
 async def draft_listing_from_url(
     body: DraftFromUrlRequest,
     user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ):
     """
     Scrape a Property Finder or Bayut URL and return a partial draft. Failures
     are non-fatal — the client renders a manual-entry form prefilled with
     whatever the scraper retrieved.
     """
-    _ = user  # auth-gated; user identity used for audit only
+    _ensure_member_brokerage(user, db)
     scraped = scrape_any(body.url)
     community_key = _slugify_community(scraped.community or scraped.building_or_project)
     return {
@@ -385,10 +407,17 @@ async def create_listing(
     listing's community key. The listing goes live regardless of research
     state — missing community data is simply absent and never blocks publish.
     """
-    member = _ensure_member_brokerage(user.id, db)
+    member = _ensure_member_brokerage(user, db)
     brokerage_id = member.brokerage_id
 
     managing_agent_user_id = body.managing_agent_user_id or user.id
+    _require_assignable_listing_agent(
+        db,
+        brokerage_id=brokerage_id,
+        acting_user_id=user.id,
+        acting_role=member.role,
+        target_user_id=managing_agent_user_id,
+    )
     community_key = _slugify_community(body.community)
 
     # SPA shim: ready listings still need a spa_data JSON to satisfy the existing
@@ -518,7 +547,7 @@ async def add_reference_documents(
     listing = db.get(DBListing, listing_id)
     if not listing:
         raise HTTPException(status_code=404, detail="Listing not found.")
-    member = _ensure_member_brokerage(user.id, db)
+    member = _ensure_member_brokerage(user, db)
     if listing.brokerage_id != member.brokerage_id:
         raise HTTPException(status_code=403, detail="Listing is not under your brokerage.")
 

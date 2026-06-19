@@ -6,7 +6,6 @@ It uses real brokerage-scoped rows when they exist and falls back to a stable
 sample payload so frontend work can proceed before a brokerage is fully seeded.
 """
 
-import os
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -16,7 +15,14 @@ from sqlalchemy import func, or_
 from sqlalchemy.orm import Session, aliased, joinedload
 
 from app.core.auth import CurrentUser, get_current_user
-from app.core.brokerage_access import can_view_conversation, is_buyer_suppressed, record_compliance_event
+from app.core.brokerage_access import (
+    can_view_conversation,
+    capture_requested_brokerage_context,
+    current_requested_brokerage_id,
+    is_buyer_suppressed,
+    record_compliance_event,
+    resolve_request_brokerage_context,
+)
 from app.core.hot_list import (
     latest_hotlist_refresh_run,
     refresh_hotlist_with_run,
@@ -49,7 +55,7 @@ from app.models.db_models import (
     DBViewing,
 )
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 
 
 class AgentDashboardContext(BaseModel):
@@ -99,47 +105,27 @@ def _iso(value: Optional[datetime]) -> Optional[str]:
 
 
 def _agent_context(user: CurrentUser, db: Session) -> AgentDashboardContext:
-    member = (
-        db.query(DBBrokerageMember)
+    context = resolve_request_brokerage_context(
+        db,
+        user,
+        current_requested_brokerage_id(),
+    )
+    brokerage = db.get(DBBrokerage, context.brokerage_id)
+    profile = (
+        db.query(DBAgentProfile)
         .filter(
-            DBBrokerageMember.user_id == user.id,
-            DBBrokerageMember.status == "active",
+            DBAgentProfile.brokerage_id == context.brokerage_id,
+            DBAgentProfile.user_id == user.id,
         )
-        .order_by(DBBrokerageMember.created_at.asc())
         .first()
     )
-    if member:
-        brokerage = db.get(DBBrokerage, member.brokerage_id)
-        profile = (
-            db.query(DBAgentProfile)
-            .filter(
-                DBAgentProfile.brokerage_id == member.brokerage_id,
-                DBAgentProfile.user_id == user.id,
-            )
-            .first()
-        )
-        return AgentDashboardContext(
-            brokerage_id=member.brokerage_id,
-            brokerage_name=brokerage.name if brokerage else None,
-            user_id=user.id,
-            role=member.role,
-            display_name=profile.display_name if profile else member.display_name,
-        )
-
-    if os.getenv("ALLOW_DEFAULT_BROKERAGE_CONTEXT") == "true":
-        brokerage_id = os.getenv("DEFAULT_BROKERAGE_ID", "dalya-internal")
-        brokerage = db.get(DBBrokerage, brokerage_id)
-        return AgentDashboardContext(
-            brokerage_id=brokerage_id,
-            brokerage_name=brokerage.name if brokerage else "Dalya Internal Pilot",
-            user_id=user.id,
-            role="agent",
-            display_name=user.email or "Agent",
-        )
-
-    raise HTTPException(
-        status_code=403,
-        detail="No active brokerage membership for this user",
+    member = db.get(DBBrokerageMember, context.membership_id) if context.membership_id else None
+    return AgentDashboardContext(
+        brokerage_id=context.brokerage_id,
+        brokerage_name=brokerage.name if brokerage else None,
+        user_id=context.user_id,
+        role=context.role or "agent",
+        display_name=profile.display_name if profile else (member.display_name if member else user.email),
     )
 
 
@@ -204,7 +190,11 @@ def _metadata_datetime(metadata: dict, key: str) -> Optional[datetime]:
 
 def _serialize_reply_draft(db: Session, draft: DBDraftReply) -> dict:
     conversation = db.get(DBConversation, draft.conversation_id)
+    if not conversation or not conversation.brokerage_id:
+        conversation = None
     listing = db.get(DBListing, draft.listing_id) if draft.listing_id else None
+    if not listing or not listing.brokerage_id:
+        listing = None
     spa = (listing.spa_data or {}) if listing else {}
     metadata = draft.metadata_json or {}
     return {
@@ -560,6 +550,8 @@ def _questions_for_threads(db: Session, thread_ids: list[str]) -> dict[str, list
 
 def _listing_for_thread(db: Session, thread: DBEscalationThread) -> dict:
     listing = db.get(DBListing, thread.listing_id)
+    if not listing or not listing.brokerage_id:
+        listing = None
     spa = (listing.spa_data or {}) if listing else {}
     return {
         "listing_id": thread.listing_id,
@@ -573,6 +565,8 @@ def _listing_for_thread(db: Session, thread: DBEscalationThread) -> dict:
 
 def _buyer_for_thread(db: Session, thread: DBEscalationThread) -> dict:
     conversation = db.get(DBConversation, thread.conversation_id)
+    if not conversation or not conversation.brokerage_id:
+        conversation = None
     return {
         "name": conversation.buyer_name if conversation else None,
         "phone": thread.buyer_phone,
@@ -1536,7 +1530,7 @@ async def send_reply_draft(
         raise HTTPException(status_code=400, detail="Draft body is required")
 
     conversation = db.get(DBConversation, draft.conversation_id)
-    if not conversation:
+    if not conversation or not conversation.brokerage_id:
         raise HTTPException(status_code=404, detail="Conversation not found")
     brokerage = db.get(DBBrokerage, ctx.brokerage_id)
     if not brokerage or not brokerage.brokerage_ai_number:
