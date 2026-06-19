@@ -2,7 +2,7 @@
 
 @theme {
   /* ════════════════════════════════════════════════════════════════════
-   * LEGACY TOKENS — used by the dashboard + Mahoroba consumer surfaces.
+   * LEGACY TOKENS — used by the dashboard + retired consumer surfaces.
    * Kept until those surfaces are migrated to the new brand system.
    * Do not use in new components — pick from the B2B tokens below.
    * ════════════════════════════════════════════════════════════════════ */
