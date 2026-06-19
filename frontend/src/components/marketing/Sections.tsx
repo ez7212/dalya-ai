@@ -736,6 +736,99 @@ export function WhatsAppBridge() {
 }
 
 /* ════════════════════════════════════════════════════════════════════
+ * FAQ — objection handling, leading with data security / compliance
+ * ════════════════════════════════════════════════════════════════════ */
+
+const FAQ_ITEMS = [
+  {
+    q: 'Is our buyer data secure?',
+    a: "Yes. Each brokerage's data is isolated — listings, buyer conversations, contacts, and offers stay inside your account and are never shared across brokerages. Every action the AI takes is written to an audit trail, and the platform is built around UAE PDPL: lawful-basis tracking on outbound messages, one-word STOP opt-out that halts all messaging to a buyer, and data minimisation by design.",
+  },
+  {
+    q: 'Is Dalya RERA-licensed?',
+    a: "Dalya is software, not a brokerage — software can't hold a RERA licence. Every listing on the platform is operated by your own RERA-licensed brokerage; Dalya runs underneath your licence, it doesn't replace it. Regulatory attribution on any listing points to the brokerage that owns it.",
+  },
+  {
+    q: 'Which languages does it handle?',
+    a: 'English, Arabic, Russian, and Hindi out of the box, including right-to-left Arabic. Buyers are answered in their own language while your agents work in one place.',
+  },
+  {
+    q: 'How does it work with WhatsApp?',
+    a: 'Buyers message the way they already do — over WhatsApp. Dalya answers and qualifies them around the clock and prepares a ready-to-send draft for anything that needs an agent. Your agent reviews and sends; nothing goes out on its own on a sensitive thread.',
+  },
+  {
+    q: 'What does it cost, and how fast can we start?',
+    a: 'Pricing scales with your team and we walk through it on the demo, once you’ve seen what Dalya does day to day. Setup starts with a thirty-minute demo on your own listings; if it’s a fit, we connect your active listings and WhatsApp inquiry flow and brief your agents — most teams are live within days.',
+  },
+]
+
+export function FAQ() {
+  return (
+    <section style={{ background: 'var(--color-surface-1)' }}>
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
+
+          {/* Intro */}
+          <div>
+            <div className="t-eyebrow mb-2.5">Common questions</div>
+            <h2 className="t-section mb-4">Questions, answered.</h2>
+            <p className="t-large max-w-[420px]">
+              What Dubai brokerage owners ask first — your data, your licence, and what
+              Dalya actually does for your agents.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-block mt-6 text-sm font-medium"
+              style={{ color: 'var(--color-brand-500)' }}
+            >
+              Still have questions? Book a demo →
+            </Link>
+          </div>
+
+          {/* Accordion */}
+          <div className="border-t" style={{ borderColor: 'var(--color-border-hairline)' }}>
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={item.q} className="faq-item" open={i === 0}>
+                <summary className="faq-summary flex items-start justify-between gap-5 py-5">
+                  <span
+                    className="text-[16px] font-semibold leading-snug"
+                    style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
+                  >
+                    {item.q}
+                  </span>
+                  <svg
+                    className="faq-chevron mt-1 shrink-0"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    style={{ color: 'var(--color-text-3)' }}
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </summary>
+                <p
+                  className="text-[15px] leading-relaxed pb-5 max-w-[640px]"
+                  style={{ color: 'var(--color-text-2)' }}
+                >
+                  {item.a}
+                </p>
+              </details>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ════════════════════════════════════════════════════════════════════
  * CLOSING CTA
  * ════════════════════════════════════════════════════════════════════ */
 
@@ -775,10 +868,14 @@ export function MarketingFooter() {
         borderColor: 'var(--color-border-hairline)',
       }}
     >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-6 flex flex-wrap gap-4 justify-between text-[11px]" style={{ color: 'var(--color-text-3)' }}>
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-6 flex flex-wrap gap-4 justify-between items-center text-[11px]" style={{ color: 'var(--color-text-3)' }}>
         <span>© 2026 Dalya · AI infrastructure for Dubai brokerages</span>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-5">
+          <Link href="/agents" style={{ color: 'var(--color-text-3)' }}>For agents</Link>
+          <Link href="/how-it-works" style={{ color: 'var(--color-text-3)' }}>Workflow</Link>
           <Link href="/contact" style={{ color: 'var(--color-text-3)' }}>Contact</Link>
+          <Link href="/privacy" style={{ color: 'var(--color-text-3)' }}>Privacy</Link>
+          <a href="mailto:eric@dalya.ae" style={{ color: 'var(--color-text-3)' }}>eric@dalya.ae</a>
         </div>
       </div>
     </footer>
