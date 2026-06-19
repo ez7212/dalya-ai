@@ -96,9 +96,7 @@ export function Surfaces() {
           title="The agent dashboard."
           desc="Who to call this morning, ranked by buying signal. Today's viewings and confirmations. Drafts waiting for one-tap approval. Every page an agent needs, one click away."
           img="/brand-mockups/agent-dashboard.png"
-
           mobileImg="/brand-mockups/agent-mobile.png"
-          src="/brand-mockups/agent-dashboard.html"
         />
       </div>
     </section>
@@ -111,14 +109,12 @@ export function SurfaceCard({
   desc,
   img,
   mobileImg,
-  src,
 }: {
   eyebrow: string
   title: string
   desc: string
   img: string
   mobileImg?: string
-  src: string
 }) {
   return (
     <article
@@ -191,23 +187,6 @@ export function SurfaceCard({
           </div>
         </div>
       )}
-      <div
-        className="px-5 py-3 border-t"
-        style={{
-          background: 'var(--color-surface-1)',
-          borderColor: 'var(--color-border-hairline)',
-        }}
-      >
-        <a
-          href={src}
-          target="_blank"
-          rel="noreferrer"
-          className="text-xs font-medium"
-          style={{ color: 'var(--color-brand-500)' }}
-        >
-          Open the live mockup →
-        </a>
-      </div>
     </article>
   )
 }
