@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { AppSidebar, BackButton } from '@/components/app/AppSidebar'
+import { BrokerageGate, BrokerageProvider, BrokerageSelector } from '@/components/providers/BrokerageProvider'
 import { useAuth } from '@/components/providers/AuthProvider'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -9,6 +10,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth()
 
   const isLoginPage = pathname === '/login' || pathname.startsWith('/auth/')
+  const isOnboardingPage = pathname.startsWith('/onboarding')
+  const isAdminPage = pathname.startsWith('/admin')
+  const requiresBrokerageContext = !isLoginPage && !isOnboardingPage && !isAdminPage
   const displayName = (user?.user_metadata?.display_name as string) || user?.email || ''
   const initial = displayName ? displayName.charAt(0).toUpperCase() : null
 
@@ -19,6 +23,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   // All other app pages: always render the same structure
   return (
+    <BrokerageProvider>
     <div className="min-h-screen bg-neutral-50">
       <AppSidebar />
 
@@ -27,7 +32,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="flex h-16 items-center justify-between gap-4 px-4 md:px-6 lg:px-8">
             <BackButton />
           {/* Right side — user menu */}
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-end gap-4">
+            {user && !isOnboardingPage && !isAdminPage && <BrokerageSelector />}
             {user && (
               <div className="flex items-center gap-3">
                 <div className="hidden sm:flex flex-col items-end leading-tight">
@@ -58,9 +64,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
         <main id="main-content" className="pt-16">
-          {children}
+          {requiresBrokerageContext ? <BrokerageGate>{children}</BrokerageGate> : children}
         </main>
       </div>
     </div>
+    </BrokerageProvider>
   )
 }
