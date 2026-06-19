@@ -2,8 +2,9 @@ import Link from 'next/link'
 
 export function Hero() {
   return (
-    <section className="relative">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 pt-20 pb-16 lg:pt-28 lg:pb-24">
+    <section className="relative overflow-hidden">
+      <div aria-hidden className="dot-grid absolute inset-0" style={{ zIndex: 0 }} />
+      <div className="relative max-w-[1280px] mx-auto px-6 lg:px-8 pt-20 pb-16 lg:pt-28 lg:pb-24" style={{ zIndex: 1 }}>
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
 
           {/* Copy column */}

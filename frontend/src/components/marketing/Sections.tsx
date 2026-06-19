@@ -2,34 +2,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 /* ════════════════════════════════════════════════════════════════════
- * FRAME — the agent-improvement statement
- * ════════════════════════════════════════════════════════════════════ */
-
-export function Frame() {
-  return (
-    <div
-      className="border-t border-b"
-      style={{ borderColor: 'var(--color-border-hairline)' }}
-    >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-14">
-        <div className="max-w-[880px]">
-          <div className="t-eyebrow mb-2.5">The frame</div>
-          <p
-            className="text-[22px] sm:text-2xl font-normal leading-snug"
-            style={{ color: 'var(--color-text-1)', letterSpacing: '-0.01em' }}
-          >
-            Dalya is the operating layer around your agents&apos; day. It organizes repetitive
-            questions, late-night WhatsApp replies, viewing coordination, and follow-up nudges
-            into one working surface, so every agent starts the day knowing who to call,
-            what changed, and where the next serious conversation is.
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/* ════════════════════════════════════════════════════════════════════
  * STATS — three big-number stat cards
  * ════════════════════════════════════════════════════════════════════ */
 
@@ -764,67 +736,28 @@ export function WhatsAppBridge() {
 }
 
 /* ════════════════════════════════════════════════════════════════════
- * TRUST STRIP
- * ════════════════════════════════════════════════════════════════════ */
-
-export function TrustStrip() {
-  const items = [
-    'Listings operated by RERA-licensed brokerages',
-    'UAE PDPL compliant',
-    'EN · AR · RU · HI',
-    'Dubai-based',
-  ]
-  return (
-    <div
-      className="border-t"
-      style={{
-        background: 'var(--color-surface-0)',
-        borderColor: 'var(--color-border-hairline)',
-      }}
-    >
-      <div className="max-w-[1280px] mx-auto px-6 py-7 flex flex-wrap gap-6 justify-center items-center">
-        {items.map((item, i) => (
-          <span
-            key={item}
-            className="text-[11px] uppercase tracking-widest font-semibold flex items-center"
-            style={{ color: 'var(--color-text-3)' }}
-          >
-            {i > 0 && (
-              <span
-                className="mr-2 font-bold"
-                style={{ color: 'var(--color-success-500)' }}
-              >
-                ·
-              </span>
-            )}
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ════════════════════════════════════════════════════════════════════
  * CLOSING CTA
  * ════════════════════════════════════════════════════════════════════ */
 
 export function ClosingCTA() {
   return (
-    <section className="text-center max-w-[720px] mx-auto px-6 py-24">
-      <div className="t-eyebrow mb-4">See it on your listings</div>
-      <h2 className="t-section mb-4">Put Dalya to work on your listings.</h2>
-      <p className="t-large mb-6 max-w-[540px] mx-auto">
-        Bring your listings and your toughest buyer conversations. We&apos;ll show you the
-        working surface your agents wake up to — and how much of the day it handles before
-        they arrive.
-      </p>
-      <Link
-        href="/contact"
-        className="btn-brand rounded-lg px-5 py-2.5 text-sm"
-      >
-        Book a demo
-      </Link>
+    <section className="section-rule relative overflow-hidden">
+      <div aria-hidden className="dot-grid absolute inset-0" style={{ zIndex: 0 }} />
+      <div className="relative text-center max-w-[720px] mx-auto px-6 py-24" style={{ zIndex: 1 }}>
+        <div className="t-eyebrow mb-4">See it on your listings</div>
+        <h2 className="t-section mb-4">Put Dalya to work on your listings.</h2>
+        <p className="t-large mb-6 max-w-[540px] mx-auto">
+          Bring your listings and your toughest buyer conversations. We&apos;ll show you the
+          working surface your agents wake up to — and how much of the day it handles before
+          they arrive.
+        </p>
+        <Link
+          href="/contact"
+          className="btn-brand rounded-lg px-5 py-2.5 text-sm"
+        >
+          Book a demo
+        </Link>
+      </div>
     </section>
   )
 }

@@ -1,26 +1,31 @@
 import { Hero } from '@/components/marketing/Hero'
 import {
-  Frame,
   StatsRow,
   Surfaces,
   Pillars,
   WhatsAppBridge,
   HowWeShip,
-  TrustStrip,
   ClosingCTA,
 } from '@/components/marketing/Sections'
+
+function Rule() {
+  return <div role="presentation" className="section-rule" />
+}
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Frame />
+      <Rule />
       <StatsRow />
+      <Rule />
       <Surfaces />
+      <Rule />
       <Pillars />
+      <Rule />
       <WhatsAppBridge />
+      <Rule />
       <HowWeShip />
-      <TrustStrip />
       <ClosingCTA />
     </>
   )
