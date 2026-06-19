@@ -48,6 +48,19 @@ class AgentOnboardingRequest(BaseModel):
     rera_lookup_payload: dict = {}
 
 
+class ActiveBrokerageSummary(BaseModel):
+    brokerage_id: str
+    name: str
+    role: str
+    membership_id: str
+
+
+class MyBrokeragesResponse(BaseModel):
+    active_brokerages: list[ActiveBrokerageSummary]
+    requires_selection: bool
+    default_brokerage_id: Optional[str] = None
+
+
 def _clean_code(value: str) -> str:
     return value.strip().upper()
 
@@ -256,6 +269,38 @@ async def onboarding_status(
         } if profile else None,
         "can_access_agent_workspace": bool(member and member.status == "active"),
     }
+
+
+@router.get("/me/brokerages", response_model=MyBrokeragesResponse)
+async def my_brokerages(
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    memberships = (
+        db.query(DBBrokerageMember, DBBrokerage)
+        .join(DBBrokerage, DBBrokerage.brokerage_id == DBBrokerageMember.brokerage_id)
+        .filter(
+            DBBrokerageMember.user_id == user.id,
+            DBBrokerageMember.status == "active",
+            DBBrokerage.status == "active",
+        )
+        .order_by(DBBrokerage.name.asc(), DBBrokerageMember.created_at.asc())
+        .all()
+    )
+    active_brokerages = [
+        ActiveBrokerageSummary(
+            brokerage_id=brokerage.brokerage_id,
+            name=brokerage.name,
+            role=membership.role,
+            membership_id=membership.member_id,
+        )
+        for membership, brokerage in memberships
+    ]
+    return MyBrokeragesResponse(
+        active_brokerages=active_brokerages,
+        requires_selection=len(active_brokerages) > 1,
+        default_brokerage_id=active_brokerages[0].brokerage_id if len(active_brokerages) == 1 else None,
+    )
 
 
 @router.post("/onboarding/brokerage-lookup")

@@ -1,16 +1,23 @@
 from __future__ import annotations
 
 import logging
+import os
 import re
+from contextvars import ContextVar
+from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
+from typing import AsyncIterator, Literal, Optional
 
+from fastapi import Header, HTTPException, status
 from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
+from app.core.auth import CurrentUser
 from app.db.session import safe_commit
 from app.models.db_models import (
+    DBBrokerage,
+    DBBrokerageMember,
     DBBuyerSuppression,
     DBComplianceEvent,
     DBConversation,
@@ -20,6 +27,223 @@ from app.models.db_models import (
 )
 
 _MANAGING_ROLES = {"owner", "team_lead", "admin"}
+_REQUESTED_BROKERAGE_ID: ContextVar[str | None] = ContextVar("requested_brokerage_id", default=None)
+BrokerageContextSource = Literal[
+    "explicit_header",
+    "single_membership_fallback",
+    "service",
+    "parent_object",
+]
+
+
+@dataclass(frozen=True)
+class BrokerageContext:
+    brokerage_id: str
+    membership_id: str | None
+    user_id: str
+    role: str | None
+    is_platform_admin: bool
+    source: BrokerageContextSource
+    warnings: tuple[str, ...] = ()
+
+
+def get_requested_brokerage_id(
+    x_brokerage_id: Optional[str] = Header(default=None, alias="X-Brokerage-Id"),
+) -> Optional[str]:
+    if x_brokerage_id is None:
+        return None
+    cleaned = x_brokerage_id.strip()
+    return cleaned or None
+
+
+async def capture_requested_brokerage_context(
+    x_brokerage_id: Optional[str] = Header(default=None, alias="X-Brokerage-Id"),
+) -> AsyncIterator[Optional[str]]:
+    requested_brokerage_id = get_requested_brokerage_id(x_brokerage_id)
+    token = _REQUESTED_BROKERAGE_ID.set(requested_brokerage_id)
+    try:
+        yield requested_brokerage_id
+    finally:
+        _REQUESTED_BROKERAGE_ID.reset(token)
+
+
+def current_requested_brokerage_id() -> Optional[str]:
+    return _REQUESTED_BROKERAGE_ID.get()
+
+
+def _brokerage_context_error(status_code: int, code: str, message: str) -> HTTPException:
+    return HTTPException(
+        status_code=status_code,
+        detail={
+            "code": code,
+            "message": message,
+        },
+    )
+
+
+def resolve_request_brokerage_context(
+    db: Session,
+    current_user: CurrentUser,
+    explicit_brokerage_id: str | None,
+    *,
+    allow_single_membership_fallback: bool = True,
+    require_explicit_for_multi: bool = True,
+    allow_platform_admin: bool = False,
+) -> BrokerageContext:
+    """Resolve authenticated brokerage context without guessing for multi-tenant users."""
+    user_id = current_user.id
+    active_memberships = (
+        db.query(DBBrokerageMember)
+        .filter(
+            DBBrokerageMember.user_id == user_id,
+            DBBrokerageMember.status == "active",
+        )
+        .order_by(DBBrokerageMember.created_at.asc(), DBBrokerageMember.member_id.asc())
+        .all()
+    )
+    is_platform_admin = bool(os.getenv("ADMIN_USER_ID") and os.getenv("ADMIN_USER_ID") == user_id)
+
+    if explicit_brokerage_id:
+        member = next(
+            (
+                membership
+                for membership in active_memberships
+                if membership.brokerage_id == explicit_brokerage_id
+            ),
+            None,
+        )
+        if not member and allow_platform_admin and is_platform_admin:
+            brokerage = db.get(DBBrokerage, explicit_brokerage_id)
+            if brokerage and brokerage.status == "active":
+                logger.info(
+                    "brokerage_context_resolved",
+                    extra={
+                        "user_id": user_id,
+                        "brokerage_id": explicit_brokerage_id,
+                        "source": "explicit_header",
+                        "is_platform_admin": True,
+                    },
+                )
+                return BrokerageContext(
+                    brokerage_id=explicit_brokerage_id,
+                    membership_id=None,
+                    user_id=user_id,
+                    role="platform_admin",
+                    is_platform_admin=True,
+                    source="explicit_header",
+                )
+        if not member:
+            logger.warning(
+                "brokerage_context_forbidden",
+                extra={
+                    "user_id": user_id,
+                    "brokerage_id": explicit_brokerage_id,
+                    "code": "brokerage_context_forbidden",
+                },
+            )
+            raise _brokerage_context_error(
+                status.HTTP_403_FORBIDDEN,
+                "brokerage_context_forbidden",
+                "You do not have access to this brokerage.",
+            )
+
+        brokerage = db.get(DBBrokerage, member.brokerage_id)
+        if not brokerage or brokerage.status != "active":
+            logger.warning(
+                "brokerage_context_forbidden",
+                extra={
+                    "user_id": user_id,
+                    "brokerage_id": member.brokerage_id,
+                    "code": "brokerage_context_forbidden",
+                },
+            )
+            raise _brokerage_context_error(
+                status.HTTP_403_FORBIDDEN,
+                "brokerage_context_forbidden",
+                "You do not have access to this brokerage.",
+            )
+
+        logger.info(
+            "brokerage_context_resolved",
+            extra={
+                "user_id": user_id,
+                "brokerage_id": member.brokerage_id,
+                "source": "explicit_header",
+            },
+        )
+        return BrokerageContext(
+            brokerage_id=member.brokerage_id,
+            membership_id=member.member_id,
+            user_id=user_id,
+            role=member.role,
+            is_platform_admin=False,
+            source="explicit_header",
+        )
+
+    if not active_memberships:
+        logger.warning(
+            "brokerage_context_no_active_membership",
+            extra={"user_id": user_id, "code": "no_active_brokerage_membership"},
+        )
+        raise _brokerage_context_error(
+            status.HTTP_403_FORBIDDEN,
+            "no_active_brokerage_membership",
+            "No active brokerage membership is available for this user.",
+        )
+
+    if len(active_memberships) == 1 and allow_single_membership_fallback:
+        member = active_memberships[0]
+        brokerage = db.get(DBBrokerage, member.brokerage_id)
+        if not brokerage or brokerage.status != "active":
+            logger.warning(
+                "brokerage_context_forbidden",
+                extra={
+                    "user_id": user_id,
+                    "brokerage_id": member.brokerage_id,
+                    "code": "brokerage_context_forbidden",
+                },
+            )
+            raise _brokerage_context_error(
+                status.HTTP_403_FORBIDDEN,
+                "brokerage_context_forbidden",
+                "You do not have access to this brokerage.",
+            )
+        logger.info(
+            "brokerage_context_resolved",
+            extra={
+                "user_id": user_id,
+                "brokerage_id": member.brokerage_id,
+                "source": "single_membership_fallback",
+            },
+        )
+        return BrokerageContext(
+            brokerage_id=member.brokerage_id,
+            membership_id=member.member_id,
+            user_id=user_id,
+            role=member.role,
+            is_platform_admin=False,
+            source="single_membership_fallback",
+            warnings=("single_membership_fallback",),
+        )
+
+    if len(active_memberships) > 1 and require_explicit_for_multi:
+        logger.warning(
+            "brokerage_context_required",
+            extra={"user_id": user_id, "code": "brokerage_context_required"},
+        )
+        raise _brokerage_context_error(
+            status.HTTP_409_CONFLICT,
+            "brokerage_context_required",
+            "Select a brokerage to continue.",
+        )
+
+    raise _brokerage_context_error(
+        status.HTTP_403_FORBIDDEN,
+        "brokerage_context_forbidden",
+        "You do not have access to this brokerage.",
+    )
+
+
 _OPT_OUT_PATTERNS = (
     r"\bstop\b",
     r"\bunsubscribe\b",
