@@ -30,6 +30,7 @@ frontend/.next/
 env.local
 .codex/config.toml
 .claude/settings.local.json
+.claude/skills/
 
 # Logs and generated reports
 *.log
