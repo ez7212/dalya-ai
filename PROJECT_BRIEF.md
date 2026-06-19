@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-20 (`DAL-170C1` tenant normalization audit/tooling clean extraction)*
+*Last updated: 2026-06-20 (`DAL-170C2` runtime null-tenant / buyer-profile guardrails)*
 
 ## Mission
 
@@ -110,6 +110,8 @@ Security hardening is now moving through the DAL-169/DAL-172 sequence. `DAL-169`
 Testing and backfill policy: unit and integration tests are expected to create and clean up their own fixture data. Shared `.env.test` is a shared validation branch, not a permanent candidate baseline; real backfill validation should use a dedicated Neon branch per migration so candidate counts cannot drift under unrelated test activity.
 
 Clean branch recovery split: `DAL-170C1` is scoped to tenant normalization audit/dry-run tooling, focused tests, and docs only. It intentionally does not reintroduce runtime null-tenant guardrails, buyer-profile quarantine changes, chatbot behavior, lead ingest behavior, WhatsApp send behavior, RLS, DDL enforcement, migrations, or real data backfills; those remain separate follow-up work under `DAL-170C2+`.
+
+`DAL-170C2` now covers the runtime guardrail slice without schema or backfill work: active CRUD helpers hide null-tenant listings/conversations from brokerage-scoped surfaces, listing inquiries resolve/refuse tenant roots instead of creating active null-root rows, and tenant-scoped buyer-profile conversion ignores legacy/global buyer-profile state so same-phone buyers across brokerages remain isolated. Chatbot behavior, lead ingest, WhatsApp send behavior, hot-list/draft behavior, frontend, RLS, DDL, migrations, production backfills, Verified Facts, and DealReadiness runtime remain separate.
 
 ## Build plan
 
