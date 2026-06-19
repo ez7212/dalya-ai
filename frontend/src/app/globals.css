@@ -284,6 +284,18 @@ body {
 .shadow-card-md { box-shadow: 0 4px 8px -2px rgba(35, 35, 32, 0.08), 0 2px 4px -2px rgba(35, 35, 32, 0.06); }
 .shadow-card-lg { box-shadow: 0 12px 24px -6px rgba(35, 35, 32, 0.10), 0 4px 8px -2px rgba(35, 35, 32, 0.06); }
 
+/* Hairline rule between marketing sections (Attio / Linear style seam) */
+.section-rule { border-top: 1px solid var(--color-border-hairline); }
+
+/* Faint dot-grid texture for select marketing sections (Attio-style).
+   Dots fade toward the section edges so the grid never hard-edges. */
+.dot-grid {
+  background-image: radial-gradient(circle at center, rgba(35, 35, 32, 0.07) 1.1px, transparent 1.6px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 42%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 92% 88% at 50% 42%, #000 62%, transparent 100%);
+}
+
 /* Form input (marketing) */
 .marketing-surface .input {
   width: 100%;

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-19T00:00:00Z",
+  "title": "Design System: Dalya",
+  "extensions": {
+    "colorMeta": {
+      "brand-slate": { "role": "primary", "displayName": "Slate Blue", "canonical": "#3D5A80", "tonalRamp": ["#1B2A3F", "#1F2E41", "#283C56", "#324B6B", "#3D5A80", "#5F7DA2", "#86A0BD", "#D6E0EC"] },
+      "sage": { "role": "secondary", "displayName": "Sage (success)", "canonical": "#4A7C6F", "tonalRamp": ["#1F3530", "#2F5048", "#3D6A5E", "#4A7C6F", "#6E978B", "#9DBDB4", "#D0E1DD", "#E8F0EE"] },
+      "copper": { "role": "secondary", "displayName": "Copper (warning)", "canonical": "#B7793A", "tonalRamp": ["#503517", "#7A4F25", "#9A6531", "#B7793A", "#CA9968", "#E0C19C", "#F4DFC8", "#FBF1E8"] },
+      "brick": { "role": "secondary", "displayName": "Brick (error)", "canonical": "#B84838", "tonalRamp": ["#50180F", "#7A2A1F", "#9D3829", "#B84838", "#CC7567", "#E0A89F", "#EFCFC8", "#F7E8E5"] },
+      "surface-page": { "role": "neutral", "displayName": "Warm-Neutral Page", "canonical": "#FAFAF9", "tonalRamp": ["#161613", "#232320", "#3D3D39", "#5C5C57", "#7B7B76", "#A8A8A2", "#E8E8E5", "#FAFAF9"] },
+      "ink-primary": { "role": "neutral", "displayName": "Ink", "canonical": "#3D3D39", "tonalRamp": ["#0A0A09", "#161613", "#232320", "#3D3D39", "#5C5C57", "#7B7B76", "#A8A8A2", "#D6D6D2"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Marketing hero headlines only. Inter 700, tight tracking, text-wrap balance." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings." },
+      "title": { "displayName": "Title", "purpose": "Card and modal titles." },
+      "body": { "displayName": "Body", "purpose": "Default operational / reading text, 15px." },
+      "label": { "displayName": "Label / Eyebrow", "purpose": "Uppercase tracked kicker and small-caps metadata. A device, not mandatory scaffolding." },
+      "mono": { "displayName": "Mono", "purpose": "AED figures, percentages, RERA IDs, code. Tabular + slashed-zero. Never prose." }
+    },
+    "shadows": [
+      { "name": "overlay-sm", "value": "0 1px 2px 0 rgba(35,35,32,0.06), 0 1px 1px 0 rgba(35,35,32,0.04)", "purpose": "Resting cards needing a whisper of lift (contact form)." },
+      { "name": "overlay-md", "value": "0 4px 8px -2px rgba(35,35,32,0.08), 0 2px 4px -2px rgba(35,35,32,0.06)", "purpose": "Product mockup cards, surface previews." },
+      { "name": "overlay-lg", "value": "0 12px 24px -6px rgba(35,35,32,0.10), 0 4px 8px -2px rgba(35,35,32,0.06)", "purpose": "Floating hero cards, popovers, modals." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default exponential ease-out for entrances and state changes." },
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Snappier UI feedback." },
+      { "name": "duration-base", "value": "120ms", "purpose": "Default state transition." },
+      { "name": "duration-medium", "value": "180ms", "purpose": "Larger reveals." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (top-tier CTA)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The 3–5 brand-critical CTAs (Book a demo). Deep slate, white text.",
+      "html": "<button class=\"ds-btn-primary\">Book a demo</button>",
+      "css": ".ds-btn-primary { background: var(--color-brand-600, #324B6B); color: #fff; font: 500 14px/1 'Inter', system-ui, sans-serif; padding: 11px 20px; border: none; border-radius: var(--radius-2, 8px); cursor: pointer; transition: background 120ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { background: var(--color-brand-700, #283C56); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-surface-0, #FAFAF9), 0 0 0 4px var(--color-brand-500, #3D5A80); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary CTA beside a primary (See the workflow).",
+      "html": "<button class=\"ds-btn-outline\">See the workflow</button>",
+      "css": ".ds-btn-outline { background: transparent; color: var(--color-text-1, #3D3D39); font: 500 14px/1 'Inter', system-ui, sans-serif; padding: 11px 20px; border: 1px solid var(--color-border-default, #D6D6D2); border-radius: var(--radius-2, 8px); cursor: pointer; transition: background 120ms, border-color 120ms; } .ds-btn-outline:hover { background: var(--color-surface-1, #F4F4F2); border-color: #A8A8A2; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form field; page-surface bg, hairline border, slate focus ring.",
+      "html": "<input class=\"ds-input\" placeholder=\"you@brokerage.ae\" />",
+      "css": ".ds-input { width: 100%; background: var(--color-surface-0, #FAFAF9); border: 1px solid var(--color-border-hairline, #E8E8E5); border-radius: var(--radius-2, 8px); padding: 10px 12px; font: 400 14px/1.5 'Inter', system-ui, sans-serif; color: var(--color-text-1, #3D3D39); } .ds-input::placeholder { color: var(--color-text-3, #7B7B76); } .ds-input:focus { outline: none; border-color: var(--color-brand-500, #3D5A80); box-shadow: 0 0 0 3px rgba(61,90,128,0.12); }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Status-only pill (sage = confirmed). Never decorative.",
+      "html": "<span class=\"ds-chip ds-chip-sage\">Confirmed</span>",
+      "css": ".ds-chip { display: inline-block; font: 700 9px/1.4 'Inter', system-ui, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 6px; border-radius: var(--radius-1, 4px); } .ds-chip-sage { background: var(--color-success-100, #D0E1DD); color: var(--color-success-700, #2F5048); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard content card; tone + hairline, flat at rest, never nested.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Smart escalation</h3><p class=\"ds-card-body\">Serious offers reach the right agent the moment they matter.</p></article>",
+      "css": ".ds-card { background: var(--color-surface-0, #FAFAF9); border: 1px solid var(--color-border-hairline, #E8E8E5); border-radius: var(--radius-3, 12px); padding: 24px; } .ds-card-title { font: 600 17px/1.35 'Inter', system-ui, sans-serif; letter-spacing: -0.01em; color: var(--color-text-1, #3D3D39); margin: 0 0 6px; } .ds-card-body { font: 400 14px/1.55 'Inter', system-ui, sans-serif; color: var(--color-text-2, #5C5C57); margin: 0; }"
+    },
+    {
+      "name": "Floating Product Card (signature)",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Slightly-rotated overlay card used in the marketing hero — concrete product proof, never decoration.",
+      "html": "<div class=\"ds-float\"><div class=\"ds-float-eyebrow\">Offer · above threshold</div><div class=\"ds-float-amt\">AED 17,000,000</div><div class=\"ds-float-meta\">Sara Mohammed · Palace Villas Ostra</div></div>",
+      "css": ".ds-float { background: var(--color-surface-0, #FAFAF9); border: 1px solid var(--color-border-hairline, #E8E8E5); border-radius: var(--radius-3, 12px); padding: 14px; box-shadow: 0 12px 24px -6px rgba(35,35,32,0.10), 0 4px 8px -2px rgba(35,35,32,0.06); transform: rotate(-2deg); max-width: 320px; } .ds-float-eyebrow { font: 700 10px/1.2 'Inter', system-ui, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-success-700, #2F5048); } .ds-float-amt { font: 700 24px/1.1 'IBM Plex Mono', monospace; font-feature-settings: 'tnum','ss01'; color: var(--color-text-1, #3D3D39); margin: 4px 0; } .ds-float-meta { font: 400 11px/1.4 'Inter', system-ui, sans-serif; color: var(--color-text-2, #5C5C57); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Calm Operating Layer",
+    "overview": "Dalya is the quiet operating layer around a Dubai agent's day. The visual system behaves like the product: it does the work, surfaces exactly what matters, and then recedes. A near-white warm-neutral page, a single slate-blue voice, and a generous amount of restraint carry the whole surface — references are Attio (product chrome), Notion (white-space discipline), and Linear (color discipline). Light-default with a designed-parallel dark mode. It rejects the crowded Property Finder/Bayut portal look, the generic-SaaS gradient kit, tech-bro/crypto neon, and the retired dark-luxury navy + gold consumer Dalya. Density is dual: marketing breathes, the dashboard is dense — same tokens, two densities.",
+    "keyCharacteristics": [
+      "One brand voice: slate blue, used sparingly and always meaningfully.",
+      "Warm-neutral light surfaces in three tonal layers; depth by tone, not heavy shadow.",
+      "Inter for everything UI; IBM Plex Mono reserved for AED figures and RERA IDs only.",
+      "Semantic color (sage / copper / brick) only when a status is genuinely meaningful.",
+      "Calm by omission — restraint is the aesthetic, not a constraint."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Slate blue is the only brand color and appears on a small fraction of any screen. Its rarity is what makes it read as important.", "section": "colors" },
+      { "name": "The Status-Only Rule", "body": "Sage, copper, and brick are forbidden as decoration. Color carries meaning or it doesn't appear.", "section": "colors" },
+      { "name": "The Retired-Gold Rule", "body": "#C9A96E gold and #0F1923 navy are prohibited — they are the old consumer brand.", "section": "colors" },
+      { "name": "The Mono-for-Money Rule", "body": "IBM Plex Mono is reserved for AED figures, percentages, RERA/permit IDs, and code; it never sets prose. AED uses tabular-nums + slashed-zero.", "section": "typography" },
+      { "name": "The Eyebrow-Is-a-Device Rule", "body": "The uppercase label is a permitted brand kicker, not mandatory scaffolding above every section. Vary the cadence.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest and separated by tone. A shadow means the element floats above the page.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep slate blue rare — CTAs, focus, active nav, one accent.",
+      "Do carry depth with three tonal surface steps + 1px hairlines; reserve shadow for things that truly float.",
+      "Do use sage / copper / brick only when a status is genuinely meaningful.",
+      "Do set AED figures, percentages, and RERA IDs in IBM Plex Mono with tabular + slashed-zero.",
+      "Do keep body text >=4.5:1 on its surface; muted ink still meets 4.5:1.",
+      "Do author RTL-ready with logical properties and support EN/AR/RU/HI.",
+      "Do give every animation a prefers-reduced-motion alternative; exponential ease-out, never bounce."
+    ],
+    "donts": [
+      "Don't revive the retired consumer brand: no #0F1923 navy, no #C9A96E gold.",
+      "Don't build the Property Finder / Bayut crowded portal — orange/red CTAs, broker-first clutter.",
+      "Don't ship generic-SaaS tells: pastel gradients, gradient-hero blobs, the hero-metric template, identical icon-card grids.",
+      "Don't use gradient text, side-stripe borders (border-left >1px), or decorative glassmorphism.",
+      "Don't put a tracked uppercase eyebrow above every section, or 01/02/03 markers as default scaffolding.",
+      "Don't nest cards inside cards, or add a shadow to a resting surface.",
+      "Don't introduce neon, glow, or aggressive motion — calm by omission is the brand."
+    ]
+  }
+}
