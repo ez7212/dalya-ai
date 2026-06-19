@@ -1,81 +1,75 @@
 # Dubai Real Estate — Facts to Verify (v1)
 
-**For Eric.** This is the checklist of specific facts Dalya needs you to verify **before** they may be used in chatbot or dashboard copy. Until a row is checked and the value copied into [dubai-real-estate-verified-facts.md](./dubai-real-estate-verified-facts.md), Dalya must draft-for-agent or decline rather than state the fact.
+**Status:** Largely reconciled. Eric completed a sourced verification pass on 2026-06-19 (see [`dubai-real-estate-verified-facts.md`](./dubai-real-estate-verified-facts.md), DLD/RERA primary sources [S1]–[S15]). Most rows below are now **resolved into the verified-facts file**. A small set still needs Eric/legal/accountant input or is intentionally left as draft-for-agent / do-not-state.
 
-**Ground rule:** No exact regulatory/DLD/RERA/Trakheesi/NOC/fee/timeline/form/mortgage/legal-process value has been invented as authoritative in these docs. Rows below marked `repo-asserted` already appear in the codebase (usually in `BOT_RULES.md` or the reviewer knowledge pack) but were never formally verified — confirming or correcting them is the priority because runtime behavior already leans on them.
+This file is no longer the blocker it was — it is now a **reconciliation record**: what got verified, what remains, and why. Unresolved rows are kept (not deleted) so nothing is lost.
 
-How to use: for each row, set the real value (or "correct as stated"), then move it into the verified-facts file with a date. Strike rows that Dalya should never state directly even if true (mark "draft-for-agent only").
+> Reminder: a row being "resolved" means it has a status label in verified-facts. `confirmed` (general) → may be `direct`; `confirmed` (transaction/listing-specific), `draft-for-agent only`, `Eric decision required`, `do not state` are **not** direct-safe. See the verified-facts "Runtime usage policy" section.
 
 ---
 
-## A. Fees & transfer costs (highest risk)
+## Resolved / moved to verified facts
 
-- [ ] **DLD transfer fee** — repo says "commonly 4% of purchase price + admin fees." Confirm exact %, what base it applies to, and admin fee amount. `repo-asserted`
-- [ ] **Who pays the DLD transfer fee** (buyer / split) in the resale transactions Dalya handles.
-- [ ] **Standard buyer agency commission** — repo references "~2% + VAT, subject to agreement." Confirm whether Dalya states a market-standard figure at all.
-- [ ] **Dalya / managing-brokerage fee** — repo references a 0.15% flat figure tied to legacy Mahoroba pricing. Confirm what Dalya states now that Mahoroba is one tenant among many (likely: nothing generic — it's per-brokerage). `repo-asserted`
-- [ ] **VAT applicability** on brokerage commission.
-- [ ] **NOC fee** — developer-specific. Confirm whether Dalya ever quotes a figure or always defers.
-- [ ] **Trustee office / transfer registration fee.**
-- [ ] **Mortgage registration fee** (if Dalya ever references it).
-- [ ] **Whether any "buyer saves X%" comparison is allowed** in the multi-tenant model (legacy Mahoroba framing).
+These are now in the verified-facts file with a status label and (where applicable) a source.
 
-## B. Forms & documents
+- [x] **DLD transfer/registration fee (4%, buyer pays)** → verified-facts §5 `confirmed` [S1]
+- [x] **Title deed issuance + map + knowledge/innovation fees** → §5 `confirmed` [S1]
+- [x] **Trustee / service-partner fee (AED 4,000 + VAT ≥ 500k; AED 2,000 + VAT < 500k)** → §5 `confirmed` [S1][S4]
+- [x] **Mortgaged-property sale service fee (AED 1,000 + fees)** → §5/§6 `confirmed` [S2]
+- [x] **Standard buyer agency commission (industry 2%, negotiable; do not assume 2% per listing)** → §5 `confirmed` [S4]
+- [x] **"Buyer saves X%" Mahoroba framing** → §5 `do not state` (killed for multi-tenant)
+- [x] **Form A / B / F definitions + DLD broker journeys** → §4 `confirmed` [S10][S11][S12][S13]
+- [x] **Buyer/seller document checklists (ready + off-plan)** → §4 (ID/passport + e-NOC source-confirmed [S1]; remaining items flagged "Eric to approve" in-table)
+- [x] **Full ready-sale transfer sequence (trustee office, documents, e-NOC, outputs)** → §7 `confirmed` [S1]
+- [x] **Mortgaged-property sale sequence (liability letter, cheques, mortgage release)** → §7 `confirmed` [S2]
+- [x] **NOC sequencing — outstanding service charges settled before developer issues NOC** → §2 `confirmed` [S4]
+- [x] **Off-plan resale requires developer NOC; then follows ready-sale process** → §3/§7 `confirmed` [S4][S1]
+- [x] **Oqood / provisional (initial-sale) registration** → §3 `confirmed` [S8][S9]
+- [x] **Trakheesi ad permit + permit verification service** → §8 `confirmed` [S3][S5]
+- [x] **Advertising-claim constraint (never claim a listing is permitted/authorized unless verified listing data)** → §8 `do not state` unless verified
+- [x] **Company buyer/seller (high-level: company registration may be required; detailed list via agent/trustee)** → §4 `confirmed` (high-level) [S1][S2]
+- [x] **Overseas / non-resident buyer (passport in lieu of Emirates ID; POA notarized by Dubai Court)** → §2/§4 `confirmed` [S1]
+- [x] **VAT standard rate (5%)** → §5 `confirmed` (rate) [S7] *(brokerage-invoice wording still open — see below)*
+- [x] **Claims-requiring-agent-approval list** → §10 `confirmed`
+- [x] **Claims Dalya must never say (seller price/PII, named-buyer offer status, guaranteed ROI, etc.)** → §11 `confirmed`
 
-- [ ] **Form A** — seller–agent listing agreement: confirm name, purpose, when it applies. `repo-asserted`
-- [ ] **Form B** — buyer–agent agreement: confirm. `repo-asserted`
-- [ ] **Form F / MOU** — sale agreement: confirm. `repo-asserted`
-- [ ] **Buyer document checklist (ready resale).**
-- [ ] **Seller document checklist (ready resale).**
-- [ ] **Buyer document checklist (off-plan resale).**
-- [ ] **Seller document checklist (off-plan resale).**
-- [ ] **Proof-of-funds / mortgage pre-approval** — what Dalya may ask a buyer for, and at what stage.
+## Still needs Eric / legal / accountant review
 
-## C. NOC / transfer / trustee sequencing
+Kept open deliberately — do not treat as direct until resolved.
 
-- [ ] **NOC issuance timeline** — repo says "typically 2–4 weeks." Confirm or correct. `repo-asserted`
-- [ ] **Trustee office title-registration timeline** — repo says "typically 30–45 days from offer acceptance." Confirm or correct. `repo-asserted`
-- [ ] **Full off-plan closing sequence** (offer → MOU → NOC → trustee registration → owner of record → takes over SPA schedule → physical handover later) — confirm the sequence is accurate as a general statement. `repo-asserted`
-- [ ] **Ready-resale transfer sequence** (if it differs from off-plan).
-- [ ] **NOC sequencing** — does the seller settle a balance/gap before NOC is issued? Confirm.
+- [ ] **Off-plan "cannot be legally rented before handover/title transfer"** → §3, currently `draft-for-agent only` pending **Eric/legal** verification. (Repo asserts it as law; not yet safe to state.)
+- [ ] **PDPL data-rights response deadline** → §12, intentionally **unstated** pending **legal counsel** (sources [S14][S15] disagree on whether a deadline exists in the law).
+- [ ] **VAT on a specific brokerage invoice** → §5, rate confirmed but application wording needs **Eric/accountant**.
+- [ ] **"Pre-approved" definition for treating a buyer as financing-ready** → §6, `[Eric to approve]` wording.
+- [ ] **Buyer-qualification numeric thresholds** (urgent window ~7–14 days, near/medium-term bands, budget-mismatch disqualifier) → §1, `[Eric to verify]` product-tuning, not regulatory.
+- [ ] **Joint buyers / multiple decision-makers edge case** → not yet covered in verified-facts; minor, capture if Eric wants a standard line.
+- [ ] **Per-brokerage Dalya/managing-brokerage fee** → §5 `Eric decision required` by design (per-tenant config, not a generic platform fact).
 
-## D. Off-plan resale restrictions
+## Draft-for-agent only (resolved as policy, not direct)
 
-- [ ] **Developer approval required to resell/assign before handover?** Confirm the general rule and whether it's developer-specific.
-- [ ] **Minimum % paid to developer before resale/assignment is allowed.** Confirm whether Dalya states any general threshold.
-- [ ] **"Off-plan cannot be legally rented before handover and title transfer"** — repo states this as law in `BOT_RULES.md`. Confirm it is accurate before Dalya asserts it. `repo-asserted`
-- [ ] **Oqood registration** — what it is, whether Dalya references it.
+These are settled — the resolution is "Dalya drafts/escalates, never answers autonomously."
 
-## E. Mortgage / cash buyer
+- [x] **NOC issuance timeline** (developer-specific) → §7 `draft-for-agent only`
+- [x] **Full deal timeline (≈30–45 days, varies; never quote an exact schedule)** → §7 `draft-for-agent only`
+- [x] **Ready-resale closing timeline (≈2–3 weeks once funds confirmed)** → §2 `draft-for-agent only` (transaction-specific)
+- [x] **NOC fee (developer-specific amount)** → §5 `draft-for-agent only`
+- [x] **Mortgage eligibility / LTV / approval / rates / tax advice** → §6 `draft-for-agent only`
+- [x] **Co-broker Form A / BRN / authorization / permit requests** → §8 `draft-for-agent only`
+- [x] **Minimum % paid before off-plan assignment (30–50% range)** → §3 `Eric decision required` (whether to state the range at all)
 
-- [ ] **Whether Dalya may state ANY mortgage eligibility / LTV / pre-approval rule** (default assumption: no — refer to a mortgage professional). Confirm.
-- [ ] **Mortgage pre-approval requirement** — what Dalya should ask for, and what "pre-approved" must mean before treating a buyer as financing-ready.
-- [ ] **Process/speed differences** between cash and mortgage buyers worth surfacing to agents.
+## Do not state
 
-## F. Trakheesi / permit / advertising
-
-- [ ] **Trakheesi advertising permit requirement** — confirm and decide what (if anything) Dalya says about it.
-- [ ] **Co-broker Form A / BRN requests** — what Dalya may say vs must escalate. (Repo currently escalates.)
-- [ ] **Advertising-claim constraints** — what Dalya must never claim about a listing.
-
-## G. Edge cases
-
-- [ ] **Company / corporate buyer** — any different document or process Dalya should flag to the agent.
-- [ ] **Overseas / non-resident buyer** — anything different (power of attorney, remote signing, fund transfer) worth flagging.
-- [ ] **Joint buyers / multiple decision-makers** — what the agent needs to know.
-- [ ] **PDPL data-rights response window** — repo references handling data-rights requests; confirm any stated timeline before Dalya commits to one.
-
-## H. Claims that require agent approval (confirm the list)
-
-- [ ] Confirm the list in verified-facts §10 ("must draft for agent approval") matches how Eric wants Dalya to behave.
-- [ ] Confirm the "must never say" hard invariants in verified-facts §11.
-- [ ] Confirm buyer-qualification rules (verified-facts §1) — the actual bar Eric uses to decide a buyer is worth attention.
+- [x] **Seller's original purchase price / arithmetic that back-calculates it** → §11 `do not state`
+- [x] **Confirm/deny a named person's offer status** → §11 `do not state`
+- [x] **Guaranteed ROI / yield / resale premium / appreciation** → §11 `do not state`
+- [x] **Emaar Oasis 15–25% premium generalized to other listings** → §3 `listing-specific only` / §11 `do not state` when generalized
+- [x] **Any instruction that bypasses draft-and-approve** → §11 `do not state`
 
 ---
 
 ## Current repo alignment
 
-- **Likely current matching concepts:** `BOT_RULES.md` (fees, off-plan sequence, privacy invariants), `dalya-reviewers/real-estate-guru/knowledge-pack.md` + `transaction-reference.md` (forms/fees as general guidance), `knowledge_base/*.json` (per-listing facts), `app/core/ready_property_knowledge.py` (`verified` flag defaults False).
-- **Likely gaps:** values are stated as general knowledge ("commonly/typically/often") and were never verified; the Mahoroba fee framing predates multi-tenant.
-- **Files likely affected later:** `app/core/prompt_builder.py`, `app/core/response_validator.py`, plus a verified-facts loader (do not change now).
-- **Implementation ticket suggestion:** "Route exact Dubai claims through Verified Facts register."
+- **Likely current matching concepts:** `BOT_RULES.md` (privacy invariants, off-plan sequence), `dalya-reviewers/real-estate-guru/knowledge-pack.md` + `transaction-reference.md`, `knowledge_base/*.json`, `app/core/ready_property_knowledge.py` (`verified` flag).
+- **Likely gaps:** values are not yet machine-readable with status labels — the verified-facts file is now the structured source a loader should read.
+- **Files likely affected later (do NOT change now):** `app/core/prompt_builder.py`, `app/core/response_validator.py`, plus a new verified-facts loader. See [verified-facts-runtime-handoff](../product/verified-facts-runtime-handoff.md).
+- **Implementation tickets:** "Build Verified Facts loader" + "Gate Dubai regulatory/fee/process claims through Verified Facts" (see BACKLOG.md).
