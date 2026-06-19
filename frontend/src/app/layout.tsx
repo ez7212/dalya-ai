@@ -30,9 +30,10 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://dalya.ae'),
   title: 'Dalya · B2B AI infrastructure for Dubai real estate brokerages',
   description:
-    'Dalya gives Dubai brokerage agents a sharper working surface for buyer qualification, viewing logistics, listing activity, follow-up, and serious offer escalation.',
+    'Dalya gives Dubai brokerage agents a sharper working surface for buyer qualification, viewing logistics, follow-up, and serious offer escalation.',
   openGraph: {
     title: 'Dalya · B2B AI infrastructure for Dubai real estate brokerages',
     description: 'AI infrastructure for Dubai brokerages. Built to make every agent sharper.',

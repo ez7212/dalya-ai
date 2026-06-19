@@ -749,14 +749,6 @@ const FAQ_ITEMS = [
     a: "Dalya is software, not a brokerage — software can't hold a RERA licence. Every listing on the platform is operated by your own RERA-licensed brokerage; Dalya runs underneath your licence, it doesn't replace it. Regulatory attribution on any listing points to the brokerage that owns it.",
   },
   {
-    q: 'Does Dalya replace my agents?',
-    a: 'The opposite. Dalya does the work agents shouldn’t be doing — midnight WhatsApp replies, repetitive qualification, viewing coordination, follow-up chasing — so your agents spend their time on the relationship, the judgment, the negotiation, and the close. The number we optimise is revenue per agent, not fewer agents.',
-  },
-  {
-    q: 'What does Dalya actually do today?',
-    a: 'Four things, live now: a 24/7 multilingual inquiry concierge that answers and qualifies buyers; smart escalation that routes serious questions and above-threshold offers to the right agent with a draft reply ready; a morning hot list with review-only follow-up drafts; and viewing logistics — slot proposals, tenant and buyer confirmation, calendar invites, and post-viewing capture.',
-  },
-  {
     q: 'Which languages does it handle?',
     a: 'English, Arabic, Russian, and Hindi out of the box, including right-to-left Arabic. Buyers are answered in their own language while your agents work in one place.',
   },
@@ -876,10 +868,14 @@ export function MarketingFooter() {
         borderColor: 'var(--color-border-hairline)',
       }}
     >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-6 flex flex-wrap gap-4 justify-between text-[11px]" style={{ color: 'var(--color-text-3)' }}>
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-6 flex flex-wrap gap-4 justify-between items-center text-[11px]" style={{ color: 'var(--color-text-3)' }}>
         <span>© 2026 Dalya · AI infrastructure for Dubai brokerages</span>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-5">
+          <Link href="/agents" style={{ color: 'var(--color-text-3)' }}>For agents</Link>
+          <Link href="/how-it-works" style={{ color: 'var(--color-text-3)' }}>Workflow</Link>
           <Link href="/contact" style={{ color: 'var(--color-text-3)' }}>Contact</Link>
+          <Link href="/privacy" style={{ color: 'var(--color-text-3)' }}>Privacy</Link>
+          <a href="mailto:eric@dalya.ae" style={{ color: 'var(--color-text-3)' }}>eric@dalya.ae</a>
         </div>
       </div>
     </footer>
