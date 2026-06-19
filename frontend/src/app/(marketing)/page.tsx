@@ -5,6 +5,7 @@ import {
   Pillars,
   WhatsAppBridge,
   HowWeShip,
+  FAQ,
   ClosingCTA,
 } from '@/components/marketing/Sections'
 
@@ -26,6 +27,8 @@ export default function Home() {
       <WhatsAppBridge />
       <Rule />
       <HowWeShip />
+      <Rule />
+      <FAQ />
       <ClosingCTA />
     </>
   )
