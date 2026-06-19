@@ -11,7 +11,7 @@ from typing import Optional
 import uuid
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -59,6 +59,16 @@ class MyBrokeragesResponse(BaseModel):
     active_brokerages: list[ActiveBrokerageSummary]
     requires_selection: bool
     default_brokerage_id: Optional[str] = None
+
+
+def _brokerage_context_forbidden() -> HTTPException:
+    return HTTPException(
+        status_code=403,
+        detail={
+            "code": "brokerage_context_forbidden",
+            "message": "You do not have access to this brokerage.",
+        },
+    )
 
 
 def _clean_code(value: str) -> str:
@@ -230,13 +240,56 @@ async def _lookup_rera_card(card_number: str) -> Optional[dict]:
 async def onboarding_status(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
+    x_brokerage_id: Optional[str] = Header(default=None, alias="X-Brokerage-Id"),
 ):
-    member = (
-        db.query(DBBrokerageMember)
-        .filter(DBBrokerageMember.user_id == user.id)
-        .order_by(DBBrokerageMember.created_at.asc())
-        .first()
+    active_memberships = (
+        db.query(DBBrokerageMember, DBBrokerage)
+        .join(DBBrokerage, DBBrokerage.brokerage_id == DBBrokerageMember.brokerage_id)
+        .filter(
+            DBBrokerageMember.user_id == user.id,
+            DBBrokerageMember.status == "active",
+            DBBrokerage.status == "active",
+        )
+        .order_by(DBBrokerage.name.asc(), DBBrokerageMember.created_at.asc())
+        .all()
     )
+    active_brokerages = [
+        {
+            "brokerage_id": brokerage.brokerage_id,
+            "name": brokerage.name,
+            "role": membership.role,
+            "membership_id": membership.member_id,
+        }
+        for membership, brokerage in active_memberships
+    ]
+
+    requested_brokerage_id = x_brokerage_id.strip() if x_brokerage_id else None
+    selected_member: DBBrokerageMember | None = None
+    selected_brokerage: DBBrokerage | None = None
+    requires_selection = False
+
+    if requested_brokerage_id:
+        for membership, brokerage in active_memberships:
+            if membership.brokerage_id == requested_brokerage_id:
+                selected_member = membership
+                selected_brokerage = brokerage
+                break
+        if selected_member is None:
+            raise _brokerage_context_forbidden()
+    elif len(active_memberships) == 1:
+        selected_member, selected_brokerage = active_memberships[0]
+    elif len(active_memberships) > 1:
+        requires_selection = True
+    else:
+        selected_member = (
+            db.query(DBBrokerageMember)
+            .filter(DBBrokerageMember.user_id == user.id)
+            .order_by(DBBrokerageMember.created_at.asc())
+            .first()
+        )
+        selected_brokerage = db.get(DBBrokerage, selected_member.brokerage_id) if selected_member else None
+
+    member = selected_member
     profile = (
         db.query(DBAgentProfile)
         .filter(DBAgentProfile.user_id == user.id)
@@ -248,7 +301,7 @@ async def onboarding_status(
         db.refresh(member)
     if profile:
         db.refresh(profile)
-    brokerage = db.get(DBBrokerage, member.brokerage_id) if member else None
+    brokerage = selected_brokerage
     return {
         "has_profile": profile is not None,
         "member_status": member.status if member else None,
@@ -268,6 +321,9 @@ async def onboarding_status(
             "onboarding_status": profile.onboarding_status,
         } if profile else None,
         "can_access_agent_workspace": bool(member and member.status == "active"),
+        "active_brokerages": active_brokerages,
+        "requires_selection": requires_selection,
+        "default_brokerage_id": active_brokerages[0]["brokerage_id"] if len(active_brokerages) == 1 else None,
     }
 
 

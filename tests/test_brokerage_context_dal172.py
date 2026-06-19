@@ -239,6 +239,49 @@ def test_me_brokerages_returns_safe_active_membership_inventory(client, brokerag
     assert all({"brokerage_id", "name", "role", "membership_id"} <= set(row) for row in payload["active_brokerages"])
 
 
+def test_onboarding_me_does_not_choose_first_brokerage_for_multi_membership_user(client, brokerage_context_seed):
+    with _as_user(brokerage_context_seed["multi_user"]):
+        response = client.get("/api/v1/onboarding/me")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["requires_selection"] is True
+    assert payload["default_brokerage_id"] is None
+    assert payload["brokerage"] is None
+    assert payload["can_access_agent_workspace"] is False
+    brokerage_ids = {row["brokerage_id"] for row in payload["active_brokerages"]}
+    assert brokerage_ids == {
+        brokerage_context_seed["brokerage_a"],
+        brokerage_context_seed["brokerage_b"],
+    }
+
+
+def test_onboarding_me_respects_explicit_brokerage_context(client, brokerage_context_seed):
+    with _as_user(brokerage_context_seed["multi_user"]):
+        response = client.get(
+            "/api/v1/onboarding/me",
+            headers={"X-Brokerage-Id": brokerage_context_seed["brokerage_b"]},
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["requires_selection"] is False
+    assert payload["brokerage"]["brokerage_id"] == brokerage_context_seed["brokerage_b"]
+    assert payload["role"] == "team_lead"
+    assert payload["can_access_agent_workspace"] is True
+
+
+def test_onboarding_me_rejects_invalid_explicit_brokerage_context(client, brokerage_context_seed):
+    with _as_user(brokerage_context_seed["single_user"]):
+        response = client.get(
+            "/api/v1/onboarding/me",
+            headers={"X-Brokerage-Id": brokerage_context_seed["brokerage_b"]},
+        )
+
+    assert response.status_code == 403
+    assert _detail_code(response) == "brokerage_context_forbidden"
+
+
 def test_spa_parse_requires_explicit_context_for_multi_membership_user(client, brokerage_context_seed):
     with _as_user(brokerage_context_seed["multi_user"]):
         response = client.post(
