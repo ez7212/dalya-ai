@@ -16,7 +16,7 @@ from typing import Optional
 from sqlalchemy.orm import Session
 
 from app.core.brokerage_config import runtime_config_for_brokerage
-from app.db.session import SessionLocal
+from app.db.session import service_session
 from app.models.db_models import (
     DBAgentProfile,
     DBBrokerage,
@@ -99,53 +99,55 @@ def context_for_listing(
     if not listing_id:
         return legacy_default_context()
 
-    own_session = db is None
-    session = db or SessionLocal()
-    try:
-        listing = session.get(DBListing, listing_id)
-        if not listing or not listing.brokerage_id:
-            return legacy_default_context()
+    if db is not None:
+        return _context_for_listing_with_session(listing_id, db)
 
-        brokerage = session.get(DBBrokerage, listing.brokerage_id)
-        if not brokerage:
-            return legacy_default_context()
+    with service_session() as session:
+        return _context_for_listing_with_session(listing_id, session)
 
-        agent: Optional[DBAgentProfile] = None
-        if listing.assigned_agent_id:
-            agent = (
-                session.query(DBAgentProfile)
-                .filter(
-                    DBAgentProfile.brokerage_id == listing.brokerage_id,
-                    DBAgentProfile.user_id == listing.assigned_agent_id,
-                )
-                .first()
+
+def _context_for_listing_with_session(listing_id: str, session: Session) -> BrokerageContext:
+    listing = session.get(DBListing, listing_id)
+    if not listing or not listing.brokerage_id:
+        return legacy_default_context()
+
+    brokerage = session.get(DBBrokerage, listing.brokerage_id)
+    if not brokerage:
+        return legacy_default_context()
+
+    agent: Optional[DBAgentProfile] = None
+    if listing.assigned_agent_id:
+        agent = (
+            session.query(DBAgentProfile)
+            .filter(
+                DBAgentProfile.brokerage_id == listing.brokerage_id,
+                DBAgentProfile.user_id == listing.assigned_agent_id,
             )
-
-        commission_rate = listing.commission_rate
-        if commission_rate is None:
-            commission_rate = 0.0  # unknown commission; new listings must set this per listing
-
-        runtime_cfg = runtime_config_for_brokerage(brokerage, agent=agent)
-
-        return BrokerageContext(
-            brokerage_id=brokerage.brokerage_id,
-            brokerage_name=runtime_cfg.brokerage_name,
-            brokerage_short=runtime_cfg.brokerage_short,
-            brokerage_arabic=runtime_cfg.brokerage_arabic,
-            managing_agent_name=runtime_cfg.managing_agent_name,
-            managing_agent_title=runtime_cfg.managing_agent_title,
-            commission_rate=float(commission_rate),
-            market_benchmark_rate=float(runtime_cfg.market_benchmark_rate),
-            dashboard_url=runtime_cfg.dashboard_url,
-            brokerage_ai_number=runtime_cfg.brokerage_ai_number,
-            agents_ai_number=runtime_cfg.agents_ai_number,
-            managing_agent_phone=runtime_cfg.managing_agent_phone,
-            managing_agent_user_id=runtime_cfg.managing_agent_user_id,
-            legacy_telegram_alerts=runtime_cfg.legacy_telegram_alerts,
+            .first()
         )
-    finally:
-        if own_session:
-            session.close()
+
+    commission_rate = listing.commission_rate
+    if commission_rate is None:
+        commission_rate = 0.0  # unknown commission; new listings must set this per listing
+
+    runtime_cfg = runtime_config_for_brokerage(brokerage, agent=agent)
+
+    return BrokerageContext(
+        brokerage_id=brokerage.brokerage_id,
+        brokerage_name=runtime_cfg.brokerage_name,
+        brokerage_short=runtime_cfg.brokerage_short,
+        brokerage_arabic=runtime_cfg.brokerage_arabic,
+        managing_agent_name=runtime_cfg.managing_agent_name,
+        managing_agent_title=runtime_cfg.managing_agent_title,
+        commission_rate=float(commission_rate),
+        market_benchmark_rate=float(runtime_cfg.market_benchmark_rate),
+        dashboard_url=runtime_cfg.dashboard_url,
+        brokerage_ai_number=runtime_cfg.brokerage_ai_number,
+        agents_ai_number=runtime_cfg.agents_ai_number,
+        managing_agent_phone=runtime_cfg.managing_agent_phone,
+        managing_agent_user_id=runtime_cfg.managing_agent_user_id,
+        legacy_telegram_alerts=runtime_cfg.legacy_telegram_alerts,
+    )
 
 
 def personalize(text: str, ctx: BrokerageContext) -> str:

@@ -12,7 +12,7 @@ from app.core.media_assets import (
     media_asset_signing_nonce,
     media_signature_is_valid,
 )
-from app.db.session import get_db
+from app.db.session import get_db, set_service_db_session_context
 from app.models.db_models import DBMediaAsset
 
 
@@ -26,6 +26,8 @@ def get_signed_media(
     sig: str | None = Query(default=None),
     db: Session = Depends(get_db),
 ):
+    if hasattr(db, "info") and hasattr(db, "in_transaction"):
+        set_service_db_session_context(db)
     if exp is None or not sig:
         raise HTTPException(status_code=403, detail="media_signature_required")
 

@@ -24,7 +24,7 @@ from datetime import datetime, timedelta
 
 import anthropic
 
-from app.db.session import SessionLocal, safe_commit
+from app.db.session import safe_commit, service_session
 from app.models.db_models import DBConversation, DBMessage, DBListing
 
 logger = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ async def _process_ready_conversations():
     now = datetime.utcnow()
     inactivity_cutoff = now - timedelta(minutes=SUMMARY_INACTIVITY_MINUTES)
 
-    with SessionLocal() as db:
+    with service_session() as db:
         # Conversations that:
         # 1. Have been inactive for 30+ min (updated_at < cutoff)
         # 2. Have messages newer than their last summary (or no summary yet)

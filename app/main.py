@@ -43,10 +43,10 @@ async def lifespan(app: FastAPI):
 
     # Recover stuck research jobs (crashed/deployed during 15-20 min pipeline)
     from datetime import datetime, timedelta
-    from app.db.session import SessionLocal, safe_commit
+    from app.db.session import safe_commit, service_session
     from app.models.db_models import DBCommunityResearch
     try:
-        with SessionLocal() as db:
+        with service_session(is_platform_admin=True) as db:
             cutoff = datetime.utcnow() - timedelta(minutes=25)
             stuck = db.query(DBCommunityResearch).filter(
                 DBCommunityResearch.status == "researching",
@@ -70,7 +70,7 @@ async def lifespan(app: FastAPI):
     # Re-fire recovered pending jobs
     import asyncio
     try:
-        with SessionLocal() as db:
+        with service_session(is_platform_admin=True) as db:
             pending = db.query(DBCommunityResearch).filter_by(status="pending").all()
             for record in pending:
                 from app.api.research import _run_research_job
@@ -183,20 +183,18 @@ async def health():
 
     # Database connectivity + counts (sync engine, run in threadpool)
     def _db_checks():
-        from app.db.session import SessionLocal
-        db = SessionLocal()
+        from app.db.session import service_session
         try:
-            listings_count = db.execute(
-                text("SELECT count(*) FROM listings")
-            ).scalar()
-            pending_count = db.execute(
-                text("SELECT count(*) FROM message_queue WHERE status = 'pending'")
-            ).scalar()
-            return "ok", listings_count or 0, pending_count or 0
+            with service_session() as db:
+                listings_count = db.execute(
+                    text("SELECT count(*) FROM listings")
+                ).scalar()
+                pending_count = db.execute(
+                    text("SELECT count(*) FROM message_queue WHERE status = 'pending'")
+                ).scalar()
+                return "ok", listings_count or 0, pending_count or 0
         except Exception:
             return "error", 0, 0
-        finally:
-            db.close()
 
     try:
         db_status, listings_count, pending_count = await asyncio.get_event_loop().run_in_executor(
@@ -229,12 +227,12 @@ async def admin_dashboard():
         raise HTTPException(status_code=404, detail="Not found")
 
     import asyncio
-    from app.db.session import SessionLocal
+    from app.db.session import service_session
     from app.models.db_models import DBListing, DBConversation
     from app.core.chatbot_engine import engine
 
     def _query():
-        with SessionLocal() as db:
+        with service_session(is_platform_admin=True) as db:
             listings = db.query(DBListing).all()
             results = []
             for listing in listings:

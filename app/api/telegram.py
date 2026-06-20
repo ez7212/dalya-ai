@@ -12,7 +12,7 @@ Any message that is NOT a reply to an alert is ignored with a reminder.
 import os
 import logging
 from fastapi import APIRouter, Request
-from app.db.session import safe_commit
+from app.db.session import safe_commit, service_session, set_service_db_session_context
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -50,10 +50,9 @@ async def telegram_webhook(request: Request):
 
     original_message_id = reply_to.get("message_id")
 
-    from app.db.session import SessionLocal
     from app.models.db_models import DBTelegramReplyRoute
 
-    with SessionLocal() as db:
+    with service_session() as db:
         route = (
             db.query(DBTelegramReplyRoute)
             .filter_by(telegram_message_id=original_message_id)
@@ -112,11 +111,12 @@ def _save_qa_to_listing(listing_id: str, questions: str, answer: str) -> None:
     Called after Eric replies to a questions alert on Telegram.
     Future buyers asking the same question will get this answer from Dalya directly.
     """
-    from app.db.session import SessionLocal
     from app.models.db_models import DBListing
     try:
-        with SessionLocal() as db:
+        with service_session() as db:
             listing = db.get(DBListing, listing_id)
+            if listing and listing.brokerage_id:
+                set_service_db_session_context(db, brokerage_id=listing.brokerage_id)
             if listing:
                 qa = list(listing.seller_qa or [])
                 qa.append({"question": questions, "answer": answer})

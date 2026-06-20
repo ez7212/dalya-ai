@@ -15,7 +15,7 @@ from sqlalchemy import func, select, case, and_
 from sqlalchemy.orm import Session
 
 from app.core.auth import CurrentUser, require_admin
-from app.db.session import get_db, safe_commit
+from app.db.session import get_db, safe_commit, set_service_db_session_context
 from app.models.db_models import (
     DBBuyerProfile,
     DBConversation,
@@ -48,6 +48,10 @@ def _decode_phone(phone: str) -> str:
     return unquote(phone)
 
 
+def _set_admin_db_context(db: Session) -> None:
+    set_service_db_session_context(db, is_platform_admin=True)
+
+
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 @router.get("/admin/buyers")
@@ -62,6 +66,7 @@ async def list_buyers(
     db: Session = Depends(get_db),
 ):
     """List all buyers with aggregated stats, paginated and filterable."""
+    _set_admin_db_context(db)
 
     # Subquery: count of distinct listings inquired per buyer
     inquiries_sq = (
@@ -168,6 +173,7 @@ async def buyer_stats(
     db: Session = Depends(get_db),
 ):
     """Summary counts by lead stage."""
+    _set_admin_db_context(db)
     one_week_ago = datetime.utcnow() - timedelta(days=7)
 
     rows = db.execute(
@@ -199,6 +205,7 @@ async def get_buyer(
     db: Session = Depends(get_db),
 ):
     """Full buyer detail with conversations and inquiries."""
+    _set_admin_db_context(db)
     phone = _decode_phone(phone)
 
     profile = db.get(DBBuyerProfile, phone)
@@ -293,6 +300,7 @@ async def list_buyer_conversations(
     db: Session = Depends(get_db),
 ):
     """List all conversations for a buyer."""
+    _set_admin_db_context(db)
     phone = _decode_phone(phone)
 
     rows = db.execute(
@@ -347,6 +355,7 @@ async def get_conversation_messages(
     db: Session = Depends(get_db),
 ):
     """Full message transcript for a specific conversation."""
+    _set_admin_db_context(db)
     phone = _decode_phone(phone)
 
     # Verify conversation belongs to this buyer
@@ -399,6 +408,7 @@ async def update_buyer(
     db: Session = Depends(get_db),
 ):
     """Update lead_stage, tags, or lead_source for a buyer."""
+    _set_admin_db_context(db)
     phone = _decode_phone(phone)
 
     profile = db.get(DBBuyerProfile, phone)
@@ -431,6 +441,7 @@ async def add_note(
     db: Session = Depends(get_db),
 ):
     """Append a timestamped admin note."""
+    _set_admin_db_context(db)
     phone = _decode_phone(phone)
 
     profile = db.get(DBBuyerProfile, phone)

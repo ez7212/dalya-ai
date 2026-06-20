@@ -21,7 +21,7 @@ from sqlalchemy.orm import Session
 from app.core.lead_ingest import ingest_lead_email
 from app.core.runtime_config import is_production
 from app.core.webhook_security import mark_inbound_provider_event, record_inbound_provider_event
-from app.db.session import get_db
+from app.db.session import get_db, set_service_db_session_context
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -50,6 +50,7 @@ async def ingest_email(
 
     provider = (x_provider or "lead_email").strip().lower() or "lead_email"
     payload_dict = payload.model_dump() if hasattr(payload, "model_dump") else payload.dict()
+    set_service_db_session_context(db)
     is_new_event = record_inbound_provider_event(
         db,
         provider=provider,

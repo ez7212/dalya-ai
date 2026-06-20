@@ -24,7 +24,7 @@ from sqlalchemy.orm import Session
 
 from app.core.auth import CurrentUser, require_admin
 from app.core.community_researcher import CommunityResearcher
-from app.db.session import get_db, SessionLocal, safe_commit
+from app.db.session import get_db, safe_commit, service_session, set_service_db_session_context
 from app.models.db_models import DBCommunityResearch, DBListing
 
 logger = logging.getLogger(__name__)
@@ -139,69 +139,67 @@ async def _run_research_job(research_id: int, project_name: str, developer: str,
 
 async def _run_research_job_inner(research_id: int, project_name: str, developer: str, sub_community: str | None):
     """Inner research job — runs under the concurrency semaphore."""
-    db = SessionLocal()
-    try:
-        # Mark as researching
-        record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
-        if not record:
-            logger.error("Research record %d not found", research_id)
-            return
-        record.status = "researching"
-        safe_commit(db)
-        logger.info("Research job %d: status → researching", research_id)
-
-        # Run the research pipeline with timeout
-        researcher = CommunityResearcher()
-        result = await asyncio.wait_for(
-            researcher.research_community(
-                project_name=project_name,
-                developer=developer,
-                sub_community=sub_community,
-            ),
-            timeout=RESEARCH_TIMEOUT_SECONDS,
-        )
-
-        # Update record with results
-        record.status = "needs_review"
-        record.file_path = result["file_path"]
-        record.research_confidence = result.get("research_confidence")
-        record.source_urls = result.get("source_urls", [])
-        record.audit_flags = result.get("audit_flags", [])
-        record.last_researched_at = datetime.now(timezone.utc)
-        safe_commit(db)
-        logger.info(
-            "Research job %d: status → needs_review (confidence=%.2f, flags=%d)",
-            research_id,
-            result.get("research_confidence") or 0,
-            len(result.get("audit_flags", [])),
-        )
-
-        # Notify admin via Telegram
-        await _notify_admin_research_complete(project_name, result)
-
-    except asyncio.TimeoutError:
-        logger.error("Research job %d timed out after %ds", research_id, RESEARCH_TIMEOUT_SECONDS)
+    with service_session(is_platform_admin=True) as db:
         try:
+            # Mark as researching
             record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
-            if record:
-                record.status = "failed"
-                record.audit_flags = [f"Research timed out after {RESEARCH_TIMEOUT_SECONDS}s"]
-                safe_commit(db)
-        except Exception:
-            logger.error("Failed to update research record %d to failed status", research_id)
+            if not record:
+                logger.error("Research record %d not found", research_id)
+                return
+            record.status = "researching"
+            safe_commit(db)
+            logger.info("Research job %d: status → researching", research_id)
 
-    except Exception as e:
-        logger.error("Research job %d failed: %s", research_id, e, exc_info=True)
-        try:
-            record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
-            if record:
-                record.status = "failed"
-                record.audit_flags = [f"Research failed: {e}"]
-                safe_commit(db)
-        except Exception:
-            logger.error("Failed to update research record %d to failed status", research_id)
-    finally:
-        db.close()
+            # Run the research pipeline with timeout
+            researcher = CommunityResearcher()
+            result = await asyncio.wait_for(
+                researcher.research_community(
+                    project_name=project_name,
+                    developer=developer,
+                    sub_community=sub_community,
+                ),
+                timeout=RESEARCH_TIMEOUT_SECONDS,
+            )
+
+            # Update record with results
+            record.status = "needs_review"
+            record.file_path = result["file_path"]
+            record.research_confidence = result.get("research_confidence")
+            record.source_urls = result.get("source_urls", [])
+            record.audit_flags = result.get("audit_flags", [])
+            record.last_researched_at = datetime.now(timezone.utc)
+            safe_commit(db)
+            logger.info(
+                "Research job %d: status → needs_review (confidence=%.2f, flags=%d)",
+                research_id,
+                result.get("research_confidence") or 0,
+                len(result.get("audit_flags", [])),
+            )
+
+            # Notify admin via Telegram
+            await _notify_admin_research_complete(project_name, result)
+
+        except asyncio.TimeoutError:
+            logger.error("Research job %d timed out after %ds", research_id, RESEARCH_TIMEOUT_SECONDS)
+            try:
+                record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
+                if record:
+                    record.status = "failed"
+                    record.audit_flags = [f"Research timed out after {RESEARCH_TIMEOUT_SECONDS}s"]
+                    safe_commit(db)
+            except Exception:
+                logger.error("Failed to update research record %d to failed status", research_id)
+
+        except Exception as e:
+            logger.error("Research job %d failed: %s", research_id, e, exc_info=True)
+            try:
+                record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
+                if record:
+                    record.status = "failed"
+                    record.audit_flags = [f"Research failed: {e}"]
+                    safe_commit(db)
+            except Exception:
+                logger.error("Failed to update research record %d to failed status", research_id)
 
 
 # ── Endpoints ────────────────────────────────────────────────────────────────
@@ -213,6 +211,7 @@ async def trigger_research(
     db: Session = Depends(get_db),
 ):
     """Create a research job. Runs asynchronously in the background."""
+    set_service_db_session_context(db, is_platform_admin=True)
     _check_research_rate_limit()
 
     # Check for existing research job (unique constraint on project_name + developer)
@@ -345,6 +344,7 @@ async def list_research_jobs(
     db: Session = Depends(get_db),
 ):
     """List all community research records with their status."""
+    set_service_db_session_context(db, is_platform_admin=True)
     records = (
         db.query(DBCommunityResearch)
         .order_by(DBCommunityResearch.created_at.desc())
@@ -363,6 +363,7 @@ async def get_research_job(
     db: Session = Depends(get_db),
 ):
     """Get details of a research job including audit flags."""
+    set_service_db_session_context(db, is_platform_admin=True)
     record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
     if not record:
         raise HTTPException(status_code=404, detail="Research job not found")
@@ -380,6 +381,7 @@ async def approve_research(
     Updates the research record status to 'approved'.
     Reloads the community data index so new listings pick it up.
     """
+    set_service_db_session_context(db, is_platform_admin=True)
     record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
     if not record:
         raise HTTPException(status_code=404, detail="Research job not found")
@@ -462,6 +464,7 @@ async def re_research(
     Re-run research for an approved or stale community.
     Preserves the existing live file as a backup until the new draft is approved.
     """
+    set_service_db_session_context(db, is_platform_admin=True)
     _check_research_rate_limit()
 
     record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
@@ -520,6 +523,7 @@ async def reject_research(
     db: Session = Depends(get_db),
 ):
     """Delete the draft file and mark the research as rejected."""
+    set_service_db_session_context(db, is_platform_admin=True)
     record = db.query(DBCommunityResearch).filter_by(id=research_id).first()
     if not record:
         raise HTTPException(status_code=404, detail="Research job not found")

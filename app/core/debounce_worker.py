@@ -20,7 +20,12 @@ import os
 from datetime import datetime, timedelta
 from typing import Optional
 
-from app.db.session import SessionLocal, safe_commit
+from app.db.session import (
+    safe_commit,
+    service_db_context_scope,
+    service_session,
+    set_service_db_session_context,
+)
 from app.models.db_models import DBMessageQueue
 from app.schemas.conversation import InboundMessage
 
@@ -43,10 +48,10 @@ async def run_debounce_worker():
     while True:
         try:
             await _process_ready_batches()
-            with SessionLocal() as db:
+            with service_session() as db:
                 from app.core.escalation_threads import process_due_escalation_threads
                 process_due_escalation_threads(db)
-            with SessionLocal() as db:
+            with service_session() as db:
                 # DAL-161: release due held relay items, expire stale parked media.
                 from app.core.relay_media import process_relay_outbox
                 process_relay_outbox(db)
@@ -63,7 +68,7 @@ async def _process_ready_batches():
     cutoff = datetime.utcnow() - timedelta(seconds=DEBOUNCE_SECONDS)
     batches = []
 
-    with SessionLocal() as db:
+    with service_session() as db:
         # Phones that still have pending messages newer than cutoff (still typing)
         from sqlalchemy import select
         still_typing = (
@@ -229,7 +234,7 @@ async def _handle_batch(
 
     brokerage_for_route = resolve_brokerage_by_inbound_number(to_number)
     if brokerage_for_route:
-        with SessionLocal() as db:
+        with service_session(brokerage_id=brokerage_for_route.brokerage_id) as db:
             suppressed = is_buyer_suppressed(
                 db=db,
                 brokerage_id=brokerage_for_route.brokerage_id,
@@ -265,7 +270,7 @@ async def _handle_batch(
                 forward_buyer_message_during_takeover,
             )
 
-            with SessionLocal() as db:
+            with service_session(brokerage_id=brokerage_for_route.brokerage_id) as db:
                 takeover_conv = find_agent_controlled_conversation(
                     db,
                     brokerage_id=brokerage_for_route.brokerage_id,
@@ -296,17 +301,28 @@ async def _handle_batch(
         # Run the synchronous chatbot engine in a thread pool
         # so it doesn't block the asyncio event loop
         loop = asyncio.get_event_loop()
+        def _run_chatbot_turn():
+            with service_db_context_scope(
+                brokerage_id=(
+                    brokerage_for_route.brokerage_id
+                    if brokerage_for_route
+                    else None
+                )
+            ):
+                return chat_engine.handle_message_resilient(inbound)
+
         response_text, escalation, media_url = await loop.run_in_executor(
-            None, chat_engine.handle_message_resilient, inbound
+            None, _run_chatbot_turn
         )
 
         # Follow-up suppression: don't send a second consecutive assistant
         # message if no buyer reply has come in since the last one.
-        from app.db.session import SessionLocal as _SL
         from app.db import crud as _crud
 
         suppress = False
-        with _SL() as _db:
+        with service_session(
+            brokerage_id=brokerage_for_route.brokerage_id if brokerage_for_route else None
+        ) as _db:
             conv = (
                 _db.query(_crud.DBConversation)
                 .filter_by(buyer_phone=phone)
@@ -353,7 +369,7 @@ async def _handle_batch(
 
 
 def _mark_messages(ids: list, status: str):
-    with SessionLocal() as db:
+    with service_session() as db:
         db.query(DBMessageQueue).filter(
             DBMessageQueue.id.in_(ids)
         ).update(
@@ -388,7 +404,7 @@ def _notify_hot_buyer_reply(
             DBLeadAssignment,
         )
 
-        with SessionLocal() as db:
+        with service_session(brokerage_id=brokerage_id) as db:
             query = db.query(DBConversation).filter(
                 DBConversation.brokerage_id == brokerage_id,
                 DBConversation.buyer_phone == phone,
@@ -465,7 +481,7 @@ async def _handle_unprocessable_media(
     brokerage_id = brokerage.brokerage_id if brokerage else None
 
     conversation = None
-    with SessionLocal() as db:
+    with service_session(brokerage_id=brokerage_id) as db:
         if listing_id:
             conversation = crud.get_or_create_conversation(db, phone, listing_id)
         else:
@@ -549,7 +565,7 @@ async def _handle_unprocessable_media(
         try:
             from app.core.agent_notifications import notify_agent
 
-            with SessionLocal() as db:
+            with service_session(brokerage_id=brokerage_id) as db:
                 from app.models.db_models import DBBrokerage as _DBBrokerage
                 from app.models.db_models import DBConversation as _DBConversation
 
@@ -592,7 +608,6 @@ async def _prepare_voice_inbound(
         transcribe_audio_file,
         transcription_result_metadata,
     )
-    from app.db.session import SessionLocal as _SL
     from app.models.db_models import DBListing
 
     audio_path = None
@@ -622,8 +637,10 @@ async def _prepare_voice_inbound(
                 from app.core.media_assets import local_media_asset_path
                 from app.models.db_models import DBMediaAsset
 
-                with _SL() as db:
+                with service_session() as db:
                     asset = db.get(DBMediaAsset, candidate_asset_id)
+                    if asset and asset.brokerage_id:
+                        set_service_db_session_context(db, brokerage_id=asset.brokerage_id)
                     if asset:
                         audio_path = local_media_asset_path(asset)
                         content_type = asset.mime_type
@@ -652,8 +669,10 @@ async def _prepare_voice_inbound(
 
     asking_price = None
     if listing_id:
-        with _SL() as db:
+        with service_session() as db:
             listing = db.get(DBListing, listing_id)
+            if listing and listing.brokerage_id:
+                set_service_db_session_context(db, brokerage_id=listing.brokerage_id)
             if listing:
                 spa = listing.spa_data or {}
                 asking_price = listing.seller_asking_price or spa.get("purchase_price_aed")
