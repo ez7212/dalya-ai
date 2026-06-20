@@ -10,6 +10,8 @@ import pytest
 from app.core.debounce_worker import _prepare_voice_inbound
 from app.core.media_assets import (
     MediaValidationError,
+    cleanup_media_assets,
+    download_provider_media_bytes,
     inbound_media_asset_metadata,
     store_inbound_provider_media_asset,
 )
@@ -35,6 +37,9 @@ class FakeDb:
 
     def refresh(self, asset):
         return None
+
+    def delete(self, asset):
+        self.assets = [existing for existing in self.assets if existing is not asset]
 
 
 class FakeSession:
@@ -128,6 +133,78 @@ def test_inbound_media_requires_tenant_root(monkeypatch):
             media_url="https://api.twilio.test/media/image.png",
             mime_type="image/png",
         )
+
+
+def test_http_provider_media_requires_auth():
+    with pytest.raises(MediaValidationError):
+        download_provider_media_bytes("https://api.twilio.test/media/image.png", auth=None)
+
+
+def test_unsupported_inbound_mime_rejected_before_download(monkeypatch):
+    def _unexpected_download(*args, **kwargs):
+        raise AssertionError("unsupported media should be rejected before download")
+
+    monkeypatch.setattr(
+        "app.core.media_assets.download_provider_media_bytes",
+        _unexpected_download,
+    )
+
+    with pytest.raises(MediaValidationError):
+        store_inbound_provider_media_asset(
+            FakeDb(),
+            brokerage_id="brokerage-a",
+            media_url="https://api.twilio.test/media/script.svg",
+            mime_type="image/svg+xml",
+            auth=("sid", "token"),
+        )
+
+
+def test_oversized_inbound_media_rejected_before_storage(tmp_path, monkeypatch):
+    monkeypatch.setenv("MEDIA_INBOUND_MAX_BYTES", "4")
+    path = tmp_path / "too-large.ogg"
+    path.write_bytes(b"12345")
+
+    with pytest.raises(MediaValidationError):
+        store_inbound_provider_media_asset(
+            FakeDb(),
+            brokerage_id="brokerage-a",
+            media_url=str(path),
+            mime_type="audio/ogg",
+        )
+
+
+def test_partial_multi_media_failure_cleans_prior_asset_and_file(tmp_path, monkeypatch):
+    monkeypatch.setenv("MEDIA_STORAGE_DIR", str(tmp_path))
+    monkeypatch.setenv("MEDIA_INBOUND_MAX_BYTES", "10")
+    db = FakeDb()
+    first = tmp_path / "first.png"
+    second = tmp_path / "second.png"
+    first.write_bytes(b"PNG")
+    second.write_bytes(b"this-is-too-large")
+    created = []
+
+    try:
+        created.append(
+            store_inbound_provider_media_asset(
+                db,
+                brokerage_id="brokerage-a",
+                media_url=str(first),
+                mime_type="image/png",
+            )
+        )
+        store_inbound_provider_media_asset(
+            db,
+            brokerage_id="brokerage-a",
+            media_url=str(second),
+            mime_type="image/png",
+        )
+    except MediaValidationError:
+        cleanup_media_assets(db, created)
+    else:  # pragma: no cover
+        raise AssertionError("second media should have failed")
+
+    assert db.assets == []
+    assert not any((tmp_path / asset.storage_ref).exists() for asset in created)
 
 
 def test_voice_note_metadata_prefers_media_asset_id_over_provider_url():
