@@ -36,6 +36,7 @@ from app.models.db_models import (
 )
 from scripts.rls_rehearsal_dal170e1 import (
     APPLY_SQL,
+    E2_DIRECT_ROOT_TABLES,
     ROLLBACK_SQL,
     RUNTIME_ROLE,
     _assert_rehearsal_mutation_allowed,
@@ -83,6 +84,438 @@ def _as_user(user_id: str):
         yield
     finally:
         app.dependency_overrides.pop(get_current_user, None)
+
+
+def _e2_row_refs(seed: dict[str, object]) -> list[tuple[str, str, object, object]]:
+    return [
+        ("listing_documents", "document_id", seed["document_a"], seed["document_b"]),
+        ("listing_facts", "fact_id", seed["fact_a"], seed["fact_b"]),
+        ("listing_knowledge_summaries", "summary_id", seed["summary_a"], seed["summary_b"]),
+        ("listing_logistics", "logistics_id", seed["logistics_a"], seed["logistics_b"]),
+        ("tenant_consents", "consent_id", seed["consent_a"], seed["consent_b"]),
+        ("listing_inquiries", "id", seed["inquiry_a"], seed["inquiry_b"]),
+        ("offers", "offer_id", seed["offer_a"], seed["offer_b"]),
+        ("draft_replies", "draft_id", seed["draft_reply_a"], seed["draft_reply_b"]),
+        ("ai_drafts", "draft_id", seed["ai_draft_a"], seed["ai_draft_b"]),
+        ("lead_ingests", "ingest_id", seed["lead_ingest_a"], seed["lead_ingest_b"]),
+        ("lead_assignments", "assignment_id", seed["lead_assignment_a"], seed["lead_assignment_b"]),
+        ("lead_tasks", "task_id", seed["lead_task_a"], seed["lead_task_b"]),
+        ("lead_actions", "action_id", seed["lead_action_a"], seed["lead_action_b"]),
+        ("viewings", "viewing_id", seed["viewing_a"], seed["viewing_b"]),
+        ("tenant_viewing_confirmations", "confirmation_id", seed["tenant_confirmation_a"], seed["tenant_confirmation_b"]),
+        ("viewing_feedback", "feedback_id", seed["viewing_feedback_a"], seed["viewing_feedback_b"]),
+        ("media_assets", "media_asset_id", seed["media_asset_a"], seed["media_asset_b"]),
+    ]
+
+
+def _seed_e2_rows(db, seed: dict[str, object]) -> dict[str, object]:
+    prefix = seed["prefix"]
+    rows = {
+        "document_a": f"{prefix}-document-a",
+        "document_b": f"{prefix}-document-b",
+        "fact_a": f"{prefix}-fact-a",
+        "fact_b": f"{prefix}-fact-b",
+        "summary_a": f"{prefix}-summary-a",
+        "summary_b": f"{prefix}-summary-b",
+        "logistics_a": f"{prefix}-logistics-a",
+        "logistics_b": f"{prefix}-logistics-b",
+        "consent_a": f"{prefix}-consent-a",
+        "consent_b": f"{prefix}-consent-b",
+        "offer_a": f"{prefix}-offer-a",
+        "offer_b": f"{prefix}-offer-b",
+        "draft_reply_a": f"{prefix}-draft-reply-a",
+        "draft_reply_b": f"{prefix}-draft-reply-b",
+        "ai_draft_a": f"{prefix}-ai-draft-a",
+        "ai_draft_b": f"{prefix}-ai-draft-b",
+        "lead_ingest_a": f"{prefix}-lead-ingest-a",
+        "lead_ingest_b": f"{prefix}-lead-ingest-b",
+        "lead_assignment_a": f"{prefix}-lead-assignment-a",
+        "lead_assignment_b": f"{prefix}-lead-assignment-b",
+        "lead_task_a": f"{prefix}-lead-task-a",
+        "lead_task_b": f"{prefix}-lead-task-b",
+        "lead_action_a": f"{prefix}-lead-action-a",
+        "lead_action_b": f"{prefix}-lead-action-b",
+        "viewing_a": f"{prefix}-viewing-a",
+        "viewing_b": f"{prefix}-viewing-b",
+        "tenant_confirmation_a": f"{prefix}-tenant-confirmation-a",
+        "tenant_confirmation_b": f"{prefix}-tenant-confirmation-b",
+        "viewing_feedback_a": f"{prefix}-viewing-feedback-a",
+        "viewing_feedback_b": f"{prefix}-viewing-feedback-b",
+        "media_asset_a": f"{prefix}-media-asset-a",
+        "media_asset_b": f"{prefix}-media-asset-b",
+        "legacy_buyer_phone": f"+97159{int(seed['prefix'].rsplit('-', 1)[-1], 16) % 10000000:07d}",
+    }
+    rows["buyer_phone_a"] = f"+97152{int(seed['prefix'].rsplit('-', 1)[-1], 16) % 10000000:07d}"
+    rows["buyer_phone_b"] = f"+97153{int(seed['prefix'].rsplit('-', 1)[-1], 16) % 10000000:07d}"
+
+    for side in ("a", "b"):
+        brokerage_id = seed[f"brokerage_{side}"]
+        listing_id = seed[f"listing_{side}"]
+        conversation_id = seed[f"conversation_{side}"]
+        buyer_phone = rows[f"buyer_phone_{side}"]
+        document_id = rows[f"document_{side}"]
+        viewing_id = rows[f"viewing_{side}"]
+
+        db.execute(
+            text(
+                """
+                insert into buyer_profiles (phone, brokerage_id, name)
+                values (:phone, :brokerage_id, :name)
+                on conflict (phone) do nothing
+                """
+            ),
+            {"phone": buyer_phone, "brokerage_id": brokerage_id, "name": f"E2 Buyer {side}"},
+        )
+        db.execute(
+            text(
+                """
+                insert into listing_documents
+                    (document_id, brokerage_id, listing_id, document_type, label, status, metadata_json, created_at, updated_at)
+                values (:document_id, :brokerage_id, :listing_id, 'spa', :label, 'processed', '{}'::jsonb, now(), now())
+                """
+            ),
+            {"document_id": document_id, "brokerage_id": brokerage_id, "listing_id": listing_id, "label": f"E2 doc {side}"},
+        )
+        db.execute(
+            text(
+                """
+                insert into listing_facts (
+                    fact_id, brokerage_id, listing_id, document_id, fact_key, fact_group, value_text,
+                    value_json, confidence, source, verified, buyer_safe, risk_flag, created_at, updated_at
+                )
+                values (
+                    :fact_id, :brokerage_id, :listing_id, :document_id, :fact_key, 'property', :value_text,
+                    '{}'::jsonb, 0.8, 'test', false, true, false, now(), now()
+                )
+                """
+            ),
+            {
+                "fact_id": rows[f"fact_{side}"],
+                "brokerage_id": brokerage_id,
+                "listing_id": listing_id,
+                "document_id": document_id,
+                "fact_key": f"e2_fact_{side}_{prefix}",
+                "value_text": f"value {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into listing_knowledge_summaries (
+                    summary_id, brokerage_id, listing_id, buyer_safe_summary,
+                    missing_information, risk_flags, status, metadata_json, created_at, updated_at
+                )
+                values (
+                    :summary_id, :brokerage_id, :listing_id, :summary,
+                    '[]'::jsonb, '[]'::jsonb, 'ready', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "summary_id": rows[f"summary_{side}"],
+                "brokerage_id": brokerage_id,
+                "listing_id": listing_id,
+                "summary": f"E2 summary {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into listing_logistics (
+                    logistics_id, brokerage_id, listing_id, access, keys, tenant,
+                    owner_permissions, source, metadata_json, created_at, updated_at
+                )
+                values (
+                    :logistics_id, :brokerage_id, :listing_id, '{}'::jsonb, '{}'::jsonb, '{}'::jsonb,
+                    '{}'::jsonb, 'agent_confirmed', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {"logistics_id": rows[f"logistics_{side}"], "brokerage_id": brokerage_id, "listing_id": listing_id},
+        )
+        db.execute(
+            text(
+                """
+                insert into tenant_consents (
+                    consent_id, brokerage_id, listing_id, tenant_contact_key, lawful_basis,
+                    opt_in_status, metadata_json, created_at, updated_at
+                )
+                values (
+                    :consent_id, :brokerage_id, :listing_id, :tenant_contact_key,
+                    'listing_viewing_coordination', 'pending', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "consent_id": rows[f"consent_{side}"],
+                "brokerage_id": brokerage_id,
+                "listing_id": listing_id,
+                "tenant_contact_key": f"tenant-{side}-{prefix}",
+            },
+        )
+        rows[f"inquiry_{side}"] = db.execute(
+            text(
+                """
+                insert into listing_inquiries (brokerage_id, buyer_phone, listing_id, project, unit_number, price_aed)
+                values (:brokerage_id, :buyer_phone, :listing_id, :project, :unit_number, :price_aed)
+                returning id
+                """
+            ),
+            {
+                "brokerage_id": brokerage_id,
+                "buyer_phone": buyer_phone,
+                "listing_id": listing_id,
+                "project": f"E2 Project {side}",
+                "unit_number": side.upper(),
+                "price_aed": 1_700_000,
+            },
+        ).scalar_one()
+        db.execute(
+            text(
+                """
+                insert into offers (
+                    offer_id, brokerage_id, conversation_id, listing_id, buyer_phone, thread_key,
+                    direction, status, financing_contingent, subject_to_viewing, source, metadata_json, created_at, updated_at
+                )
+                values (
+                    :offer_id, :brokerage_id, :conversation_id, :listing_id, :buyer_phone, :thread_key,
+                    'buyer_offer', 'draft_pending_confirm', false, false, 'agent_logged', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "offer_id": rows[f"offer_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": buyer_phone,
+                "thread_key": f"{conversation_id}:{listing_id}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into draft_replies (
+                    draft_id, brokerage_id, conversation_id, listing_id, intent, draft_text,
+                    source, status, metadata_json, created_at, updated_at
+                )
+                values (
+                    :draft_id, :brokerage_id, :conversation_id, :listing_id, 'follow_up', :draft_text,
+                    'template', 'draft', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "draft_id": rows[f"draft_reply_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "draft_text": f"E2 draft {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into ai_drafts (
+                    draft_id, brokerage_id, conversation_id, listing_id, draft_type, body,
+                    status, source, metadata_json, created_at, updated_at
+                )
+                values (
+                    :draft_id, :brokerage_id, :conversation_id, :listing_id, 'whatsapp_reply', :body,
+                    'draft', 'agent_dashboard', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "draft_id": rows[f"ai_draft_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "body": f"E2 AI draft {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into lead_ingests (
+                    ingest_id, brokerage_id, source, status, buyer_phone, listing_id, conversation_id,
+                    first_touch_sent, raw_payload, created_at, updated_at
+                )
+                values (
+                    :ingest_id, :brokerage_id, 'property_finder', 'ingested', :buyer_phone, :listing_id, :conversation_id,
+                    false, '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "ingest_id": rows[f"lead_ingest_{side}"],
+                "brokerage_id": brokerage_id,
+                "buyer_phone": buyer_phone,
+                "listing_id": listing_id,
+                "conversation_id": conversation_id,
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into lead_assignments (
+                    assignment_id, brokerage_id, conversation_id, listing_id, buyer_phone,
+                    status, urgency_score, metadata_json, created_at, updated_at
+                )
+                values (
+                    :assignment_id, :brokerage_id, :conversation_id, :listing_id, :buyer_phone,
+                    'new', 0, '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "assignment_id": rows[f"lead_assignment_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": buyer_phone,
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into lead_tasks (
+                    task_id, brokerage_id, conversation_id, listing_id, buyer_phone, task_type, title,
+                    status, priority, metadata_json, created_at, updated_at
+                )
+                values (
+                    :task_id, :brokerage_id, :conversation_id, :listing_id, :buyer_phone, 'call', :title,
+                    'open', 'normal', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "task_id": rows[f"lead_task_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": buyer_phone,
+                "title": f"E2 task {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into lead_actions (
+                    action_id, brokerage_id, conversation_id, listing_id, buyer_phone, action_type,
+                    payload, created_at
+                )
+                values (
+                    :action_id, :brokerage_id, :conversation_id, :listing_id, :buyer_phone, 'call_started',
+                    '{}'::jsonb, now()
+                )
+                """
+            ),
+            {
+                "action_id": rows[f"lead_action_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": buyer_phone,
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into viewings (
+                    viewing_id, brokerage_id, conversation_id, listing_id, buyer_phone,
+                    status, tenant_notice_required, metadata_json, created_at, updated_at
+                )
+                values (
+                    :viewing_id, :brokerage_id, :conversation_id, :listing_id, :buyer_phone,
+                    'proposed', false, '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "viewing_id": viewing_id,
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": buyer_phone,
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into tenant_viewing_confirmations
+                    (confirmation_id, brokerage_id, viewing_id, listing_id, tenant_contact_key, status, metadata_json, created_at, updated_at)
+                values (:confirmation_id, :brokerage_id, :viewing_id, :listing_id, :tenant_contact_key, 'pending', '{}'::jsonb, now(), now())
+                """
+            ),
+            {
+                "confirmation_id": rows[f"tenant_confirmation_{side}"],
+                "brokerage_id": brokerage_id,
+                "viewing_id": viewing_id,
+                "listing_id": listing_id,
+                "tenant_contact_key": f"viewing-tenant-{side}-{prefix}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into viewing_feedback
+                    (
+                        feedback_id, brokerage_id, viewing_id, conversation_id, listing_id,
+                        participant_type, status, structured_json, source, metadata_json, created_at, updated_at
+                    )
+                values (
+                    :feedback_id, :brokerage_id, :viewing_id, :conversation_id, :listing_id,
+                    'buyer', 'requested', '{}'::jsonb, 'post_viewing_capture', '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "feedback_id": rows[f"viewing_feedback_{side}"],
+                "brokerage_id": brokerage_id,
+                "viewing_id": viewing_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into media_assets
+                    (media_asset_id, brokerage_id, conversation_id, listing_id, mime_type, size_bytes, storage_ref, source, metadata_json, created_at)
+                values (:media_asset_id, :brokerage_id, :conversation_id, :listing_id, 'image/jpeg', 1, :storage_ref, 'listing_asset', '{}'::jsonb, now())
+                """
+            ),
+            {
+                "media_asset_id": rows[f"media_asset_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "storage_ref": f"{brokerage_id}/e2/{side}.jpg",
+            },
+        )
+
+    db.execute(
+        text(
+            """
+            insert into buyer_profiles (phone, name)
+            values (:phone, 'Legacy Null Tenant')
+            on conflict (phone) do nothing
+            """
+        ),
+        {"phone": rows["legacy_buyer_phone"]},
+    )
+    rows["legacy_null_inquiry"] = db.execute(
+        text(
+            """
+            insert into listing_inquiries (brokerage_id, buyer_phone, listing_id, project, unit_number, price_aed)
+            values (null, :buyer_phone, :listing_id, 'Legacy Null Project', 'N', 1)
+            returning id
+            """
+        ),
+        {"buyer_phone": rows["legacy_buyer_phone"], "listing_id": seed["listing_a"]},
+    ).scalar_one()
+    return rows
 
 
 def _set_rehearsal_env(monkeypatch, *, dalya_env: str | None = "test", database_url: str | None = None) -> None:
@@ -163,8 +596,16 @@ def test_rehearsal_apply_and_rollback_cli_are_gated(monkeypatch, mode):
         rls_rehearsal_main()
 
 
+@pytest.fixture(scope="module")
+def rls_policies():
+    _execute_statements(ROLLBACK_SQL)
+    _execute_statements(APPLY_SQL)
+    yield
+    _execute_statements(ROLLBACK_SQL)
+
+
 @pytest.fixture
-def rls_seed():
+def rls_seed(rls_policies):
     suffix = uuid.uuid4().hex[:8]
     prefix = f"dal170e1-{suffix}"
     brokerage_a = f"{prefix}-a"
@@ -180,7 +621,6 @@ def rls_seed():
     portal_phone = f"+97158{int(suffix, 16) % 10000000:07d}"
     source_url = f"https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dal170e1-{suffix}"
 
-    _execute_statements(ROLLBACK_SQL)
     with SessionLocal() as db:
         db.add_all(
             [
@@ -302,8 +742,22 @@ def rls_seed():
         )
         safe_commit(db)
 
-    _execute_statements(APPLY_SQL)
-    yield {
+    with SessionLocal() as db:
+        e2_rows = _seed_e2_rows(
+            db,
+            {
+                "prefix": prefix,
+                "brokerage_a": brokerage_a,
+                "brokerage_b": brokerage_b,
+                "listing_a": listing_a,
+                "listing_b": listing_b,
+                "conversation_a": conversation_a,
+                "conversation_b": conversation_b,
+            },
+        )
+        safe_commit(db)
+
+    seed = {
         "prefix": prefix,
         "brokerage_a": brokerage_a,
         "brokerage_b": brokerage_b,
@@ -318,8 +772,9 @@ def rls_seed():
         "portal_phone": portal_phone,
         "source_url": source_url,
     }
+    seed.update(e2_rows)
+    yield seed
 
-    _execute_statements(ROLLBACK_SQL)
     with SessionLocal() as db:
         conversation_ids = [
             row[0]
@@ -327,6 +782,19 @@ def rls_seed():
             .filter(DBConversation.brokerage_id.in_([brokerage_a, brokerage_b]))
             .all()
         ]
+        db.execute(text("delete from media_assets where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from viewing_feedback where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from tenant_viewing_confirmations where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from viewings where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from ai_drafts where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from draft_replies where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from offers where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from listing_inquiries where brokerage_id in (:a, :b) or id = :legacy_id"), {"a": brokerage_a, "b": brokerage_b, "legacy_id": e2_rows["legacy_null_inquiry"]})
+        db.execute(text("delete from tenant_consents where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from listing_logistics where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from listing_facts where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from listing_knowledge_summaries where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(text("delete from listing_documents where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
         db.query(DBAgentNotification).filter(DBAgentNotification.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBLeadTask).filter(DBLeadTask.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBLeadAction).filter(DBLeadAction.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
@@ -340,6 +808,14 @@ def rls_seed():
         db.query(DBConversation).filter(DBConversation.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBListing).filter(DBListing.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBAgentProfile).filter(DBAgentProfile.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
+        db.execute(
+            text("delete from buyer_profiles where phone in (:buyer_a, :buyer_b, :legacy)"),
+            {
+                "buyer_a": e2_rows["buyer_phone_a"],
+                "buyer_b": e2_rows["buyer_phone_b"],
+                "legacy": e2_rows["legacy_buyer_phone"],
+            },
+        )
         db.query(DBBrokerageMember).filter(DBBrokerageMember.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBBrokerage).filter(DBBrokerage.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         safe_commit(db)
@@ -373,6 +849,90 @@ def test_brokerage_context_cannot_read_other_brokerage_rows(rls_seed):
 
     assert listing_ids == {rls_seed["listing_a"]}
     assert profile_ids == {rls_seed["profile_a"]}
+
+
+def test_e2_policy_table_list_is_complete():
+    assert set(E2_DIRECT_ROOT_TABLES) == {
+        "listing_documents",
+        "listing_facts",
+        "listing_knowledge_summaries",
+        "listing_logistics",
+        "tenant_consents",
+        "listing_inquiries",
+        "offers",
+        "draft_replies",
+        "ai_drafts",
+        "lead_ingests",
+        "lead_assignments",
+        "lead_tasks",
+        "lead_actions",
+        "viewings",
+        "tenant_viewing_confirmations",
+        "viewing_feedback",
+        "media_assets",
+    }
+
+
+def test_e2_direct_root_tables_hide_rows_without_brokerage_context(rls_seed):
+    with _runtime_connection() as conn:
+        for table, key_column, key_a, key_b in _e2_row_refs(rls_seed):
+            rows = conn.execute(
+                text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b)"),
+                {"key_a": key_a, "key_b": key_b},
+            ).fetchall()
+            assert rows == [], table
+
+
+def test_e2_direct_root_tables_cannot_read_other_brokerage_rows(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        for table, key_column, key_a, key_b in _e2_row_refs(rls_seed):
+            rows = {
+                row[0]
+                for row in conn.execute(
+                    text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b)"),
+                    {"key_a": key_a, "key_b": key_b},
+                ).fetchall()
+            }
+            assert rows == {key_a}, table
+
+
+def test_e2_listing_inquiries_hide_null_brokerage_legacy_rows(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        rows = conn.execute(
+            text("select id from listing_inquiries where id = :legacy_id"),
+            {"legacy_id": rls_seed["legacy_null_inquiry"]},
+        ).fetchall()
+
+    assert rows == []
+
+
+def test_e2_direct_root_table_updates_with_mismatched_brokerage_fail(rls_seed):
+    for table, key_column, key_a, _key_b in _e2_row_refs(rls_seed):
+        with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+            with pytest.raises(DBAPIError):
+                conn.execute(
+                    text(f"update {table} set brokerage_id = :brokerage_b where {key_column} = :key_a"),
+                    {"brokerage_b": rls_seed["brokerage_b"], "key_a": key_a},
+                )
+
+
+def test_e2_direct_root_insert_with_mismatched_brokerage_fails(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        with pytest.raises(DBAPIError):
+            conn.execute(
+                text(
+                    """
+                    insert into media_assets
+                        (media_asset_id, brokerage_id, listing_id, mime_type, size_bytes, storage_ref)
+                    values (:media_asset_id, :brokerage_b, :listing_a, 'image/jpeg', 1, 'bad/e2.jpg')
+                    """
+                ),
+                {
+                    "media_asset_id": f"{rls_seed['prefix']}-bad-media",
+                    "brokerage_b": rls_seed["brokerage_b"],
+                    "listing_a": rls_seed["listing_a"],
+                },
+            )
 
 
 def test_mismatched_tenant_insert_fails_with_selected_context(rls_seed):
