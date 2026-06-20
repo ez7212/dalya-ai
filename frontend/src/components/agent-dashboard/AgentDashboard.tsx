@@ -447,6 +447,10 @@ function LoadingPanel({ rows }: { rows: number }) {
 }
 
 function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashboardData {
+  // Only a sample workspace should be padded with demo content. A real live
+  // workspace with no activity must read as genuinely empty so the "Your day
+  // is clear" state can surface instead of fake sample buyers.
+  const sampleData = Boolean(payload?.sample_data)
   const metrics = payload?.metrics ?? {}
   const hotListRefresh = payload?.hot_list_refresh ?? {}
   const hotLeads = Array.isArray(payload?.hot_leads) ? payload.hot_leads : []
@@ -629,9 +633,9 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       openEscalations: Number(metrics.open_escalations ?? mappedEscalations.length),
     },
     performance: mapPerformance(payload?.performance, fallback.performance),
-    conversationInbox: mappedConversations.length ? mappedConversations : fallback.conversationInbox,
-    morningQueue: morningQueue.length ? morningQueue : fallback.morningQueue,
-    escalationInbox: mappedEscalations.length ? mappedEscalations : fallback.escalationInbox,
+    conversationInbox: mappedConversations.length ? mappedConversations : sampleData ? fallback.conversationInbox : [],
+    morningQueue: morningQueue.length ? morningQueue : sampleData ? fallback.morningQueue : [],
+    escalationInbox: mappedEscalations.length ? mappedEscalations : sampleData ? fallback.escalationInbox : [],
     drafts: {
       replyDrafts: mappedReplyDrafts,
       outreachDrafts: mappedOutreachDrafts,
@@ -647,8 +651,8 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       costPerQualifiedLead: fallback.campaignSnapshot.costPerQualifiedLead,
       campaigns: mappedCampaigns.length ? mappedCampaigns : fallback.campaignSnapshot.campaigns,
     },
-    overnightBuyerDigest: buyerDigest.length ? buyerDigest : fallback.overnightBuyerDigest,
-    todaysViewings: mappedViewings.length ? mappedViewings : fallback.todaysViewings,
+    overnightBuyerDigest: buyerDigest.length ? buyerDigest : sampleData ? fallback.overnightBuyerDigest : [],
+    todaysViewings: mappedViewings.length ? mappedViewings : sampleData ? fallback.todaysViewings : [],
     personalMomentum: {
       ...fallback.personalMomentum,
       stats: [
