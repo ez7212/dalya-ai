@@ -32,7 +32,7 @@ from app.core.chatbot_engine import engine
 from app.core.pii_redaction import redact_pii
 from app.core.runtime_config import debug_routes_enabled, is_production
 from app.core.webhook_security import mark_inbound_provider_event, record_inbound_provider_event
-from app.db.session import safe_commit
+from app.db.session import safe_commit, service_session, set_service_db_session_context
 from app.schemas.conversation import InboundMessage, EscalationAlert
 
 router = APIRouter()
@@ -100,16 +100,18 @@ async def notify_managing_agent(alert: EscalationAlert):
         resolve_brokerage_for_listing,
     )
     from app.core.escalation_threads import send_initial_or_update
-    from app.db.session import SessionLocal as _SL
+    from app.db.session import service_session as _service_session
     from app.models.db_models import (
         DBListing,
     )
     from app.schemas.conversation import EscalationType
 
     # ── Multi-tenant agent-side relay (primary path) ────────────────────────
-    with _SL() as db:
+    with _service_session() as db:
         listing = db.get(DBListing, alert.listing_id)
         brokerage = resolve_brokerage_for_listing(alert.listing_id, db) if listing else None
+        if brokerage:
+            set_service_db_session_context(db, brokerage_id=brokerage.brokerage_id)
         managing_agent = get_managing_agent(listing, db) if listing else None
 
         if brokerage and managing_agent and brokerage.agents_ai_number:
@@ -258,10 +260,11 @@ Reply to THIS message on Telegram and Dalya will forward it to the buyer on What
     # Clear pending forwarded questions after sending the alert.
     # Move them into alerted_questions so they are never re-alerted.
     if str(alert.escalation_type) in {"unanswerable_question", "info_gap"}:
-        from app.db.session import SessionLocal as _SL
         from app.models.db_models import DBConversation
-        with _SL() as db:
+        with service_session() as db:
             conv = db.get(DBConversation, alert.conversation_id)
+            if conv and conv.brokerage_id:
+                set_service_db_session_context(db, brokerage_id=conv.brokerage_id)
             if conv:
                 alerted = list(conv.alerted_questions or [])
                 for q in (conv.pending_forwarded_questions or []):
@@ -276,7 +279,6 @@ Reply to THIS message on Telegram and Dalya will forward it to the buyer on What
 
     if telegram_token and telegram_chat_id:
         import httpx
-        from app.db.session import SessionLocal
         from app.models.db_models import DBTelegramReplyRoute
         try:
             async with httpx.AsyncClient() as client:
@@ -288,7 +290,8 @@ Reply to THIS message on Telegram and Dalya will forward it to the buyer on What
                 data = resp.json()
                 if data.get("ok"):
                     telegram_message_id = data["result"]["message_id"]
-                    with SessionLocal() as db:
+                    with service_session() as db:
+                        set_service_db_session_context(db, brokerage_id=brokerage.brokerage_id if brokerage else None)
                         db.add(DBTelegramReplyRoute(
                             telegram_message_id=telegram_message_id,
                             buyer_phone=alert.buyer_phone,
@@ -334,7 +337,6 @@ def send_whatsapp_reply(
         is_buyer_suppressed,
         record_compliance_event,
     )
-    from app.db.session import SessionLocal
 
     sender = from_number or TWILIO_WHATSAPP_NUMBER
     # Strip whatsapp: prefix — transports normalise on the way out.
@@ -344,7 +346,7 @@ def send_whatsapp_reply(
         to_number = to_number[len("whatsapp:"):]
 
     if brokerage_id:
-        with SessionLocal() as db:
+        with service_session(brokerage_id=brokerage_id) as db:
             if is_buyer_suppressed(db, brokerage_id, to_number):
                 record_compliance_event(
                     db,
@@ -378,7 +380,7 @@ def send_whatsapp_reply(
         )
     )
     if brokerage_id and result.ok:
-        with SessionLocal() as db:
+        with service_session(brokerage_id=brokerage_id) as db:
             record_compliance_event(
                 db,
                 brokerage_id=brokerage_id,
@@ -437,8 +439,7 @@ async def whatsapp_webhook(
         if not validator.validate(webhook_url, form_data, signature):
             raise HTTPException(status_code=403, detail="Invalid Twilio signature")
 
-    from app.db.session import SessionLocal
-    with SessionLocal() as db:
+    with service_session() as db:
         is_new_event = record_inbound_provider_event(
             db,
             provider=provider,
@@ -451,7 +452,7 @@ async def whatsapp_webhook(
             return empty_twiml
 
     def _mark_provider_event(status: str) -> None:
-        with SessionLocal() as db:
+        with service_session() as db:
             mark_inbound_provider_event(
                 db,
                 provider=provider,
@@ -475,9 +476,10 @@ async def whatsapp_webhook(
         resolve_brokerage_by_inbound_number,
     )
     from app.core.messaging import get_transport
-    with SessionLocal() as db:
+    with service_session() as db:
         agents_brokerage = resolve_brokerage_by_agents_ai_number(To, db)
         if agents_brokerage:
+            set_service_db_session_context(db, brokerage_id=agents_brokerage.brokerage_id)
             from app.core.agent_relay import (
                 handle_agent_send_keyword,
                 relay_agent_reply,
@@ -558,6 +560,7 @@ async def whatsapp_webhook(
 
         buyer_brokerage = resolve_brokerage_by_inbound_number(To, db)
         if buyer_brokerage:
+            set_service_db_session_context(db, brokerage_id=buyer_brokerage.brokerage_id)
             from app.core.post_viewing_capture import handle_buyer_post_viewing_reply
             from app.core.tenant_viewings import handle_tenant_viewing_reply
 
@@ -631,7 +634,7 @@ async def whatsapp_webhook(
         return _processed_response()
 
     # ── Per-phone rate limiting (10 msgs / 60s) ──────────────────────────────
-    with SessionLocal() as db:
+    with service_session() as db:
         cutoff = datetime.utcnow() - timedelta(seconds=60)
         count = db.query(func.count(DBMessageQueue.id)).filter(
             DBMessageQueue.from_number == buyer_phone,
@@ -645,7 +648,7 @@ async def whatsapp_webhook(
             )
             return _processed_response()
 
-    with SessionLocal() as db:
+    with service_session() as db:
         existing = (
             db.query(DBMessageQueue.id)
             .filter(DBMessageQueue.message_sid == MessageSid)
@@ -676,6 +679,7 @@ async def whatsapp_webhook(
                     MessageSid,
                 )
                 raise HTTPException(status_code=403, detail="brokerage_not_resolved_for_media")
+            set_service_db_session_context(db, brokerage_id=brokerage.brokerage_id)
 
             auth = twilio_media_auth()
             if any(url.startswith(("http://", "https://")) for url in media_urls) and not auth:
@@ -809,12 +813,13 @@ async def send_test_voice_note(
     from app.core.transcription.post_processor import ClaudeTranscriptPostProcessor
     from app.core.transcription.dictionary import load_transcription_dictionary
     from app.core.voice_notes import transcribe_audio_file, transcription_result_metadata
-    from app.db.session import SessionLocal
     from app.models.db_models import DBListing
 
     asking_price = None
-    with SessionLocal() as db:
+    with service_session() as db:
         listing = db.get(DBListing, listing_id)
+        if listing and listing.brokerage_id:
+            set_service_db_session_context(db, brokerage_id=listing.brokerage_id)
         if listing:
             spa = listing.spa_data or {}
             asking_price = listing.seller_asking_price or spa.get("purchase_price_aed")
@@ -891,7 +896,6 @@ async def activate_listing_chatbot(
     Call this after /parse-spa to make the listing live.
     """
     import asyncio
-    from app.db.session import SessionLocal
     from app.db import crud
     from app.schemas.spa import SPAParseResult
     from app.core.community_data import get_community_data_for_listing
@@ -900,7 +904,7 @@ async def activate_listing_chatbot(
 
     community_research_status = None
 
-    with SessionLocal() as db:
+    with service_session() as db:
         row = crud.get_listing(db, listing_id)
         if not row:
             raise HTTPException(
@@ -1043,11 +1047,10 @@ async def list_all_listings(admin: CurrentUser = Depends(require_admin)):
     field names (id/property_name/asking_price/etc).
     """
     import asyncio
-    from app.db.session import SessionLocal
     from app.models.db_models import DBListing, DBConversation, DBBuyerProfile
 
     def _query():
-        with SessionLocal() as db:
+        with service_session(is_platform_admin=True) as db:
             listings = db.query(DBListing).all()
             stats_rows = (
                 db.query(
@@ -1135,10 +1138,9 @@ async def list_all_listings(admin: CurrentUser = Depends(require_admin)):
 async def get_portal_links(listing_id: str):
     """Return portal deep links for a listing — WhatsApp, Property Finder, Bayut."""
     import urllib.parse
-    from app.db.session import SessionLocal
     from app.db import crud
 
-    with SessionLocal() as db:
+    with service_session() as db:
         row = crud.get_listing(db, listing_id)
 
     if not row:
@@ -1179,11 +1181,12 @@ async def add_listing_media(listing_id: str, urls: list[str]):
     Append render / floor-plan URLs to a listing's media_urls.
     Body: {"urls": ["https://..."]}
     """
-    from app.db.session import SessionLocal
     from app.models.db_models import DBListing
 
-    with SessionLocal() as db:
+    with service_session() as db:
         listing = db.get(DBListing, listing_id)
+        if listing and listing.brokerage_id:
+            set_service_db_session_context(db, brokerage_id=listing.brokerage_id)
         if not listing:
             raise HTTPException(status_code=404, detail="Listing not found.")
 

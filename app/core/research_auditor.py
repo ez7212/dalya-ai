@@ -21,7 +21,7 @@ load_dotenv()
 
 import anthropic
 
-from app.db.session import SessionLocal, safe_commit
+from app.db.session import safe_commit, service_session
 from app.models.db_models import DBCommunityResearch
 
 logger = logging.getLogger(__name__)
@@ -67,7 +67,7 @@ async def _audit_stale_communities():
 
     cutoff = datetime.utcnow() - timedelta(days=STALE_THRESHOLD_DAYS)
 
-    with SessionLocal() as db:
+    with service_session(is_platform_admin=True) as db:
         # Dynamic rate: audit enough per day to cover all communities within the
         # stale threshold window. At 90 communities, that's ceil(90/30) = 3/day.
         # At 300, ceil(300/30) = 10/day. Capped at MIN..MAX range.

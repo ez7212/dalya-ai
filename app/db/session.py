@@ -5,6 +5,8 @@ Uses SQLAlchemy 2.0 with psycopg2 for PostgreSQL.
 
 import logging
 import os
+from contextlib import contextmanager
+from contextvars import ContextVar
 from urllib.parse import urlparse, urlunparse, quote, parse_qs, urlencode
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, event, text
@@ -60,6 +62,10 @@ engine = create_engine(
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 RLS_CONTEXT_INFO_KEY = "dalya_rls_context"
+_DEFAULT_RLS_CONTEXT: ContextVar[dict[str, object] | None] = ContextVar(
+    "dalya_default_rls_context",
+    default=None,
+)
 _UNSET = object()
 _RLS_CONTEXT_KEYS = (
     "app.user_id",
@@ -156,6 +162,11 @@ def _apply_rls_context_to_connection(connection, context: dict[str, object]) -> 
 def _apply_rls_context_after_begin(session, transaction, connection) -> None:
     """Reapply SET LOCAL context whenever SQLAlchemy opens a transaction."""
     context = session.info.get(RLS_CONTEXT_INFO_KEY)
+    if not context:
+        default_context = _DEFAULT_RLS_CONTEXT.get()
+        if default_context:
+            context = dict(default_context)
+            session.info[RLS_CONTEXT_INFO_KEY] = context
     if context:
         _apply_rls_context_to_connection(connection, context)
 
@@ -189,6 +200,71 @@ def set_db_session_context(
     db.info[RLS_CONTEXT_INFO_KEY] = context
     if db.in_transaction():
         _apply_rls_context_to_connection(db.connection(), context)
+
+
+def set_service_db_session_context(
+    db,
+    *,
+    brokerage_id: object = None,
+    is_platform_admin: bool = False,
+) -> None:
+    """Mark a server-side DB session as explicit service/admin context."""
+    set_db_session_context(
+        db,
+        brokerage_id=brokerage_id,
+        is_service=True,
+        is_platform_admin=is_platform_admin,
+    )
+
+
+def _service_context_dict(
+    *,
+    brokerage_id: object = None,
+    is_platform_admin: bool = False,
+) -> dict[str, object]:
+    return {
+        "app.brokerage_id": brokerage_id,
+        "app.is_service": True,
+        "app.is_platform_admin": is_platform_admin,
+    }
+
+
+@contextmanager
+def service_db_context_scope(
+    *,
+    brokerage_id: object = None,
+    is_platform_admin: bool = False,
+):
+    """Apply service context to nested SessionLocal instances in this scope."""
+    token = _DEFAULT_RLS_CONTEXT.set(
+        _service_context_dict(
+            brokerage_id=brokerage_id,
+            is_platform_admin=is_platform_admin,
+        )
+    )
+    try:
+        yield
+    finally:
+        _DEFAULT_RLS_CONTEXT.reset(token)
+
+
+@contextmanager
+def service_session(
+    *,
+    brokerage_id: object = None,
+    is_platform_admin: bool = False,
+):
+    """Open a SessionLocal with explicit service/admin RLS context."""
+    db = SessionLocal()
+    try:
+        set_service_db_session_context(
+            db,
+            brokerage_id=brokerage_id,
+            is_platform_admin=is_platform_admin,
+        )
+        yield db
+    finally:
+        db.close()
 
 
 def clear_db_session_context(db) -> None:

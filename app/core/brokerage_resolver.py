@@ -15,7 +15,7 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from app.db.session import SessionLocal
+from app.db.session import service_session
 from app.models.db_models import (
     DBAgentProfile,
     DBBrokerage,
@@ -48,18 +48,20 @@ def resolve_brokerage_by_inbound_number(
     if not normalized:
         return None
 
-    own_session = db is None
-    session = db or SessionLocal()
-    try:
+    if db is not None:
         brokerage = (
-            session.query(DBBrokerage)
+            db.query(DBBrokerage)
             .filter(DBBrokerage.brokerage_ai_number == normalized)
             .first()
         )
         return brokerage
-    finally:
-        if own_session:
-            session.close()
+
+    with service_session() as session:
+        return (
+            session.query(DBBrokerage)
+            .filter(DBBrokerage.brokerage_ai_number == normalized)
+            .first()
+        )
 
 
 def resolve_brokerage_by_agents_ai_number(
@@ -75,17 +77,19 @@ def resolve_brokerage_by_agents_ai_number(
     if not normalized:
         return None
 
-    own_session = db is None
-    session = db or SessionLocal()
-    try:
+    if db is not None:
+        return (
+            db.query(DBBrokerage)
+            .filter(DBBrokerage.agents_ai_number == normalized)
+            .first()
+        )
+
+    with service_session() as session:
         return (
             session.query(DBBrokerage)
             .filter(DBBrokerage.agents_ai_number == normalized)
             .first()
         )
-    finally:
-        if own_session:
-            session.close()
 
 
 def resolve_brokerage_for_listing(
@@ -93,16 +97,17 @@ def resolve_brokerage_for_listing(
     db: Optional[Session] = None,
 ) -> Optional[DBBrokerage]:
     """Look up the brokerage that owns a given listing."""
-    own_session = db is None
-    session = db or SessionLocal()
-    try:
+    if db is not None:
+        listing = db.get(DBListing, listing_id)
+        if not listing or not listing.brokerage_id:
+            return None
+        return db.get(DBBrokerage, listing.brokerage_id)
+
+    with service_session() as session:
         listing = session.get(DBListing, listing_id)
         if not listing or not listing.brokerage_id:
             return None
         return session.get(DBBrokerage, listing.brokerage_id)
-    finally:
-        if own_session:
-            session.close()
 
 
 def get_managing_agent(
@@ -120,9 +125,17 @@ def get_managing_agent(
     if not listing or not listing.assigned_agent_id:
         return None
 
-    own_session = db is None
-    session = db or SessionLocal()
-    try:
+    if db is not None:
+        return (
+            db.query(DBAgentProfile)
+            .filter(
+                DBAgentProfile.brokerage_id == listing.brokerage_id,
+                DBAgentProfile.user_id == listing.assigned_agent_id,
+            )
+            .first()
+        )
+
+    with service_session(brokerage_id=listing.brokerage_id) as session:
         return (
             session.query(DBAgentProfile)
             .filter(
@@ -131,9 +144,6 @@ def get_managing_agent(
             )
             .first()
         )
-    finally:
-        if own_session:
-            session.close()
 
 
 def list_approved_brokerages(db: Optional[Session] = None) -> list[DBBrokerage]:
@@ -141,9 +151,19 @@ def list_approved_brokerages(db: Optional[Session] = None) -> list[DBBrokerage]:
     Return brokerages an agent is allowed to register under
     (i.e. agent_signup_enabled, active, with a real_estate_number set).
     """
-    own_session = db is None
-    session = db or SessionLocal()
-    try:
+    if db is not None:
+        return (
+            db.query(DBBrokerage)
+            .filter(
+                DBBrokerage.status == "active",
+                DBBrokerage.agent_signup_enabled.is_(True),
+                DBBrokerage.real_estate_number.isnot(None),
+            )
+            .order_by(DBBrokerage.name.asc())
+            .all()
+        )
+
+    with service_session() as session:
         return (
             session.query(DBBrokerage)
             .filter(
@@ -154,9 +174,6 @@ def list_approved_brokerages(db: Optional[Session] = None) -> list[DBBrokerage]:
             .order_by(DBBrokerage.name.asc())
             .all()
         )
-    finally:
-        if own_session:
-            session.close()
 
 
 def get_managing_agent_title(brokerage: Optional[DBBrokerage]) -> str:
