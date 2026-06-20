@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import hashlib
 import hmac
+import ipaddress
 import logging
 import os
 import secrets
@@ -74,6 +75,17 @@ _NON_PRODUCTION_MEDIA_ENVS = {"test", "local", "development", "dev", "ci", "rehe
 _LOCAL_MEDIA_SIGNING_SECRET = "dalya-local-media-url-signing-secret"
 _MEDIA_LIFECYCLE_METADATA_KEY = "lifecycle"
 _REDACTED_FILENAME = "[redacted]"
+_BLOCKED_EXTERNAL_HOSTS = {
+    "localhost",
+    "metadata",
+    "metadata.google.internal",
+    "169.254.169.254",
+}
+_BLOCKED_EXTERNAL_HOST_SUFFIXES = (
+    ".localhost",
+    ".local",
+    ".internal",
+)
 
 
 def media_storage_dir() -> Path:
@@ -213,6 +225,44 @@ class MediaSendOutcome:
     message_id: Optional[str]
     sent_assets: list[dict]
     caption: str
+
+
+def validate_external_url(url: str, *, field_name: str = "url") -> str:
+    """Validate externally displayed/pass-through URLs without fetching them."""
+    candidate = (url or "").strip()
+    if not candidate:
+        raise MediaValidationError(f"{field_name} is required.")
+    parsed = urlparse(candidate)
+    if parsed.scheme.lower() != "https":
+        raise MediaValidationError(f"{field_name} must use https.")
+    if not parsed.hostname:
+        raise MediaValidationError(f"{field_name} must include a hostname.")
+    if parsed.username or parsed.password:
+        raise MediaValidationError(f"{field_name} must not include credentials.")
+
+    hostname = parsed.hostname.strip().lower().rstrip(".")
+    if hostname in _BLOCKED_EXTERNAL_HOSTS:
+        raise MediaValidationError(f"{field_name} host is not allowed.")
+    if any(hostname.endswith(suffix) for suffix in _BLOCKED_EXTERNAL_HOST_SUFFIXES):
+        raise MediaValidationError(f"{field_name} host is not allowed.")
+    if hostname.endswith(".test") or hostname == "example.test":
+        return candidate
+    try:
+        ip = ipaddress.ip_address(hostname)
+    except ValueError:
+        if "." not in hostname:
+            raise MediaValidationError(f"{field_name} host is not public.")
+    else:
+        if (
+            ip.is_private
+            or ip.is_loopback
+            or ip.is_link_local
+            or ip.is_multicast
+            or ip.is_reserved
+            or ip.is_unspecified
+        ):
+            raise MediaValidationError(f"{field_name} host is not allowed.")
+    return candidate
 
 
 def last_buyer_inbound_at(db: Session, conversation_id: str) -> Optional[datetime]:
@@ -448,6 +498,7 @@ def register_external_media_asset(
     source: str = "listing_asset",
 ) -> DBMediaAsset:
     """A media_assets row for an asset already hosted elsewhere (listing media)."""
+    validated_url = validate_external_url(url, field_name="external media URL")
     asset = DBMediaAsset(
         brokerage_id=brokerage_id,
         agent_user_id=agent_user_id,
@@ -456,10 +507,10 @@ def register_external_media_asset(
         mime_type=mime_type,
         size_bytes=0,
         sha256=None,
-        original_filename=url.rsplit("/", 1)[-1][:120] or None,
+        original_filename=validated_url.rsplit("/", 1)[-1][:120] or None,
         source=source,
         signing_nonce=generate_media_signing_nonce(),
-        storage_ref=url,
+        storage_ref=validated_url,
     )
     db.add(asset)
     safe_commit(db)
@@ -476,7 +527,7 @@ def signed_media_url(asset: DBMediaAsset, *, ttl_seconds: int | None = None) -> 
     """
     ensure_media_asset_accessible(asset)
     if asset.storage_ref.startswith("http://") or asset.storage_ref.startswith("https://"):
-        return asset.storage_ref
+        return validate_external_url(asset.storage_ref, field_name="external media URL")
     ttl = ttl_seconds if ttl_seconds is not None else media_url_ttl_seconds()
     if ttl <= 0:
         raise RuntimeError("media URL TTL must be positive")
@@ -845,12 +896,22 @@ def listing_assets_for_attachment(db: Session, listing: DBListing) -> list[dict]
     """The listing's already-in-system media — the attach-from-listing 80% case."""
     items: list[dict] = []
     for url in list(listing.media_urls or []):
-        items.append({"kind": "listing_media", "url": url, "label": url.rsplit("/", 1)[-1][:80]})
+        try:
+            validated_url = validate_external_url(url, field_name="listing media URL")
+        except MediaValidationError:
+            logger.warning("Skipping unsafe listing media URL for listing %s", listing.listing_id)
+            continue
+        items.append({"kind": "listing_media", "url": validated_url, "label": validated_url.rsplit("/", 1)[-1][:80]})
     for document in listing.documents or []:
         if document.source_url:
+            try:
+                validated_url = validate_external_url(document.source_url, field_name="listing document source_url")
+            except MediaValidationError:
+                logger.warning("Skipping unsafe listing document URL for listing %s", listing.listing_id)
+                continue
             items.append({
                 "kind": "listing_document",
-                "url": document.source_url,
+                "url": validated_url,
                 "label": document.label or document.document_type,
             })
     return items

@@ -33,6 +33,7 @@ from app.core.brokerage_access import (
 )
 from app.core.brokerage_resolver import list_approved_brokerages
 from app.core.listing_scraper import scrape_any
+from app.core.media_assets import MediaValidationError, validate_external_url
 from app.core.ready_property_knowledge import (
     DOCUMENT_TYPES,
     process_listing_document,
@@ -553,7 +554,13 @@ async def add_reference_documents(
 
     existing = list(listing.reference_documents or [])
     for doc in documents:
-        existing.append(doc.model_dump())
+        payload = doc.model_dump()
+        if payload.get("url"):
+            try:
+                payload["url"] = validate_external_url(payload["url"], field_name="reference document URL")
+            except MediaValidationError as exc:
+                raise HTTPException(status_code=422, detail=str(exc))
+        existing.append(payload)
     listing.reference_documents = existing
     safe_commit(db)
     return {"listing_id": listing_id, "reference_documents": existing}
@@ -570,13 +577,19 @@ async def create_listing_document(
     document_type = body.document_type.strip().lower()
     if document_type not in DOCUMENT_TYPES:
         raise HTTPException(status_code=422, detail=f"Unsupported document_type. Use one of: {', '.join(DOCUMENT_TYPES)}")
+    source_url = body.source_url
+    if source_url:
+        try:
+            source_url = validate_external_url(source_url, field_name="listing document source_url")
+        except MediaValidationError as exc:
+            raise HTTPException(status_code=422, detail=str(exc))
 
     document = DBListingDocument(
         brokerage_id=member.brokerage_id,
         listing_id=listing.listing_id,
         document_type=document_type,
         label=body.label,
-        source_url=body.source_url,
+        source_url=source_url,
         content_text=body.content_text,
         status="pending",
         metadata_json=body.metadata_json or {},
