@@ -16,8 +16,10 @@ import type {
   EscalationUrgency,
   MomentumStat,
   MomentumStreak,
+  OutreachDraftItem,
   QueueItem,
   QueuePriority,
+  ReplyDraftItem,
   ViewingItem,
   ViewingStatus,
 } from './types'
@@ -32,11 +34,18 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
   const [taskActionState, setTaskActionState] = useState<Record<string, 'done' | 'snoozed' | 'error' | 'working'>>({})
   const [escalationActionState, setEscalationActionState] = useState<Record<string, 'resolved' | 'error' | 'working'>>({})
   const [refreshState, setRefreshState] = useState<'idle' | 'working' | 'error'>('idle')
+  const [reloadKey, setReloadKey] = useState(0)
+  const [showMore, setShowMore] = useState(false)
 
   useEffect(() => {
     let active = true
 
     async function loadDashboard() {
+      if (reloadKey > 0) {
+        // Retry: drop back to the loading skeleton instead of stale sample data.
+        setDashboardData(null)
+        setDataState('loading')
+      }
       try {
         const res = await apiFetch('/api/v1/agent/dashboard')
         if (!res.ok) {
@@ -57,13 +66,17 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
     return () => {
       active = false
     }
-  }, [data])
+  }, [data, reloadKey])
 
+  // The error state intentionally renders the fallback dataset so the workspace
+  // is not blank, but it must never be presented as the real "Sample workspace".
   const sourceLabel = dataState === 'live'
     ? 'Live workspace'
     : dataState === 'loading'
       ? 'Loading workspace'
-      : 'Sample workspace'
+      : dataState === 'error'
+        ? 'Connection error'
+        : 'Sample workspace'
 
   if (!dashboardData) {
     return <DashboardLoadingState />
@@ -156,16 +169,45 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
     }
   }
 
+  const actionsEnabled = dataState === 'live'
+  const needsReply = sortNeedsReply(dashboardData.conversationInbox)
+  const hotBuyers = dashboardData.overnightBuyerDigest
+  const replyDrafts = dashboardData.drafts.replyDrafts
+  const outreachDrafts = dashboardData.drafts.outreachDrafts
+  const draftCount = replyDrafts.length + outreachDrafts.length
+  const viewings = dashboardData.todaysViewings
+  const escalations = dashboardData.escalationInbox
+  const morningQueue = dashboardData.morningQueue
+
+  const sections = [
+    { id: 'needs-reply', label: 'Needs Reply', count: needsReply.length },
+    { id: 'hot-buyers', label: 'Hot Buyers', count: hotBuyers.length },
+    { id: 'drafts', label: 'Drafts', count: draftCount },
+    { id: 'viewings', label: 'Viewings', count: viewings.length },
+    { id: 'escalations', label: 'Escalations', count: escalations.length },
+  ].filter((section) => section.count > 0)
+
+  const dayIsClear = sections.length === 0 && morningQueue.length === 0
+
+  function scrollToSection(id: string) {
+    const target = document.getElementById(id)
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  function retry() {
+    setReloadKey((key) => key + 1)
+  }
+
   return (
     <div id="dashboard" className="marketing-surface min-h-[calc(100vh-4rem)] bg-neutral-50">
       <div className="mx-auto max-w-[1600px]">
         <main className="min-w-0 px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
-          <header className="mb-5 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <header className="mb-4 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
                 <span>{dashboardData.agent.market}</span>
                 <span aria-hidden="true">/</span>
-                <span>{sourceLabel}</span>
+                <span className={dataState === 'error' ? 'font-medium text-error-700' : undefined}>{sourceLabel}</span>
                 <span aria-hidden="true">/</span>
                 <span>Updated {dashboardData.agent.lastUpdated}</span>
                 {dashboardData.hotListRefresh?.lastRefreshAt && (
@@ -182,7 +224,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
                 <button
                   type="button"
                   onClick={refreshHotList}
-                  disabled={dataState !== 'live' || refreshState === 'working'}
+                  disabled={!actionsEnabled || refreshState === 'working'}
                   className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <span className="material-symbols-outlined text-[18px]" aria-hidden="true">sync</span>
@@ -199,35 +241,151 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
             </div>
           </header>
 
-          <AgentPerformancePanel performance={dashboardData.performance} />
+          {dataState === 'error' && (
+            <div className="mb-4 flex flex-col gap-3 rounded-lg border border-error-100 bg-error-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-[20px] text-error-600" aria-hidden="true">cloud_off</span>
+                <div>
+                  <p className="text-sm font-semibold text-error-700">Couldn&apos;t load your live workspace</p>
+                  <p className="mt-0.5 text-sm text-error-700/80">Showing sample data so you can keep looking around. Actions are paused until we reconnect.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={retry}
+                className="inline-flex shrink-0 items-center gap-2 self-start rounded-md border border-error-200 bg-white px-3 py-2 text-sm font-medium text-error-700 transition-colors hover:bg-error-50 sm:self-auto"
+              >
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">refresh</span>
+                Retry
+              </button>
+            </div>
+          )}
 
-          <div className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(360px,0.85fr)]">
-            <div className="space-y-5">
-              <MorningQueue
-                items={dashboardData.morningQueue}
-                taskActionState={taskActionState}
-                actionsEnabled={dataState === 'live'}
-                onDone={(taskId) => updateTask(taskId, 'done')}
-                onSnooze={(taskId) => updateTask(taskId, 'snoozed')}
-              />
-              <EscalationInboxPanel
-                items={dashboardData.escalationInbox}
-                actionState={escalationActionState}
-                actionsEnabled={dataState === 'live'}
-                onResolve={resolveEscalation}
-              />
-              <CampaignSnapshot snapshot={dashboardData.campaignSnapshot} />
-            </div>
-            <div className="space-y-5">
-              <ConversationInbox items={dashboardData.conversationInbox} />
-              <OvernightBuyerDigest items={dashboardData.overnightBuyerDigest} />
-              <TodaysViewings items={dashboardData.todaysViewings} />
-              <PersonalMomentum momentum={dashboardData.personalMomentum} />
-            </div>
+          {/* Today Queue — action-first. Sticky tab-bar jumps between live sections. */}
+          {sections.length > 0 && (
+            <nav
+              aria-label="Today Queue sections"
+              className="sticky top-16 z-30 -mx-4 mb-4 border-y border-neutral-200 bg-neutral-50/95 px-4 py-2 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+            >
+              <div className="flex items-center gap-2 overflow-x-auto">
+                <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">Today</span>
+                {sections.map((section) => (
+                  <button
+                    key={section.id}
+                    type="button"
+                    onClick={() => scrollToSection(section.id)}
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+                  >
+                    {section.label}
+                    <span className="rounded-full bg-neutral-100 px-1.5 font-mono text-[10px] text-neutral-600">{section.count}</span>
+                  </button>
+                ))}
+              </div>
+            </nav>
+          )}
+
+          <div className="mx-auto max-w-4xl space-y-5">
+            {dayIsClear ? (
+              <DayIsClear sourceLabel={sourceLabel} />
+            ) : (
+              <>
+                {morningQueue.length > 0 && (
+                  <MorningQueue
+                    items={morningQueue}
+                    taskActionState={taskActionState}
+                    actionsEnabled={actionsEnabled}
+                    onDone={(taskId) => updateTask(taskId, 'done')}
+                    onSnooze={(taskId) => updateTask(taskId, 'snoozed')}
+                  />
+                )}
+                {needsReply.length > 0 && <NeedsReply items={needsReply} />}
+                {hotBuyers.length > 0 && (
+                  <HotBuyers
+                    items={hotBuyers}
+                    actionsEnabled={actionsEnabled}
+                    refreshState={refreshState}
+                    onRefresh={refreshHotList}
+                  />
+                )}
+                {draftCount > 0 && (
+                  <DraftsSection
+                    replyDrafts={replyDrafts}
+                    outreachDrafts={outreachDrafts}
+                    actionsEnabled={actionsEnabled}
+                  />
+                )}
+                {viewings.length > 0 && <TodaysViewings items={viewings} />}
+                {escalations.length > 0 && (
+                  <EscalationInboxPanel
+                    items={escalations}
+                    actionState={escalationActionState}
+                    actionsEnabled={actionsEnabled}
+                    onResolve={resolveEscalation}
+                  />
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Analytics — demoted below the fold behind a compact toggle. */}
+          <div className="mx-auto mt-8 max-w-4xl">
+            <button
+              type="button"
+              onClick={() => setShowMore((value) => !value)}
+              aria-expanded={showMore}
+              className="flex w-full items-center justify-between rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
+            >
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[18px] text-neutral-500" aria-hidden="true">bar_chart</span>
+                More — performance, campaigns &amp; momentum
+              </span>
+              <span className="material-symbols-outlined text-[20px] text-neutral-500" aria-hidden="true">
+                {showMore ? 'expand_less' : 'expand_more'}
+              </span>
+            </button>
+            {showMore && (
+              <div className="mt-5 space-y-5">
+                <AgentPerformancePanel performance={dashboardData.performance} />
+                <div className="grid gap-5 xl:grid-cols-2">
+                  <CampaignSnapshot snapshot={dashboardData.campaignSnapshot} />
+                  <OvernightBuyerDigest items={dashboardData.overnightBuyerDigest} />
+                  <PersonalMomentum momentum={dashboardData.personalMomentum} />
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>
     </div>
+  )
+}
+
+function sortNeedsReply(items: ConversationInboxItem[]): ConversationInboxItem[] {
+  // TODO(server): add an explicit `needs_reply` / awaiting-agent signal to the
+  // dashboard payload. This is a best-effort client-side heuristic from the
+  // fields we already have (open escalations > offers > high interest) and does
+  // not reflect who actually sent the last message. Do not invent API fields.
+  function score(item: ConversationInboxItem): number {
+    let value = 0
+    if (item.openEscalationCount > 0) value += 100 + item.openEscalationCount
+    if (item.offerCount > 0) value += 40 + item.offerCount
+    if ((item.interestLevel ?? '').toLowerCase() === 'high') value += 10
+    return value
+  }
+  return [...items].sort((a, b) => score(b) - score(a))
+}
+
+function DayIsClear({ sourceLabel }: { sourceLabel: string }) {
+  return (
+    <section className="rounded-lg border border-neutral-200 bg-white px-6 py-12 text-center shadow-card-sm">
+      <span className="material-symbols-outlined text-[40px] text-success-600" aria-hidden="true">task_alt</span>
+      <h2 className="mt-3 text-lg font-semibold text-neutral-900">Your day is clear</h2>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-neutral-600">
+        No buyers waiting on a reply, no hot signals, no drafts to review, and no viewings or escalations open right now.
+        New activity lands here the moment a buyer engages.
+      </p>
+      <p className="mt-3 text-xs text-neutral-400">{sourceLabel}</p>
+    </section>
   )
 }
 
@@ -289,6 +447,10 @@ function LoadingPanel({ rows }: { rows: number }) {
 }
 
 function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashboardData {
+  // Only a sample workspace should be padded with demo content. A real live
+  // workspace with no activity must read as genuinely empty so the "Your day
+  // is clear" state can surface instead of fake sample buyers.
+  const sampleData = Boolean(payload?.sample_data)
   const metrics = payload?.metrics ?? {}
   const hotListRefresh = payload?.hot_list_refresh ?? {}
   const hotLeads = Array.isArray(payload?.hot_leads) ? payload.hot_leads : []
@@ -425,6 +587,27 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       : [],
   }))
 
+  const mappedReplyDrafts: ReplyDraftItem[] = replyDrafts.slice(0, 6).map((draft: any, index: number) => ({
+    id: draft.reply_draft_id ?? draft.draft_id ?? `reply-draft-${index}`,
+    conversationId: draft.conversation_id ?? null,
+    buyerName: draft.buyer_name ?? draft.buyer_phone ?? 'Buyer',
+    buyerPhone: draft.buyer_phone ?? null,
+    listingName: draft.listing_name ?? draft.listing?.project ?? draft.listing_id ?? 'Listing',
+    unitNumber: draft.unit_number ?? draft.listing?.unit_number ?? null,
+    category: draft.category ?? 'general_nurture',
+    intent: draft.intent ?? null,
+    body: draft.body ?? 'Draft reply is ready for review.',
+  }))
+
+  const mappedOutreachDrafts: OutreachDraftItem[] = outreachDrafts.slice(0, 4).map((draft: any, index: number) => ({
+    id: draft.outreach_draft_id ?? draft.draft_id ?? `outreach-draft-${index}`,
+    subject: draft.subject ?? 'Owner outreach draft',
+    audience: draft.audience?.project
+      ? `${draft.audience.project} owners`
+      : draft.audience_label ?? 'Owner acquisition',
+    body: draft.body ?? 'Campaign draft is ready for review.',
+  }))
+
   return {
     agent: {
       name: payload?.agent?.display_name ?? fallback.agent.name,
@@ -450,9 +633,13 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       openEscalations: Number(metrics.open_escalations ?? mappedEscalations.length),
     },
     performance: mapPerformance(payload?.performance, fallback.performance),
-    conversationInbox: mappedConversations.length ? mappedConversations : fallback.conversationInbox,
-    morningQueue: morningQueue.length ? morningQueue : fallback.morningQueue,
-    escalationInbox: mappedEscalations.length ? mappedEscalations : fallback.escalationInbox,
+    conversationInbox: mappedConversations.length ? mappedConversations : sampleData ? fallback.conversationInbox : [],
+    morningQueue: morningQueue.length ? morningQueue : sampleData ? fallback.morningQueue : [],
+    escalationInbox: mappedEscalations.length ? mappedEscalations : sampleData ? fallback.escalationInbox : [],
+    drafts: {
+      replyDrafts: mappedReplyDrafts,
+      outreachDrafts: mappedOutreachDrafts,
+    },
     campaignSnapshot: {
       headline: mappedCampaigns.length
         ? 'Owner outreach and page activity are ready for review.'
@@ -464,8 +651,8 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       costPerQualifiedLead: fallback.campaignSnapshot.costPerQualifiedLead,
       campaigns: mappedCampaigns.length ? mappedCampaigns : fallback.campaignSnapshot.campaigns,
     },
-    overnightBuyerDigest: buyerDigest.length ? buyerDigest : fallback.overnightBuyerDigest,
-    todaysViewings: mappedViewings.length ? mappedViewings : fallback.todaysViewings,
+    overnightBuyerDigest: buyerDigest.length ? buyerDigest : sampleData ? fallback.overnightBuyerDigest : [],
+    todaysViewings: mappedViewings.length ? mappedViewings : sampleData ? fallback.todaysViewings : [],
     personalMomentum: {
       ...fallback.personalMomentum,
       stats: [
@@ -637,18 +824,20 @@ function SummaryMetric({
 }
 
 function Section({
+  id,
   eyebrow,
   title,
   children,
   action,
 }: {
+  id?: string
   eyebrow: string
   title: string
   children: ReactNode
   action?: ReactNode
 }) {
   return (
-    <section className="rounded-lg border border-neutral-200 bg-white shadow-card-sm">
+    <section id={id} className="scroll-mt-28 rounded-lg border border-neutral-200 bg-white shadow-card-sm">
       <div className="flex items-start justify-between gap-3 border-b border-neutral-200 px-4 py-4 sm:px-5">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{eyebrow}</p>
@@ -733,9 +922,18 @@ function MorningQueue({
   )
 }
 
-function ConversationInbox({ items }: { items: ConversationInboxItem[] }) {
+function NeedsReply({ items }: { items: ConversationInboxItem[] }) {
   return (
-    <Section eyebrow="Conversation Inbox" title="Live buyer threads">
+    <Section
+      id="needs-reply"
+      eyebrow="Needs Reply"
+      title="Threads awaiting your reply"
+      action={
+        <Link href="/agent/buyers" className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-50 hover:text-brand-700" aria-label="Open all buyer conversations" title="Open all buyer conversations">
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">forum</span>
+        </Link>
+      }
+    >
       <div className="divide-y divide-neutral-200">
         {items.length === 0 ? (
           <div className="px-4 py-6 sm:px-5">
@@ -779,6 +977,160 @@ function ConversationInbox({ items }: { items: ConversationInboxItem[] }) {
   )
 }
 
+function HotBuyers({
+  items,
+  actionsEnabled,
+  refreshState,
+  onRefresh,
+}: {
+  items: BuyerDigestItem[]
+  actionsEnabled: boolean
+  refreshState: 'idle' | 'working' | 'error'
+  onRefresh: () => void
+}) {
+  return (
+    <Section
+      id="hot-buyers"
+      eyebrow="Hot Buyers"
+      title="High-intent buyers to reach first"
+      action={
+        <button
+          type="button"
+          onClick={onRefresh}
+          disabled={!actionsEnabled || refreshState === 'working'}
+          className="inline-flex h-10 items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">sync</span>
+          <span className="hidden sm:inline">{refreshState === 'working' ? 'Refreshing' : 'Refresh'}</span>
+        </button>
+      }
+    >
+      <div className="divide-y divide-neutral-200">
+        {items.map((item) => (
+          <div key={item.id} className="px-4 py-4 sm:px-5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h3 className="text-sm font-semibold text-neutral-900">{item.buyerName}</h3>
+                <p className="mt-1 text-xs text-neutral-500">{item.target}</p>
+              </div>
+              <IntentPill intent={item.intent} />
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.message}</p>
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm font-medium leading-snug text-brand-700">{item.recommendedAction}</p>
+              <span className="font-mono text-xs text-neutral-500">{item.budget} · {item.lastSeen}</span>
+            </div>
+            <Link href="/agent/buyers" className="mt-3 inline-flex text-sm font-medium text-brand-700 hover:text-brand-800">
+              Open buyer brief
+            </Link>
+          </div>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
+function DraftsSection({
+  replyDrafts,
+  outreachDrafts,
+  actionsEnabled,
+}: {
+  replyDrafts: ReplyDraftItem[]
+  outreachDrafts: OutreachDraftItem[]
+  actionsEnabled: boolean
+}) {
+  return (
+    <Section
+      id="drafts"
+      eyebrow="Drafts"
+      title="Replies and outreach awaiting your approval"
+      action={
+        <Link href="/agent/drafts" className="inline-flex h-10 items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 text-sm font-medium text-neutral-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700" aria-label="Open the full draft queue" title="Open the full draft queue">
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">edit_note</span>
+          <span className="hidden sm:inline">Draft queue</span>
+        </Link>
+      }
+    >
+      <div className="divide-y divide-neutral-200">
+        {replyDrafts.map((draft) => (
+          <div key={draft.id} className="px-4 py-4 sm:px-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-brand-100 bg-brand-50 px-2 py-0.5 text-[11px] font-medium text-brand-700">
+                {labelFromKey(draft.category)}
+              </span>
+              <span className="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] font-medium text-neutral-600">Reply</span>
+            </div>
+            <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="text-sm font-semibold text-neutral-900">{draft.buyerName}</h3>
+              <p className="text-xs text-neutral-500">{draft.listingName}{draft.unitNumber ? ` · ${draft.unitNumber}` : ''}</p>
+            </div>
+            <p className="mt-2 line-clamp-3 rounded-md bg-neutral-50 px-3 py-2 text-sm leading-relaxed text-neutral-700">{draft.body}</p>
+            <DraftActions
+              actionsEnabled={actionsEnabled}
+              conversationId={draft.conversationId}
+            />
+          </div>
+        ))}
+        {outreachDrafts.map((draft) => (
+          <div key={draft.id} className="px-4 py-4 sm:px-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-warning-100 bg-warning-50 px-2 py-0.5 text-[11px] font-medium text-warning-700">Outreach</span>
+              <span className="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] font-medium text-neutral-600">{draft.audience}</span>
+            </div>
+            <h3 className="mt-2 text-sm font-semibold text-neutral-900">{draft.subject}</h3>
+            <p className="mt-2 line-clamp-3 rounded-md bg-neutral-50 px-3 py-2 text-sm leading-relaxed text-neutral-700">{draft.body}</p>
+            <DraftActions actionsEnabled={actionsEnabled} conversationId={null} />
+          </div>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
+function DraftActions({
+  actionsEnabled,
+  conversationId,
+}: {
+  actionsEnabled: boolean
+  conversationId?: string | null
+}) {
+  // Draft mutations (send / edit / reject) live on the dedicated /agent/drafts
+  // queue, which owns the draft action endpoints. The dashboard only previews
+  // and links through, so it never mutates drafts directly.
+  return (
+    <div className="mt-3 flex flex-wrap items-center gap-2">
+      {actionsEnabled ? (
+        <Link
+          href="/agent/drafts"
+          className="inline-flex items-center gap-1.5 rounded-md bg-brand-700 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-brand-800"
+        >
+          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">rate_review</span>
+          Review &amp; send
+        </Link>
+      ) : (
+        <button
+          type="button"
+          disabled
+          title="Connect a live workspace to act on drafts."
+          className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-md bg-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-500"
+        >
+          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">rate_review</span>
+          Review &amp; send
+        </button>
+      )}
+      {conversationId && (
+        <Link
+          href={`/agent/conversations/${conversationId}`}
+          className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
+        >
+          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span>
+          Conversation
+        </Link>
+      )}
+    </div>
+  )
+}
+
 function EscalationInboxPanel({
   items,
   actionState,
@@ -792,6 +1144,7 @@ function EscalationInboxPanel({
 }) {
   return (
     <Section
+      id="escalations"
       eyebrow="Escalation Inbox"
       title="Questions waiting for agent judgment"
       action={
@@ -939,6 +1292,7 @@ function OvernightBuyerDigest({ items }: { items: BuyerDigestItem[] }) {
 function TodaysViewings({ items }: { items: ViewingItem[] }) {
   return (
     <Section
+      id="viewings"
       eyebrow="Today's Viewings"
       title="Confirmed and at-risk appointments"
       action={

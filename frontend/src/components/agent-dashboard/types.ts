@@ -34,10 +34,35 @@ export interface AgentDashboardData {
   conversationInbox: ConversationInboxItem[]
   morningQueue: QueueItem[]
   escalationInbox: EscalationThreadItem[]
+  drafts: AgentDrafts
   campaignSnapshot: CampaignSnapshot
   overnightBuyerDigest: BuyerDigestItem[]
   todaysViewings: ViewingItem[]
   personalMomentum: PersonalMomentum
+}
+
+export interface AgentDrafts {
+  replyDrafts: ReplyDraftItem[]
+  outreachDrafts: OutreachDraftItem[]
+}
+
+export interface ReplyDraftItem {
+  id: string
+  conversationId?: string | null
+  buyerName: string
+  buyerPhone?: string | null
+  listingName: string
+  unitNumber?: string | null
+  category: string
+  intent?: string | null
+  body: string
+}
+
+export interface OutreachDraftItem {
+  id: string
+  subject: string
+  audience: string
+  body: string
 }
 
 export interface AgentPerformanceWindow {
