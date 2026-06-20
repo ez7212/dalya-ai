@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from app.api import agent, agent_dashboard, crm, leads, listings, media, onboarding, research, seller, spa_parser, telegram, viewings, whatsapp
-from app.core.runtime_config import debug_routes_enabled, is_production
+from app.core.runtime_config import debug_routes_enabled, is_production, runtime_create_all_allowed
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +17,19 @@ def _env_bool(name: str, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _create_runtime_schema_if_allowed() -> bool:
+    if not runtime_create_all_allowed():
+        logger.info("Runtime schema creation skipped")
+        return False
+
+    from app.db.session import engine, Base
+    import app.models.db_models  # noqa: F401 - registers models with Base
+
+    Base.metadata.create_all(bind=engine)
+    logger.warning("Runtime schema creation executed in local/test/dev mode")
+    return True
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Configure root logger
@@ -26,10 +39,7 @@ async def lifespan(app: FastAPI):
         format="%(asctime)s %(levelname)-8s %(message)s",
     )
 
-    # Create all tables on startup (safe to run multiple times — no-ops if tables exist)
-    from app.db.session import engine, Base
-    import app.models.db_models  # noqa: F401 — registers models with Base
-    Base.metadata.create_all(bind=engine)
+    _create_runtime_schema_if_allowed()
 
     # Recover stuck research jobs (crashed/deployed during 15-20 min pipeline)
     from datetime import datetime, timedelta
