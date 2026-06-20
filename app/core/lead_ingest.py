@@ -31,7 +31,7 @@ from sqlalchemy.orm import Session
 
 from app.core.brokerage_access import is_buyer_suppressed, record_compliance_event
 from app.core.buyer_profiles import get_or_create_profile as get_or_create_buyer_profile
-from app.db.session import safe_commit
+from app.db.session import safe_commit, set_db_session_context
 from app.models.db_models import (
     DBBrokerage,
     DBConversation,
@@ -265,10 +265,12 @@ def ingest_lead_email(
     never silently drops anything.
     """
     now = now or datetime.utcnow()
+    set_db_session_context(db, is_service=True)
     brokerage = resolve_brokerage_by_ingest_address(db, to_address)
     if not brokerage:
         # Wrong/unknown ingest address — refuse without creating any tenant data.
         return IngestOutcome(status="dead_letter", details={"reason": "unknown_ingest_address"})
+    set_db_session_context(db, brokerage_id=brokerage.brokerage_id, is_service=True)
 
     parsed = EmailLeadAdapter().parse(payload)
     if not parsed:
@@ -305,6 +307,7 @@ def ingest_parsed_lead(
     from app.db import crud
 
     now = now or datetime.utcnow()
+    set_db_session_context(db, brokerage_id=brokerage.brokerage_id, is_service=True)
     record = DBLeadIngestRecord(
         brokerage_id=brokerage.brokerage_id,
         source=parsed.source,
