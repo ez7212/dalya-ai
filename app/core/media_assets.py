@@ -29,7 +29,9 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 from urllib.parse import urlencode
+from urllib.parse import urlparse
 
+import httpx
 from sqlalchemy.orm import Session
 
 from app.core.brokerage_access import is_buyer_suppressed, record_compliance_event
@@ -65,6 +67,14 @@ def media_storage_dir() -> Path:
     if configured:
         return Path(configured)
     return Path(__file__).resolve().parents[2] / "static" / "media"
+
+
+def local_media_asset_path(asset: DBMediaAsset) -> Path:
+    storage_root = media_storage_dir().resolve()
+    candidate = (storage_root / asset.storage_ref).resolve()
+    if not candidate.is_relative_to(storage_root):
+        raise MediaValidationError("Media asset path is outside the configured storage directory.")
+    return candidate
 
 
 def media_url_ttl_seconds() -> int:
@@ -224,6 +234,64 @@ def store_media_asset(
     safe_commit(db)
     db.refresh(asset)
     return asset
+
+
+def _provider_media_filename(media_url: str) -> Optional[str]:
+    parsed = urlparse(media_url)
+    candidate = Path(parsed.path).name if parsed.path else ""
+    return candidate[:120] or None
+
+
+def download_provider_media_bytes(
+    media_url: str,
+    *,
+    auth: Optional[tuple[str, str]] = None,
+) -> bytes:
+    """Download provider media bytes without persisting the provider URL."""
+    if media_url.startswith("/") or media_url.startswith("file://"):
+        return Path(media_url.removeprefix("file://")).read_bytes()
+    with httpx.Client(timeout=30) as client:
+        response = client.get(media_url, auth=auth)
+        response.raise_for_status()
+        return response.content
+
+
+def store_inbound_provider_media_asset(
+    db: Session,
+    *,
+    brokerage_id: str,
+    media_url: str,
+    mime_type: str,
+    auth: Optional[tuple[str, str]] = None,
+    conversation_id: Optional[str] = None,
+    listing_id: Optional[str] = None,
+    source: str = "buyer_inbound",
+) -> DBMediaAsset:
+    """Download provider-hosted inbound media and re-host it as tenant-scoped media."""
+    if not brokerage_id:
+        raise MediaValidationError("brokerage_id is required to persist inbound media.")
+    content = download_provider_media_bytes(media_url, auth=auth)
+    return store_media_asset(
+        db,
+        brokerage_id=brokerage_id,
+        agent_user_id=None,
+        conversation_id=conversation_id,
+        listing_id=listing_id,
+        content=content,
+        mime_type=mime_type or "application/octet-stream",
+        original_filename=_provider_media_filename(media_url),
+        source=source,
+    )
+
+
+def inbound_media_asset_metadata(asset: DBMediaAsset, *, content_type: Optional[str]) -> dict:
+    return {
+        "media_asset_id": asset.media_asset_id,
+        "brokerage_id": asset.brokerage_id,
+        "content_type": content_type or asset.mime_type,
+        "mime_type": asset.mime_type,
+        "source": asset.source,
+    }
 
 
 def register_external_media_asset(
