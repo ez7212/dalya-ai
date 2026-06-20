@@ -42,6 +42,7 @@ from app.core.runtime_config import env_name, is_production
 from app.db.session import safe_commit
 from app.models.db_models import (
     DBBrokerage,
+    DBComplianceEvent,
     DBConversation,
     DBLeadAction,
     DBListing,
@@ -72,6 +73,7 @@ DEFAULT_MEDIA_INBOUND_MAX_BYTES = 10 * 1024 * 1024
 _NON_PRODUCTION_MEDIA_ENVS = {"test", "local", "development", "dev", "ci", "rehearsal"}
 _LOCAL_MEDIA_SIGNING_SECRET = "dalya-local-media-url-signing-secret"
 _MEDIA_LIFECYCLE_METADATA_KEY = "lifecycle"
+_REDACTED_FILENAME = "[redacted]"
 
 
 def media_storage_dir() -> Path:
@@ -635,6 +637,208 @@ def delete_media_asset_bytes(
     safe_commit(db)
     db.refresh(asset)
     return asset
+
+
+def media_asset_ids_from_metadata(metadata: Optional[dict]) -> set[str]:
+    """Extract durable media asset references without reading provider URLs."""
+    if not isinstance(metadata, dict):
+        return set()
+
+    media_asset_ids: set[str] = set()
+    for item in list(metadata.get("inbound_media_assets") or []):
+        if isinstance(item, dict) and item.get("media_asset_id"):
+            media_asset_ids.add(str(item["media_asset_id"]))
+
+    voice_note = metadata.get("voice_note")
+    if isinstance(voice_note, dict) and voice_note.get("media_asset_id"):
+        media_asset_ids.add(str(voice_note["media_asset_id"]))
+
+    for item in list(metadata.get("media") or []):
+        if isinstance(item, dict) and item.get("media_asset_id"):
+            media_asset_ids.add(str(item["media_asset_id"]))
+
+    if metadata.get("media_asset_id"):
+        media_asset_ids.add(str(metadata["media_asset_id"]))
+
+    return media_asset_ids
+
+
+def redact_media_metadata(metadata: Optional[dict], *, media_asset_ids: set[str]) -> dict:
+    """Redact provider/filename detail while preserving safe asset references."""
+    if not isinstance(metadata, dict):
+        return {}
+
+    redacted = dict(metadata)
+    inbound_assets = []
+    for item in list(redacted.get("inbound_media_assets") or []):
+        if not isinstance(item, dict):
+            continue
+        next_item = dict(item)
+        if str(next_item.get("media_asset_id") or "") in media_asset_ids:
+            next_item.pop("provider_url", None)
+            next_item.pop("url", None)
+            next_item.pop("source_url", None)
+            next_item["filename"] = _REDACTED_FILENAME
+            next_item["redacted"] = True
+        inbound_assets.append(next_item)
+    if inbound_assets:
+        redacted["inbound_media_assets"] = inbound_assets
+
+    voice_note = redacted.get("voice_note")
+    if isinstance(voice_note, dict) and str(voice_note.get("media_asset_id") or "") in media_asset_ids:
+        next_voice = dict(voice_note)
+        next_voice.pop("audio_url", None)
+        next_voice["redacted"] = True
+        redacted["voice_note"] = next_voice
+
+    media_items = []
+    for item in list(redacted.get("media") or []):
+        if not isinstance(item, dict):
+            continue
+        next_item = dict(item)
+        if str(next_item.get("media_asset_id") or "") in media_asset_ids:
+            next_item.pop("url", None)
+            next_item["filename"] = _REDACTED_FILENAME
+            next_item["redacted"] = True
+        media_items.append(next_item)
+    if media_items:
+        redacted["media"] = media_items
+
+    return redacted
+
+
+def redact_media_asset_record(
+    db: Session,
+    asset: DBMediaAsset,
+    *,
+    reason: str,
+    actor_user_id: Optional[str] = None,
+) -> DBMediaAsset:
+    metadata = dict(asset.metadata_json or {})
+    lifecycle = dict(metadata.get(_MEDIA_LIFECYCLE_METADATA_KEY) or {})
+    lifecycle["metadata_redacted_at"] = datetime.utcnow().isoformat()
+    lifecycle["metadata_redacted_reason"] = reason
+    if actor_user_id:
+        lifecycle["metadata_redacted_by_user_id"] = actor_user_id
+    metadata[_MEDIA_LIFECYCLE_METADATA_KEY] = lifecycle
+    asset.metadata_json = metadata
+    asset.original_filename = _REDACTED_FILENAME
+    safe_commit(db)
+    db.refresh(asset)
+    return asset
+
+
+def media_asset_ids_for_buyer_deletion(
+    db: Session,
+    *,
+    brokerage_id: str,
+    buyer_phone: Optional[str] = None,
+    conversation_id: Optional[str] = None,
+) -> set[str]:
+    """Find media referenced by tenant-scoped buyer messages and durable metadata."""
+    if not brokerage_id:
+        return set()
+
+    conversations = db.query(DBConversation).filter(DBConversation.brokerage_id == brokerage_id)
+    if conversation_id:
+        conversations = conversations.filter(DBConversation.conversation_id == conversation_id)
+    if buyer_phone:
+        conversations = conversations.filter(DBConversation.buyer_phone == buyer_phone)
+    conversation_ids = [row.conversation_id for row in conversations.all()]
+    if not conversation_ids:
+        return set()
+
+    media_asset_ids: set[str] = set()
+    messages = db.query(DBMessage).filter(DBMessage.conversation_id.in_(conversation_ids)).all()
+    for message in messages:
+        media_asset_ids.update(media_asset_ids_from_metadata(message.metadata_json or {}))
+
+    direct_assets = (
+        db.query(DBMediaAsset.media_asset_id)
+        .filter(
+            DBMediaAsset.brokerage_id == brokerage_id,
+            DBMediaAsset.conversation_id.in_(conversation_ids),
+        )
+        .all()
+    )
+    media_asset_ids.update(str(row.media_asset_id) for row in direct_assets)
+    return media_asset_ids
+
+
+def delete_media_for_buyer_request(
+    db: Session,
+    *,
+    brokerage_id: str,
+    buyer_phone: Optional[str] = None,
+    conversation_id: Optional[str] = None,
+    actor_user_id: Optional[str] = None,
+    reason: str = "pdpl_media_deletion",
+) -> dict:
+    """Revoke/delete buyer-linked media bytes and redact durable metadata.
+
+    This helper is intentionally tenant-scoped. It does not infer a brokerage
+    from global phone state and does not inspect raw provider URLs.
+    """
+    if not brokerage_id:
+        raise MediaValidationError("brokerage_id is required for media deletion.")
+    if not buyer_phone and not conversation_id:
+        raise MediaValidationError("buyer_phone or conversation_id is required for media deletion.")
+
+    media_asset_ids = media_asset_ids_for_buyer_deletion(
+        db,
+        brokerage_id=brokerage_id,
+        buyer_phone=buyer_phone,
+        conversation_id=conversation_id,
+    )
+    deleted_ids: list[str] = []
+    skipped_ids: list[str] = []
+
+    for media_asset_id in sorted(media_asset_ids):
+        asset = db.get(DBMediaAsset, media_asset_id)
+        if not asset or asset.brokerage_id != brokerage_id:
+            skipped_ids.append(media_asset_id)
+            continue
+        revoke_media_asset(db, asset, reason=reason, actor_user_id=actor_user_id)
+        delete_media_asset_bytes(db, asset, reason=reason, actor_user_id=actor_user_id)
+        redact_media_asset_record(db, asset, reason=reason, actor_user_id=actor_user_id)
+        deleted_ids.append(media_asset_id)
+
+    if deleted_ids:
+        conversations = db.query(DBConversation).filter(DBConversation.brokerage_id == brokerage_id)
+        if conversation_id:
+            conversations = conversations.filter(DBConversation.conversation_id == conversation_id)
+        if buyer_phone:
+            conversations = conversations.filter(DBConversation.buyer_phone == buyer_phone)
+        conversation_ids = [row.conversation_id for row in conversations.all()]
+        messages = db.query(DBMessage).filter(DBMessage.conversation_id.in_(conversation_ids)).all()
+        deleted_id_set = set(deleted_ids)
+        for message in messages:
+            if media_asset_ids_from_metadata(message.metadata_json or {}).intersection(deleted_id_set):
+                message.metadata_json = redact_media_metadata(
+                    message.metadata_json or {},
+                    media_asset_ids=deleted_id_set,
+                )
+        db.add(DBComplianceEvent(
+            brokerage_id=brokerage_id,
+            conversation_id=conversation_id,
+            buyer_phone=None,
+            actor_user_id=actor_user_id,
+            event_type="pdpl_media_deleted",
+            direction="system",
+            details={
+                "media_asset_count": len(deleted_ids),
+                "media_asset_ids": deleted_ids,
+                "reason": reason,
+                "scope": "conversation" if conversation_id else "buyer",
+            },
+        ))
+        safe_commit(db)
+
+    return {
+        "deleted_media_asset_ids": deleted_ids,
+        "skipped_media_asset_ids": skipped_ids,
+        "media_asset_count": len(deleted_ids),
+    }
 
 
 def listing_assets_for_attachment(db: Session, listing: DBListing) -> list[dict]:
