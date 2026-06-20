@@ -30,6 +30,7 @@ from typing import Callable, Optional, Protocol
 from sqlalchemy.orm import Session
 
 from app.core.brokerage_access import is_buyer_suppressed, record_compliance_event
+from app.core.buyer_profiles import get_or_create_profile as get_or_create_buyer_profile
 from app.db.session import safe_commit
 from app.models.db_models import (
     DBBrokerage,
@@ -402,6 +403,24 @@ def ingest_parsed_lead(
         return IngestOutcome(status="ingested", record=_detach_record(db, record), details={"listing": "unresolved"})
 
     conversation = crud.get_or_create_conversation(db, parsed.buyer_phone, listing.listing_id)
+    if conversation is None:
+        record.status = "ingested"
+        record.error = "conversation_tenant_guard_blocked"
+        safe_commit(db)
+        _notify_dead_letter(
+            db,
+            brokerage=brokerage,
+            record=record,
+            body=(
+                f"New {parsed.source} lead from {parsed.buyer_name or parsed.buyer_phone} "
+                "landed on a listing without tenant-safe conversation context and was quarantined for review."
+            ),
+        )
+        return IngestOutcome(
+            status="ingested",
+            record=_detach_record(db, record),
+            details={"conversation": "quarantined"},
+        )
     if parsed.buyer_name and not conversation.buyer_name:
         conversation.buyer_name = parsed.buyer_name
     record.conversation_id = conversation.conversation_id
@@ -432,9 +451,15 @@ def ingest_parsed_lead(
     assignment.updated_at = now
 
     # Buyer profile source.
-    profile = crud.get_or_create_buyer_profile(db, parsed.buyer_phone)
-    if not profile.lead_source:
-        profile.lead_source = "portal"
+    profile = get_or_create_buyer_profile(
+        db,
+        brokerage_id=brokerage.brokerage_id,
+        buyer_phone=parsed.buyer_phone,
+        name=parsed.buyer_name,
+        source="portal",
+    )
+    if not profile.source:
+        profile.source = "portal"
     safe_commit(db)
 
     first_touch = _send_first_touch(

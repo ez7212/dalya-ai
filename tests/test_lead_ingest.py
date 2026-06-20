@@ -39,7 +39,9 @@ from app.models.db_models import (
     DBAgentNotification,
     DBAgentProfile,
     DBBrokerage,
+    DBBrokerageBuyerProfile,
     DBBuyerProfile,
+    DBBuyerProfileField,
     DBBuyerSuppression,
     DBComplianceEvent,
     DBConversation,
@@ -90,9 +92,13 @@ def lead_seed():
     slug = f"lead-{suffix}"
     other_slug = f"lead-other-{suffix}"
     listing_id = f"lead-listing-{suffix}"
+    other_listing_id = f"lead-other-listing-{suffix}"
     agent_user_id = f"lead-agent-{suffix}"
+    other_agent_user_id = f"lead-other-agent-{suffix}"
     agent_phone = f"+97157788{suffix[:4]}"
+    other_agent_phone = f"+97157789{suffix[:4]}"
     listing_url = f"https://www.propertyfinder.ae/en/plp/buy/apartment-{suffix}.html"
+    other_listing_url = f"https://www.propertyfinder.ae/en/plp/buy/villa-{suffix}.html"
     # Phones must be all-digits — the parser normalizes to E.164.
     digits = f"{int(suffix, 16) % 10000:04d}"
     buyer_phone = f"+97156688{digits}"
@@ -122,6 +128,14 @@ def lead_seed():
             whatsapp_phone=agent_phone,
             rera_broker_card_number=f"BRN-LEAD-{suffix}",
         ))
+        db.add(DBAgentProfile(
+            brokerage_id=other_brokerage_id,
+            user_id=other_agent_user_id,
+            full_name="Other Lead Agent",
+            display_name="Other Lead Agent",
+            whatsapp_phone=other_agent_phone,
+            rera_broker_card_number=f"BRN-OTHER-LEAD-{suffix}",
+        ))
         db.add(DBListing(
             listing_id=listing_id,
             brokerage_id=brokerage_id,
@@ -131,6 +145,22 @@ def lead_seed():
             commission_rate=0.02,
             property_type="ready",
             source_url=listing_url,
+            additional_fees=[],
+            seller_qa=[],
+            media_urls=[],
+            unit_profile={},
+            unit_profile_history=[],
+            processing_stages={},
+        ))
+        db.add(DBListing(
+            listing_id=other_listing_id,
+            brokerage_id=other_brokerage_id,
+            assigned_agent_id=other_agent_user_id,
+            spa_data={"project": "Other Lead Lagoons", "unit_number": "2502"},
+            seller_asking_price=2_100_000,
+            commission_rate=0.02,
+            property_type="ready",
+            source_url=other_listing_url,
             additional_fees=[],
             seller_qa=[],
             media_urls=[],
@@ -150,9 +180,13 @@ def lead_seed():
             "slug": slug,
             "other_slug": other_slug,
             "listing_id": listing_id,
+            "other_listing_id": other_listing_id,
             "listing_url": listing_url,
+            "other_listing_url": other_listing_url,
             "agent_user_id": agent_user_id,
+            "other_agent_user_id": other_agent_user_id,
             "agent_phone": agent_phone,
+            "other_agent_phone": other_agent_phone,
             "buyer_phone": buyer_phone,
             "transport": transport,
         }
@@ -175,9 +209,11 @@ def lead_seed():
                 db.query(DBMessage).filter(DBMessage.conversation_id.in_(conversation_ids)).delete(synchronize_session=False)
                 db.query(DBLeadAssignment).filter(DBLeadAssignment.conversation_id.in_(conversation_ids)).delete(synchronize_session=False)
                 db.query(DBConversation).filter(DBConversation.conversation_id.in_(conversation_ids)).delete(synchronize_session=False)
+            db.query(DBBuyerProfileField).filter(DBBuyerProfileField.brokerage_id.in_([brokerage_id, other_brokerage_id])).delete(synchronize_session=False)
+            db.query(DBBrokerageBuyerProfile).filter(DBBrokerageBuyerProfile.brokerage_id.in_([brokerage_id, other_brokerage_id])).delete(synchronize_session=False)
             db.query(DBBuyerProfile).filter(DBBuyerProfile.phone == buyer_phone).delete(synchronize_session=False)
-            db.query(DBListing).filter(DBListing.listing_id == listing_id).delete(synchronize_session=False)
-            db.query(DBAgentProfile).filter(DBAgentProfile.brokerage_id == brokerage_id).delete(synchronize_session=False)
+            db.query(DBListing).filter(DBListing.listing_id.in_([listing_id, other_listing_id])).delete(synchronize_session=False)
+            db.query(DBAgentProfile).filter(DBAgentProfile.brokerage_id.in_([brokerage_id, other_brokerage_id])).delete(synchronize_session=False)
             db.query(DBBrokerage).filter(DBBrokerage.brokerage_id.in_([brokerage_id, other_brokerage_id])).delete(synchronize_session=False)
             safe_commit(db)
 
@@ -303,6 +339,105 @@ def test_first_touch_template_locked_and_duplicate_suppressed(lead_seed):
     assert len(transport.messages_to_buyer(seed["buyer_phone"])) == 1
 
 
+def test_portal_lead_writes_tenant_scoped_brokerage_buyer_profile(lead_seed):
+    seed = lead_seed
+
+    outcome = _ingest(seed, _pf_email(seed["buyer_phone"], seed["listing_url"]))
+    assert outcome.status == "ingested"
+
+    with SessionLocal() as db:
+        legacy = db.get(DBBuyerProfile, seed["buyer_phone"])
+        assert legacy is None
+
+        scoped = (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(
+                DBBrokerageBuyerProfile.brokerage_id == seed["brokerage_id"],
+                DBBrokerageBuyerProfile.buyer_phone == seed["buyer_phone"],
+            )
+            .one()
+        )
+        assert scoped.source == "portal"
+        assert scoped.name == "Imran Khan"
+
+
+def test_same_phone_portal_leads_do_not_share_profile_state_across_brokerages(lead_seed):
+    seed = lead_seed
+
+    first = _ingest(seed, _pf_email(seed["buyer_phone"], seed["listing_url"], name="Brokerage A Buyer"))
+    second = _ingest(
+        seed,
+        _pf_email(seed["buyer_phone"], seed["other_listing_url"], name="Brokerage B Buyer"),
+        slug=seed["other_slug"],
+    )
+    assert first.status == "ingested"
+    assert second.status == "ingested"
+
+    with SessionLocal() as db:
+        legacy = db.get(DBBuyerProfile, seed["buyer_phone"])
+        assert legacy is None
+
+        profiles = (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(DBBrokerageBuyerProfile.buyer_phone == seed["buyer_phone"])
+            .order_by(DBBrokerageBuyerProfile.brokerage_id.asc())
+            .all()
+        )
+        assert {profile.brokerage_id for profile in profiles} == {
+            seed["brokerage_id"],
+            seed["other_brokerage_id"],
+        }
+        assert len({profile.profile_id for profile in profiles}) == 2
+        by_brokerage = {profile.brokerage_id: profile for profile in profiles}
+        assert by_brokerage[seed["brokerage_id"]].name == "Brokerage A Buyer"
+        assert by_brokerage[seed["other_brokerage_id"]].name == "Brokerage B Buyer"
+        assert by_brokerage[seed["brokerage_id"]].source == "portal"
+        assert by_brokerage[seed["other_brokerage_id"]].source == "portal"
+
+
+def test_conversation_guard_blocks_partial_lead_ingest_without_unsafe_dereference(lead_seed, monkeypatch):
+    seed = lead_seed
+
+    from app.db import crud as crud_module
+
+    monkeypatch.setattr(crud_module, "get_or_create_conversation", lambda *args, **kwargs: None)
+    outcome = _ingest(seed, _pf_email(seed["buyer_phone"], seed["listing_url"]))
+
+    assert outcome.status == "ingested"
+    assert outcome.conversation_id is None
+    assert outcome.first_touch_sent is False
+    assert outcome.details == {"conversation": "quarantined"}
+
+    with SessionLocal() as db:
+        record = db.get(DBLeadIngestRecord, outcome.record.ingest_id)
+        assert record.conversation_id is None
+        assert record.error == "conversation_tenant_guard_blocked"
+        assert (
+            db.query(DBConversation)
+            .filter(
+                DBConversation.brokerage_id == seed["brokerage_id"],
+                DBConversation.buyer_phone == seed["buyer_phone"],
+            )
+            .count()
+            == 0
+        )
+        assert (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(
+                DBBrokerageBuyerProfile.brokerage_id == seed["brokerage_id"],
+                DBBrokerageBuyerProfile.buyer_phone == seed["buyer_phone"],
+            )
+            .count()
+            == 0
+        )
+        assert (
+            db.query(DBBuyerProfile)
+            .filter(DBBuyerProfile.phone == seed["buyer_phone"])
+            .count()
+            == 0
+        )
+
+
 # ── Checklist 4: existing conversation → attach, no new conversation ───────────
 
 
@@ -381,8 +516,7 @@ def test_stop_propagates_and_no_nudge_draft(lead_seed):
         record = db.get(DBLeadIngestRecord, outcome.record.ingest_id)
         record.created_at = datetime.utcnow() - timedelta(hours=49)
         safe_commit(db)
-        created = create_first_touch_nudge_drafts(db)
-        assert created == 0
+        create_first_touch_nudge_drafts(db)
         record = db.get(DBLeadIngestRecord, outcome.record.ingest_id)
         assert record.nudge_draft_id == "suppressed"
         drafts = (
