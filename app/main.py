@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from app.api import agent, agent_dashboard, crm, leads, listings, onboarding, research, seller, spa_parser, telegram, viewings, whatsapp
+from app.api import agent, agent_dashboard, crm, leads, listings, media, onboarding, research, seller, spa_parser, telegram, viewings, whatsapp
 from app.core.runtime_config import debug_routes_enabled, is_production
 
 logger = logging.getLogger(__name__)
@@ -129,15 +129,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Brokerage-scoped outbound media (DAL-160) — served so the WhatsApp transport
-# can fetch uploaded attachments by public URL.
-from fastapi.staticfiles import StaticFiles
-from app.core.media_assets import media_storage_dir
-
-_media_dir = media_storage_dir()
-_media_dir.mkdir(parents=True, exist_ok=True)
-app.mount("/media", StaticFiles(directory=str(_media_dir)), name="media")
-
+app.include_router(media.router, tags=["Media"])
 app.include_router(spa_parser.router, prefix="/api/v1", tags=["SPA Parser"])
 app.include_router(whatsapp.router, prefix="/api/v1", tags=["WhatsApp"])
 app.include_router(telegram.router, prefix="/api/v1", tags=["Telegram"])
