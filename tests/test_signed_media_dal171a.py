@@ -30,6 +30,7 @@ def _asset(
     storage_ref: str = "brokerage-1/asset-1.jpg",
     mime_type: str = "image/jpeg",
     original_filename: str | None = "floorplan.jpg",
+    signing_nonce: str = "nonce-1",
 ) -> DBMediaAsset:
     return DBMediaAsset(
         media_asset_id=media_asset_id,
@@ -38,6 +39,7 @@ def _asset(
         size_bytes=4,
         storage_ref=storage_ref,
         original_filename=original_filename,
+        signing_nonce=signing_nonce,
         source="composer_upload",
     )
 
@@ -133,6 +135,7 @@ def test_expired_signed_media_url_returns_403(client, tmp_path, monkeypatch):
         media_asset_id=asset.media_asset_id,
         brokerage_id=asset.brokerage_id,
         exp=exp,
+        signing_nonce=asset.signing_nonce,
     )
     _override_db(asset)
     try:
@@ -167,6 +170,7 @@ def test_signature_for_wrong_brokerage_returns_403(client, tmp_path, monkeypatch
         media_asset_id=asset.media_asset_id,
         brokerage_id="other-brokerage",
         exp=exp,
+        signing_nonce=asset.signing_nonce,
     )
     _override_db(asset)
     try:

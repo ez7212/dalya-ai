@@ -23,6 +23,7 @@ import hashlib
 import hmac
 import logging
 import os
+import secrets
 import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -70,6 +71,7 @@ DEFAULT_MEDIA_URL_TTL_SECONDS = 900
 DEFAULT_MEDIA_INBOUND_MAX_BYTES = 10 * 1024 * 1024
 _NON_PRODUCTION_MEDIA_ENVS = {"test", "local", "development", "dev", "ci", "rehearsal"}
 _LOCAL_MEDIA_SIGNING_SECRET = "dalya-local-media-url-signing-secret"
+_MEDIA_LIFECYCLE_METADATA_KEY = "lifecycle"
 
 
 def media_storage_dir() -> Path:
@@ -124,27 +126,70 @@ def media_url_signing_secret() -> str:
     raise RuntimeError("MEDIA_URL_SIGNING_SECRET is required for media URL signing")
 
 
-def media_signature_payload(*, media_asset_id: str, brokerage_id: str, exp: int) -> str:
-    return f"{media_asset_id}.{brokerage_id}.{exp}"
+def generate_media_signing_nonce() -> str:
+    return secrets.token_urlsafe(24)
 
 
-def sign_media_url_payload(*, media_asset_id: str, brokerage_id: str, exp: int) -> str:
+def media_asset_signing_nonce(asset: DBMediaAsset) -> str:
+    nonce = (getattr(asset, "signing_nonce", None) or "").strip()
+    if not nonce:
+        raise MediaValidationError("Media asset signing nonce is missing.")
+    return nonce
+
+
+def media_asset_is_revoked_or_deleted(asset: DBMediaAsset) -> bool:
+    return bool(getattr(asset, "revoked_at", None) or getattr(asset, "deleted_at", None))
+
+
+def ensure_media_asset_accessible(asset: DBMediaAsset) -> None:
+    if getattr(asset, "deleted_at", None):
+        raise MediaValidationError("Media asset has been deleted.")
+    if getattr(asset, "revoked_at", None):
+        raise MediaValidationError("Media asset has been revoked.")
+
+
+def media_signature_payload(
+    *,
+    media_asset_id: str,
+    brokerage_id: str,
+    exp: int,
+    signing_nonce: str,
+) -> str:
+    return f"{media_asset_id}.{brokerage_id}.{exp}.{signing_nonce}"
+
+
+def sign_media_url_payload(
+    *,
+    media_asset_id: str,
+    brokerage_id: str,
+    exp: int,
+    signing_nonce: str,
+) -> str:
     return hmac.new(
         media_url_signing_secret().encode("utf-8"),
         media_signature_payload(
             media_asset_id=media_asset_id,
             brokerage_id=brokerage_id,
             exp=exp,
+            signing_nonce=signing_nonce,
         ).encode("utf-8"),
         hashlib.sha256,
     ).hexdigest()
 
 
-def media_signature_is_valid(*, media_asset_id: str, brokerage_id: str, exp: int, sig: str) -> bool:
+def media_signature_is_valid(
+    *,
+    media_asset_id: str,
+    brokerage_id: str,
+    exp: int,
+    sig: str,
+    signing_nonce: str,
+) -> bool:
     expected = sign_media_url_payload(
         media_asset_id=media_asset_id,
         brokerage_id=brokerage_id,
         exp=exp,
+        signing_nonce=signing_nonce,
     )
     return hmac.compare_digest(expected, sig or "")
 
@@ -260,6 +305,7 @@ def store_media_asset(
         sha256=hashlib.sha256(content).hexdigest(),
         original_filename=original_filename,
         source=source,
+        signing_nonce=generate_media_signing_nonce(),
         storage_ref="",  # set below once the asset_id exists
     )
     db.add(asset)
@@ -410,6 +456,7 @@ def register_external_media_asset(
         sha256=None,
         original_filename=url.rsplit("/", 1)[-1][:120] or None,
         source=source,
+        signing_nonce=generate_media_signing_nonce(),
         storage_ref=url,
     )
     db.add(asset)
@@ -425,6 +472,7 @@ def signed_media_url(asset: DBMediaAsset, *, ttl_seconds: int | None = None) -> 
     listing/source provider. Local Dalya media is never returned as a static
     public path; callers receive a signed endpoint URL instead.
     """
+    ensure_media_asset_accessible(asset)
     if asset.storage_ref.startswith("http://") or asset.storage_ref.startswith("https://"):
         return asset.storage_ref
     ttl = ttl_seconds if ttl_seconds is not None else media_url_ttl_seconds()
@@ -435,6 +483,7 @@ def signed_media_url(asset: DBMediaAsset, *, ttl_seconds: int | None = None) -> 
         media_asset_id=asset.media_asset_id,
         brokerage_id=asset.brokerage_id,
         exp=exp,
+        signing_nonce=media_asset_signing_nonce(asset),
     )
     base = os.getenv("PUBLIC_URL", "").rstrip("/")
     query = urlencode({"exp": str(exp), "sig": sig})
@@ -444,6 +493,148 @@ def signed_media_url(asset: DBMediaAsset, *, ttl_seconds: int | None = None) -> 
 def public_media_url(asset: DBMediaAsset) -> str:
     """Deprecated alias: returns signed URLs for local Dalya media."""
     return signed_media_url(asset)
+
+
+def _lifecycle_metadata(
+    asset: DBMediaAsset,
+    *,
+    action: str,
+    reason: Optional[str],
+    actor_user_id: Optional[str],
+    at: datetime,
+) -> dict:
+    metadata = dict(asset.metadata_json or {})
+    lifecycle = dict(metadata.get(_MEDIA_LIFECYCLE_METADATA_KEY) or {})
+    history = list(lifecycle.get("history") or [])
+    event = {
+        "action": action,
+        "at": at.isoformat(),
+    }
+    if reason:
+        event["reason"] = reason
+    if actor_user_id:
+        event["actor_user_id"] = actor_user_id
+    history.append(event)
+    lifecycle.update(
+        {
+            "last_action": action,
+            "last_action_at": at.isoformat(),
+            "history": history[-20:],
+        }
+    )
+    if reason:
+        lifecycle["last_reason"] = reason
+    metadata[_MEDIA_LIFECYCLE_METADATA_KEY] = lifecycle
+    return metadata
+
+
+def rotate_media_signing_nonce(
+    db: Session,
+    asset: DBMediaAsset,
+    *,
+    reason: Optional[str] = None,
+    actor_user_id: Optional[str] = None,
+) -> DBMediaAsset:
+    now = datetime.utcnow()
+    asset.signing_nonce = generate_media_signing_nonce()
+    asset.metadata_json = _lifecycle_metadata(
+        asset,
+        action="signing_nonce_rotated",
+        reason=reason,
+        actor_user_id=actor_user_id,
+        at=now,
+    )
+    safe_commit(db)
+    db.refresh(asset)
+    return asset
+
+
+def revoke_media_asset(
+    db: Session,
+    asset: DBMediaAsset,
+    *,
+    reason: Optional[str] = None,
+    actor_user_id: Optional[str] = None,
+) -> DBMediaAsset:
+    now = datetime.utcnow()
+    asset.revoked_at = asset.revoked_at or now
+    asset.signing_nonce = generate_media_signing_nonce()
+    asset.metadata_json = _lifecycle_metadata(
+        asset,
+        action="revoked",
+        reason=reason,
+        actor_user_id=actor_user_id,
+        at=now,
+    )
+    safe_commit(db)
+    db.refresh(asset)
+    return asset
+
+
+def soft_delete_media_asset(
+    db: Session,
+    asset: DBMediaAsset,
+    *,
+    reason: Optional[str] = None,
+    actor_user_id: Optional[str] = None,
+) -> DBMediaAsset:
+    now = datetime.utcnow()
+    asset.revoked_at = asset.revoked_at or now
+    asset.deleted_at = asset.deleted_at or now
+    asset.signing_nonce = generate_media_signing_nonce()
+    asset.metadata_json = _lifecycle_metadata(
+        asset,
+        action="soft_deleted",
+        reason=reason,
+        actor_user_id=actor_user_id,
+        at=now,
+    )
+    safe_commit(db)
+    db.refresh(asset)
+    return asset
+
+
+def delete_local_media_file(asset: DBMediaAsset) -> bool:
+    """Delete local media bytes without allowing path traversal."""
+    if asset.storage_ref.startswith(("http://", "https://")):
+        return False
+    path = local_media_asset_path(asset)
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
+
+
+def delete_media_asset_bytes(
+    db: Session,
+    asset: DBMediaAsset,
+    *,
+    reason: Optional[str] = None,
+    actor_user_id: Optional[str] = None,
+) -> DBMediaAsset:
+    """Revoke, remove local bytes, and mark the asset deleted."""
+    now = datetime.utcnow()
+    asset.revoked_at = asset.revoked_at or now
+    asset.signing_nonce = generate_media_signing_nonce()
+    bytes_deleted = False
+    try:
+        bytes_deleted = delete_local_media_file(asset)
+    except FileNotFoundError:
+        bytes_deleted = False
+    asset.deleted_at = asset.deleted_at or datetime.utcnow()
+    metadata = _lifecycle_metadata(
+        asset,
+        action="bytes_deleted",
+        reason=reason,
+        actor_user_id=actor_user_id,
+        at=datetime.utcnow(),
+    )
+    metadata[_MEDIA_LIFECYCLE_METADATA_KEY]["bytes_deleted"] = bytes_deleted
+    metadata[_MEDIA_LIFECYCLE_METADATA_KEY]["bytes_deleted_at"] = asset.deleted_at.isoformat()
+    asset.metadata_json = metadata
+    safe_commit(db)
+    db.refresh(asset)
+    return asset
 
 
 def listing_assets_for_attachment(db: Session, listing: DBListing) -> list[dict]:

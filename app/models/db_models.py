@@ -652,6 +652,10 @@ class DBMediaAsset(Base):
     sha256 = Column(String, nullable=True, index=True)
     original_filename = Column(String, nullable=True)
     source = Column(String, nullable=False, default="composer_upload")  # composer_upload | listing_asset | relay_inbound
+    signing_nonce = Column(String, nullable=False, default=lambda: str(uuid.uuid4()))
+    revoked_at = Column(DateTime, nullable=True, index=True)
+    deleted_at = Column(DateTime, nullable=True, index=True)
+    retention_until = Column(DateTime, nullable=True, index=True)
     metadata_json = Column(JSON, default=dict)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
