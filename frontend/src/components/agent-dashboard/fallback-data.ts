@@ -197,6 +197,40 @@ export const fallbackAgentDashboardData: AgentDashboardData = {
       ],
     },
   ],
+  drafts: {
+    replyDrafts: [
+      {
+        id: 'reply-draft-1',
+        conversationId: 'sample-conv-1',
+        buyerName: 'Ahmed K.',
+        buyerPhone: '+971502148821',
+        listingName: 'Downtown resale apartment',
+        unitNumber: '2BR',
+        category: 'viewing_follow_up',
+        intent: 'book_viewing',
+        body: 'Hi Ahmed — yes, 6pm today works. I can hold 18:00 or 18:30 for the Downtown 2BR. Which suits you?',
+      },
+      {
+        id: 'reply-draft-2',
+        conversationId: 'sample-conv-2',
+        buyerName: 'Omar R.',
+        buyerPhone: '+971504445566',
+        listingName: 'Dubai Hills Estate 3BR',
+        unitNumber: 'TH-18',
+        category: 'financing_follow_up',
+        intent: 'confirm_timeline',
+        body: 'Hi Omar — checking with conveyancing on whether transfer can complete before the school term. Will confirm timing shortly.',
+      },
+    ],
+    outreachDrafts: [
+      {
+        id: 'outreach-draft-1',
+        subject: 'Dubai Hills villa owners — qualified buyer at AED 7-10M',
+        audience: 'Dubai Hills villa owners',
+        body: 'We have a pre-qualified end-user looking in Dubai Hills at AED 7-10M. If you are considering selling, I can share a no-obligation valuation this week.',
+      },
+    ],
+  },
   campaignSnapshot: {
     headline: 'Villa exit campaign is producing the strongest qualified buyer flow.',
     activeCampaigns: 5,
