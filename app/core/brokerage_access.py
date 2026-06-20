@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 logger = logging.getLogger(__name__)
 
 from app.core.auth import CurrentUser
-from app.db.session import safe_commit
+from app.db.session import safe_commit, set_db_session_context
 from app.models.db_models import (
     DBBrokerage,
     DBBrokerageMember,
@@ -92,6 +92,12 @@ def resolve_request_brokerage_context(
 ) -> BrokerageContext:
     """Resolve authenticated brokerage context without guessing for multi-tenant users."""
     user_id = current_user.id
+    is_platform_admin = bool(os.getenv("ADMIN_USER_ID") and os.getenv("ADMIN_USER_ID") == user_id)
+    set_db_session_context(
+        db,
+        user_id=user_id,
+        is_platform_admin=False,
+    )
     active_memberships = (
         db.query(DBBrokerageMember)
         .filter(
@@ -101,7 +107,6 @@ def resolve_request_brokerage_context(
         .order_by(DBBrokerageMember.created_at.asc(), DBBrokerageMember.member_id.asc())
         .all()
     )
-    is_platform_admin = bool(os.getenv("ADMIN_USER_ID") and os.getenv("ADMIN_USER_ID") == user_id)
 
     if explicit_brokerage_id:
         member = next(
@@ -123,6 +128,11 @@ def resolve_request_brokerage_context(
                         "source": "explicit_header",
                         "is_platform_admin": True,
                     },
+                )
+                set_db_session_context(
+                    db,
+                    brokerage_id=explicit_brokerage_id,
+                    is_platform_admin=True,
                 )
                 return BrokerageContext(
                     brokerage_id=explicit_brokerage_id,
@@ -171,6 +181,7 @@ def resolve_request_brokerage_context(
                 "source": "explicit_header",
             },
         )
+        set_db_session_context(db, brokerage_id=member.brokerage_id)
         return BrokerageContext(
             brokerage_id=member.brokerage_id,
             membership_id=member.member_id,
@@ -216,6 +227,7 @@ def resolve_request_brokerage_context(
                 "source": "single_membership_fallback",
             },
         )
+        set_db_session_context(db, brokerage_id=member.brokerage_id)
         return BrokerageContext(
             brokerage_id=member.brokerage_id,
             membership_id=member.member_id,

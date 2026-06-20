@@ -16,7 +16,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core.auth import CurrentUser, get_current_user
-from app.db.session import get_db, safe_commit
+from app.db.session import get_db, safe_commit, set_db_session_context
 from app.models.db_models import (
     DBAgentChatbotConfig,
     DBAgentProfile,
@@ -242,6 +242,7 @@ async def onboarding_status(
     db: Session = Depends(get_db),
     x_brokerage_id: Optional[str] = Header(default=None, alias="X-Brokerage-Id"),
 ):
+    set_db_session_context(db, user_id=user.id)
     active_memberships = (
         db.query(DBBrokerageMember, DBBrokerage)
         .join(DBBrokerage, DBBrokerage.brokerage_id == DBBrokerageMember.brokerage_id)
@@ -332,6 +333,7 @@ async def my_brokerages(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    set_db_session_context(db, user_id=user.id)
     memberships = (
         db.query(DBBrokerageMember, DBBrokerage)
         .join(DBBrokerage, DBBrokerage.brokerage_id == DBBrokerageMember.brokerage_id)

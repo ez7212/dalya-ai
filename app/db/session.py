@@ -7,8 +7,9 @@ import logging
 import os
 from urllib.parse import urlparse, urlunparse, quote, parse_qs, urlencode
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event, text
 from sqlalchemy.exc import DBAPIError, InterfaceError, OperationalError
+from sqlalchemy.orm import Session as SASession
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 load_dotenv()
@@ -57,6 +58,15 @@ engine = create_engine(
 )
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+
+RLS_CONTEXT_INFO_KEY = "dalya_rls_context"
+_UNSET = object()
+_RLS_CONTEXT_KEYS = (
+    "app.user_id",
+    "app.brokerage_id",
+    "app.is_service",
+    "app.is_platform_admin",
+)
 
 
 class Base(DeclarativeBase):
@@ -120,6 +130,77 @@ def safe_commit(db) -> None:
             reset_db_connections()
             raise TransientDatabaseError(str(exc)) from exc
         raise
+
+
+def _normalise_context_value(value) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    return str(value)
+
+
+def _apply_rls_context_to_connection(connection, context: dict[str, object]) -> None:
+    """Apply request-scoped DB context to the current transaction only."""
+    for key in _RLS_CONTEXT_KEYS:
+        connection.execute(
+            text("select set_config(:setting_name, :setting_value, true)"),
+            {
+                "setting_name": key,
+                "setting_value": _normalise_context_value(context.get(key)),
+            },
+        )
+
+
+@event.listens_for(SASession, "after_begin")
+def _apply_rls_context_after_begin(session, transaction, connection) -> None:
+    """Reapply SET LOCAL context whenever SQLAlchemy opens a transaction."""
+    context = session.info.get(RLS_CONTEXT_INFO_KEY)
+    if context:
+        _apply_rls_context_to_connection(connection, context)
+
+
+def set_db_session_context(
+    db,
+    *,
+    user_id: object = _UNSET,
+    brokerage_id: object = _UNSET,
+    is_service: object = _UNSET,
+    is_platform_admin: object = _UNSET,
+) -> None:
+    """
+    Store request/service DB context on the SQLAlchemy Session.
+
+    The after_begin hook applies this context with SET LOCAL for every new
+    transaction. If a transaction is already open, apply immediately so callers
+    can safely resolve a user first and then add brokerage context.
+    """
+    context = dict(db.info.get(RLS_CONTEXT_INFO_KEY, {}))
+    updates = {
+        "app.user_id": user_id,
+        "app.brokerage_id": brokerage_id,
+        "app.is_service": is_service,
+        "app.is_platform_admin": is_platform_admin,
+    }
+    for key, value in updates.items():
+        if value is not _UNSET:
+            context[key] = value
+
+    db.info[RLS_CONTEXT_INFO_KEY] = context
+    if db.in_transaction():
+        _apply_rls_context_to_connection(db.connection(), context)
+
+
+def clear_db_session_context(db) -> None:
+    """Clear stored DB context for tests or explicit session reuse."""
+    db.info.pop(RLS_CONTEXT_INFO_KEY, None)
+    if db.in_transaction():
+        _apply_rls_context_to_connection(db.connection(), {})
+
+
+def get_db_session_context(db) -> dict[str, object]:
+    """Return a copy of the stored DB context for assertions/diagnostics."""
+    return dict(db.info.get(RLS_CONTEXT_INFO_KEY, {}))
 
 
 def get_db():
