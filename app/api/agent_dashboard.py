@@ -35,6 +35,7 @@ from app.models.db_models import (
     DBAgentProfile,
     DBBrokerage,
     DBBrokerageMember,
+    DBBuyerSuppression,
     DBCampaign,
     DBCampaignRecipient,
     DBCampaignUpload,
@@ -404,12 +405,87 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         .all()
     ) if conversation_ids else {}
 
+    # needs_reply signal (DAL-170E5): derived from the latest inbound (buyer)
+    # vs latest outbound (agent/bot) message timestamps, with no schema change.
+    # A thread needs a reply when the buyer's last message is newer than any
+    # agent/bot response and the buyer has not opted out.
+    last_buyer_message_at = dict(
+        db.query(DBMessage.conversation_id, func.max(DBMessage.timestamp))
+        .filter(
+            DBMessage.conversation_id.in_(conversation_ids),
+            DBMessage.role == "user",
+        )
+        .group_by(DBMessage.conversation_id)
+        .all()
+    ) if conversation_ids else {}
+    last_agent_response_at = dict(
+        db.query(DBMessage.conversation_id, func.max(DBMessage.timestamp))
+        .filter(
+            DBMessage.conversation_id.in_(conversation_ids),
+            DBMessage.role.in_(["assistant", "agent", "owner", "platform_admin"]),
+        )
+        .group_by(DBMessage.conversation_id)
+        .all()
+    ) if conversation_ids else {}
+    pending_draft_convs = {
+        row[0]
+        for row in (
+            db.query(DBDraftReply.conversation_id)
+            .filter(
+                DBDraftReply.conversation_id.in_(conversation_ids),
+                DBDraftReply.status.in_(["draft", "edited"]),
+            )
+            .distinct()
+            .all()
+        )
+    } if conversation_ids else set()
+    pending_draft_convs |= {
+        row[0]
+        for row in (
+            db.query(DBAIDraft.conversation_id)
+            .filter(
+                DBAIDraft.conversation_id.in_(conversation_ids),
+                DBAIDraft.status == "draft",
+            )
+            .distinct()
+            .all()
+        )
+    } if conversation_ids else set()
+    suppressed_phones = {
+        row[0]
+        for row in (
+            db.query(DBBuyerSuppression.buyer_phone)
+            .filter(
+                DBBuyerSuppression.brokerage_id == ctx.brokerage_id,
+                DBBuyerSuppression.active.is_(True),
+            )
+            .all()
+        )
+    }
+
     items = []
     for conv in rows:
         listing = conv.listing
         spa = (listing.spa_data or {}) if listing else {}
         latest = latest_messages.get(conv.conversation_id)
         summary = conv.ai_summary or {}
+        buyer_at = last_buyer_message_at.get(conv.conversation_id)
+        agent_at = last_agent_response_at.get(conv.conversation_id)
+        has_pending_draft = conv.conversation_id in pending_draft_convs
+        is_suppressed = bool(conv.buyer_phone) and conv.buyer_phone in suppressed_phones
+        needs_reply = bool(
+            buyer_at is not None
+            and (agent_at is None or buyer_at > agent_at)
+            and not is_suppressed
+        )
+        if not needs_reply:
+            needs_reply_reason = None
+        elif has_pending_draft:
+            needs_reply_reason = "draft_ready"
+        elif int(open_thread_counts.get(conv.conversation_id, 0)) > 0:
+            needs_reply_reason = "escalation_open"
+        else:
+            needs_reply_reason = "buyer_awaiting"
         items.append({
             "conversation_id": conv.conversation_id,
             "buyer": {
@@ -433,9 +509,17 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
             "message_count": int(message_counts.get(conv.conversation_id, 0)),
             "offer_count": int(offer_counts.get(conv.conversation_id, 0)),
             "open_escalation_count": int(open_thread_counts.get(conv.conversation_id, 0)),
+            "needs_reply": needs_reply,
+            "needs_reply_reason": needs_reply_reason,
+            "has_pending_draft": has_pending_draft,
+            "last_buyer_message_at": _iso(buyer_at),
+            "last_agent_response_at": _iso(agent_at),
             "created_at": _iso(conv.created_at),
             "updated_at": _iso(conv.updated_at),
         })
+    # Rank needs_reply threads first; preserve the existing recency order within
+    # each group (Python's sort is stable).
+    items.sort(key=lambda item: 0 if item["needs_reply"] else 1)
     return items
 
 
@@ -886,6 +970,7 @@ def _metrics(db: Session, ctx: AgentDashboardContext, payload: dict) -> dict:
     today_start = datetime(now.year, now.month, now.day)
     return {
         "conversations": len(payload.get("conversations", [])),
+        "needs_reply": len([c for c in payload.get("conversations", []) if c.get("needs_reply")]),
         "hot_leads": len(payload["hot_leads"]),
         "open_tasks": (
             db.query(func.count(DBLeadTask.task_id))
@@ -1138,6 +1223,7 @@ def _sample_dashboard(ctx: AgentDashboardContext) -> dict:
             "marketing_events_7d": 18,
             "open_escalations": 2,
             "conversations": 1,
+            "needs_reply": 1,
         },
         "conversations": [
             {
@@ -1153,6 +1239,11 @@ def _sample_dashboard(ctx: AgentDashboardContext) -> dict:
                 "message_count": 6,
                 "offer_count": 0,
                 "open_escalation_count": 1,
+                "needs_reply": True,
+                "needs_reply_reason": "escalation_open",
+                "has_pending_draft": False,
+                "last_buyer_message_at": _iso(now - timedelta(minutes=18)),
+                "last_agent_response_at": _iso(now - timedelta(minutes=42)),
                 "created_at": _iso(now - timedelta(hours=2)),
                 "updated_at": _iso(now - timedelta(minutes=18)),
             }

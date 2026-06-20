@@ -142,6 +142,11 @@ export const fallbackAgentDashboardData: AgentDashboardData = {
       offerCount: 0,
       openEscalationCount: 1,
       interestLevel: 'high',
+      needsReply: true,
+      needsReplyReason: 'escalation_open',
+      hasPendingDraft: false,
+      lastBuyerMessageAt: '18 min ago',
+      lastAgentResponseAt: '42 min ago',
     },
   ],
   escalationInbox: [

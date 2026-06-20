@@ -361,12 +361,13 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 }
 
 function sortNeedsReply(items: ConversationInboxItem[]): ConversationInboxItem[] {
-  // TODO(server): add an explicit `needs_reply` / awaiting-agent signal to the
-  // dashboard payload. This is a best-effort client-side heuristic from the
-  // fields we already have (open escalations > offers > high interest) and does
-  // not reflect who actually sent the last message. Do not invent API fields.
+  // The server now provides an authoritative `needs_reply` signal (DAL-170E5),
+  // derived from last buyer-vs-agent message timestamps and opt-out state, and
+  // already ranks needs_reply threads first. We re-assert that ordering here so
+  // it survives any client-side reshuffling, then fall back to a lightweight
+  // urgency heuristic (open escalations > offers > high interest) as a tiebreak.
   function score(item: ConversationInboxItem): number {
-    let value = 0
+    let value = item.needsReply ? 1000 : 0
     if (item.openEscalationCount > 0) value += 100 + item.openEscalationCount
     if (item.offerCount > 0) value += 40 + item.offerCount
     if ((item.interestLevel ?? '').toLowerCase() === 'high') value += 10
@@ -550,6 +551,11 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     offerCount: Number(conversation.offer_count ?? 0),
     openEscalationCount: Number(conversation.open_escalation_count ?? 0),
     interestLevel: conversation.interest_level,
+    needsReply: Boolean(conversation.needs_reply),
+    needsReplyReason: conversation.needs_reply_reason ?? null,
+    hasPendingDraft: Boolean(conversation.has_pending_draft),
+    lastBuyerMessageAt: formatShortTime(conversation.last_buyer_message_at),
+    lastAgentResponseAt: conversation.last_agent_response_at ? formatShortTime(conversation.last_agent_response_at) : null,
   }))
 
   const mappedViewings: ViewingItem[] = viewings.slice(0, 4).map((viewing: any, index: number) => ({
@@ -947,6 +953,11 @@ function NeedsReply({ items }: { items: ConversationInboxItem[] }) {
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="truncate text-sm font-semibold text-neutral-900">{item.buyerName}</h3>
+                    {item.needsReply && (
+                      <span className="rounded-full bg-error-50 px-2 py-0.5 text-[11px] font-semibold text-error-700">
+                        {item.hasPendingDraft ? 'Draft ready' : 'Needs reply'}
+                      </span>
+                    )}
                     {item.openEscalationCount > 0 && (
                       <span className="rounded-full bg-warning-50 px-2 py-0.5 text-[11px] font-semibold text-warning-700">
                         {item.openEscalationCount} escalation{item.openEscalationCount === 1 ? '' : 's'}

@@ -106,6 +106,11 @@ export interface ConversationInboxItem {
   offerCount: number
   openEscalationCount: number
   interestLevel?: string | null
+  needsReply: boolean
+  needsReplyReason?: string | null
+  hasPendingDraft?: boolean
+  lastBuyerMessageAt?: string | null
+  lastAgentResponseAt?: string | null
 }
 
 export interface EscalationThreadQuestion {
