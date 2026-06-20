@@ -20,7 +20,7 @@ ALLOWED_MUTATION_ENVS = {"test", "local", "development", "ci", "rehearsal"}
 LIVE_ENV_MARKERS = ("production", "prod", "staging", "stage", "preview", "live")
 SAFE_IDENTITY_MARKERS = ("test", "local", "localhost", "127.0.0.1", "ci", "dev", "development", "rehearsal")
 
-POLICY_NAMES = (
+FIRST_TABLE_POLICY_NAMES = (
     ("brokerages", "dal170e1_brokerages_select"),
     ("brokerage_members", "dal170e1_brokerage_members_select"),
     ("brokerage_members", "dal170e1_brokerage_members_write"),
@@ -31,9 +31,36 @@ POLICY_NAMES = (
     ("buyer_profile_fields", "dal170e1_buyer_profile_fields_tenant"),
 )
 
+E2_DIRECT_ROOT_TABLES = (
+    "listing_documents",
+    "listing_facts",
+    "listing_knowledge_summaries",
+    "listing_logistics",
+    "tenant_consents",
+    "listing_inquiries",
+    "offers",
+    "draft_replies",
+    "ai_drafts",
+    "lead_ingests",
+    "lead_assignments",
+    "lead_tasks",
+    "lead_actions",
+    "viewings",
+    "tenant_viewing_confirmations",
+    "viewing_feedback",
+    "media_assets",
+)
+
+E2_POLICY_NAMES = tuple(
+    (table, f"dal170e2_{table}_tenant")
+    for table in E2_DIRECT_ROOT_TABLES
+)
+
+POLICY_NAMES = FIRST_TABLE_POLICY_NAMES + E2_POLICY_NAMES
+
 RUNTIME_ROLE = "dal170e1_rls_runtime"
 
-TABLES = (
+FIRST_TABLES = (
     "brokerages",
     "brokerage_members",
     "agent_profiles",
@@ -42,6 +69,8 @@ TABLES = (
     "brokerage_buyer_profiles",
     "buyer_profile_fields",
 )
+
+TABLES = FIRST_TABLES + E2_DIRECT_ROOT_TABLES
 
 ROLE_SQL = [
     f"""
@@ -55,7 +84,7 @@ ROLE_SQL = [
     $$
     """,
     f"grant usage on schema public to {RUNTIME_ROLE}",
-    f"grant select, insert, update, delete on brokerages, brokerage_members, agent_profiles, listings, conversations, brokerage_buyer_profiles, buyer_profile_fields to {RUNTIME_ROLE}",
+    f"grant select, insert, update, delete on {', '.join(TABLES)} to {RUNTIME_ROLE}",
 ]
 
 HELPER_SQL = [
@@ -98,7 +127,7 @@ HELPER_SQL = [
     """,
 ]
 
-POLICY_SQL = [
+FIRST_POLICY_SQL = [
     """
     create policy dal170e1_brokerages_select on brokerages
     for select
@@ -203,6 +232,24 @@ POLICY_SQL = [
     """,
 ]
 
+E2_POLICY_SQL = [
+    f"""
+    create policy dal170e2_{table}_tenant on {table}
+    for all
+    using (
+        app.is_service()
+        or brokerage_id = app.current_brokerage_id()
+    )
+    with check (
+        app.is_service()
+        or brokerage_id = app.current_brokerage_id()
+    )
+    """
+    for table in E2_DIRECT_ROOT_TABLES
+]
+
+POLICY_SQL = FIRST_POLICY_SQL + E2_POLICY_SQL
+
 ENABLE_SQL = [
     f"alter table {table} enable row level security" for table in TABLES
 ] + [
@@ -226,7 +273,7 @@ ROLLBACK_SQL = [
     do $$
     begin
         if exists (select 1 from pg_roles where rolname = '{RUNTIME_ROLE}') then
-            revoke select, insert, update, delete on brokerages, brokerage_members, agent_profiles, listings, conversations, brokerage_buyer_profiles, buyer_profile_fields from {RUNTIME_ROLE};
+            revoke select, insert, update, delete on {', '.join(TABLES)} from {RUNTIME_ROLE};
             revoke usage on schema app from {RUNTIME_ROLE};
             revoke usage on schema public from {RUNTIME_ROLE};
             execute format('revoke {RUNTIME_ROLE} from %I', current_user);
