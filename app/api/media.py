@@ -7,7 +7,9 @@ from sqlalchemy.orm import Session
 
 from app.core.media_assets import (
     MediaValidationError,
+    ensure_media_asset_accessible,
     local_media_asset_path,
+    media_asset_signing_nonce,
     media_signature_is_valid,
 )
 from app.db.session import get_db
@@ -37,11 +39,18 @@ def get_signed_media(
     if asset.storage_ref.startswith("http://") or asset.storage_ref.startswith("https://"):
         raise HTTPException(status_code=404, detail="media_not_found")
 
+    try:
+        ensure_media_asset_accessible(asset)
+        signing_nonce = media_asset_signing_nonce(asset)
+    except MediaValidationError:
+        raise HTTPException(status_code=404, detail="media_not_found")
+
     if not media_signature_is_valid(
         media_asset_id=asset.media_asset_id,
         brokerage_id=asset.brokerage_id,
         exp=exp,
         sig=sig,
+        signing_nonce=signing_nonce,
     ):
         raise HTTPException(status_code=403, detail="media_signature_forbidden")
 
