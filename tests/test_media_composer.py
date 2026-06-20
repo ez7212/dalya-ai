@@ -17,6 +17,7 @@ from __future__ import annotations
 import io
 import uuid
 from datetime import datetime, timedelta
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
@@ -182,8 +183,12 @@ def test_three_pdfs_with_caption_reach_buyer_with_chips_and_compliance(client, m
     assert all(send.media_url for send in sends)
     assert sends[0].body == "Here is everything on Media Mansions 501."
     assert sends[1].body == "" and sends[2].body == ""
-    # Storage refs are brokerage-scoped (checklist 12 structural property).
-    assert all(seed["brokerage_id"] in send.media_url for send in sends)
+
+    signed_urls = [urlsplit(send.media_url) for send in sends]
+    assert all(parsed.path.startswith("/media/") for parsed in signed_urls)
+    assert all(seed["brokerage_id"] not in parsed.path for parsed in signed_urls)
+    assert all(parse_qs(parsed.query).get("exp") for parsed in signed_urls)
+    assert all(parse_qs(parsed.query).get("sig") for parsed in signed_urls)
 
     with SessionLocal() as db:
         message = (
@@ -215,6 +220,10 @@ def test_three_pdfs_with_caption_reach_buyer_with_chips_and_compliance(client, m
             .all()
         )
         assert len(assets) == 3
+        assert {parsed.path for parsed in signed_urls} == {
+            f"/media/{asset.media_asset_id}" for asset in assets
+        }
+        assert all(asset.brokerage_id == seed["brokerage_id"] for asset in assets)
         assert all(asset.storage_ref.startswith(seed["brokerage_id"]) for asset in assets)
         assert all(asset.size_bytes == len(PDF_BYTES) for asset in assets)
 
