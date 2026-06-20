@@ -1,29 +1,20 @@
 from __future__ import annotations
 
 import time
-from pathlib import Path
-
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.core.media_assets import (
+    MediaValidationError,
+    local_media_asset_path,
     media_signature_is_valid,
-    media_storage_dir,
 )
 from app.db.session import get_db
 from app.models.db_models import DBMediaAsset
 
 
 router = APIRouter()
-
-
-def _local_asset_path(asset: DBMediaAsset) -> Path:
-    storage_root = media_storage_dir().resolve()
-    candidate = (storage_root / asset.storage_ref).resolve()
-    if not candidate.is_relative_to(storage_root):
-        raise HTTPException(status_code=404, detail="media_not_found")
-    return candidate
 
 
 @router.get("/media/{media_asset_id}")
@@ -54,7 +45,10 @@ def get_signed_media(
     ):
         raise HTTPException(status_code=403, detail="media_signature_forbidden")
 
-    path = _local_asset_path(asset)
+    try:
+        path = local_media_asset_path(asset)
+    except MediaValidationError:
+        raise HTTPException(status_code=404, detail="media_not_found")
     if not path.is_file():
         raise HTTPException(status_code=404, detail="media_not_found")
 

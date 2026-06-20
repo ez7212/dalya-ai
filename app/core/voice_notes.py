@@ -16,26 +16,33 @@ def transcription_result_metadata(
     *,
     direction: str,
     audio_url: Optional[str] = None,
+    media_asset_id: Optional[str] = None,
 ) -> dict:
+    voice_note = {
+        "direction": direction,
+        "provider": result.provider,
+        "raw_transcript": result.raw_transcript,
+        "corrected_transcript": result.corrected_transcript,
+        "prices": [price.model_dump() for price in result.prices],
+        "low_confidence_segments": [
+            segment.model_dump() for segment in result.low_confidence_segments
+        ],
+        "normalized_terms": list(result.normalized_terms),
+        "cost_tracking": dict(result.cost_tracking),
+        # Spec-named storage fields (DAL-159) — mirrored onto the message
+        # record columns by crud.add_message.
+        "transcription_text": result.corrected_transcript or result.raw_transcript,
+        "transcription_language": result.language,
+        "transcription_confidence": result.effective_confidence(),
+        "transcription_provider": result.provider,
+    }
+    if media_asset_id:
+        voice_note["media_asset_id"] = media_asset_id
+    elif audio_url:
+        voice_note["audio_url"] = audio_url
     return {
         "voice_note": {
-            "direction": direction,
-            "audio_url": audio_url,
-            "provider": result.provider,
-            "raw_transcript": result.raw_transcript,
-            "corrected_transcript": result.corrected_transcript,
-            "prices": [price.model_dump() for price in result.prices],
-            "low_confidence_segments": [
-                segment.model_dump() for segment in result.low_confidence_segments
-            ],
-            "normalized_terms": list(result.normalized_terms),
-            "cost_tracking": dict(result.cost_tracking),
-            # Spec-named storage fields (DAL-159) — mirrored onto the message
-            # record columns by crud.add_message.
-            "transcription_text": result.corrected_transcript or result.raw_transcript,
-            "transcription_language": result.language,
-            "transcription_confidence": result.effective_confidence(),
-            "transcription_provider": result.provider,
+            **voice_note,
         }
     }
 

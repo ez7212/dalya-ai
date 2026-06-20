@@ -655,17 +655,79 @@ async def whatsapp_webhook(
             logger.info("[WhatsApp] Duplicate Twilio MessageSid ignored: %s", MessageSid)
             return _processed_response()
 
-        db.add(DBMessageQueue(
-            from_number=buyer_phone,
-            to_number=To,
-            body=Body,
-            message_sid=MessageSid,
-            listing_id=listing_id,
-            media_urls=media_urls,
-            media_content_types=media_content_types,
-            metadata_json={"has_audio_media": has_audio_media} if has_audio_media else {},
-        ))
-        safe_commit(db)
+        metadata_json = {"has_audio_media": has_audio_media} if has_audio_media else {}
+        persisted_media_assets = []
+        created_media_assets = []
+        if media_urls:
+            from app.core.brokerage_resolver import resolve_brokerage_by_inbound_number
+            from app.core.media_assets import (
+                MediaValidationError,
+                cleanup_media_assets,
+                inbound_media_asset_metadata,
+                store_inbound_provider_media_asset,
+            )
+            from app.core.voice_notes import twilio_media_auth
+
+            brokerage = resolve_brokerage_by_inbound_number(To, db)
+            if not brokerage:
+                logger.warning(
+                    "[WhatsApp] Refusing inbound media without brokerage context: to=%s sid=%s",
+                    redact_pii(To),
+                    MessageSid,
+                )
+                raise HTTPException(status_code=403, detail="brokerage_not_resolved_for_media")
+
+            auth = twilio_media_auth()
+            if any(url.startswith(("http://", "https://")) for url in media_urls) and not auth:
+                logger.warning(
+                    "[WhatsApp] Refusing inbound provider media without provider auth: to=%s sid=%s",
+                    redact_pii(To),
+                    MessageSid,
+                )
+                raise HTTPException(status_code=503, detail="provider_media_auth_required")
+            try:
+                for index, provider_url in enumerate(media_urls):
+                    content_type = media_content_types[index] if index < len(media_content_types) else ""
+                    if content_type.lower().startswith("video/"):
+                        continue
+                    asset = store_inbound_provider_media_asset(
+                        db,
+                        brokerage_id=brokerage.brokerage_id,
+                        media_url=provider_url,
+                        mime_type=content_type,
+                        auth=auth if provider_url.startswith("http") else None,
+                        listing_id=listing_id,
+                        source="buyer_inbound",
+                    )
+                    created_media_assets.append(asset)
+                    persisted_media_assets.append(
+                        inbound_media_asset_metadata(asset, content_type=content_type)
+                    )
+                metadata_json["inbound_media_assets"] = persisted_media_assets
+            except MediaValidationError as exc:
+                cleanup_media_assets(db, created_media_assets)
+                logger.warning("[WhatsApp] Refused inbound provider media: %s", exc)
+                raise HTTPException(status_code=422, detail="inbound_media_rejected")
+            except Exception:
+                cleanup_media_assets(db, created_media_assets)
+                logger.warning("[WhatsApp] Inbound provider media persistence failed", exc_info=True)
+                raise
+
+        try:
+            db.add(DBMessageQueue(
+                from_number=buyer_phone,
+                to_number=To,
+                body=Body,
+                message_sid=MessageSid,
+                listing_id=listing_id,
+                media_urls=[],
+                media_content_types=media_content_types,
+                metadata_json=metadata_json,
+            ))
+            safe_commit(db)
+        except Exception:
+            cleanup_media_assets(db, created_media_assets)
+            raise
 
     # Return empty TwiML immediately — reply will be sent by debounce worker
     return _processed_response()

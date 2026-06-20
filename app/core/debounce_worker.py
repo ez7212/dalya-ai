@@ -164,16 +164,32 @@ async def _handle_batch(
     inbound_body = combined_body
     inbound_metadata = {}
     if media_urls or metadata_items:
+        inbound_media_assets = [
+            asset
+            for item in metadata_items
+            for asset in list(item.get("inbound_media_assets") or [])
+            if isinstance(asset, dict)
+        ]
         audio_present = any(
             (content_type or "").lower().startswith("audio/")
             for content_type in media_content_types
-        ) or any(item.get("audio_path") for item in metadata_items)
+        ) or any(item.get("audio_path") for item in metadata_items) or any(
+            str(asset.get("content_type") or asset.get("mime_type") or "").lower().startswith("audio/")
+            for asset in inbound_media_assets
+        )
         video_present = any(
             (content_type or "").lower().startswith("video/")
             for content_type in media_content_types
+        ) or any(
+            str(asset.get("content_type") or asset.get("mime_type") or "").lower().startswith("video/")
+            for asset in inbound_media_assets
         )
         try:
-            if video_present or (media_urls and not audio_present and not combined_body.strip()):
+            if video_present or (
+                (media_urls or inbound_media_assets)
+                and not audio_present
+                and not combined_body.strip()
+            ):
                 # Video notes and unsupported attachments are forward-to-agent
                 # only — never silently dropped (DAL-159 out-of-scope handling).
                 raise UnprocessableMediaError("unsupported media type (video or unknown attachment)")
@@ -185,6 +201,8 @@ async def _handle_batch(
                     media_content_types=media_content_types,
                     metadata_items=metadata_items,
                 )
+            if inbound_media_assets:
+                inbound_metadata.setdefault("inbound_media_assets", inbound_media_assets)
         except Exception as exc:
             # DAL-159 failure mode: never silent. The buyer gets one polite
             # fallback in conversation language and the conversation escalates
@@ -579,6 +597,7 @@ async def _prepare_voice_inbound(
 
     audio_path = None
     audio_url = None
+    audio_media_asset_id = None
     content_type = None
     for item in metadata_items:
         if item.get("audio_path"):
@@ -586,6 +605,32 @@ async def _prepare_voice_inbound(
             content_type = item.get("content_type")
             audio_url = item.get("audio_url")
             break
+
+    if audio_path is None:
+        for item in metadata_items:
+            for asset_meta in list(item.get("inbound_media_assets") or []):
+                if not isinstance(asset_meta, dict):
+                    continue
+                candidate_content_type = str(
+                    asset_meta.get("content_type") or asset_meta.get("mime_type") or ""
+                )
+                if not candidate_content_type.lower().startswith("audio/"):
+                    continue
+                candidate_asset_id = asset_meta.get("media_asset_id")
+                if not candidate_asset_id:
+                    continue
+                from app.core.media_assets import local_media_asset_path
+                from app.models.db_models import DBMediaAsset
+
+                with _SL() as db:
+                    asset = db.get(DBMediaAsset, candidate_asset_id)
+                    if asset:
+                        audio_path = local_media_asset_path(asset)
+                        content_type = asset.mime_type
+                        audio_media_asset_id = asset.media_asset_id
+                        break
+            if audio_path is not None:
+                break
 
     if audio_path is None and media_urls:
         audio_url = str(media_urls[0])
@@ -625,7 +670,8 @@ async def _prepare_voice_inbound(
     metadata = transcription_result_metadata(
         result,
         direction="buyer_to_property_advisor",
-        audio_url=audio_url,
+        audio_url=audio_url if not audio_media_asset_id else None,
+        media_asset_id=audio_media_asset_id,
     )
     body = result.corrected_transcript.strip() or result.raw_transcript.strip() or combined_body
     if combined_body.strip():

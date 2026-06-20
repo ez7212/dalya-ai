@@ -29,7 +29,9 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 from urllib.parse import urlencode
+from urllib.parse import urlparse
 
+import httpx
 from sqlalchemy.orm import Session
 
 from app.core.brokerage_access import is_buyer_suppressed, record_compliance_event
@@ -55,7 +57,17 @@ ALLOWED_MIME_TYPES = {
     "image/jpeg",
     "image/png",
 }
+ALLOWED_INBOUND_MIME_TYPES = {
+    "application/pdf",
+    "image/jpeg",
+    "image/png",
+    "audio/aac",
+    "audio/mp4",
+    "audio/mpeg",
+    "audio/ogg",
+}
 DEFAULT_MEDIA_URL_TTL_SECONDS = 900
+DEFAULT_MEDIA_INBOUND_MAX_BYTES = 10 * 1024 * 1024
 _NON_PRODUCTION_MEDIA_ENVS = {"test", "local", "development", "dev", "ci", "rehearsal"}
 _LOCAL_MEDIA_SIGNING_SECRET = "dalya-local-media-url-signing-secret"
 
@@ -65,6 +77,14 @@ def media_storage_dir() -> Path:
     if configured:
         return Path(configured)
     return Path(__file__).resolve().parents[2] / "static" / "media"
+
+
+def local_media_asset_path(asset: DBMediaAsset) -> Path:
+    storage_root = media_storage_dir().resolve()
+    candidate = (storage_root / asset.storage_ref).resolve()
+    if not candidate.is_relative_to(storage_root):
+        raise MediaValidationError("Media asset path is outside the configured storage directory.")
+    return candidate
 
 
 def media_url_ttl_seconds() -> int:
@@ -78,6 +98,19 @@ def media_url_ttl_seconds() -> int:
     if ttl <= 0:
         raise RuntimeError("MEDIA_URL_TTL_SECONDS must be positive")
     return ttl
+
+
+def media_inbound_max_bytes() -> int:
+    raw = os.getenv("MEDIA_INBOUND_MAX_BYTES")
+    if raw is None:
+        return DEFAULT_MEDIA_INBOUND_MAX_BYTES
+    try:
+        limit = int(raw)
+    except ValueError as exc:
+        raise RuntimeError("MEDIA_INBOUND_MAX_BYTES must be an integer") from exc
+    if limit <= 0:
+        raise RuntimeError("MEDIA_INBOUND_MAX_BYTES must be positive")
+    return limit
 
 
 def media_url_signing_secret() -> str:
@@ -162,6 +195,10 @@ def session_window_state(db: Session, conversation_id: str, now: Optional[dateti
 def _extension_for_mime(mime_type: str, filename: Optional[str]) -> str:
     mapping = {
         "application/pdf": ".pdf",
+        "audio/aac": ".aac",
+        "audio/mp4": ".m4a",
+        "audio/mpeg": ".mp3",
+        "audio/ogg": ".ogg",
         "image/jpeg": ".jpg",
         "image/png": ".png",
     }
@@ -184,6 +221,19 @@ def validate_media_upload(*, mime_type: str, size_bytes: int) -> None:
         raise MediaValidationError(
             f"File is too large ({size_bytes / (1024 * 1024):.1f} MB). "
             f"The limit for {mime_type} on this channel is {limit_mb:.0f} MB."
+        )
+
+
+def validate_inbound_media(*, mime_type: str, size_bytes: int) -> None:
+    normalized_mime = (mime_type or "").strip().lower()
+    if normalized_mime not in ALLOWED_INBOUND_MIME_TYPES:
+        raise MediaValidationError(
+            f"Unsupported inbound media type {mime_type or 'unknown'}."
+        )
+    limit = media_inbound_max_bytes()
+    if size_bytes > limit:
+        raise MediaValidationError(
+            f"Inbound media is too large ({size_bytes / (1024 * 1024):.1f} MB)."
         )
 
 
@@ -224,6 +274,118 @@ def store_media_asset(
     safe_commit(db)
     db.refresh(asset)
     return asset
+
+
+def _provider_media_filename(media_url: str) -> Optional[str]:
+    parsed = urlparse(media_url)
+    candidate = Path(parsed.path).name if parsed.path else ""
+    return candidate[:120] or None
+
+
+def download_provider_media_bytes(
+    media_url: str,
+    *,
+    auth: Optional[tuple[str, str]] = None,
+    max_bytes: Optional[int] = None,
+) -> bytes:
+    """Download provider media bytes without persisting the provider URL."""
+    limit = max_bytes if max_bytes is not None else media_inbound_max_bytes()
+    if media_url.startswith("/") or media_url.startswith("file://"):
+        path = Path(media_url.removeprefix("file://"))
+        size = path.stat().st_size
+        if size > limit:
+            raise MediaValidationError(
+                f"Inbound media is too large ({size / (1024 * 1024):.1f} MB)."
+            )
+        return path.read_bytes()
+    if media_url.startswith("http://") or media_url.startswith("https://"):
+        if not auth or not auth[0] or not auth[1]:
+            raise MediaValidationError("Provider media auth is required for HTTP(S) downloads.")
+    else:
+        raise MediaValidationError("Unsupported inbound provider media URL.")
+    with httpx.Client(timeout=30) as client:
+        with client.stream("GET", media_url, auth=auth) as response:
+            response.raise_for_status()
+            content_length = response.headers.get("content-length")
+            if content_length:
+                try:
+                    declared_size = int(content_length)
+                except ValueError:
+                    declared_size = 0
+                if declared_size > limit:
+                    raise MediaValidationError(
+                        f"Inbound media is too large ({declared_size / (1024 * 1024):.1f} MB)."
+                    )
+            chunks: list[bytes] = []
+            total = 0
+            for chunk in response.iter_bytes():
+                total += len(chunk)
+                if total > limit:
+                    raise MediaValidationError(
+                        f"Inbound media is too large ({total / (1024 * 1024):.1f} MB)."
+                    )
+                chunks.append(chunk)
+            return b"".join(chunks)
+
+
+def store_inbound_provider_media_asset(
+    db: Session,
+    *,
+    brokerage_id: str,
+    media_url: str,
+    mime_type: str,
+    auth: Optional[tuple[str, str]] = None,
+    conversation_id: Optional[str] = None,
+    listing_id: Optional[str] = None,
+    source: str = "buyer_inbound",
+) -> DBMediaAsset:
+    """Download provider-hosted inbound media and re-host it as tenant-scoped media."""
+    if not brokerage_id:
+        raise MediaValidationError("brokerage_id is required to persist inbound media.")
+    normalized_mime = (mime_type or "").strip().lower()
+    validate_inbound_media(mime_type=normalized_mime, size_bytes=0)
+    content = download_provider_media_bytes(
+        media_url,
+        auth=auth,
+        max_bytes=media_inbound_max_bytes(),
+    )
+    validate_inbound_media(mime_type=normalized_mime, size_bytes=len(content))
+    return store_media_asset(
+        db,
+        brokerage_id=brokerage_id,
+        agent_user_id=None,
+        conversation_id=conversation_id,
+        listing_id=listing_id,
+        content=content,
+        mime_type=normalized_mime,
+        original_filename=_provider_media_filename(media_url),
+        source=source,
+    )
+
+
+def cleanup_media_assets(db: Session, assets: list[DBMediaAsset]) -> None:
+    """Best-effort cleanup for assets persisted before a failed batch queue."""
+    for asset in assets:
+        try:
+            if asset.storage_ref and not asset.storage_ref.startswith(("http://", "https://")):
+                local_media_asset_path(asset).unlink(missing_ok=True)
+        except Exception:
+            logger.warning("Failed to delete media file during cleanup: %s", asset.media_asset_id, exc_info=True)
+        try:
+            db.delete(asset)
+        except Exception:
+            logger.warning("Failed to mark media asset for cleanup: %s", asset.media_asset_id, exc_info=True)
+    safe_commit(db)
+
+
+def inbound_media_asset_metadata(asset: DBMediaAsset, *, content_type: Optional[str]) -> dict:
+    return {
+        "media_asset_id": asset.media_asset_id,
+        "brokerage_id": asset.brokerage_id,
+        "content_type": content_type or asset.mime_type,
+        "mime_type": asset.mime_type,
+        "source": asset.source,
+    }
 
 
 def register_external_media_asset(
