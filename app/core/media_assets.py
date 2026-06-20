@@ -20,18 +20,22 @@ Rules encoded here, not in the UI:
 from __future__ import annotations
 
 import hashlib
+import hmac
 import logging
 import os
+import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
+from urllib.parse import urlencode
 
 from sqlalchemy.orm import Session
 
 from app.core.brokerage_access import is_buyer_suppressed, record_compliance_event
 from app.core.messaging import get_transport
 from app.core.messaging.types import OutboundBuyerMessage
+from app.core.runtime_config import env_name, is_production
 from app.db.session import safe_commit
 from app.models.db_models import (
     DBBrokerage,
@@ -51,6 +55,9 @@ ALLOWED_MIME_TYPES = {
     "image/jpeg",
     "image/png",
 }
+DEFAULT_MEDIA_URL_TTL_SECONDS = 900
+_NON_PRODUCTION_MEDIA_ENVS = {"test", "local", "development", "dev", "ci", "rehearsal"}
+_LOCAL_MEDIA_SIGNING_SECRET = "dalya-local-media-url-signing-secret"
 
 
 def media_storage_dir() -> Path:
@@ -58,6 +65,55 @@ def media_storage_dir() -> Path:
     if configured:
         return Path(configured)
     return Path(__file__).resolve().parents[2] / "static" / "media"
+
+
+def media_url_ttl_seconds() -> int:
+    raw = os.getenv("MEDIA_URL_TTL_SECONDS")
+    if raw is None:
+        return DEFAULT_MEDIA_URL_TTL_SECONDS
+    try:
+        ttl = int(raw)
+    except ValueError as exc:
+        raise RuntimeError("MEDIA_URL_TTL_SECONDS must be an integer") from exc
+    if ttl <= 0:
+        raise RuntimeError("MEDIA_URL_TTL_SECONDS must be positive")
+    return ttl
+
+
+def media_url_signing_secret() -> str:
+    secret = os.getenv("MEDIA_URL_SIGNING_SECRET")
+    if secret:
+        return secret
+    if is_production():
+        raise RuntimeError("MEDIA_URL_SIGNING_SECRET is required in production")
+    if env_name() in _NON_PRODUCTION_MEDIA_ENVS:
+        return _LOCAL_MEDIA_SIGNING_SECRET
+    raise RuntimeError("MEDIA_URL_SIGNING_SECRET is required for media URL signing")
+
+
+def media_signature_payload(*, media_asset_id: str, brokerage_id: str, exp: int) -> str:
+    return f"{media_asset_id}.{brokerage_id}.{exp}"
+
+
+def sign_media_url_payload(*, media_asset_id: str, brokerage_id: str, exp: int) -> str:
+    return hmac.new(
+        media_url_signing_secret().encode("utf-8"),
+        media_signature_payload(
+            media_asset_id=media_asset_id,
+            brokerage_id=brokerage_id,
+            exp=exp,
+        ).encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+
+
+def media_signature_is_valid(*, media_asset_id: str, brokerage_id: str, exp: int, sig: str) -> bool:
+    expected = sign_media_url_payload(
+        media_asset_id=media_asset_id,
+        brokerage_id=brokerage_id,
+        exp=exp,
+    )
+    return hmac.compare_digest(expected, sig or "")
 
 
 class MediaValidationError(ValueError):
@@ -200,12 +256,32 @@ def register_external_media_asset(
     return asset
 
 
-def public_media_url(asset: DBMediaAsset) -> str:
-    """Transport-fetchable URL for an asset (external refs pass through)."""
+def signed_media_url(asset: DBMediaAsset, *, ttl_seconds: int | None = None) -> str:
+    """Short-lived transport-fetchable URL for an asset.
+
+    External refs pass through because those bytes are already hosted by the
+    listing/source provider. Local Dalya media is never returned as a static
+    public path; callers receive a signed endpoint URL instead.
+    """
     if asset.storage_ref.startswith("http://") or asset.storage_ref.startswith("https://"):
         return asset.storage_ref
+    ttl = ttl_seconds if ttl_seconds is not None else media_url_ttl_seconds()
+    if ttl <= 0:
+        raise RuntimeError("media URL TTL must be positive")
+    exp = int(time.time()) + ttl
+    sig = sign_media_url_payload(
+        media_asset_id=asset.media_asset_id,
+        brokerage_id=asset.brokerage_id,
+        exp=exp,
+    )
     base = os.getenv("PUBLIC_URL", "").rstrip("/")
-    return f"{base}/media/{asset.storage_ref}"
+    query = urlencode({"exp": str(exp), "sig": sig})
+    return f"{base}/media/{asset.media_asset_id}?{query}"
+
+
+def public_media_url(asset: DBMediaAsset) -> str:
+    """Deprecated alias: returns signed URLs for local Dalya media."""
+    return signed_media_url(asset)
 
 
 def listing_assets_for_attachment(db: Session, listing: DBListing) -> list[dict]:
@@ -264,7 +340,7 @@ def send_conversation_media(
     caption = (caption or "").strip()
 
     for index, asset in enumerate(assets):
-        url = public_media_url(asset)
+        url = signed_media_url(asset)
         body = caption if (index == 0 and caption) else ""
         send_result = transport.send_to_buyer(
             OutboundBuyerMessage(
