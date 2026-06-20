@@ -96,7 +96,7 @@ def resolve_request_brokerage_context(
     set_db_session_context(
         db,
         user_id=user_id,
-        is_platform_admin=is_platform_admin,
+        is_platform_admin=False,
     )
     active_memberships = (
         db.query(DBBrokerageMember)

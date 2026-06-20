@@ -8,6 +8,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
 
 from app.core.auth import CurrentUser, get_current_user
+from app.core.brokerage_access import resolve_request_brokerage_context
 from app.core.lead_ingest import ingest_lead_email
 from app.db.session import (
     SessionLocal,
@@ -33,7 +34,15 @@ from app.models.db_models import (
     DBListing,
     DBMessage,
 )
-from scripts.rls_rehearsal_dal170e1 import APPLY_SQL, ROLLBACK_SQL, RUNTIME_ROLE
+from scripts.rls_rehearsal_dal170e1 import (
+    APPLY_SQL,
+    ROLLBACK_SQL,
+    RUNTIME_ROLE,
+    _assert_rehearsal_mutation_allowed,
+    apply_sql_text,
+    main as rls_rehearsal_main,
+    rollback_sql_text,
+)
 
 
 def _execute_statements(statements: list[str]) -> None:
@@ -74,6 +83,84 @@ def _as_user(user_id: str):
         yield
     finally:
         app.dependency_overrides.pop(get_current_user, None)
+
+
+def _set_rehearsal_env(monkeypatch, *, dalya_env: str | None = "test", database_url: str | None = None) -> None:
+    monkeypatch.setenv("DALYA_ALLOW_RLS_REHEARSAL_MUTATION", "1")
+    monkeypatch.setenv("PROD_DB_HOST", "prod-db.example.com")
+    if dalya_env is None:
+        monkeypatch.delenv("DALYA_ENV", raising=False)
+    else:
+        monkeypatch.setenv("DALYA_ENV", dalya_env)
+    if database_url is None:
+        database_url = "postgresql://dalya_test_user:secret@test-db.local/dalya_test"
+    monkeypatch.setenv("DATABASE_URL", database_url)
+
+
+@pytest.mark.parametrize("dalya_env", ["production", "prod", "staging", "stage", "preview", "live", "qa", None])
+def test_rehearsal_mutation_refuses_live_missing_or_unknown_env(monkeypatch, dalya_env):
+    _set_rehearsal_env(monkeypatch, dalya_env=dalya_env)
+
+    with pytest.raises(SystemExit):
+        _assert_rehearsal_mutation_allowed(allow_rehearsal_mutation=True)
+
+
+def test_rehearsal_mutation_requires_explicit_approval(monkeypatch):
+    _set_rehearsal_env(monkeypatch)
+    monkeypatch.delenv("DALYA_ALLOW_RLS_REHEARSAL_MUTATION", raising=False)
+
+    with pytest.raises(SystemExit):
+        _assert_rehearsal_mutation_allowed()
+
+
+@pytest.mark.parametrize(
+    "database_url",
+    [
+        "postgresql://dalya_test_user:secret@prod-db.example.com/dalya_test",
+        "postgresql://dalya_test_user:secret@rehearsal-prod.example.com/dalya_test",
+        "postgresql://dalya_test_user:secret@test-db.local/dalya_staging",
+        "postgresql://prod_user:secret@test-db.local/dalya_test",
+    ],
+)
+def test_rehearsal_mutation_refuses_production_like_database_identity(monkeypatch, database_url):
+    _set_rehearsal_env(monkeypatch, database_url=database_url)
+
+    with pytest.raises(SystemExit):
+        _assert_rehearsal_mutation_allowed(allow_rehearsal_mutation=True)
+
+
+@pytest.mark.parametrize(
+    "database_url",
+    [
+        "",
+        "not-a-url",
+        "postgresql:///dalya_test",
+    ],
+)
+def test_rehearsal_mutation_refuses_missing_or_ambiguous_database_identity(monkeypatch, database_url):
+    _set_rehearsal_env(monkeypatch, database_url=database_url)
+
+    with pytest.raises(SystemExit):
+        _assert_rehearsal_mutation_allowed(allow_rehearsal_mutation=True)
+
+
+def test_rehearsal_dry_run_sql_is_available_without_mutation_env(monkeypatch):
+    monkeypatch.delenv("DALYA_ENV", raising=False)
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.delenv("DALYA_ALLOW_RLS_REHEARSAL_MUTATION", raising=False)
+
+    assert "create policy dal170e1_listings_tenant" in apply_sql_text()
+    assert "drop policy if exists dal170e1_listings_tenant" in rollback_sql_text()
+
+
+@pytest.mark.parametrize("mode", ["--apply", "--rollback"])
+def test_rehearsal_apply_and_rollback_cli_are_gated(monkeypatch, mode):
+    _set_rehearsal_env(monkeypatch)
+    monkeypatch.delenv("DALYA_ALLOW_RLS_REHEARSAL_MUTATION", raising=False)
+    monkeypatch.setattr("sys.argv", ["rls_rehearsal_dal170e1.py", mode])
+
+    with pytest.raises(SystemExit):
+        rls_rehearsal_main()
 
 
 @pytest.fixture
@@ -362,6 +449,40 @@ def test_dal172_selected_route_still_sets_brokerage_context(client, rls_seed):
     assert missing.json()["detail"]["code"] == "brokerage_context_required"
     assert selected.status_code == 200
     assert selected.json()["brokerage"]["brokerage_id"] == rls_seed["brokerage_b"]
+
+
+def test_admin_user_normal_route_does_not_seed_platform_admin_bypass(monkeypatch, rls_seed):
+    monkeypatch.setenv("ADMIN_USER_ID", rls_seed["multi_user"])
+    with SessionLocal() as db:
+        context = resolve_request_brokerage_context(
+            db,
+            CurrentUser(id=rls_seed["multi_user"], email="admin@example.com"),
+            rls_seed["brokerage_a"],
+            allow_platform_admin=False,
+        )
+        is_platform_admin = db.execute(text("select app.is_platform_admin()")).scalar()
+
+    assert context.brokerage_id == rls_seed["brokerage_a"]
+    assert context.is_platform_admin is False
+    assert is_platform_admin is False
+
+
+def test_platform_admin_bypass_requires_explicit_opt_in(monkeypatch, rls_seed):
+    platform_user = f"{rls_seed['prefix']}-platform-admin"
+    monkeypatch.setenv("ADMIN_USER_ID", platform_user)
+    with SessionLocal() as db:
+        context = resolve_request_brokerage_context(
+            db,
+            CurrentUser(id=platform_user, email="platform@example.com"),
+            rls_seed["brokerage_a"],
+            allow_platform_admin=True,
+        )
+        is_platform_admin = db.execute(text("select app.is_platform_admin()")).scalar()
+
+    assert context.brokerage_id == rls_seed["brokerage_a"]
+    assert context.role == "platform_admin"
+    assert context.is_platform_admin is True
+    assert is_platform_admin is True
 
 
 def test_lead_ingest_sets_explicit_service_context(monkeypatch, rls_seed):

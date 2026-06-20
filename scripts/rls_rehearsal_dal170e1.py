@@ -16,6 +16,10 @@ from urllib.parse import urlparse
 from sqlalchemy import create_engine, text
 
 
+ALLOWED_MUTATION_ENVS = {"test", "local", "development", "ci", "rehearsal"}
+LIVE_ENV_MARKERS = ("production", "prod", "staging", "stage", "preview", "live")
+SAFE_IDENTITY_MARKERS = ("test", "local", "localhost", "127.0.0.1", "ci", "dev", "development", "rehearsal")
+
 POLICY_NAMES = (
     ("brokerages", "dal170e1_brokerages_select"),
     ("brokerage_members", "dal170e1_brokerage_members_select"),
@@ -246,26 +250,52 @@ def rollback_sql_text() -> str:
     return _statement_block(ROLLBACK_SQL)
 
 
+def _database_url_metadata(database_url: str) -> tuple[str, str, str]:
+    parsed = urlparse(database_url)
+    host = (parsed.hostname or "").lower()
+    database = (parsed.path or "").lstrip("/").lower()
+    username = (parsed.username or "").lower()
+    if not host or not database or not username:
+        raise SystemExit("Refusing DAL-170E1 rehearsal RLS mutation: DATABASE_URL metadata is incomplete")
+    return host, database, username
+
+
+def _contains_live_marker(value: str) -> bool:
+    return any(marker in value for marker in LIVE_ENV_MARKERS)
+
+
+def _has_safe_identity_marker(*values: str) -> bool:
+    return any(any(marker in value for marker in SAFE_IDENTITY_MARKERS) for value in values)
+
+
 def _database_url_is_production_like(database_url: str) -> bool:
-    host = (urlparse(database_url).hostname or "").lower()
+    host, database, username = _database_url_metadata(database_url)
     prod_host = (os.getenv("PROD_DB_HOST") or "").lower()
-    return bool(prod_host and (host == prod_host or prod_host in host))
+    if prod_host and (host == prod_host or prod_host in host):
+        return True
+    return _contains_live_marker(host) or _contains_live_marker(database) or _contains_live_marker(username)
 
 
-def _assert_test_only() -> None:
+def _assert_rehearsal_mutation_allowed(*, allow_rehearsal_mutation: bool = False) -> None:
     dalya_env = (os.getenv("DALYA_ENV") or "").lower()
     database_url = os.getenv("DATABASE_URL") or ""
-    if dalya_env in {"production", "prod", "staging"}:
-        raise SystemExit(f"Refusing DAL-170E1 rehearsal RLS apply for DALYA_ENV={dalya_env}")
-    if _database_url_is_production_like(database_url):
-        raise SystemExit("Refusing DAL-170E1 rehearsal RLS apply against production-like database host")
-
-
-def _execute(statements: list[str]) -> None:
-    _assert_test_only()
-    database_url = os.getenv("DATABASE_URL")
+    mutation_allowed = allow_rehearsal_mutation or os.getenv("DALYA_ALLOW_RLS_REHEARSAL_MUTATION") == "1"
+    if not mutation_allowed:
+        raise SystemExit("Refusing DAL-170E1 rehearsal RLS mutation without explicit mutation approval")
+    if not dalya_env or dalya_env not in ALLOWED_MUTATION_ENVS:
+        raise SystemExit(f"Refusing DAL-170E1 rehearsal RLS mutation for DALYA_ENV={dalya_env or '<missing>'}")
     if not database_url:
         raise SystemExit("DATABASE_URL is required")
+    if _database_url_is_production_like(database_url):
+        raise SystemExit("Refusing DAL-170E1 rehearsal RLS mutation against production/staging-like database identity")
+    host, database, username = _database_url_metadata(database_url)
+    if not _has_safe_identity_marker(dalya_env, host, database, username):
+        raise SystemExit("Refusing DAL-170E1 rehearsal RLS mutation: database identity is not clearly test/local/rehearsal")
+
+
+def _execute(statements: list[str], *, allow_rehearsal_mutation: bool = False) -> None:
+    _assert_rehearsal_mutation_allowed(allow_rehearsal_mutation=allow_rehearsal_mutation)
+    database_url = os.getenv("DATABASE_URL")
     engine = create_engine(database_url, pool_pre_ping=True)
     with engine.begin() as conn:
         for statement in statements:
@@ -279,14 +309,19 @@ def main() -> int:
     mode.add_argument("--apply", action="store_true", help="Apply rehearsal RLS to a test/local database only")
     mode.add_argument("--rollback", action="store_true", help="Rollback DAL-170E1 rehearsal RLS from a test/local database")
     parser.add_argument("--print-rollback", action="store_true", help="Print rollback SQL instead of apply SQL")
+    parser.add_argument(
+        "--allow-rehearsal-mutation",
+        action="store_true",
+        help="Required for --apply/--rollback, in addition to a test/local/rehearsal DB identity",
+    )
     args = parser.parse_args()
 
     if args.apply:
-        _execute(APPLY_SQL)
+        _execute(APPLY_SQL, allow_rehearsal_mutation=args.allow_rehearsal_mutation)
         print("DAL-170E1 rehearsal RLS applied")
         return 0
     if args.rollback:
-        _execute(ROLLBACK_SQL)
+        _execute(ROLLBACK_SQL, allow_rehearsal_mutation=args.allow_rehearsal_mutation)
         print("DAL-170E1 rehearsal RLS rolled back")
         return 0
 
