@@ -56,7 +56,41 @@ E2_POLICY_NAMES = tuple(
     for table in E2_DIRECT_ROOT_TABLES
 )
 
-POLICY_NAMES = FIRST_TABLE_POLICY_NAMES + E2_POLICY_NAMES
+E3_PARENT_DERIVED_POLICY_NAMES = (
+    ("escalation_threads", "dal170e3_escalation_threads_tenant"),
+    ("messages", "dal170e3_messages_conversation_tenant"),
+    ("escalation_thread_questions", "dal170e3_escalation_thread_questions_thread_tenant"),
+    ("telegram_reply_routes", "dal170e3_telegram_reply_routes_parent_tenant"),
+)
+
+E3_NULLABLE_ROOT_TABLES = (
+    "offer_records",
+    "suspicious_activity",
+    "inbound_provider_events",
+)
+
+E3_NULLABLE_ROOT_POLICY_NAMES = tuple(
+    (table, f"dal170e3_{table}_tenant")
+    for table in E3_NULLABLE_ROOT_TABLES
+)
+
+E3_SERVICE_ONLY_TABLES = (
+    "message_queue",
+    "buyer_profiles",
+)
+
+E3_SERVICE_ONLY_POLICY_NAMES = tuple(
+    (table, f"dal170e3_{table}_service_only")
+    for table in E3_SERVICE_ONLY_TABLES
+)
+
+POLICY_NAMES = (
+    FIRST_TABLE_POLICY_NAMES
+    + E2_POLICY_NAMES
+    + E3_PARENT_DERIVED_POLICY_NAMES
+    + E3_NULLABLE_ROOT_POLICY_NAMES
+    + E3_SERVICE_ONLY_POLICY_NAMES
+)
 
 RUNTIME_ROLE = "dal170e1_rls_runtime"
 
@@ -70,7 +104,18 @@ FIRST_TABLES = (
     "buyer_profile_fields",
 )
 
-TABLES = FIRST_TABLES + E2_DIRECT_ROOT_TABLES
+E3_TABLES = (
+    "escalation_threads",
+    "messages",
+    "escalation_thread_questions",
+    "telegram_reply_routes",
+    "offer_records",
+    "suspicious_activity",
+    "inbound_provider_events",
+    "message_queue",
+    "buyer_profiles",
+)
+TABLES = FIRST_TABLES + E2_DIRECT_ROOT_TABLES + E3_TABLES
 
 ROLE_SQL = [
     f"""
@@ -248,7 +293,122 @@ E2_POLICY_SQL = [
     for table in E2_DIRECT_ROOT_TABLES
 ]
 
-POLICY_SQL = FIRST_POLICY_SQL + E2_POLICY_SQL
+E3_POLICY_SQL = [
+    """
+    create policy dal170e3_escalation_threads_tenant on escalation_threads
+    for all
+    using (
+        app.is_service()
+        or brokerage_id = app.current_brokerage_id()
+    )
+    with check (
+        app.is_service()
+        or brokerage_id = app.current_brokerage_id()
+    )
+    """,
+    """
+    create policy dal170e3_messages_conversation_tenant on messages
+    for all
+    using (
+        app.is_service()
+        or exists (
+            select 1
+            from conversations c
+            where c.conversation_id = messages.conversation_id
+              and c.brokerage_id = app.current_brokerage_id()
+        )
+    )
+    with check (
+        app.is_service()
+        or exists (
+            select 1
+            from conversations c
+            where c.conversation_id = messages.conversation_id
+              and c.brokerage_id = app.current_brokerage_id()
+        )
+    )
+    """,
+    """
+    create policy dal170e3_escalation_thread_questions_thread_tenant on escalation_thread_questions
+    for all
+    using (
+        app.is_service()
+        or exists (
+            select 1
+            from escalation_threads et
+            where et.thread_id = escalation_thread_questions.thread_id
+              and et.brokerage_id = app.current_brokerage_id()
+        )
+    )
+    with check (
+        app.is_service()
+        or exists (
+            select 1
+            from escalation_threads et
+            where et.thread_id = escalation_thread_questions.thread_id
+              and et.brokerage_id = app.current_brokerage_id()
+        )
+    )
+    """,
+    """
+    create policy dal170e3_telegram_reply_routes_parent_tenant on telegram_reply_routes
+    for all
+    using (
+        app.is_service()
+        or exists (
+            select 1
+            from conversations c
+            join listings l on l.listing_id = telegram_reply_routes.listing_id
+            where c.conversation_id = telegram_reply_routes.conversation_id
+              and c.listing_id = l.listing_id
+              and c.brokerage_id = app.current_brokerage_id()
+              and l.brokerage_id = app.current_brokerage_id()
+        )
+    )
+    with check (
+        app.is_service()
+        or exists (
+            select 1
+            from conversations c
+            join listings l on l.listing_id = telegram_reply_routes.listing_id
+            where c.conversation_id = telegram_reply_routes.conversation_id
+              and c.listing_id = l.listing_id
+              and c.brokerage_id = app.current_brokerage_id()
+              and l.brokerage_id = app.current_brokerage_id()
+        )
+    )
+    """,
+] + [
+    f"""
+    create policy dal170e3_{table}_tenant on {table}
+    for all
+    using (
+        app.is_service()
+        or (
+            brokerage_id is not null
+            and brokerage_id = app.current_brokerage_id()
+        )
+    )
+    with check (
+        app.is_service()
+        or (
+            brokerage_id is not null
+            and brokerage_id = app.current_brokerage_id()
+        )
+    )
+    """
+    for table in E3_NULLABLE_ROOT_TABLES
+] + [
+    f"""
+    create policy dal170e3_{table}_service_only on {table}
+    for all
+    using (app.is_service())
+    with check (app.is_service())
+    """
+    for table in E3_SERVICE_ONLY_TABLES
+]
+
+POLICY_SQL = FIRST_POLICY_SQL + E2_POLICY_SQL + E3_POLICY_SQL
 
 ENABLE_SQL = [
     f"alter table {table} enable row level security" for table in TABLES

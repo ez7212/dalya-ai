@@ -37,6 +37,8 @@ from app.models.db_models import (
 from scripts.rls_rehearsal_dal170e1 import (
     APPLY_SQL,
     E2_DIRECT_ROOT_TABLES,
+    E3_NULLABLE_ROOT_TABLES,
+    E3_SERVICE_ONLY_TABLES,
     ROLLBACK_SQL,
     RUNTIME_ROLE,
     _assert_rehearsal_mutation_allowed,
@@ -54,7 +56,12 @@ def _execute_statements(statements: list[str]) -> None:
 
 
 @contextmanager
-def _runtime_connection(*, user_id: str | None = None, brokerage_id: str | None = None):
+def _runtime_connection(
+    *,
+    user_id: str | None = None,
+    brokerage_id: str | None = None,
+    is_service: bool = False,
+):
     with engine.connect() as conn:
         trans = conn.begin()
         conn.execute(text(f"set local role {RUNTIME_ROLE}"))
@@ -67,6 +74,10 @@ def _runtime_connection(*, user_id: str | None = None, brokerage_id: str | None 
             conn.execute(
                 text("select set_config('app.brokerage_id', :value, true)"),
                 {"value": brokerage_id},
+            )
+        if is_service:
+            conn.execute(
+                text("select set_config('app.is_service', 'true', true)"),
             )
         try:
             yield conn
@@ -108,6 +119,30 @@ def _e2_row_refs(seed: dict[str, object]) -> list[tuple[str, str, object, object
     ]
 
 
+def _e3_parent_derived_row_refs(seed: dict[str, object]) -> list[tuple[str, str, object, object]]:
+    return [
+        ("escalation_threads", "thread_id", seed["thread_a"], seed["thread_b"]),
+        ("messages", "id", seed["message_a"], seed["message_b"]),
+        ("escalation_thread_questions", "question_id", seed["question_a"], seed["question_b"]),
+        ("telegram_reply_routes", "id", seed["telegram_a"], seed["telegram_b"]),
+    ]
+
+
+def _e3_nullable_root_row_refs(seed: dict[str, object]) -> list[tuple[str, str, object, object, object]]:
+    return [
+        ("offer_records", "offer_id", seed["offer_record_a"], seed["offer_record_b"], seed["offer_record_null"]),
+        ("suspicious_activity", "activity_id", seed["suspicious_a"], seed["suspicious_b"], seed["suspicious_null"]),
+        ("inbound_provider_events", "event_id", seed["inbound_event_a"], seed["inbound_event_b"], seed["inbound_event_null"]),
+    ]
+
+
+def _e3_service_only_row_refs(seed: dict[str, object]) -> list[tuple[str, str, object, object]]:
+    return [
+        ("message_queue", "id", seed["message_queue_a"], seed["message_queue_b"]),
+        ("buyer_profiles", "phone", seed["buyer_phone_a"], seed["buyer_phone_b"]),
+    ]
+
+
 def _seed_e2_rows(db, seed: dict[str, object]) -> dict[str, object]:
     prefix = seed["prefix"]
     rows = {
@@ -144,6 +179,21 @@ def _seed_e2_rows(db, seed: dict[str, object]) -> dict[str, object]:
         "media_asset_a": f"{prefix}-media-asset-a",
         "media_asset_b": f"{prefix}-media-asset-b",
         "legacy_buyer_phone": f"+97159{int(seed['prefix'].rsplit('-', 1)[-1], 16) % 10000000:07d}",
+        "message_a": f"{prefix}-message-a",
+        "message_b": f"{prefix}-message-b",
+        "thread_a": f"{prefix}-thread-a",
+        "thread_b": f"{prefix}-thread-b",
+        "question_a": f"{prefix}-question-a",
+        "question_b": f"{prefix}-question-b",
+        "offer_record_a": f"{prefix}-offer-record-a",
+        "offer_record_b": f"{prefix}-offer-record-b",
+        "offer_record_null": f"{prefix}-offer-record-null",
+        "suspicious_a": f"{prefix}-suspicious-a",
+        "suspicious_b": f"{prefix}-suspicious-b",
+        "suspicious_null": f"{prefix}-suspicious-null",
+        "inbound_event_a": f"{prefix}-inbound-event-a",
+        "inbound_event_b": f"{prefix}-inbound-event-b",
+        "inbound_event_null": f"{prefix}-inbound-event-null",
     }
     rows["buyer_phone_a"] = f"+97152{int(seed['prefix'].rsplit('-', 1)[-1], 16) % 10000000:07d}"
     rows["buyer_phone_b"] = f"+97153{int(seed['prefix'].rsplit('-', 1)[-1], 16) % 10000000:07d}"
@@ -494,6 +544,168 @@ def _seed_e2_rows(db, seed: dict[str, object]) -> dict[str, object]:
                 "storage_ref": f"{brokerage_id}/e2/{side}.jpg",
             },
         )
+        rows[f"message_{side}"] = db.execute(
+            text(
+                """
+                insert into messages (conversation_id, role, content, intent, metadata_json, timestamp)
+                values (:conversation_id, 'user', :content, 'general', '{}'::jsonb, now())
+                returning id
+                """
+            ),
+            {"conversation_id": conversation_id, "content": f"E3 message {side}"},
+        ).scalar_one()
+        db.execute(
+            text(
+                """
+                insert into escalation_threads (
+                    thread_id, brokerage_id, conversation_id, listing_id, buyer_phone, category,
+                    state, escalation_type, opened_at, last_buyer_message_at, question_count, metadata_json,
+                    created_at, updated_at
+                )
+                values (
+                    :thread_id, :brokerage_id, :conversation_id, :listing_id, :buyer_phone, 'pricing',
+                    'open', 'question', now(), now(), 1, '{}'::jsonb, now(), now()
+                )
+                """
+            ),
+            {
+                "thread_id": rows[f"thread_{side}"],
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": buyer_phone,
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into escalation_thread_questions (
+                    question_id, thread_id, buyer_message_id, question_text, category, sort_order,
+                    metadata_json, added_at
+                )
+                values (
+                    :question_id, :thread_id, :buyer_message_id, :question_text, 'pricing', 1,
+                    '{}'::jsonb, now()
+                )
+                """
+            ),
+            {
+                "question_id": rows[f"question_{side}"],
+                "thread_id": rows[f"thread_{side}"],
+                "buyer_message_id": rows[f"message_{side}"],
+                "question_text": f"E3 question {side}",
+            },
+        )
+        rows[f"telegram_{side}"] = db.execute(
+            text(
+                """
+                insert into telegram_reply_routes (
+                    telegram_message_id, buyer_phone, conversation_id, listing_id, buyer_name, alert_questions, created_at
+                )
+                values (
+                    :telegram_message_id, :buyer_phone, :conversation_id, :listing_id, :buyer_name, :alert_questions, now()
+                )
+                returning id
+                """
+            ),
+            {
+                "telegram_message_id": int(prefix.rsplit("-", 1)[-1], 16) % 1_000_000_000 + (1 if side == "a" else 2),
+                "buyer_phone": buyer_phone,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_name": f"E3 Buyer {side}",
+                "alert_questions": f"E3 route {side}",
+            },
+        ).scalar_one()
+        rows[f"message_queue_{side}"] = db.execute(
+            text(
+                """
+                insert into message_queue (
+                    from_number, to_number, body, message_sid, listing_id,
+                    media_urls, media_content_types, metadata_json, status, received_at
+                )
+                values (
+                    :from_number, :to_number, :body, :message_sid, :listing_id,
+                    '[]'::jsonb, '[]'::jsonb, :metadata_json, 'pending', now()
+                )
+                returning id
+                """
+            ),
+            {
+                "from_number": buyer_phone,
+                "to_number": f"+9715502{int(prefix.rsplit('-', 1)[-1], 16) % 10000:04d}",
+                "body": f"E3 queue {side}",
+                "message_sid": f"{prefix}-queue-{side}",
+                "listing_id": listing_id,
+                "metadata_json": f'{{"brokerage_id": "{brokerage_id}"}}',
+            },
+        ).scalar_one()
+        db.execute(
+            text(
+                """
+                insert into offer_records (
+                    offer_id, brokerage_id, listing_id, conversation_id, buyer_phone, buyer_name,
+                    offer_amount_aed, asking_price_aed, gap_pct, above_threshold, escalated, created_at
+                )
+                values (
+                    :offer_id, :brokerage_id, :listing_id, :conversation_id, :buyer_phone, :buyer_name,
+                    1500000, 1700000, 11.76, false, false, now()
+                )
+                """
+            ),
+            {
+                "offer_id": rows[f"offer_record_{side}"],
+                "brokerage_id": brokerage_id,
+                "listing_id": listing_id,
+                "conversation_id": conversation_id,
+                "buyer_phone": buyer_phone,
+                "buyer_name": f"E3 Buyer {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into suspicious_activity (
+                    activity_id, brokerage_id, listing_id, conversation_id, buyer_phone, buyer_name,
+                    category, trigger_message, created_at
+                )
+                values (
+                    :activity_id, :brokerage_id, :listing_id, :conversation_id, :buyer_phone, :buyer_name,
+                    'bypass_attempt', :trigger_message, now()
+                )
+                """
+            ),
+            {
+                "activity_id": rows[f"suspicious_{side}"],
+                "brokerage_id": brokerage_id,
+                "listing_id": listing_id,
+                "conversation_id": conversation_id,
+                "buyer_phone": buyer_phone,
+                "buyer_name": f"E3 Buyer {side}",
+                "trigger_message": f"E3 suspicious {side}",
+            },
+        )
+        db.execute(
+            text(
+                """
+                insert into inbound_provider_events (
+                    event_id, provider, endpoint, provider_event_id, payload_fingerprint,
+                    brokerage_id, status, replay_count, received_at
+                )
+                values (
+                    :event_id, 'twilio', :endpoint, :provider_event_id, :payload_fingerprint,
+                    :brokerage_id, 'processed', 0, now()
+                )
+                """
+            ),
+            {
+                "event_id": rows[f"inbound_event_{side}"],
+                "endpoint": f"e3-{side}-{prefix}",
+                "provider_event_id": f"{prefix}-provider-{side}",
+                "payload_fingerprint": f"{prefix}-fingerprint-{side}",
+                "brokerage_id": brokerage_id,
+            },
+        )
 
     db.execute(
         text(
@@ -504,6 +716,66 @@ def _seed_e2_rows(db, seed: dict[str, object]) -> dict[str, object]:
             """
         ),
         {"phone": rows["legacy_buyer_phone"]},
+    )
+    db.execute(
+        text(
+            """
+            insert into offer_records (
+                offer_id, brokerage_id, listing_id, conversation_id, buyer_phone, buyer_name,
+                offer_amount_aed, asking_price_aed, gap_pct, above_threshold, escalated, created_at
+            )
+            values (
+                :offer_id, null, :listing_id, :conversation_id, :buyer_phone, 'Legacy Null Offer',
+                1, 2, 50, false, false, now()
+            )
+            """
+        ),
+        {
+            "offer_id": rows["offer_record_null"],
+            "listing_id": seed["listing_a"],
+            "conversation_id": seed["conversation_a"],
+            "buyer_phone": rows["legacy_buyer_phone"],
+        },
+    )
+    db.execute(
+        text(
+            """
+            insert into suspicious_activity (
+                activity_id, brokerage_id, listing_id, conversation_id, buyer_phone,
+                category, trigger_message, created_at
+            )
+            values (
+                :activity_id, null, :listing_id, :conversation_id, :buyer_phone,
+                'bypass_attempt', 'Legacy null suspicious', now()
+            )
+            """
+        ),
+        {
+            "activity_id": rows["suspicious_null"],
+            "listing_id": seed["listing_a"],
+            "conversation_id": seed["conversation_a"],
+            "buyer_phone": rows["legacy_buyer_phone"],
+        },
+    )
+    db.execute(
+        text(
+            """
+            insert into inbound_provider_events (
+                event_id, provider, endpoint, provider_event_id, payload_fingerprint,
+                brokerage_id, status, replay_count, received_at
+            )
+            values (
+                :event_id, 'twilio', :endpoint, :provider_event_id, :payload_fingerprint,
+                null, 'processing', 0, now()
+            )
+            """
+        ),
+        {
+            "event_id": rows["inbound_event_null"],
+            "endpoint": f"e3-null-{prefix}",
+            "provider_event_id": f"{prefix}-provider-null",
+            "payload_fingerprint": f"{prefix}-fingerprint-null",
+        },
     )
     rows["legacy_null_inquiry"] = db.execute(
         text(
@@ -795,6 +1067,92 @@ def rls_seed(rls_policies):
         db.execute(text("delete from listing_facts where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
         db.execute(text("delete from listing_knowledge_summaries where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
         db.execute(text("delete from listing_documents where brokerage_id in (:a, :b)"), {"a": brokerage_a, "b": brokerage_b})
+        db.execute(
+            text(
+                """
+                delete from inbound_provider_events
+                where brokerage_id in (:a, :b)
+                   or event_id in (:event_a, :event_b, :event_null)
+                """
+            ),
+            {
+                "a": brokerage_a,
+                "b": brokerage_b,
+                "event_a": e2_rows["inbound_event_a"],
+                "event_b": e2_rows["inbound_event_b"],
+                "event_null": e2_rows["inbound_event_null"],
+            },
+        )
+        db.execute(
+            text(
+                """
+                delete from message_queue
+                where id in (:queue_a, :queue_b)
+                   or metadata_json ->> 'brokerage_id' in (:a, :b)
+                """
+            ),
+            {
+                "queue_a": e2_rows["message_queue_a"],
+                "queue_b": e2_rows["message_queue_b"],
+                "a": brokerage_a,
+                "b": brokerage_b,
+            },
+        )
+        db.execute(
+            text(
+                """
+                delete from telegram_reply_routes
+                where id in (:telegram_a, :telegram_b)
+                   or conversation_id in (:conversation_a, :conversation_b)
+                """
+            ),
+            {
+                "telegram_a": e2_rows["telegram_a"],
+                "telegram_b": e2_rows["telegram_b"],
+                "conversation_a": conversation_a,
+                "conversation_b": conversation_b,
+            },
+        )
+        db.execute(
+            text("delete from escalation_thread_questions where thread_id in (:thread_a, :thread_b)"),
+            {"thread_a": e2_rows["thread_a"], "thread_b": e2_rows["thread_b"]},
+        )
+        db.execute(
+            text("delete from escalation_threads where brokerage_id in (:a, :b)"),
+            {"a": brokerage_a, "b": brokerage_b},
+        )
+        db.execute(
+            text(
+                """
+                delete from suspicious_activity
+                where brokerage_id in (:a, :b)
+                   or activity_id in (:suspicious_a, :suspicious_b, :suspicious_null)
+                """
+            ),
+            {
+                "a": brokerage_a,
+                "b": brokerage_b,
+                "suspicious_a": e2_rows["suspicious_a"],
+                "suspicious_b": e2_rows["suspicious_b"],
+                "suspicious_null": e2_rows["suspicious_null"],
+            },
+        )
+        db.execute(
+            text(
+                """
+                delete from offer_records
+                where brokerage_id in (:a, :b)
+                   or offer_id in (:offer_a, :offer_b, :offer_null)
+                """
+            ),
+            {
+                "a": brokerage_a,
+                "b": brokerage_b,
+                "offer_a": e2_rows["offer_record_a"],
+                "offer_b": e2_rows["offer_record_b"],
+                "offer_null": e2_rows["offer_record_null"],
+            },
+        )
         db.query(DBAgentNotification).filter(DBAgentNotification.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBLeadTask).filter(DBLeadTask.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
         db.query(DBLeadAction).filter(DBLeadAction.brokerage_id.in_([brokerage_a, brokerage_b])).delete(synchronize_session=False)
@@ -931,6 +1289,111 @@ def test_e2_direct_root_insert_with_mismatched_brokerage_fails(rls_seed):
                     "media_asset_id": f"{rls_seed['prefix']}-bad-media",
                     "brokerage_b": rls_seed["brokerage_b"],
                     "listing_a": rls_seed["listing_a"],
+                },
+            )
+
+
+def test_e3_policy_table_groups_are_explicit():
+    assert E3_NULLABLE_ROOT_TABLES == (
+        "offer_records",
+        "suspicious_activity",
+        "inbound_provider_events",
+    )
+    assert E3_SERVICE_ONLY_TABLES == (
+        "message_queue",
+        "buyer_profiles",
+    )
+
+
+def test_e3_parent_derived_tables_hide_rows_without_context(rls_seed):
+    with _runtime_connection() as conn:
+        for table, key_column, key_a, key_b in _e3_parent_derived_row_refs(rls_seed):
+            rows = conn.execute(
+                text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b)"),
+                {"key_a": key_a, "key_b": key_b},
+            ).fetchall()
+            assert rows == [], table
+
+
+def test_e3_parent_derived_tables_cannot_read_other_brokerage_rows(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        for table, key_column, key_a, key_b in _e3_parent_derived_row_refs(rls_seed):
+            rows = {
+                row[0]
+                for row in conn.execute(
+                    text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b)"),
+                    {"key_a": key_a, "key_b": key_b},
+                ).fetchall()
+            }
+            assert rows == {key_a}, table
+
+
+def test_e3_nullable_root_tables_hide_null_and_other_brokerage_rows(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        for table, key_column, key_a, key_b, key_null in _e3_nullable_root_row_refs(rls_seed):
+            rows = {
+                row[0]
+                for row in conn.execute(
+                    text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b, :key_null)"),
+                    {"key_a": key_a, "key_b": key_b, "key_null": key_null},
+                ).fetchall()
+            }
+            assert rows == {key_a}, table
+
+
+def test_e3_service_only_tables_are_hidden_from_normal_tenant_context(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        for table, key_column, key_a, key_b in _e3_service_only_row_refs(rls_seed):
+            rows = conn.execute(
+                text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b)"),
+                {"key_a": key_a, "key_b": key_b},
+            ).fetchall()
+            assert rows == [], table
+
+
+def test_e3_service_context_can_access_service_only_rows(rls_seed):
+    with _runtime_connection(is_service=True) as conn:
+        for table, key_column, key_a, key_b in _e3_service_only_row_refs(rls_seed):
+            rows = {
+                row[0]
+                for row in conn.execute(
+                    text(f"select {key_column} from {table} where {key_column} in (:key_a, :key_b)"),
+                    {"key_a": key_a, "key_b": key_b},
+                ).fetchall()
+            }
+            assert rows == {key_a, key_b}, table
+
+
+def test_e3_nullable_root_null_rows_are_service_only(rls_seed):
+    with _runtime_connection(is_service=True) as conn:
+        for table, key_column, _key_a, _key_b, key_null in _e3_nullable_root_row_refs(rls_seed):
+            rows = conn.execute(
+                text(f"select {key_column} from {table} where {key_column} = :key_null"),
+                {"key_null": key_null},
+            ).fetchall()
+            assert rows == [(key_null,)], table
+
+
+def test_e3_parent_derived_message_update_to_other_brokerage_fails(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        with pytest.raises(DBAPIError):
+            conn.execute(
+                text("update messages set conversation_id = :conversation_b where id = :message_a"),
+                {
+                    "conversation_b": rls_seed["conversation_b"],
+                    "message_a": rls_seed["message_a"],
+                },
+            )
+
+
+def test_e3_parent_derived_telegram_route_update_to_mismatched_parent_fails(rls_seed):
+    with _runtime_connection(user_id=rls_seed["multi_user"], brokerage_id=rls_seed["brokerage_a"]) as conn:
+        with pytest.raises(DBAPIError):
+            conn.execute(
+                text("update telegram_reply_routes set listing_id = :listing_b where id = :telegram_a"),
+                {
+                    "listing_b": rls_seed["listing_b"],
+                    "telegram_a": rls_seed["telegram_a"],
                 },
             )
 
