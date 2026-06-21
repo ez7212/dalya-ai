@@ -58,6 +58,8 @@ from app.models.db_models import (
 
 router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 
+TERMINAL_ESCALATION_STATES = {"resolved", "timed_out", "opt_out_closed"}
+
 
 class AgentDashboardContext(BaseModel):
     brokerage_id: str
@@ -404,11 +406,28 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         .group_by(DBEscalationThread.conversation_id)
         .all()
     ) if conversation_ids else {}
+    terminal_thread_completed_at = dict(
+        db.query(
+            DBEscalationThread.conversation_id,
+            func.max(func.coalesce(
+                DBEscalationThread.closed_at,
+                DBEscalationThread.updated_at,
+                DBEscalationThread.last_buyer_message_at,
+            )),
+        )
+        .filter(
+            DBEscalationThread.conversation_id.in_(conversation_ids),
+            DBEscalationThread.state.in_(TERMINAL_ESCALATION_STATES),
+        )
+        .group_by(DBEscalationThread.conversation_id)
+        .all()
+    ) if conversation_ids else {}
 
     # needs_reply signal (DAL-170E5): derived from the latest inbound (buyer)
     # vs latest outbound (agent/bot) message timestamps, with no schema change.
     # A thread needs a reply when the buyer's last message is newer than any
-    # agent/bot response and the buyer has not opted out.
+    # agent/bot response, has not been covered by a terminal escalation state,
+    # and the buyer has not opted out.
     last_buyer_message_at = dict(
         db.query(DBMessage.conversation_id, func.max(DBMessage.timestamp))
         .filter(
@@ -473,9 +492,16 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         agent_at = last_agent_response_at.get(conv.conversation_id)
         has_pending_draft = conv.conversation_id in pending_draft_convs
         is_suppressed = bool(conv.buyer_phone) and conv.buyer_phone in suppressed_phones
+        terminal_at = terminal_thread_completed_at.get(conv.conversation_id)
+        terminal_covers_latest_buyer = bool(
+            buyer_at is not None
+            and terminal_at is not None
+            and terminal_at >= buyer_at
+        )
         needs_reply = bool(
             buyer_at is not None
             and (agent_at is None or buyer_at > agent_at)
+            and not terminal_covers_latest_buyer
             and not is_suppressed
         )
         if not needs_reply:
