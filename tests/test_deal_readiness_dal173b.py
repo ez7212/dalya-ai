@@ -29,6 +29,7 @@ def _complete_fields():
         "viewing_availability": "Thursday evening",
         "decision_makers": "buying with wife",
         "in_dubai_now": "yes",
+        "other_agent_status": "exclusive_with_us",
         "contact_preference": "whatsapp",
         "family_size": "family of 4",
     }
@@ -68,6 +69,7 @@ def test_missing_financing_viewing_decision_surfaced():
     assert "financing" in profile.missing_fields
     assert "viewing_availability" in profile.missing_fields
     assert "decision_makers" in profile.missing_fields
+    assert "other_agent_status" in profile.missing_fields
 
 
 def test_new_buyer_asks_budget_first():
@@ -84,6 +86,42 @@ def test_next_best_action_priority_is_deterministic():
     b = compute_readiness(fields)
     assert a == b  # deterministic
     assert a.next_best_action is NextBestAction.ASK_PURPOSE
+
+
+def test_other_agent_status_present_when_provided():
+    profile = compute_readiness({**_base_qualified(), "other_agent_status": "working_with_others"})
+    assert profile.present_fields["other_agent_status"] == "working_with_others"
+    assert "other_agent_status" not in profile.missing_fields
+
+
+def test_missing_other_agent_status_is_surfaced_for_qualified_buyer():
+    fields = {
+        "budget_max_aed": 2_500_000,
+        "financing": "cash",
+        "purpose": "investment",
+        "timeline": "this quarter",
+        "target_areas": ["JVC"],
+    }
+    profile = compute_readiness(fields)
+    assert "other_agent_status" in profile.missing_fields
+    assert profile.next_best_action is NextBestAction.ASK_OTHER_AGENT_STATUS
+
+
+def test_other_agent_status_increases_completeness_score_and_band_consistently():
+    fields = {
+        "budget_max_aed": 2_500_000,
+        "financing": "cash",
+        "purpose": "investment",
+        "timeline": "this quarter",
+        "target_areas": ["JVC"],
+    }
+    without_status = compute_readiness(fields)
+    with_status = compute_readiness({**fields, "other_agent_status": "exclusive_with_us"})
+    assert without_status.score == 65
+    assert without_status.priority_band is PriorityBand.MEDIUM
+    assert with_status.score == 70
+    assert with_status.priority_band is PriorityBand.HIGH
+    assert with_status.stage is without_status.stage
 
 
 def test_investor_vs_end_user_handled():
