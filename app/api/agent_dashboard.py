@@ -422,6 +422,8 @@ def _hot_leads(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         if assignment.conversation_id and not _conversation_is_visible(db, ctx, assignment.conversation_id):
             continue
         latest = latest_messages.get(assignment.conversation_id)
+        metadata = assignment.metadata_json or {}
+        hot_list_metadata = metadata.get("hot_list") if isinstance(metadata, dict) else {}
         leads.append({
             "id": assignment.assignment_id,
             "conversation_id": assignment.conversation_id,
@@ -438,6 +440,7 @@ def _hot_leads(db: Session, ctx: AgentDashboardContext) -> list[dict]:
             "last_buyer_message_at": _iso(assignment.last_buyer_message_at),
             "due_at": _iso(assignment.due_at),
             "status": assignment.status,
+            "readiness_shadow": (hot_list_metadata or {}).get("readiness_shadow"),
         })
     return leads
 

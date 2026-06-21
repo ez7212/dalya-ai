@@ -365,6 +365,8 @@ async def hot_list(
         latest = _latest_message(db, conv.conversation_id)
         listing = conv.listing
         spa = (listing.spa_data or {}) if listing else {}
+        metadata = assignment.metadata_json or {}
+        hot_list_metadata = metadata.get("hot_list") if isinstance(metadata, dict) else {}
 
         leads.append({
             "conversation_id": conv.conversation_id,
@@ -382,6 +384,7 @@ async def hot_list(
             "reason": assignment.next_action_reason,
             "due_at": assignment.due_at.isoformat() if assignment.due_at else None,
             "ai_mode": conversation_ai_mode(conv),
+            "readiness_shadow": (hot_list_metadata or {}).get("readiness_shadow"),
         })
 
     leads.sort(key=lambda item: item["urgency_score"], reverse=True)
