@@ -39,6 +39,7 @@ class NextBestAction(str, Enum):
     ASK_FINANCING = "ask_financing"
     ASK_TIMELINE = "ask_timeline"
     ASK_LOCATION = "ask_location"
+    ASK_OTHER_AGENT_STATUS = "ask_other_agent_status"
     ASK_VIEWING_AVAILABILITY = "ask_viewing_availability"
     SEND_OPTIONS = "send_options"
     DRAFT_FOLLOW_UP = "draft_follow_up"
@@ -80,6 +81,7 @@ _WEIGHTS = {
     "viewing_availability": 10,
     "decision_makers": 5,
     "in_dubai_now": 5,
+    "other_agent_status": 5,
     "contact_preference": 5,
 }
 
@@ -122,6 +124,7 @@ def compute_readiness(
     has_location = _any_present(fields, _LOCATION_FIELDS)
     has_viewing_availability = _present(fields.get("viewing_availability"))
     has_decision_makers = _present(fields.get("decision_makers"))
+    has_other_agent_status = _present(fields.get("other_agent_status"))
 
     purpose_value = str(fields.get("purpose") or "").strip().lower()
     is_end_user = purpose_value in {"end_use", "end_user", "both"}
@@ -155,6 +158,8 @@ def compute_readiness(
         score += _WEIGHTS["decision_makers"]
     if _present(fields.get("in_dubai_now")):
         score += _WEIGHTS["in_dubai_now"]
+    if has_other_agent_status:
+        score += _WEIGHTS["other_agent_status"]
     if _present(fields.get("contact_preference")):
         score += _WEIGHTS["contact_preference"]
     if viewing_intent:
@@ -172,6 +177,7 @@ def compute_readiness(
     # ── Qualification gates ────────────────────────────────────────────────
     qualified = has_budget and has_financing and (has_purpose or has_location)
     partially = has_budget or has_purpose or has_financing or has_location
+    other_agent_status_relevant = partially or viewing_intent or offer_intent
 
     # ── Stage (most-advanced first) ────────────────────────────────────────
     if agent_takeover or legal_question:
@@ -206,6 +212,8 @@ def compute_readiness(
         missing.append("viewing_availability")
     if (offer_intent or stage is ReadinessStage.OFFER_READY) and not has_decision_makers:
         missing.append("decision_makers")
+    if other_agent_status_relevant and not has_other_agent_status:
+        missing.append("other_agent_status")
     # End-users: surface family-fit fields as helpful-missing.
     if is_end_user and not _present(fields.get("family_size")):
         missing.append("family_size")
@@ -233,6 +241,11 @@ def compute_readiness(
         nba, reason = NextBestAction.ASK_TIMELINE, "Timeline separates call-now from nurture."
     elif not has_location:
         nba, reason = NextBestAction.ASK_LOCATION, "Need a location/property focus to match stock."
+    elif other_agent_status_relevant and not has_other_agent_status:
+        nba, reason = (
+            NextBestAction.ASK_OTHER_AGENT_STATUS,
+            "Clarify whether the buyer is already working with another agent.",
+        )
     elif stage is ReadinessStage.HOT:
         nba, reason = NextBestAction.AGENT_CALL_NOW, "Qualified and high-intent — call now."
     elif stage is ReadinessStage.QUALIFIED:
@@ -251,6 +264,7 @@ def compute_readiness(
             "viewing_availability",
             "decision_makers",
             "in_dubai_now",
+            "other_agent_status",
             "contact_preference",
             "family_size",
             "urgency",
