@@ -32,11 +32,13 @@ from app.core.brokerage_config import (
     runtime_config_for_brokerage,
     serialize_runtime_config,
 )
+from app.core.buyer_profiles import effective_fields
 from app.core.conversation_takeover import (
     AI_MODES,
     conversation_ai_mode,
     set_ai_mode,
 )
+from app.core.deal_readiness import compute_readiness, fields_from_effective_fields, serialize_readiness
 from app.core.hot_list import refresh_morning_hot_list
 from app.db.session import get_db, safe_commit
 from app.models.db_models import (
@@ -578,6 +580,77 @@ def _visible_profile_or_404(db: Session, *, profile_id: str, ctx: AgentContext):
     return profile, visible
 
 
+def _buyer_readiness_payload(
+    db: Session,
+    *,
+    profile,
+    top_conversation: DBConversation,
+    assignment: Optional[DBLeadAssignment] = None,
+    open_offers: int = 0,
+    has_next_viewing: bool = False,
+) -> dict:
+    qualification = effective_fields(db, profile)
+    fields = fields_from_effective_fields(
+        qualification,
+        fallback_budget_aed=top_conversation.detected_budget,
+    )
+    latest = (
+        db.query(DBMessage)
+        .filter(DBMessage.conversation_id == top_conversation.conversation_id)
+        .order_by(DBMessage.timestamp.desc())
+        .first()
+    )
+    summary = top_conversation.ai_summary or {}
+    summary_text = ""
+    if isinstance(summary, dict):
+        summary_text = " ".join(
+            str(value)
+            for key in ("summary", "one_line", "key_question", "next_step_hint", "interest_level")
+            if (value := summary.get(key))
+        ).lower()
+    latest_text = (latest.content if latest else "").lower()
+    text = f"{latest_text} {summary_text}"
+    next_action = assignment.next_action if assignment else None
+    conversation_ctx = {
+        "viewing_intent": bool(
+            has_next_viewing
+            or next_action == "book_viewing"
+            or (latest and latest.intent == "viewing_request")
+            or any(term in text for term in ("viewing", "view the", "see it", "tour"))
+        ),
+        "offer_intent": bool(
+            open_offers
+            or next_action == "review_offer"
+            or (
+                top_conversation.escalation_reason
+                and top_conversation.escalation_reason.startswith("offer:")
+            )
+        ),
+        "responsive": bool(latest and latest.role == "user"),
+        "urgent": bool((assignment and (assignment.urgency_score or 0) >= 70) or "urgent" in text),
+    }
+    listing = top_conversation.listing
+    listing_ctx = (
+        {
+            "listing_id": listing.listing_id,
+            "property_type": listing.property_type,
+        }
+        if listing
+        else (
+            {"listing_id": top_conversation.listing_id}
+            if top_conversation.listing_id
+            else None
+        )
+    )
+    return serialize_readiness(
+        compute_readiness(
+            fields,
+            conversation_ctx=conversation_ctx,
+            listing_ctx=listing_ctx,
+        )
+    )
+
+
 @router.get("/agent/buyers")
 async def list_buyers(
     filter: Optional[str] = None,
@@ -586,7 +659,6 @@ async def list_buyers(
     db: Session = Depends(get_db),
 ):
     """Buyer list (DAL-164): assignment-scoped — agents see their own buyers."""
-    from app.core.buyer_profiles import effective_fields
     from app.core.offers import OPEN_OFFER_STATUSES
     from app.models.db_models import (
         DBBrokerageBuyerProfile,
@@ -657,6 +729,14 @@ async def list_buyers(
             > 0
         )
         fields = effective_fields(db, profile)
+        deal_readiness = _buyer_readiness_payload(
+            db,
+            profile=profile,
+            top_conversation=top,
+            assignment=assignment,
+            open_offers=open_offers,
+            has_next_viewing=bool(next_viewing),
+        )
         listing = top.listing
         spa = (listing.spa_data or {}) if listing else {}
         last_activity = top.updated_at
@@ -672,6 +752,7 @@ async def list_buyers(
                 "financing": (fields.get("financing") or {}).get("value"),
                 "timeline": (fields.get("timeline") or {}).get("value"),
             },
+            "deal_readiness": deal_readiness,
             "score": assignment.urgency_score if assignment else None,
             "last_activity_at": last_activity.isoformat() if last_activity else None,
             "open_offers": open_offers,
@@ -705,7 +786,6 @@ async def buyer_card(
 ):
     """The buyer card (DAL-164): identity, provenance-tracked qualification,
     and synced histories read from their source tables."""
-    from app.core.buyer_profiles import effective_fields
     from app.core.offers import serialize_offer
     from app.models.db_models import (
         DBBuyerSuppression,
@@ -766,6 +846,22 @@ async def buyer_card(
         .count()
     )
 
+    top_conversation = visible[0]
+    assignment = (
+        db.query(DBLeadAssignment)
+        .filter(DBLeadAssignment.conversation_id == top_conversation.conversation_id)
+        .first()
+    )
+    next_viewing = next(
+        (
+            viewing
+            for viewing in viewings
+            if viewing.scheduled_for and viewing.scheduled_for >= datetime.utcnow()
+            and viewing.status in {"proposed", "confirmed"}
+        ),
+        None,
+    )
+
     return {
         "profile_id": profile.profile_id,
         "identity": {
@@ -776,6 +872,14 @@ async def buyer_card(
             "opted_out": opted_out,
         },
         "qualification": effective_fields(db, profile),
+        "deal_readiness": _buyer_readiness_payload(
+            db,
+            profile=profile,
+            top_conversation=top_conversation,
+            assignment=assignment,
+            open_offers=sum(1 for offer in offers if offer.status in {"draft_pending_confirm", "submitted", "countered"}),
+            has_next_viewing=bool(next_viewing),
+        ),
         "conversations": [
             {
                 "conversation_id": conv.conversation_id,

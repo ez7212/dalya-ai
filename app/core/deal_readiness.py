@@ -86,6 +86,35 @@ _WEIGHTS = {
 }
 
 
+def fields_from_effective_fields(
+    fields: Mapping[str, Any],
+    *,
+    fallback_budget_aed: Optional[Any] = None,
+) -> dict[str, Any]:
+    """Flatten buyer_profiles.effective_fields() into readiness input values.
+
+    `effective_fields()` already applies confirmed-over-inferred precedence and
+    keeps conflicting AI values as suggestion chips. This adapter intentionally
+    reads only the effective `value`, so readiness remains a derived read model
+    and never treats suggestions as confirmed truth.
+    """
+    flattened: dict[str, Any] = {}
+    for field, entry in (fields or {}).items():
+        if not isinstance(entry, Mapping):
+            continue
+        value = entry.get("value")
+        if value is not None:
+            flattened[field] = value
+
+    has_budget = any(
+        field in flattened
+        for field in ("budget_min_aed", "budget_max_aed", "budget")
+    )
+    if not has_budget and fallback_budget_aed is not None:
+        flattened["budget_max_aed"] = fallback_budget_aed
+    return flattened
+
+
 def _present(value: Any) -> bool:
     """A field counts as present when it has a meaningful, non-empty value."""
     if value is None:
@@ -281,3 +310,16 @@ def compute_readiness(
         priority_band=band,
         present_fields=present_fields,
     )
+
+
+def serialize_readiness(profile: DealReadinessProfile) -> dict:
+    """JSON-safe representation for API payloads."""
+    return {
+        "stage": profile.stage.value,
+        "missing_fields": list(profile.missing_fields),
+        "next_best_action": profile.next_best_action.value,
+        "next_best_action_reason": profile.next_best_action_reason,
+        "score": profile.score,
+        "priority_band": profile.priority_band.value,
+        "present_fields": dict(profile.present_fields),
+    }
