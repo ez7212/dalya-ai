@@ -7,8 +7,8 @@ model: stage, missing fields, next best action, score, and priority band.
 This module has NO side effects: it does not touch the database, send messages,
 or mutate hot-list / lead ranking. It is the read model described in
 docs/product/verified-facts-deal-readiness-spec.md (Part 2) and
-docs/product/deal-readiness-v1.md (Parts B/C). It is intentionally NOT wired into
-chatbot behaviour, the dashboard, or hot-list scoring yet.
+docs/product/deal-readiness-v1.md (Parts B/C). DAL-173C2 uses it only as
+optional chatbot planning metadata; it does not control sends or ranking.
 
 Input `fields` is a flat mapping of field-name -> resolved value. Callers holding
 the `effective_fields()` structure should pass
@@ -56,6 +56,29 @@ class PriorityBand(str, Enum):
     HIGH = "high"
 
 
+_QUESTION_BY_ACTION = {
+    NextBestAction.ASK_BUDGET: "What budget range should I keep in mind?",
+    NextBestAction.ASK_PURPOSE: "Is this mainly for you to live in, as an investment, or both?",
+    NextBestAction.ASK_FINANCING: "Would this be cash or mortgage-backed?",
+    NextBestAction.ASK_TIMELINE: "What buying timeline are you working with?",
+    NextBestAction.ASK_LOCATION: "Which areas or property type are you focused on?",
+    NextBestAction.ASK_OTHER_AGENT_STATUS: "Are you already working with another agent on this search?",
+    NextBestAction.ASK_VIEWING_AVAILABILITY: "What viewing window works for you?",
+}
+
+
+def question_for_next_best_action(action: Optional[NextBestAction | str]) -> Optional[str]:
+    """Return one conversational qualification question for ask-* readiness actions."""
+    if action is None:
+        return None
+    if not isinstance(action, NextBestAction):
+        try:
+            action = NextBestAction(str(action))
+        except ValueError:
+            return None
+    return _QUESTION_BY_ACTION.get(action)
+
+
 @dataclass(frozen=True)
 class DealReadinessProfile:
     stage: ReadinessStage
@@ -65,6 +88,11 @@ class DealReadinessProfile:
     score: int
     priority_band: PriorityBand
     present_fields: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def next_best_question(self) -> Optional[str]:
+        """One askable question for chatbot planning, or None for non-question actions."""
+        return question_for_next_best_action(self.next_best_action)
 
 
 # Field-name groups (reuse existing QUALIFICATION_FIELDS names).

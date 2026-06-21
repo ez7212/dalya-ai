@@ -24,6 +24,49 @@ if TYPE_CHECKING:
     from app.schemas.conversation import BuyerProfile
 
 
+_DIRECT_BUYER_QUESTION_HINTS = re.compile(
+    r"\b("
+    r"what|when|where|why|how|"
+    r"price|asking|cost|payment plan|handover|size|sqft|parking|"
+    r"service charge|fees|commission|noc|title deed|spa|contract|"
+    r"floor plan|photos|renders|brochure|seller|owner|mortgage|roi|yield"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def buyer_message_allows_readiness_question(latest_buyer_message: Optional[str]) -> bool:
+    """True when a qualification question can be appended without replacing an answer."""
+    message = (latest_buyer_message or "").strip()
+    if not message:
+        return False
+    lower = message.lower()
+    if "?" in message:
+        return False
+    if _DIRECT_BUYER_QUESTION_HINTS.search(lower):
+        return False
+    return True
+
+
+def build_readiness_next_question_section(
+    readiness_next_question: Optional[str],
+    *,
+    latest_buyer_message: Optional[str],
+) -> str:
+    """Optional prompt metadata for asking exactly one readiness question."""
+    question = (readiness_next_question or "").strip()
+    if not question or not buyer_message_allows_readiness_question(latest_buyer_message):
+        return ""
+    return f"""
+DEAL READINESS NEXT QUESTION (OPTIONAL)
+---------------------------------------
+If the response naturally has room for a short qualification follow-up, ask exactly this one question in the buyer's language:
+"{question}"
+
+Do not ask any other qualification question in this turn. Do not ask this if the buyer's latest message already answered it, if you are answering a direct property/process/factual question, or if your response already ends with another necessary question.
+"""
+
+
 def format_payment_schedule(spa: SPAParseResult) -> str:
     """Format payment schedule as clean readable text for the prompt, marking PAID vs UPCOMING."""
     if not spa.payment_schedule:
@@ -174,6 +217,8 @@ def build_system_prompt(
     additional_fees: Optional[list[dict]] = None,
     listing_amenities: Optional[list[dict]] = None,
     listing_anchor_times: Optional[list[dict]] = None,
+    readiness_next_question: Optional[str] = None,
+    latest_buyer_message: Optional[str] = None,
 ) -> str:
     """
     Build a complete system prompt for a specific listing's chatbot.
@@ -438,6 +483,11 @@ Area preference: {known_areas}{other_lines}
 
 Use this profile to personalise your responses. If you know their name, use it naturally. If their budget or preferences align well with this property, highlight the fit. If they've enquired about other properties, you can reference that context to make relevant comparisons or recommendations.
 """
+
+    readiness_next_question_section = build_readiness_next_question_section(
+        readiness_next_question,
+        latest_buyer_message=latest_buyer_message,
+    )
 
     # ── Same-brokerage portfolio alternatives ──────────────────────────────
     portfolio_section = ""
@@ -854,7 +904,7 @@ OTHER STYLE RULES
 - Do not cite developer credit ratings, delivery percentages, unit/home counts, or market-outperformance claims unless those exact figures are provided in this prompt from a named source.
 - For furnishing on off-plan units that are still under construction, default to unfurnished unless listing data says otherwise.
 - For pet questions in Dubai communities, if the listing does not specify the exact building rule, say most Dubai developments are pet-friendly subject to HOA/building rules, and that the listing agent can confirm the specific restriction.
-{community_section}{listing_enrichment_section}{buyer_section}{portfolio_section}{seller_qa_section}{seller_instructions}{media_section}{unit_profile_section}{ready_property_knowledge_section}{property_scope_section}{agent_private_section}{reference_documents_section}{additional_fees_block}{downward_revision_section}
+{community_section}{listing_enrichment_section}{buyer_section}{readiness_next_question_section}{portfolio_section}{seller_qa_section}{seller_instructions}{media_section}{unit_profile_section}{ready_property_knowledge_section}{property_scope_section}{agent_private_section}{reference_documents_section}{additional_fees_block}{downward_revision_section}
 YOUR RULES — FOLLOW THESE STRICTLY
 ------------------------------------
 1. NEVER quote a price lower than {format_aed(asking_price)} without escalating to the human agent
