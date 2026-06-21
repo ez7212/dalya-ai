@@ -10,9 +10,12 @@ from sqlalchemy.orm import Session
 logger = logging.getLogger(__name__)
 
 from app.core.brokerage_access import can_view_conversation, get_or_create_lead_assignment
+from app.core.buyer_profiles import effective_fields
+from app.core.deal_readiness import compute_readiness, fields_from_effective_fields, serialize_readiness
 from app.db.session import safe_commit
 from app.models.db_models import (
     DBBrokerage,
+    DBBrokerageBuyerProfile,
     DBConversation,
     DBDraftReply,
     DBHotlistRefreshRun,
@@ -224,6 +227,89 @@ def score_conversation(
     )
 
 
+def _readiness_conversation_context(score: HotListScore, conversation: DBConversation) -> dict:
+    latest_text = ""
+    latest_message = None
+    try:
+        latest_message = conversation.messages[-1] if conversation.messages else None
+        latest_text = (latest_message.content if latest_message else "").lower()
+    except Exception:
+        latest_text = ""
+    return {
+        "viewing_intent": bool(
+            score.next_action == "book_viewing"
+            or score.signal == "ready_to_view"
+            or (latest_message and latest_message.intent == "viewing_request")
+        ),
+        "offer_intent": bool(
+            score.next_action == "review_offer"
+            or score.signal == "firm_offer"
+            or _is_offer(conversation)
+        ),
+        "responsive": bool(latest_message and latest_message.role == "user"),
+        "urgent": bool((score.urgency_score or 0) >= 70 or any(term in latest_text for term in ("urgent", "asap", "serious"))),
+    }
+
+
+def build_hot_list_readiness_shadow(
+    *,
+    effective_buyer_fields: dict,
+    conversation: DBConversation,
+    score: HotListScore,
+) -> dict:
+    """Read-only DealReadiness metadata for hot-list inspection.
+
+    This is deliberately not an input to hot-list scoring, thresholds, task
+    creation, notifications, drafts, or sends.
+    """
+    listing = conversation.listing
+    fields = fields_from_effective_fields(
+        effective_buyer_fields or {},
+        fallback_budget_aed=conversation.detected_budget,
+    )
+    readiness = compute_readiness(
+        fields,
+        conversation_ctx=_readiness_conversation_context(score, conversation),
+        listing_ctx=(
+            {
+                "listing_id": listing.listing_id,
+                "property_type": listing.property_type,
+            }
+            if listing
+            else {"listing_id": conversation.listing_id}
+        ),
+    )
+    return {
+        "mode": "shadow_read_only",
+        "used_for_ranking": False,
+        "used_for_thresholds": False,
+        "used_for_tasks": False,
+        "deal_readiness": serialize_readiness(readiness),
+    }
+
+
+def _hot_list_readiness_shadow(
+    db: Session,
+    *,
+    conversation: DBConversation,
+    score: HotListScore,
+) -> dict:
+    profile = (
+        db.query(DBBrokerageBuyerProfile)
+        .filter(
+            DBBrokerageBuyerProfile.brokerage_id == conversation.brokerage_id,
+            DBBrokerageBuyerProfile.buyer_phone == conversation.buyer_phone,
+        )
+        .first()
+    )
+    fields = effective_fields(db, profile) if profile else {}
+    return build_hot_list_readiness_shadow(
+        effective_buyer_fields=fields,
+        conversation=conversation,
+        score=score,
+    )
+
+
 def _hot_task_key(brokerage_id: str, conversation_id: str, next_action: str) -> str:
     return f"morning_hot_list:{brokerage_id}:{conversation_id}:{next_action}"
 
@@ -249,6 +335,11 @@ def upsert_assignment_from_score(
             "latest_message_at": score.latest_message_at.isoformat() if score.latest_message_at else None,
             "buyer_message_count": score.buyer_message_count,
             "stale": score.stale,
+            "readiness_shadow": _hot_list_readiness_shadow(
+                db,
+                conversation=conversation,
+                score=score,
+            ),
         }
     })
     assignment.metadata_json = metadata
