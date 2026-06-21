@@ -1209,6 +1209,15 @@ class ChatbotEngine:
 
                     from app.core.ready_property_knowledge import ready_property_knowledge_for_prompt
 
+                    readiness_next_question = self._deal_readiness_next_question_for_prompt(
+                        db,
+                        brokerage_id=ctx.brokerage_id or db_listing.brokerage_id or conv.brokerage_id,
+                        buyer_phone=inbound.from_number,
+                        intent=intent,
+                        fallback_budget_aed=conv.detected_budget,
+                        listing_id=listing_id,
+                    )
+
                     # Build system prompt
                     system_prompt = build_system_prompt(
                         spa=spa,
@@ -1247,6 +1256,8 @@ class ChatbotEngine:
                         additional_fees=list(db_listing.additional_fees or []) or None,
                         listing_amenities=listing_amenities or None,
                         listing_anchor_times=listing_anchor_times or None,
+                        readiness_next_question=readiness_next_question,
+                        latest_buyer_message=inbound.body,
                     )
 
                     # Build conversation history for Claude (last 20 messages).
@@ -1847,6 +1858,61 @@ class ChatbotEngine:
         if threshold is None:
             threshold = getattr(db_listing, "negotiation_threshold_aed", None)
         return float(threshold) if threshold is not None else None
+
+    @staticmethod
+    def _deal_readiness_next_question_for_prompt(
+        db,
+        *,
+        brokerage_id: Optional[str],
+        buyer_phone: Optional[str],
+        intent: BuyerIntent,
+        fallback_budget_aed: Optional[float],
+        listing_id: Optional[str],
+    ) -> Optional[str]:
+        """Compute one optional qualification question without writing profile state."""
+        if not brokerage_id or not buyer_phone:
+            return None
+
+        try:
+            from app.core.buyer_profiles import effective_fields
+            from app.core.deal_readiness import compute_readiness, fields_from_effective_fields
+            from app.models.db_models import DBBrokerageBuyerProfile
+
+            profile = (
+                db.query(DBBrokerageBuyerProfile)
+                .filter(
+                    DBBrokerageBuyerProfile.brokerage_id == brokerage_id,
+                    DBBrokerageBuyerProfile.buyer_phone == buyer_phone,
+                )
+                .first()
+            )
+            if profile is None:
+                return None
+
+            readiness_fields = fields_from_effective_fields(
+                effective_fields(db, profile),
+                fallback_budget_aed=fallback_budget_aed,
+            )
+            viewing_intent = intent is BuyerIntent.viewing_request
+            offer_intent = intent in {
+                BuyerIntent.offer_submission,
+                BuyerIntent.price_negotiation,
+            }
+            if not readiness_fields and not viewing_intent and not offer_intent:
+                return None
+
+            readiness = compute_readiness(
+                readiness_fields,
+                conversation_ctx={
+                    "viewing_intent": viewing_intent,
+                    "offer_intent": offer_intent,
+                },
+                listing_ctx={"listing_id": listing_id} if listing_id else None,
+            )
+            return readiness.next_best_question
+        except Exception:  # pragma: no cover - readiness planning must not break chat
+            logger.warning("Deal readiness next-question planning failed", exc_info=True)
+            return None
 
     @staticmethod
     def _escalation_state_reason(escalation: EscalationAlert) -> str:

@@ -14,6 +14,7 @@ from app.core.deal_readiness import (
     ReadinessStage,
     compute_readiness,
     fields_from_effective_fields,
+    question_for_next_best_action,
     serialize_readiness,
 )
 
@@ -142,6 +143,17 @@ def test_missing_other_agent_status_is_surfaced_for_qualified_buyer():
     profile = compute_readiness(fields)
     assert "other_agent_status" in profile.missing_fields
     assert profile.next_best_action is NextBestAction.ASK_OTHER_AGENT_STATUS
+    assert profile.next_best_question == "Are you already working with another agent on this search?"
+
+
+def test_question_text_only_exists_for_ask_actions():
+    assert question_for_next_best_action(NextBestAction.ASK_VIEWING_AVAILABILITY) == (
+        "What viewing window works for you?"
+    )
+    assert question_for_next_best_action("ask_other_agent_status") == (
+        "Are you already working with another agent on this search?"
+    )
+    assert question_for_next_best_action(NextBestAction.SEND_OPTIONS) is None
 
 
 def test_other_agent_status_increases_completeness_score_and_band_consistently():
