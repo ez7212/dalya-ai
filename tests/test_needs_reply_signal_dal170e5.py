@@ -22,6 +22,7 @@ from app.models.db_models import (
     DBBuyerSuppression,
     DBConversation,
     DBDraftReply,
+    DBEscalationThread,
     DBHotlistRefreshRun,
     DBLeadAction,
     DBLeadAssignment,
@@ -120,6 +121,7 @@ def nr_seed():
                 for model in (DBLeadTask, DBLeadAssignment, DBDraftReply, DBAIDraft, DBOutreachDraft, DBHotlistRefreshRun):
                     db.query(model).filter(model.brokerage_id == bid).delete(synchronize_session=False)
                 if conv_ids:
+                    db.query(DBEscalationThread).filter(DBEscalationThread.conversation_id.in_(conv_ids)).delete(synchronize_session=False)
                     db.query(DBLeadAction).filter(DBLeadAction.conversation_id.in_(conv_ids)).delete(synchronize_session=False)
                     db.query(DBMessage).filter(DBMessage.conversation_id.in_(conv_ids)).delete(synchronize_session=False)
                     db.query(DBConversation).filter(DBConversation.conversation_id.in_(conv_ids)).delete(synchronize_session=False)
@@ -215,6 +217,34 @@ def test_opted_out_thread_not_needs_reply(client, nr_seed):
         safe_commit(db)
     _as_user(nr_seed["agent_id"])
     item = _conv(_dashboard(client), cid)
+    assert item["needs_reply"] is False
+    assert item["needs_reply_reason"] is None
+
+
+def test_resolved_escalation_thread_not_needs_reply_even_when_buyer_latest(client, nr_seed):
+    phone = f"+97155909{nr_seed['suffix'][:4]}"
+    with SessionLocal() as db:
+        cid = _add_conversation(
+            db, nr_seed["brokerage_id"], nr_seed["agent_id"], nr_seed["listing_id"], phone,
+            [("assistant", "I have escalated this.", 30), ("user", "Can you confirm the NOC?", 10)],
+        )
+        now = datetime.utcnow()
+        db.add(DBEscalationThread(
+            brokerage_id=nr_seed["brokerage_id"],
+            conversation_id=cid,
+            listing_id=nr_seed["listing_id"],
+            buyer_phone=phone,
+            agent_user_id=nr_seed["agent_id"],
+            category="regulatory",
+            state="resolved",
+            escalation_type="regulatory_request",
+            last_buyer_message_at=now - timedelta(minutes=10),
+            closed_at=now - timedelta(minutes=2),
+        ))
+        safe_commit(db)
+    _as_user(nr_seed["agent_id"])
+    item = _conv(_dashboard(client), cid)
+    assert item["last_message_role"] == "user"
     assert item["needs_reply"] is False
     assert item["needs_reply_reason"] is None
 
