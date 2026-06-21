@@ -24,6 +24,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from app.core.brokerage_access import mark_buyer_opted_out
+from app.core.buyer_profiles import confirm_field, effective_fields, get_or_create_profile
 from app.core.lead_ingest import (
     FIRST_TOUCH_TEMPLATE_NAME,
     FIRST_TOUCH_TEMPLATE_VERSION,
@@ -67,6 +68,20 @@ def _pf_email(buyer_phone: str, listing_url: str, name: str = "Imran Khan") -> d
             "Reference: PF-12345\n"
         ),
     }
+
+
+def _pf_email_with_message(
+    buyer_phone: str,
+    listing_url: str,
+    message: str,
+    name: str = "Imran Khan",
+) -> dict:
+    email = _pf_email(buyer_phone, listing_url, name=name)
+    email["body"] = email["body"].replace(
+        "Is this unit still available? What are the service charges?",
+        message,
+    )
+    return email
 
 
 def _bayut_email(buyer_phone: str, listing_url: str) -> dict:
@@ -361,13 +376,148 @@ def test_portal_lead_writes_tenant_scoped_brokerage_buyer_profile(lead_seed):
         assert scoped.name == "Imran Khan"
 
 
+def test_lead_ingest_maps_readiness_fields_to_profile_inferences(lead_seed):
+    seed = lead_seed
+    message = (
+        "Cash buyer, budget AED 2.4M, looking for a 3BR apartment for my family. "
+        "I live in Dubai, can view this weekend, not working with another agent. "
+        "Please WhatsApp me ASAP."
+    )
+
+    outcome = _ingest(seed, _pf_email_with_message(seed["buyer_phone"], seed["listing_url"], message))
+    assert outcome.status == "ingested"
+
+    with SessionLocal() as db:
+        profile = (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(
+                DBBrokerageBuyerProfile.brokerage_id == seed["brokerage_id"],
+                DBBrokerageBuyerProfile.buyer_phone == seed["buyer_phone"],
+            )
+            .one()
+        )
+        fields = effective_fields(db, profile)
+        assert fields["budget_max_aed"]["value"] == 2_400_000
+        assert fields["budget_max_aed"]["provenance"] == "ai_inferred"
+        assert fields["budget_max_aed"]["source_message_id"] is not None
+        assert fields["financing"]["value"] == "cash"
+        assert fields["purpose"]["value"] == "end_user"
+        assert fields["bedrooms"]["value"] == 3
+        assert fields["property_type"]["value"] == "apartment"
+        assert fields["in_dubai_now"]["value"] == "yes"
+        assert fields["viewing_availability"]["value"] == "this weekend"
+        assert fields["other_agent_status"]["value"] == "not_working_with_agent"
+        assert fields["urgency"]["value"] == "high"
+        assert fields["contact_preference"]["value"] == "whatsapp"
+        assert profile.metadata_json["latest_lead_ingest_readiness"]["mapped_fields"]
+        assignment = (
+            db.query(DBLeadAssignment)
+            .filter(DBLeadAssignment.conversation_id == outcome.conversation_id)
+            .one()
+        )
+        assert assignment.signal == "new_portal_lead"
+        assert assignment.next_action == "call_now"
+    assert len(seed["transport"].messages_to_buyer(seed["buyer_phone"])) == 1
+
+
+def test_lead_ingest_inferred_values_do_not_overwrite_confirmed_profile_fields(lead_seed):
+    seed = lead_seed
+    with SessionLocal() as db:
+        profile = get_or_create_profile(
+            db,
+            brokerage_id=seed["brokerage_id"],
+            buyer_phone=seed["buyer_phone"],
+            name="Confirmed Buyer",
+            source="manual",
+        )
+        confirm_field(
+            db,
+            profile=profile,
+            field="financing",
+            value="mortgage_preapproved",
+            confirmed_by=seed["agent_user_id"],
+        )
+
+    outcome = _ingest(
+        seed,
+        _pf_email_with_message(
+            seed["buyer_phone"],
+            seed["listing_url"],
+            "Cash buyer with budget AED 2M.",
+        ),
+    )
+    assert outcome.status == "ingested"
+
+    with SessionLocal() as db:
+        profile = (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(
+                DBBrokerageBuyerProfile.brokerage_id == seed["brokerage_id"],
+                DBBrokerageBuyerProfile.buyer_phone == seed["buyer_phone"],
+            )
+            .one()
+        )
+        fields = effective_fields(db, profile)
+        assert fields["financing"]["value"] == "mortgage_preapproved"
+        assert fields["financing"]["provenance"] == "agent_confirmed"
+        assert fields["financing"]["suggestion"]["value"] == "cash"
+        assert fields["budget_max_aed"]["value"] == 2_000_000
+
+
+def test_lead_ingest_missing_ambiguous_and_off_plan_viewing_values_remain_missing(lead_seed):
+    seed = lead_seed
+    with SessionLocal() as db:
+        listing = db.get(DBListing, seed["listing_id"])
+        listing.property_type = "off_plan"
+        listing.spa_data = {**(listing.spa_data or {}), "property_status": "off-plan"}
+        safe_commit(db)
+
+    outcome = _ingest(
+        seed,
+        _pf_email_with_message(
+            seed["buyer_phone"],
+            seed["listing_url"],
+            "Is this still available? Can I book a viewing this weekend?",
+        ),
+    )
+    assert outcome.status == "ingested"
+
+    with SessionLocal() as db:
+        profile = (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(
+                DBBrokerageBuyerProfile.brokerage_id == seed["brokerage_id"],
+                DBBrokerageBuyerProfile.buyer_phone == seed["buyer_phone"],
+            )
+            .one()
+        )
+        fields = effective_fields(db, profile)
+        assert "budget_max_aed" not in fields
+        assert "purpose" not in fields
+        assert "financing" not in fields
+        assert "viewing_availability" not in fields
+
+
 def test_same_phone_portal_leads_do_not_share_profile_state_across_brokerages(lead_seed):
     seed = lead_seed
 
-    first = _ingest(seed, _pf_email(seed["buyer_phone"], seed["listing_url"], name="Brokerage A Buyer"))
+    first = _ingest(
+        seed,
+        _pf_email_with_message(
+            seed["buyer_phone"],
+            seed["listing_url"],
+            "Cash buyer with budget AED 2M.",
+            name="Brokerage A Buyer",
+        ),
+    )
     second = _ingest(
         seed,
-        _pf_email(seed["buyer_phone"], seed["other_listing_url"], name="Brokerage B Buyer"),
+        _pf_email_with_message(
+            seed["buyer_phone"],
+            seed["other_listing_url"],
+            "Mortgage buyer with budget AED 3M.",
+            name="Brokerage B Buyer",
+        ),
         slug=seed["other_slug"],
     )
     assert first.status == "ingested"
@@ -393,6 +543,12 @@ def test_same_phone_portal_leads_do_not_share_profile_state_across_brokerages(le
         assert by_brokerage[seed["other_brokerage_id"]].name == "Brokerage B Buyer"
         assert by_brokerage[seed["brokerage_id"]].source == "portal"
         assert by_brokerage[seed["other_brokerage_id"]].source == "portal"
+        fields_a = effective_fields(db, by_brokerage[seed["brokerage_id"]])
+        fields_b = effective_fields(db, by_brokerage[seed["other_brokerage_id"]])
+        assert fields_a["financing"]["value"] == "cash"
+        assert fields_b["financing"]["value"] == "mortgage_unknown"
+        assert fields_a["budget_max_aed"]["value"] == 2_000_000
+        assert fields_b["budget_max_aed"]["value"] == 3_000_000
 
 
 def test_conversation_guard_blocks_partial_lead_ingest_without_unsafe_dereference(lead_seed, monkeypatch):

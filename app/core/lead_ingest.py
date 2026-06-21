@@ -30,7 +30,10 @@ from typing import Callable, Optional, Protocol
 from sqlalchemy.orm import Session
 
 from app.core.brokerage_access import is_buyer_suppressed, record_compliance_event
-from app.core.buyer_profiles import get_or_create_profile as get_or_create_buyer_profile
+from app.core.buyer_profiles import (
+    get_or_create_profile as get_or_create_buyer_profile,
+    record_inferred_field,
+)
 from app.db.session import safe_commit, set_db_session_context
 from app.models.db_models import (
     DBBrokerage,
@@ -56,6 +59,23 @@ FIRST_TOUCH_TEMPLATE = (
     "Hi {buyer_name}, thanks for your enquiry about {listing_label} on {portal}. "
     "I'm the AI assistant for {brokerage_name} — happy to answer questions or "
     "arrange a viewing. Reply STOP to opt out."
+)
+
+
+_BUDGET_AED = re.compile(
+    r"\b(?:budget|up to|around|approx(?:imately)?|aed|د\.إ)\s*(?:is|:)?\s*(?:aed|د\.إ)?\s*"
+    r"(\d+(?:\.\d+)?)\s*(m|mn|million|k|thousand)?\b",
+    re.IGNORECASE,
+)
+_FAMILY_SIZE = re.compile(r"\bfamily of\s+(\d+)\b", re.IGNORECASE)
+_BEDROOMS = re.compile(r"\b(\d+)\s*(?:br|bed(?:room)?s?)\b", re.IGNORECASE)
+_VIEWING_WINDOW = re.compile(
+    r"\b(?:viewing|view|tour|see it|visit)\b.{0,40}?\b(today|tomorrow|this weekend|weekend|this week|next week|morning|afternoon|evening)\b",
+    re.IGNORECASE,
+)
+_TIMELINE = re.compile(
+    r"\b(asap|immediately|this (?:week|month)|next (?:week|month)|within (?:a|\d+) (?:week|month)s?)\b",
+    re.IGNORECASE,
 )
 
 
@@ -250,6 +270,168 @@ def _resolve_listing(
     return None, "unresolved"
 
 
+# ── Readiness mapping (DAL-173C5) ─────────────────────────────────────────────
+
+
+def _listing_is_ready_property(listing: Optional[DBListing]) -> bool:
+    if not listing:
+        return False
+    raw_values = [
+        listing.property_type,
+        (listing.spa_data or {}).get("property_status"),
+        (listing.spa_data or {}).get("status"),
+    ]
+    text = " ".join(str(value or "").lower().replace("_", " ") for value in raw_values)
+    if any(term in text for term in ("off plan", "off-plan", "under construction", "construction")):
+        return False
+    return any(term in text for term in ("ready", "completed", "complete", "handed over"))
+
+
+def _lead_text(parsed: ParsedLead, raw_payload: dict) -> str:
+    return "\n".join(
+        str(value)
+        for value in (
+            raw_payload.get("subject"),
+            parsed.buyer_message,
+            raw_payload.get("body"),
+        )
+        if value
+    )
+
+
+def _budget_from_text(text: str) -> Optional[float]:
+    for match in _BUDGET_AED.finditer(text or ""):
+        amount = float(match.group(1))
+        suffix = (match.group(2) or "").lower()
+        if suffix in {"m", "mn", "million"}:
+            amount *= 1_000_000
+        elif suffix in {"k", "thousand"}:
+            amount *= 1_000
+        elif amount < 1000:
+            continue
+        if amount > 0:
+            return amount
+    return None
+
+
+def _property_type_from_text(text: str) -> Optional[str]:
+    lowered = (text or "").lower()
+    for label in ("apartment", "villa", "townhouse", "penthouse", "studio"):
+        if re.search(rf"\b{label}s?\b", lowered):
+            return label
+    return None
+
+
+def _extract_lead_readiness_signals(
+    *,
+    parsed: ParsedLead,
+    raw_payload: dict,
+    listing: Optional[DBListing],
+) -> dict[str, tuple[object, float]]:
+    """Conservative lead payload → DealReadiness-compatible field mapping."""
+    text = _lead_text(parsed, raw_payload)
+    lowered = text.lower()
+    signals: dict[str, tuple[object, float]] = {}
+
+    budget = _budget_from_text(text)
+    if budget is not None:
+        signals["budget_max_aed"] = (budget, 0.75)
+    if "cash" in lowered and not re.search(r"\b(no cash|not cash)\b", lowered):
+        signals["financing"] = ("cash", 0.8)
+    elif re.search(r"\bpre[- ]?approv\w*", lowered):
+        signals["financing"] = ("mortgage_preapproved", 0.8)
+    elif re.search(r"\b(mortgage|home loan|bank loan|financing)\b", lowered):
+        signals["financing"] = ("mortgage_unknown", 0.65)
+
+    if re.search(r"\b(invest(?:ment|or)?|roi|rental yield)\b", lowered):
+        signals["purpose"] = ("investment", 0.7)
+    elif re.search(r"\b(live in|end[- ]?user|own use|family home|for my family)\b", lowered):
+        signals["purpose"] = ("end_user", 0.7)
+
+    family_size = _FAMILY_SIZE.search(text)
+    if family_size:
+        signals["family_size"] = (int(family_size.group(1)), 0.7)
+    if re.search(r"\b(wife|husband|spouse|partner|parents?|family decision)\b", lowered):
+        signals["decision_makers"] = ("with_family_or_partner", 0.65)
+    if re.search(r"\b(not in dubai|outside dubai|overseas|abroad)\b", lowered):
+        signals["in_dubai_now"] = ("no", 0.7)
+    elif re.search(r"\b(in dubai|currently in dubai|i am here|i'm here)\b", lowered):
+        signals["in_dubai_now"] = ("yes", 0.7)
+    if re.search(r"\b(not working with (?:an|another) agent|no agent)\b", lowered):
+        signals["other_agent_status"] = ("not_working_with_agent", 0.75)
+    elif re.search(r"\b(already working with (?:an|another) agent|have an agent)\b", lowered):
+        signals["other_agent_status"] = ("working_with_agent", 0.75)
+    if re.search(r"\b(urgent|asap|immediately)\b", lowered):
+        signals["urgency"] = ("high", 0.7)
+    if re.search(r"\bwhats ?app\b", lowered):
+        signals["contact_preference"] = ("whatsapp", 0.75)
+    elif re.search(r"\bcall me|phone call|call back\b", lowered):
+        signals["contact_preference"] = ("call", 0.75)
+    elif re.search(r"\bemail me|by email\b", lowered):
+        signals["contact_preference"] = ("email", 0.75)
+
+    timeline = _TIMELINE.search(text)
+    if timeline:
+        signals["timeline"] = (timeline.group(1).lower(), 0.65)
+    bedrooms = _BEDROOMS.search(text)
+    if bedrooms:
+        signals["bedrooms"] = (int(bedrooms.group(1)), 0.7)
+    property_type = _property_type_from_text(text)
+    if property_type:
+        signals["property_type"] = (property_type, 0.65)
+
+    viewing = _VIEWING_WINDOW.search(text)
+    if viewing and _listing_is_ready_property(listing):
+        signals["viewing_availability"] = (viewing.group(1).lower(), 0.7)
+
+    return signals
+
+
+def _write_lead_readiness_profile_fields(
+    db: Session,
+    *,
+    brokerage: DBBrokerage,
+    parsed: ParsedLead,
+    raw_payload: dict,
+    conversation: DBConversation,
+    listing: Optional[DBListing],
+    message_id: Optional[int],
+) -> None:
+    """Write lead-ingest readiness signals as tenant-scoped AI inferences."""
+    profile = get_or_create_buyer_profile(
+        db,
+        brokerage_id=brokerage.brokerage_id,
+        buyer_phone=parsed.buyer_phone,
+        name=parsed.buyer_name or conversation.buyer_name,
+        source="portal",
+    )
+    if not profile.source:
+        profile.source = "portal"
+    signals = _extract_lead_readiness_signals(
+        parsed=parsed,
+        raw_payload=raw_payload,
+        listing=listing,
+    )
+    for field, (value, confidence) in signals.items():
+        record_inferred_field(
+            db,
+            profile=profile,
+            field=field,
+            value=value,
+            confidence=confidence,
+            source_message_id=message_id,
+        )
+    metadata = dict(profile.metadata_json or {})
+    metadata["latest_lead_ingest_readiness"] = {
+        "mapped_by": "lead_ingest",
+        "source": parsed.source,
+        "parser_version": parsed.parser_version,
+        "mapped_fields": sorted(signals),
+        "listing_id": listing.listing_id if listing else None,
+    }
+    profile.metadata_json = metadata
+
+
 # ── Ingestion pipeline ─────────────────────────────────────────────────────────
 
 
@@ -345,13 +527,26 @@ def ingest_parsed_lead(
             record.status = "duplicate"
             record.conversation_id = duplicate.conversation_id
             if duplicate.conversation_id:
-                db.add(DBMessage(
+                message = DBMessage(
                     conversation_id=duplicate.conversation_id,
                     role="user",
                     content=parsed.buyer_message or "[Repeat portal lead]",
                     intent="portal_lead_repeat",
                     metadata_json={"lead_ingest": {"ingest_id": record.ingest_id, "source": parsed.source}},
-                ))
+                )
+                db.add(message)
+                db.flush()
+                conversation = db.get(DBConversation, duplicate.conversation_id)
+                if conversation:
+                    _write_lead_readiness_profile_fields(
+                        db,
+                        brokerage=brokerage,
+                        parsed=parsed,
+                        raw_payload=raw_payload,
+                        conversation=conversation,
+                        listing=listing,
+                        message_id=message.id,
+                    )
             safe_commit(db)
             duplicate_conversation_id = duplicate.conversation_id
             return IngestOutcome(status="duplicate", record=_detach_record(db, record), conversation_id=duplicate_conversation_id)
@@ -370,13 +565,24 @@ def ingest_parsed_lead(
     if existing:
         record.status = "attached"
         record.conversation_id = existing.conversation_id
-        db.add(DBMessage(
+        message = DBMessage(
             conversation_id=existing.conversation_id,
             role="user",
             content=parsed.buyer_message or f"[New {parsed.source} lead for this buyer]",
             intent="portal_lead",
             metadata_json={"lead_ingest": {"ingest_id": record.ingest_id, "source": parsed.source}},
-        ))
+        )
+        db.add(message)
+        db.flush()
+        _write_lead_readiness_profile_fields(
+            db,
+            brokerage=brokerage,
+            parsed=parsed,
+            raw_payload=raw_payload,
+            conversation=existing,
+            listing=listing,
+            message_id=message.id,
+        )
         existing.updated_at = now
         safe_commit(db)
         _notify_lead_event(
@@ -427,7 +633,7 @@ def ingest_parsed_lead(
     if parsed.buyer_name and not conversation.buyer_name:
         conversation.buyer_name = parsed.buyer_name
     record.conversation_id = conversation.conversation_id
-    db.add(DBMessage(
+    message = DBMessage(
         conversation_id=conversation.conversation_id,
         role="user",
         content=parsed.buyer_message or f"[{parsed.source} enquiry]",
@@ -440,7 +646,9 @@ def ingest_parsed_lead(
                 "listing_resolution": resolution,
             }
         },
-    ))
+    )
+    db.add(message)
+    db.flush()
 
     # Hot-list entry with a strong recency score — a fresh lead outranks
     # stale conversations until the next scheduled re-score.
@@ -453,16 +661,16 @@ def ingest_parsed_lead(
     assignment.next_action_reason = "Fresh portal lead — speed-to-lead window is open."
     assignment.updated_at = now
 
-    # Buyer profile source.
-    profile = get_or_create_buyer_profile(
+    # Buyer profile source + readiness-compatible inferred fields.
+    _write_lead_readiness_profile_fields(
         db,
-        brokerage_id=brokerage.brokerage_id,
-        buyer_phone=parsed.buyer_phone,
-        name=parsed.buyer_name,
-        source="portal",
+        brokerage=brokerage,
+        parsed=parsed,
+        raw_payload=raw_payload,
+        conversation=conversation,
+        listing=listing,
+        message_id=message.id,
     )
-    if not profile.source:
-        profile.source = "portal"
     safe_commit(db)
 
     first_touch = _send_first_touch(
