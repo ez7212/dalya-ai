@@ -863,6 +863,7 @@ class ChatbotEngine:
                     spa,
                     property_type=db_listing.property_type,
                     seller_asking_price=seller_asking_price,
+                    ctx=ctx,
                 )
             elif self._detect_offplan_mortgage_query(inbound.body, db_listing, spa):
                 deterministic_response = self._compose_offplan_mortgage_response(
@@ -4428,7 +4429,9 @@ Summary:"""
         spa: SPAParseResult,
         property_type: Optional[str] = None,
         seller_asking_price: Optional[float] = None,
+        ctx: Optional["BrokerageContext"] = None,
     ) -> str:
+        ctx = ctx or legacy_default_context()
         status = (spa.property_status or "").lower()
         ready_prefix = (
             f"At the asking price of AED {seller_asking_price:,.0f}, this"
@@ -4442,7 +4445,7 @@ Summary:"""
             return (
                 f"{ready_prefix} is a ready property, so there is no remaining developer payment plan shown for the buyer to take over. "
                 "At purchase, the buyer-side costs are the agreed property price, DLD transfer fee, "
-                "{brokerage_short} fee, and any documented transaction line items. "
+                f"{ctx.brokerage_short} fee, and any documented transaction line items. "
                 "The listing agent can verify tenancy, service charge, and closing mechanics before offer stage."
             )
         paid = compute_paid_to_date(spa)
@@ -4451,10 +4454,11 @@ Summary:"""
         schedule = "\n".join(lines) if lines else "- No remaining developer instalments are shown in the SPA."
         return (
             f"{offplan_prefix} to the developer is AED {paid['remaining_aed']:,.0f}. "
-            f"You take over those payments directly with {developer} once the transfer is registered.\n\n"
+            f"The remaining {developer} schedule must be confirmed against the listing documents and transaction mechanics "
+            f"by {ctx.managing_agent_name} before you rely on it.\n\n"
             f"Remaining SPA instalments:\n{schedule}\n\n"
             "This is separate from the seller-equity amount settled at closing. "
-            "{managing_agent_name} will walk through the exact closing math once you're at offer stage."
+            f"{ctx.managing_agent_name} will walk through the exact closing math once you're at offer stage."
         )
 
     @classmethod

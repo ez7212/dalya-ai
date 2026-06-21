@@ -1,6 +1,6 @@
 # Dalya — Backlog
 
-*Last updated: 2026-06-21 (`DAL-192` DAL-173C6 hot-list readiness shadow metadata)*
+*Last updated: 2026-06-21 (`DAL-194` remaining-payment deterministic response wording P0)*
 
 This document is split into two parts, mirroring [FEATURES.md](./FEATURES.md):
 
@@ -139,6 +139,11 @@ Spec/docs only — **no runtime code changed**, safe parallel work while DAL-172
 - [x] **DAL-190: DAL-173C4 draft/agent-assist integration.** Added review-only `agent_assist` metadata to manual draft creation so agents can see source-tagged Verified Facts, fail-closed agent-confirmation guidance for missing or non-direct facts, and one DealReadiness follow-up suggestion derived from confirmed-over-inferred buyer profile fields. Draft body generation and the existing approve/edit/send flow remain unchanged. No autonomous send, WhatsApp send policy, buyer-facing chatbot behavior, hot-list ranking, lead ingest, migrations, RLS/DAL-170E, or broad frontend redesign changed.
 - [x] **DAL-191: DAL-173C5 lead-ingest readiness mapping.** Added conservative portal-lead mapping into tenant-scoped `ai_inferred` buyer profile fields for explicit readiness signals such as budget, financing, purpose, family/decision context, in-Dubai status, other-agent status, urgency, contact preference, bedrooms, property type, timeline, and ready-property viewing windows. Confirmed profile rows remain separate and win through existing `effective_fields()` precedence. Ambiguous/missing values remain missing, and off-plan inquiries do not infer `viewing_availability`. No WhatsApp send, chatbot behavior, draft generation, hot-list ranking, lead routing/assignment, frontend, migrations, RLS/DAL-170E, or Verified Facts answer behavior changed.
 - [x] **DAL-192: DAL-173C6 hot-list readiness shadow metadata.** Added read-only `readiness_shadow` metadata to hot-list assignments and agent hot-list/dashboard payloads using existing tenant-scoped buyer profile fields and DealReadiness. The shadow block is explicitly marked not used for ranking, thresholds, or tasks, and missing readiness data still produces inspectable metadata without dropping candidates. Hot-list scoring/order, thresholds, task creation, notifications, WhatsApp sends, chatbot behavior, drafts, lead ingest, frontend, migrations, RLS/DAL-170E, and Verified Facts behavior remain unchanged.
+
+### MVP re-review launch gates (2026-06-21)
+
+- [x] **DAL-194: Fix remaining-payment deterministic response wording.** P0 from the MVP re-review. The off-plan remaining-payment deterministic response now receives brokerage context, substitutes the managing agent before buyer-facing output, and avoids unsupported direct developer-payment takeover mechanics by requiring listing-document and transaction-mechanics confirmation before reliance. Ready-property remaining-payment responses still state there is no remaining developer payment plan, now with the brokerage fee label substituted. Added focused response-policy coverage for off-plan placeholder/direct-takeover regressions and ready-property no-schedule behavior. Verification: deterministic AST harness passed because the local Python 3.13 venv interpreter is missing and Python 3.14 cannot install the pinned Pydantic core; see `.omo/ulw-loop/evidence/dal-194-green-harness.txt`.
+- [ ] **DAL-193: LazyCodex harness trial for re-review follow-ups.** Installed `omo@sisyphuslabs` / LazyCodex into Codex and selected `DAL-194` as the first bounded trial task. Codex plugin listing shows `omo@sisyphuslabs` installed/enabled. `lazycodex-ai doctor` currently routes through an OpenCode doctor path and reports OpenCode-specific missing-binary/config/cache warnings, so plugin install is verified via Codex plugin listing rather than a green doctor check.
 
 ### Verified Facts — later implementation tickets (do not start during DAL-172A without Eric's approval)
 

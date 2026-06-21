@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from types import SimpleNamespace
 
 from app.core.chatbot_engine import ChatbotEngine
+from app.core.multitenant_context import BrokerageContext
 from app.core.payment_compute import compute_paid_to_date
 from app.core.refusal_variation import OUT_OF_SCOPE, SELLER_PII, render_refusal
 from app.core.response_validator import validate_and_rewrite_response
@@ -39,6 +40,25 @@ def _sample_spa() -> SPAParseResult:
                 amount_incl_vat_aed=9_000_000,
             ),
         ],
+    )
+
+
+def _sample_brokerage_context() -> BrokerageContext:
+    return BrokerageContext(
+        brokerage_id="brokerage-1",
+        brokerage_name="Best Homes Realty",
+        brokerage_short="Best Homes",
+        brokerage_arabic="بيست هومز",
+        managing_agent_name="Karim",
+        managing_agent_title="agent managing this listing",
+        commission_rate=0.0085,
+        market_benchmark_rate=0.02,
+        dashboard_url="dalya.ai/dashboard",
+        brokerage_ai_number="+971500000201",
+        agents_ai_number="+971500000299",
+        managing_agent_phone="+971501234567",
+        managing_agent_user_id="karim",
+        legacy_telegram_alerts=False,
     )
 
 
@@ -227,11 +247,21 @@ def test_soft_offer_pause_ignores_process_only_hypothetical():
 
 
 def test_deterministic_remaining_payment_response_uses_spa_without_paid_details():
-    response = ChatbotEngine._compose_remaining_payment_response(_sample_spa())
+    response = ChatbotEngine._compose_remaining_payment_response(
+        _sample_spa(),
+        ctx=_sample_brokerage_context(),
+    )
+    lowered = response.lower()
 
     assert "AED 9,000,000" in response
     assert "Handover" in response
     assert "2099" in response
+    assert "Karim" in response
+    assert "{managing_agent_name}" not in response
+    assert "{brokerage_short}" not in response
+    assert "take over those payments directly" not in lowered
+    assert "once the transfer is registered" not in lowered
+    assert "confirmed against the listing documents" in lowered
     assert "15,000,000" not in response
     assert "40%" not in response
 
@@ -240,6 +270,7 @@ def test_remaining_payment_response_includes_asking_price_when_available():
     response = ChatbotEngine._compose_remaining_payment_response(
         _sample_spa(),
         seller_asking_price=16_500_000,
+        ctx=_sample_brokerage_context(),
     )
 
     assert response.startswith("At the asking price of AED 16,500,000")
@@ -331,6 +362,32 @@ def test_ready_property_fee_response_has_no_developer_schedule_or_savings_pitch(
     assert "ready property" in response.lower()
     assert "no remaining developer payment schedule" in response.lower()
     assert "saves roughly" not in response.lower()
+
+
+def test_ready_remaining_payment_response_keeps_no_schedule_behavior():
+    spa = SPAParseResult(
+        project="Address JBR",
+        unit_number="3105",
+        developer="Emaar",
+        property_type="Apartment",
+        purchase_price_aed=2_800_000,
+        property_status="Ready",
+        payment_schedule=[],
+    )
+
+    response = ChatbotEngine._compose_remaining_payment_response(
+        spa,
+        property_type="ready",
+        seller_asking_price=2_800_000,
+        ctx=_sample_brokerage_context(),
+    )
+    lowered = response.lower()
+
+    assert "ready property" in lowered
+    assert "no remaining developer payment plan" in lowered
+    assert "Best Homes fee" in response
+    assert "{brokerage_short}" not in response
+    assert "{managing_agent_name}" not in response
 
 
 def test_offplan_mortgage_response_encodes_real_constraints():
