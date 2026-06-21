@@ -67,6 +67,50 @@ Do not ask any other qualification question in this turn. Do not ask this if the
 """
 
 
+def build_verified_facts_grounding_section(verified_facts_grounding) -> str:
+    """Prompt metadata for Dubai process/fee facts, or empty when not applicable."""
+    if not verified_facts_grounding or not getattr(verified_facts_grounding, "applies", False):
+        return ""
+
+    from app.core.verified_facts import fact_source_label
+
+    direct_facts = list(getattr(verified_facts_grounding, "direct_facts", ()) or ())
+    blocked_facts = list(getattr(verified_facts_grounding, "blocked_facts", ()) or ())
+    missing_topics = list(getattr(verified_facts_grounding, "missing_topics", ()) or ())
+
+    direct_lines = [
+        f"- {fact.text} Source: {fact_source_label(fact)}."
+        for fact in direct_facts
+    ]
+    blocked_lines = [
+        f"- {fact.key}: policy={fact.runtime_policy.value}, source={fact_source_label(fact)}"
+        for fact in blocked_facts
+    ]
+    missing_lines = [f"- {topic}" for topic in missing_topics]
+
+    direct_block = "\n".join(direct_lines) if direct_lines else "- None for this buyer turn."
+    blocked_block = "\n".join(blocked_lines) if blocked_lines else "- None."
+    missing_block = "\n".join(missing_lines) if missing_lines else "- None."
+
+    return f"""
+VERIFIED FACTS — DUBAI PROCESS/FEE ANSWER GROUNDING
+---------------------------------------------------
+Use this section only for Dubai process, fee, NOC, DLD, RERA/Trakheesi, mortgage/process, or legal-adjacent transaction claims.
+
+Active direct facts you may state:
+{direct_block}
+
+Facts/topics that are not direct-answer safe:
+{blocked_block}
+{missing_block}
+
+Rules:
+- Do not invent fee percentages, DLD/RERA rules, NOC requirements, legal steps, mortgage policy, or payment-protection advice.
+- If the buyer asks for a topic listed as not direct-answer safe, say the listing agent needs to confirm it before you rely on it.
+- Listing-specific data passed elsewhere may still answer listing facts, but do not generalize listing-specific facts into Dubai process rules.
+"""
+
+
 def format_payment_schedule(spa: SPAParseResult) -> str:
     """Format payment schedule as clean readable text for the prompt, marking PAID vs UPCOMING."""
     if not spa.payment_schedule:
@@ -219,6 +263,9 @@ def build_system_prompt(
     listing_anchor_times: Optional[list[dict]] = None,
     readiness_next_question: Optional[str] = None,
     latest_buyer_message: Optional[str] = None,
+    verified_facts_grounding=None,
+    dld_transfer_fee_pct: Optional[float] = 0.04,
+    dld_transfer_fee_source: Optional[str] = "DLD fee schedule [S1]",
 ) -> str:
     """
     Build a complete system prompt for a specific listing's chatbot.
@@ -274,6 +321,9 @@ def build_system_prompt(
     market_pct_label = _fmt_pct(market_benchmark_rate)
     savings_rate = max(market_benchmark_rate - commission_rate, 0.0)
     savings_pct_label = _fmt_pct(savings_rate)
+    dld_fee_pct_label = _fmt_pct(dld_transfer_fee_pct) if dld_transfer_fee_pct is not None else None
+    dld_fee_source_label = dld_transfer_fee_source or "Verified Facts"
+    dld_fee_amount = asking_price * dld_transfer_fee_pct if dld_transfer_fee_pct is not None else None
     buyer_fee_line = (
         f"- {brokerage_short} brokerage fee: {commission_pct_label} flat paid by the buyer on the completed transaction."
     )
@@ -281,6 +331,32 @@ def build_system_prompt(
         f"Only mention comparison with the {market_pct_label} market benchmark if the buyer explicitly asks whether this fee is cheaper than market and the commission is genuinely below that benchmark."
         if savings_rate > 0
         else f"Do not claim buyer savings versus the {market_pct_label} market benchmark because the configured fee is not below that benchmark."
+    )
+    dld_fee_line = (
+        f"- DLD transfer fee ({dld_fee_pct_label}, source: {dld_fee_source_label}): AED {dld_fee_amount:,.0f}"
+        if dld_fee_amount is not None and dld_fee_pct_label
+        else "- DLD transfer fee: do not quote a percentage or AED amount unless an active direct Verified Fact is provided for this turn."
+    )
+    dld_fee_short_line = (
+        f"- DLD transfer fee: {dld_fee_pct_label} of property value (source: {dld_fee_source_label}; paid to Dubai Land Department, separate from brokerage)"
+        if dld_fee_pct_label
+        else "- DLD transfer fee: agent confirmation required before quoting a percentage or AED amount."
+    )
+    dld_total_value = asking_price + (dld_fee_amount or 0) + asking_price * commission_rate
+    dld_total_line = (
+        f"- Total transaction value at asking: AED {dld_total_value:,.0f}"
+        if dld_fee_amount is not None
+        else "- Total transaction value: do not calculate a DLD-inclusive total until DLD fee facts are active and direct-answer safe."
+    )
+    dld_total_example = (
+        f"AED {dld_total_value:,.0f}"
+        if dld_fee_amount is not None
+        else "agent-confirmed once DLD fees are verified"
+    )
+    dld_off_plan_total_example = (
+        f"AED {asking_price:,.0f} + AED {dld_fee_amount:,.0f} + AED {asking_price * commission_rate:,.0f} = AED {dld_total_value:,.0f}"
+        if dld_fee_amount is not None
+        else "agent-confirmed once DLD fees are verified"
     )
     if is_ready_property:
         total_cost_guidance = f"""
@@ -290,9 +366,9 @@ When a buyer asks about total fees, total cost, or "what does it cost to buy at 
 
 Correct structure:
 - Property price paid to the seller: {format_aed(asking_price)}
-- DLD transfer fee (4%): AED {asking_price * 0.04:,.0f}
+{dld_fee_line}
 - {brokerage_short} brokerage ({commission_pct_label}): AED {asking_price * commission_rate:,.0f}
-- Total transaction value at asking: AED {asking_price + asking_price * 0.04 + asking_price * commission_rate:,.0f}
+{dld_total_line}
 
 Say clearly: the asking price is the seller price. There is no separate seller-equity line on top of the asking price and no remaining developer payment schedule for the buyer to take over.
 
@@ -301,10 +377,10 @@ EXAMPLE — buyer at asking on this ready listing:
 "At asking ({format_aed(asking_price)}), the buyer-side breakdown is:
 
 1. Price paid to seller: {format_aed(asking_price)}
-2. DLD transfer fee (4%): AED {asking_price * 0.04:,.0f}
+2. {dld_fee_line.lstrip("- ")}
 3. {brokerage_short} brokerage ({commission_pct_label}): AED {asking_price * commission_rate:,.0f}
 
-Total: AED {asking_price + asking_price * 0.04 + asking_price * commission_rate:,.0f}."
+Total: {dld_total_example}."
 
 BANNED READY-PROPERTY FRAMINGS:
 - "plus seller equity at closing"
@@ -319,7 +395,7 @@ TOTAL COST BREAKDOWN — OFF-PLAN RESALE FRAMING (Phase 9.2):
 When a buyer asks about total fees, total cost, or "what does it cost to buy at asking", structure the answer in THREE buckets. NEVER lump asking price into a generic "fees" total. The asking price is the total property price and it splits between (a) seller equity at closing and (b) remaining developer balance assumed over the original SPA schedule.
 
 BUCKET 1 — DUE AT CLOSING (paid by buyer in cash/transfer at trustees registration):
-- DLD transfer fee (4% of asking): AED {asking_price * 0.04:,.0f} (paid to Dubai Land Department)
+{dld_fee_line}
 - {brokerage_short} brokerage ({commission_pct_label} of asking): AED {asking_price * commission_rate:,.0f} (paid to us)
 - Seller equity at closing — settled with the seller for the portion already paid to the developer. Frame as a structural component, not a quoted AED figure unless the verified closing statement is available.
 
@@ -327,7 +403,7 @@ BUCKET 2 — OVER REMAINING SPA SCHEDULE (paid by buyer to the developer through
 - Remaining developer balance: paid per the original SPA payment schedule. The buyer takes over the existing schedule from trustees registration; this amount is NOT due at closing.
 
 BUCKET 3 — TOTAL TRANSACTION OUTLAY (across the full lifecycle, NOT all due upfront):
-- Asking price + DLD + {brokerage_short} brokerage = AED {asking_price + asking_price * 0.04 + asking_price * commission_rate:,.0f}.
+- Asking price + DLD + {brokerage_short} brokerage = {dld_total_example}.
 - This is the lifetime transaction value. The cash-at-closing figure is DLD + {brokerage_short} + seller-equity portion only.
 
 EXAMPLE — buyer at asking on this listing:
@@ -335,14 +411,14 @@ EXAMPLE — buyer at asking on this listing:
 "Here's the cost breakdown if you buy at asking ({format_aed(asking_price)}):
 
 At closing:
-1. DLD transfer fee (4%): AED {asking_price * 0.04:,.0f}
+1. {dld_fee_line.lstrip("- ")}
 2. {brokerage_short} brokerage ({commission_pct_label}): AED {asking_price * commission_rate:,.0f}
 3. Seller equity portion settled at closing. {managing_agent_name} will walk through the exact figure when you're at offer stage.
 
 Over the remaining SPA schedule:
 1. Remaining developer balance is paid directly to the developer per the original instalment schedule through handover.
 
-Total transaction value: AED {asking_price:,.0f} + AED {asking_price * 0.04:,.0f} + AED {asking_price * commission_rate:,.0f} = AED {asking_price + asking_price * 0.04 + asking_price * commission_rate:,.0f}."
+Total transaction value: {dld_off_plan_total_example}."
 
 BANNED OFF-PLAN FRAMINGS:
 - "Total fees on top of asking: AED X" — wrong, lumps asking into fees.
@@ -488,6 +564,7 @@ Use this profile to personalise your responses. If you know their name, use it n
         readiness_next_question,
         latest_buyer_message=latest_buyer_message,
     )
+    verified_facts_grounding_section = build_verified_facts_grounding_section(verified_facts_grounding)
 
     # ── Same-brokerage portfolio alternatives ──────────────────────────────
     portfolio_section = ""
@@ -852,8 +929,8 @@ VAT: {f'{spa.vat_percent:.0f}%' if spa.vat_percent else '0% (VAT exempt)'}
 
 FEES — NEVER CONFLATE THESE:
 {buyer_fee_line}
-- DLD transfer fee: 4% of property value (paid to Dubai Land Department, separate from brokerage)
-- These are SEPARATE charges. The {commission_pct_label} is OUR fee. The 4% is the GOVERNMENT registration fee. Do NOT describe one as the other.
+{dld_fee_short_line}
+- These are SEPARATE charges. The {commission_pct_label} is OUR fee. The DLD fee is the GOVERNMENT registration fee. Do NOT describe one as the other.
 - {buyer_fee_relative_rule}
 
 {total_cost_guidance}
@@ -904,7 +981,7 @@ OTHER STYLE RULES
 - Do not cite developer credit ratings, delivery percentages, unit/home counts, or market-outperformance claims unless those exact figures are provided in this prompt from a named source.
 - For furnishing on off-plan units that are still under construction, default to unfurnished unless listing data says otherwise.
 - For pet questions in Dubai communities, if the listing does not specify the exact building rule, say most Dubai developments are pet-friendly subject to HOA/building rules, and that the listing agent can confirm the specific restriction.
-{community_section}{listing_enrichment_section}{buyer_section}{readiness_next_question_section}{portfolio_section}{seller_qa_section}{seller_instructions}{media_section}{unit_profile_section}{ready_property_knowledge_section}{property_scope_section}{agent_private_section}{reference_documents_section}{additional_fees_block}{downward_revision_section}
+{community_section}{listing_enrichment_section}{buyer_section}{readiness_next_question_section}{verified_facts_grounding_section}{portfolio_section}{seller_qa_section}{seller_instructions}{media_section}{unit_profile_section}{ready_property_knowledge_section}{property_scope_section}{agent_private_section}{reference_documents_section}{additional_fees_block}{downward_revision_section}
 YOUR RULES — FOLLOW THESE STRICTLY
 ------------------------------------
 1. NEVER quote a price lower than {format_aed(asking_price)} without escalating to the human agent

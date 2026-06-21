@@ -1,13 +1,14 @@
-"""DAL-173A — Verified Facts loader and registry.
+"""DAL-173A/C3 — Verified Facts loader, registry, and grounding helpers.
 
 A pure, side-effect-free data layer that reads source-tagged Dubai real-estate
 facts from a config-backed JSON fixture, validates them, derives each fact's
-runtime consumption policy, and exposes query helpers.
+runtime consumption policy, and exposes query helpers. DAL-173C3 adds narrow
+prompt-planning helpers for Dubai process/fee grounding.
 
-This module deliberately does NOT wire anything into chatbot answer generation,
-prompts, the dashboard, or the database. It is the standalone registry described
-in docs/product/verified-facts-deal-readiness-spec.md (Part 1) and
-docs/product/verified-facts-runtime-handoff.md.
+This module still does not change WhatsApp send policy, dashboard ranking,
+drafts, lead ingest, migrations, or the database. It is the registry described in
+docs/product/verified-facts-deal-readiness-spec.md (Part 1) and
+docs/product/verified-facts-runtime-handoff.md, with C3 answer-planning support.
 
 Content source of truth: docs/domain/dubai-real-estate-verified-facts.md.
 Update path: edit the JSON fixture (or pass a different source) and reload — no
@@ -18,6 +19,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from enum import Enum
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, Optional
 
@@ -241,3 +243,183 @@ class VerifiedFactRegistry:
             elif fact.effective_date is not None and (current is None or fact.effective_date < current):
                 result[fact.category] = fact.effective_date
         return result
+
+
+@dataclass(frozen=True)
+class VerifiedFactGrounding:
+    """Facts and fail-closed gaps relevant to a buyer process/fee question."""
+
+    applies: bool
+    direct_facts: tuple[VerifiedFact, ...] = ()
+    blocked_facts: tuple[VerifiedFact, ...] = ()
+    missing_topics: tuple[str, ...] = ()
+
+    @property
+    def has_direct_facts(self) -> bool:
+        return bool(self.direct_facts)
+
+
+@lru_cache(maxsize=1)
+def default_verified_fact_registry() -> VerifiedFactRegistry:
+    """Load the default fixture once per process."""
+    return VerifiedFactRegistry.from_source()
+
+
+def fact_source_label(fact: VerifiedFact) -> str:
+    """Buyer/planner-readable source label with citation when available."""
+    suffix = f" [{fact.source_ref}]" if fact.source_ref else ""
+    return f"{fact.source_label}{suffix}"
+
+
+def direct_fact_for_key(
+    registry: VerifiedFactRegistry,
+    key: str,
+    *,
+    brokerage_id: Optional[str] = None,
+) -> Optional[VerifiedFact]:
+    """Return an active direct fact, preferring a matching tenant fact."""
+    candidates: list[VerifiedFact] = []
+    if brokerage_id:
+        candidates.extend(
+            fact
+            for fact in registry.tenant_facts(brokerage_id, active_only=True)
+            if fact.key == key
+        )
+    candidates.extend(
+        fact
+        for fact in registry.global_facts(active_only=True)
+        if fact.key == key
+    )
+    for fact in candidates:
+        if fact.is_directly_answerable:
+            return fact
+    return None
+
+
+def _active_fact_for_key(
+    registry: VerifiedFactRegistry,
+    key: str,
+    *,
+    brokerage_id: Optional[str] = None,
+) -> Optional[VerifiedFact]:
+    if brokerage_id:
+        for fact in registry.tenant_facts(brokerage_id, active_only=True):
+            if fact.key == key:
+                return fact
+    for fact in registry.global_facts(active_only=True):
+        if fact.key == key:
+            return fact
+    return None
+
+
+_TOPIC_FACTS: tuple[tuple[str, str, tuple[str, ...]], ...] = (
+    (
+        "DLD transfer/registration fee",
+        "dld_registration_fee_pct",
+        ("dld", "dubai land department", "transfer fee", "registration fee", "government fee"),
+    ),
+    (
+        "DLD sale registration documents",
+        "dld_sale_registration_documents",
+        ("documents", "emirates id", "passport", "sale registration", "transfer documents"),
+    ),
+    (
+        "off-plan developer NOC",
+        "off_plan_requires_developer_noc",
+        ("off-plan noc", "off plan noc", "developer noc", "noc requirement"),
+    ),
+    (
+        "specific NOC or transfer timing",
+        "specific_noc_transfer_timing",
+        ("noc timing", "noc timeline", "transfer timing", "transfer timeline", "how long"),
+    ),
+    (
+        "Trakheesi advertising permit",
+        "trakheesi_permit_exists",
+        ("trakheesi", "advertising permit", "ad permit", "rera permit", "permit verification"),
+    ),
+    (
+        "off-plan pre-handover rental legality",
+        "off_plan_pre_handover_rental_legality",
+        ("rent before handover", "rental before handover", "lease before handover", "legal to rent"),
+    ),
+)
+
+_PROCESS_FEE_TERMS = (
+    "dld",
+    "dubai land department",
+    "fee",
+    "fees",
+    "commission",
+    "noc",
+    "transfer",
+    "trustee",
+    "rera",
+    "trakheesi",
+    "permit",
+    "form a",
+    "form b",
+    "form f",
+    "mou",
+    "legal",
+    "rent before handover",
+    "payment protection",
+    "registration",
+)
+
+
+def detects_dubai_process_fee_query(message: Optional[str]) -> bool:
+    text = (message or "").lower()
+    return any(term in text for term in _PROCESS_FEE_TERMS)
+
+
+def verified_facts_grounding_for_message(
+    message: Optional[str],
+    *,
+    registry: Optional[VerifiedFactRegistry] = None,
+    brokerage_id: Optional[str] = None,
+) -> Optional[VerifiedFactGrounding]:
+    """Select active Verified Facts for Dubai process/fee answer planning."""
+    text = (message or "").lower()
+    if not detects_dubai_process_fee_query(text):
+        return None
+
+    registry = registry or default_verified_fact_registry()
+    direct: list[VerifiedFact] = []
+    blocked: list[VerifiedFact] = []
+    missing: list[str] = []
+    matched_any_topic = False
+
+    for label, key, terms in _TOPIC_FACTS:
+        if not any(term in text for term in terms):
+            continue
+        matched_any_topic = True
+        direct_fact = direct_fact_for_key(registry, key, brokerage_id=brokerage_id)
+        if direct_fact:
+            direct.append(direct_fact)
+            continue
+        active_fact = _active_fact_for_key(registry, key, brokerage_id=brokerage_id)
+        if active_fact:
+            blocked.append(active_fact)
+        else:
+            missing.append(label)
+
+    if not matched_any_topic:
+        missing.append("requested Dubai process/fee/legal-adjacent claim")
+
+    return VerifiedFactGrounding(
+        applies=True,
+        direct_facts=tuple(direct),
+        blocked_facts=tuple(blocked),
+        missing_topics=tuple(missing),
+    )
+
+
+def percentage_from_fact_text(fact: VerifiedFact) -> Optional[float]:
+    """Extract a simple percentage from a verified fact's text."""
+    import re
+
+    match = re.search(r"\b(\d+(?:\.\d+)?)\s*%", fact.text)
+    if not match:
+        return None
+    return float(match.group(1)) / 100
