@@ -846,12 +846,17 @@ class ChatbotEngine:
             elif (location_response := self._compose_location_lookup(db, db_listing, spa, inbound.body)):
                 deterministic_response = location_response
             elif self._detect_total_fees_query(inbound.body):
+                dld_fee_fact = self._direct_verified_fact_for_prompt(
+                    "dld_registration_fee_pct",
+                    brokerage_id=ctx.brokerage_id or db_listing.brokerage_id or conv.brokerage_id,
+                )
                 deterministic_response = self._compose_total_fees_response(
                     spa=spa,
                     seller_asking_price=seller_asking_price,
                     ctx=ctx,
                     property_type=db_listing.property_type,
                     language=intent_data.get("language_detected") or ("ar" if self._is_arabic_text(inbound.body) else "en"),
+                    dld_fee_fact=dld_fee_fact,
                 )
             elif self._detect_remaining_payment_query(inbound.body):
                 deterministic_response = self._compose_remaining_payment_response(
@@ -1217,6 +1222,16 @@ class ChatbotEngine:
                         fallback_budget_aed=conv.detected_budget,
                         listing_id=listing_id,
                     )
+                    verified_facts_grounding = self._verified_facts_grounding_for_prompt(
+                        inbound.body,
+                        brokerage_id=ctx.brokerage_id or db_listing.brokerage_id or conv.brokerage_id,
+                    )
+                    dld_fee_fact = self._direct_verified_fact_for_prompt(
+                        "dld_registration_fee_pct",
+                        brokerage_id=ctx.brokerage_id or db_listing.brokerage_id or conv.brokerage_id,
+                    )
+                    dld_fee_pct = self._percentage_from_verified_fact(dld_fee_fact)
+                    dld_fee_source = self._source_label_for_verified_fact(dld_fee_fact)
 
                     # Build system prompt
                     system_prompt = build_system_prompt(
@@ -1258,6 +1273,9 @@ class ChatbotEngine:
                         listing_anchor_times=listing_anchor_times or None,
                         readiness_next_question=readiness_next_question,
                         latest_buyer_message=inbound.body,
+                        verified_facts_grounding=verified_facts_grounding,
+                        dld_transfer_fee_pct=dld_fee_pct,
+                        dld_transfer_fee_source=dld_fee_source,
                     )
 
                     # Build conversation history for Claude (last 20 messages).
@@ -1913,6 +1931,70 @@ class ChatbotEngine:
         except Exception:  # pragma: no cover - readiness planning must not break chat
             logger.warning("Deal readiness next-question planning failed", exc_info=True)
             return None
+
+    @staticmethod
+    def _direct_verified_fact_for_prompt(
+        key: str,
+        *,
+        brokerage_id: Optional[str],
+    ):
+        """Return an active direct Verified Fact, or None to fail closed."""
+        try:
+            from app.core.verified_facts import default_verified_fact_registry, direct_fact_for_key
+
+            return direct_fact_for_key(
+                default_verified_fact_registry(),
+                key,
+                brokerage_id=brokerage_id,
+            )
+        except Exception:  # pragma: no cover - fact grounding must not break chat
+            logger.warning("Verified Facts direct lookup failed", exc_info=True)
+            return None
+
+    @staticmethod
+    def _verified_facts_grounding_for_prompt(
+        message: Optional[str],
+        *,
+        brokerage_id: Optional[str],
+    ):
+        """Build Verified Facts grounding metadata for process/fee turns."""
+        try:
+            from app.core.verified_facts import (
+                default_verified_fact_registry,
+                verified_facts_grounding_for_message,
+            )
+
+            return verified_facts_grounding_for_message(
+                message,
+                registry=default_verified_fact_registry(),
+                brokerage_id=brokerage_id,
+            )
+        except Exception:  # pragma: no cover - fail closed in prompt builder
+            logger.warning("Verified Facts grounding failed", exc_info=True)
+            return None
+
+    @staticmethod
+    def _percentage_from_verified_fact(fact) -> Optional[float]:
+        if fact is None:
+            return None
+        try:
+            from app.core.verified_facts import percentage_from_fact_text
+
+            return percentage_from_fact_text(fact)
+        except Exception:  # pragma: no cover - malformed fact should fail closed
+            logger.warning("Verified Facts percentage extraction failed", exc_info=True)
+            return None
+
+    @staticmethod
+    def _source_label_for_verified_fact(fact) -> Optional[str]:
+        if fact is None:
+            return None
+        try:
+            from app.core.verified_facts import fact_source_label
+
+            return fact_source_label(fact)
+        except Exception:  # pragma: no cover
+            return getattr(fact, "source_label", None)
 
     @staticmethod
     def _escalation_state_reason(escalation: EscalationAlert) -> str:
@@ -4383,21 +4465,38 @@ Summary:"""
         ctx: Optional["BrokerageContext"] = None,
         property_type: Optional[str] = None,
         language: str = "en",
+        dld_fee_fact=None,
     ) -> str:
         if ctx is None:
             ctx = legacy_default_context()
         asking = seller_asking_price or spa.purchase_price_aed
-        dld_fee = asking * 0.04
+        dld_pct = cls._percentage_from_verified_fact(dld_fee_fact)
+        dld_source = cls._source_label_for_verified_fact(dld_fee_fact)
         brokerage_fee = asking * ctx.commission_rate
-        lifecycle_total = asking + dld_fee + brokerage_fee
+        dld_fee = asking * dld_pct if dld_pct is not None else None
+        lifecycle_total = asking + (dld_fee or 0) + brokerage_fee
         status = (spa.property_status or "").lower()
         is_arabic = (language or "").lower().startswith("ar")
+        if dld_pct is None or dld_fee is None:
+            if is_arabic:
+                return (
+                    f"على سعر الطلب {asking:,.0f} درهم، أستطيع تأكيد سعر العقار ورسوم "
+                    f"{ctx.brokerage_arabic or ctx.brokerage_short} ({ctx.commission_pct_label})، "
+                    "لكن يجب أن يؤكد الوكيل رسوم دائرة الأراضي أو أي رسوم حكومية حالية قبل أن نعطي إجمالي نهائي."
+                )
+            return (
+                f"At the asking price of AED {asking:,.0f}, I can confirm the property price and "
+                f"{ctx.brokerage_short} fee ({ctx.commission_pct_label}), but the listing agent needs "
+                "to confirm the current DLD/government transfer fees before I quote a final total."
+            )
+        dld_pct_label = f"{dld_pct * 100:g}%"
+        dld_source_note = f", source: {dld_source}" if dld_source else ""
         if property_type == "ready" or status in {"ready", "completed", "complete"} or not spa.payment_schedule:
             if is_arabic:
                 return (
                     f"على سعر الطلب {asking:,.0f} درهم، التقسيم هو:\n\n"
                     f"1. السعر المدفوع للبائع: {asking:,.0f} درهم\n"
-                    f"2. رسوم دائرة الأراضي 4%: {dld_fee:,.0f} درهم\n"
+                    f"2. رسوم دائرة الأراضي {dld_pct_label}: {dld_fee:,.0f} درهم ({dld_source or 'Verified Facts'})\n"
                     f"3. رسوم {ctx.brokerage_arabic or ctx.brokerage_short} ({ctx.commission_pct_label}): {brokerage_fee:,.0f} درهم\n\n"
                     "هذا عقار جاهز، لذلك لا يوجد جدول مدفوعات متبقية للمطور يتسلمه المشتري. "
                     "ولا توجد دفعة منفصلة بعنوان حقوق البائع فوق سعر الطلب. "
@@ -4407,7 +4506,7 @@ Summary:"""
             return (
                 f"At the asking price of AED {asking:,.0f}, the ready-resale breakdown is:\n\n"
                 f"1. Price paid to seller: AED {asking:,.0f}\n"
-                f"2. DLD transfer fee (4%): AED {dld_fee:,.0f}\n"
+                f"2. DLD transfer fee ({dld_pct_label}{dld_source_note}): AED {dld_fee:,.0f}\n"
                 f"3. {ctx.brokerage_short} fee ({ctx.commission_pct_label}): AED {brokerage_fee:,.0f}\n\n"
                 "This is a ready property, so there is no remaining developer payment schedule for the buyer to take over. "
                 f"There is no separate seller-equity amount on top of the asking price. Total: AED {lifecycle_total:,.0f}."
@@ -4418,7 +4517,7 @@ Summary:"""
         if is_arabic:
             return (
                 f"على سعر الطلب {asking:,.0f} درهم، تكاليف المشتري في الصفقة هي:\n\n"
-                f"- رسوم دائرة الأراضي 4%: {dld_fee:,.0f} درهم\n"
+                f"- رسوم دائرة الأراضي {dld_pct_label}: {dld_fee:,.0f} درهم ({dld_source or 'Verified Facts'})\n"
                 f"- رسوم {ctx.brokerage_arabic or ctx.brokerage_short} ({ctx.commission_pct_label}): {brokerage_fee:,.0f} درهم\n\n"
                 "سعر الطلب هو إجمالي سعر العقار، وليس مبلغاً إضافياً فوق رصيد المطور. "
                 f"ينقسم إلى نحو {seller_equity:,.0f} درهم تُسدد للبائع عند التسجيل، "
@@ -4428,7 +4527,7 @@ Summary:"""
             )
         return (
             f"At the asking price of AED {asking:,.0f}, the buyer-side transaction costs are:\n\n"
-            f"- DLD transfer fee (4%): AED {dld_fee:,.0f}\n"
+            f"- DLD transfer fee ({dld_pct_label}{dld_source_note}): AED {dld_fee:,.0f}\n"
             f"- {ctx.brokerage_short} fee ({ctx.commission_pct_label}): AED {brokerage_fee:,.0f}\n\n"
             f"The asking price is the total property price, not an amount on top of the SPA balance. "
             f"It splits into about AED {seller_equity:,.0f} settled to the seller at closing and "
