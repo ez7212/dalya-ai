@@ -23,6 +23,8 @@ from app.core.brokerage_access import (
     record_compliance_event,
     resolve_request_brokerage_context,
 )
+from app.core.buyer_profiles import effective_fields
+from app.core.deal_readiness import compute_readiness, fields_from_effective_fields, serialize_readiness
 from app.core.hot_list import (
     latest_hotlist_refresh_run,
     refresh_hotlist_with_run,
@@ -34,6 +36,7 @@ from app.models.db_models import (
     DBAgentMessageRoute,
     DBAgentProfile,
     DBBrokerage,
+    DBBrokerageBuyerProfile,
     DBBrokerageMember,
     DBBuyerSuppression,
     DBCampaign,
@@ -312,6 +315,81 @@ def _listing_payload(assignment: DBLeadAssignment) -> dict:
     }
 
 
+def _summary_text(summary: dict) -> str:
+    if not isinstance(summary, dict):
+        return ""
+    values: list[str] = []
+    for key in ("summary", "one_line", "key_question", "next_step_hint", "interest_level"):
+        value = summary.get(key)
+        if value:
+            values.append(str(value))
+    topics = summary.get("topics")
+    if isinstance(topics, list):
+        values.extend(str(topic) for topic in topics if topic)
+    return " ".join(values).lower()
+
+
+def _readiness_payload(
+    db: Session,
+    *,
+    profile: Optional[DBBrokerageBuyerProfile],
+    conversation: DBConversation,
+    listing: Optional[DBListing] = None,
+    latest_message: Optional[DBMessage] = None,
+    summary: Optional[dict] = None,
+    offer_count: int = 0,
+    open_thread_count: int = 0,
+) -> dict:
+    qualification = effective_fields(db, profile) if profile else {}
+    fields = fields_from_effective_fields(
+        qualification,
+        fallback_budget_aed=conversation.detected_budget,
+    )
+    text = " ".join(
+        value
+        for value in (
+            latest_message.content if latest_message else "",
+            _summary_text(summary or {}),
+        )
+        if value
+    ).lower()
+    conversation_ctx = {
+        "viewing_intent": bool(
+            (latest_message and latest_message.intent == "viewing_request")
+            or any(term in text for term in ("viewing", "view the", "see it", "tour"))
+        ),
+        "offer_intent": bool(
+            offer_count
+            or (
+                conversation.escalation_reason
+                and conversation.escalation_reason.startswith("offer:")
+            )
+        ),
+        "responsive": bool(latest_message and latest_message.role == "user"),
+        "urgent": any(term in text for term in ("urgent", "asap", "serious", "high intent")),
+        "agent_takeover": int(open_thread_count or 0) > 0,
+    }
+    listing_ctx = (
+        {
+            "listing_id": listing.listing_id,
+            "property_type": listing.property_type,
+        }
+        if listing
+        else (
+            {"listing_id": conversation.listing_id}
+            if conversation.listing_id
+            else None
+        )
+    )
+    return serialize_readiness(
+        compute_readiness(
+            fields,
+            conversation_ctx=conversation_ctx,
+            listing_ctx=listing_ctx,
+        )
+    )
+
+
 def _buyer_payload(assignment: DBLeadAssignment) -> dict:
     conv = assignment.conversation
     return {
@@ -384,6 +462,17 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         )
     ]
     conversation_ids = [row.conversation_id for row in rows]
+    buyer_profiles = {
+        profile.buyer_phone: profile
+        for profile in (
+            db.query(DBBrokerageBuyerProfile)
+            .filter(
+                DBBrokerageBuyerProfile.brokerage_id == ctx.brokerage_id,
+                DBBrokerageBuyerProfile.buyer_phone.in_([row.buyer_phone for row in rows if row.buyer_phone]),
+            )
+            .all()
+        )
+    } if rows else {}
     latest_messages = _latest_messages_by_conversation(db, conversation_ids)
     message_counts = dict(
         db.query(DBMessage.conversation_id, func.count(DBMessage.id))
@@ -535,6 +624,16 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
             "message_count": int(message_counts.get(conv.conversation_id, 0)),
             "offer_count": int(offer_counts.get(conv.conversation_id, 0)),
             "open_escalation_count": int(open_thread_counts.get(conv.conversation_id, 0)),
+            "deal_readiness": _readiness_payload(
+                db,
+                profile=buyer_profiles.get(conv.buyer_phone),
+                conversation=conv,
+                listing=listing,
+                latest_message=latest,
+                summary=summary,
+                offer_count=int(offer_counts.get(conv.conversation_id, 0)),
+                open_thread_count=int(open_thread_counts.get(conv.conversation_id, 0)),
+            ),
             "needs_reply": needs_reply,
             "needs_reply_reason": needs_reply_reason,
             "has_pending_draft": has_pending_draft,

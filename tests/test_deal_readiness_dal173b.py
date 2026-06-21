@@ -13,6 +13,8 @@ from app.core.deal_readiness import (
     PriorityBand,
     ReadinessStage,
     compute_readiness,
+    fields_from_effective_fields,
+    serialize_readiness,
 )
 
 
@@ -92,6 +94,41 @@ def test_other_agent_status_present_when_provided():
     profile = compute_readiness({**_base_qualified(), "other_agent_status": "working_with_others"})
     assert profile.present_fields["other_agent_status"] == "working_with_others"
     assert "other_agent_status" not in profile.missing_fields
+
+
+def test_effective_fields_adapter_uses_effective_values_not_suggestions():
+    effective = {
+        "budget_max_aed": {
+            "value": 2_200_000,
+            "provenance": "agent_confirmed",
+            "suggestion": {"value": 1_800_000},
+        },
+        "financing": {
+            "value": "cash",
+            "provenance": "ai_inferred",
+            "suggestion": None,
+        },
+    }
+    fields = fields_from_effective_fields(effective)
+    assert fields == {"budget_max_aed": 2_200_000, "financing": "cash"}
+
+
+def test_effective_fields_adapter_uses_conversation_budget_only_when_absent():
+    assert fields_from_effective_fields({}, fallback_budget_aed=1_900_000) == {
+        "budget_max_aed": 1_900_000,
+    }
+    assert fields_from_effective_fields(
+        {"budget_min_aed": {"value": 1_500_000}},
+        fallback_budget_aed=1_900_000,
+    ) == {"budget_min_aed": 1_500_000}
+
+
+def test_serialize_readiness_is_json_safe():
+    payload = serialize_readiness(compute_readiness({"budget_max_aed": 2_500_000}))
+    assert payload["stage"] == "partially_qualified"
+    assert payload["next_best_action"] == "ask_purpose"
+    assert payload["priority_band"] == "low"
+    assert payload["present_fields"] == {"budget_max_aed": 2_500_000}
 
 
 def test_missing_other_agent_status_is_surfaced_for_qualified_buyer():

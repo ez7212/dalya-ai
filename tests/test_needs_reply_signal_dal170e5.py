@@ -18,7 +18,9 @@ from app.main import app
 from app.models.db_models import (
     DBAIDraft,
     DBBrokerage,
+    DBBrokerageBuyerProfile,
     DBBrokerageMember,
+    DBBuyerProfileField,
     DBBuyerSuppression,
     DBConversation,
     DBDraftReply,
@@ -126,6 +128,8 @@ def nr_seed():
                     db.query(DBMessage).filter(DBMessage.conversation_id.in_(conv_ids)).delete(synchronize_session=False)
                     db.query(DBConversation).filter(DBConversation.conversation_id.in_(conv_ids)).delete(synchronize_session=False)
                 db.query(DBBuyerSuppression).filter(DBBuyerSuppression.brokerage_id == bid).delete(synchronize_session=False)
+                db.query(DBBuyerProfileField).filter(DBBuyerProfileField.brokerage_id == bid).delete(synchronize_session=False)
+                db.query(DBBrokerageBuyerProfile).filter(DBBrokerageBuyerProfile.brokerage_id == bid).delete(synchronize_session=False)
                 db.query(DBListing).filter(DBListing.brokerage_id == bid).delete(synchronize_session=False)
                 db.query(DBBrokerageMember).filter(DBBrokerageMember.brokerage_id == bid).delete(synchronize_session=False)
                 db.query(DBBrokerage).filter(DBBrokerage.brokerage_id == bid).delete(synchronize_session=False)
@@ -156,11 +160,29 @@ def test_buyer_latest_message_needs_reply_true(client, nr_seed):
             db, nr_seed["brokerage_id"], nr_seed["agent_id"], nr_seed["listing_id"], phone,
             [("assistant", "Hi, how can I help?", 30), ("user", "Can I view it today?", 5)],
         )
+        profile = DBBrokerageBuyerProfile(
+            brokerage_id=nr_seed["brokerage_id"],
+            buyer_phone=phone,
+            name="Buyer",
+        )
+        db.add(profile)
+        db.flush()
+        db.add(DBBuyerProfileField(
+            profile_id=profile.profile_id,
+            brokerage_id=nr_seed["brokerage_id"],
+            field="budget_max_aed",
+            value=2_000_000,
+            provenance="agent_confirmed",
+            confirmed_by=nr_seed["agent_id"],
+        ))
+        safe_commit(db)
     _as_user(nr_seed["agent_id"])
     item = _conv(_dashboard(client), cid)
     assert item["needs_reply"] is True
     assert item["needs_reply_reason"] == "buyer_awaiting"
     assert item["last_buyer_message_at"] is not None
+    assert item["deal_readiness"]["stage"] == "partially_qualified"
+    assert item["deal_readiness"]["present_fields"]["budget_max_aed"] == 2_000_000
 
 
 def test_agent_replied_after_buyer_needs_reply_false(client, nr_seed):

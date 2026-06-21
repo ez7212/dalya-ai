@@ -310,6 +310,9 @@ def test_buyer_list_and_card_api(client, card_seed):
     assert row["name"] == "Zainab"
     assert "•••" in row["phone_masked"]  # masked on the list surface
     assert row["qualification"]["budget_max_aed"] == 2_000_000
+    assert row["deal_readiness"]["stage"] == "partially_qualified"
+    assert row["deal_readiness"]["next_best_action"] == "escalate_to_agent"
+    assert row["deal_readiness"]["present_fields"]["budget_max_aed"] == 2_000_000
     assert row["open_offers"] == 1
 
     card = client.get(f"/api/v1/agent/buyers/{profile_id}")
@@ -318,6 +321,9 @@ def test_buyer_list_and_card_api(client, card_seed):
     assert payload["identity"]["phone"] == seed["buyer_phone"]  # full on the card
     assert payload["identity"]["opted_out"] is False
     assert payload["qualification"]["budget_max_aed"]["provenance"] == "ai_inferred"
+    assert payload["deal_readiness"]["stage"] == "partially_qualified"
+    assert payload["deal_readiness"]["missing_fields"][:3] == ["purpose", "financing", "timeline"]
+    assert payload["deal_readiness"]["score"] == 35
     assert len(payload["offers"]) == 1
     assert payload["offers"][0]["status"] == "submitted"
 
