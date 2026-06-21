@@ -42,6 +42,14 @@ QUALIFICATION_FIELDS = {
     "financing",            # cash | mortgage_preapproved | mortgage_unknown | unknown
     "preapproval_amount_aed",
     "preapproval_bank",
+    "purpose",              # investment | end_user | both
+    "family_size",
+    "decision_makers",
+    "in_dubai_now",
+    "viewing_availability",
+    "other_agent_status",
+    "urgency",
+    "contact_preference",
     "timeline",
     "target_areas",
     "property_type",

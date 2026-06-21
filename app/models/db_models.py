@@ -704,9 +704,10 @@ class DBBuyerProfileField(Base):
     profile_id = Column(String, ForeignKey("brokerage_buyer_profiles.profile_id"), nullable=False, index=True)
     brokerage_id = Column(String, ForeignKey("brokerages.brokerage_id"), nullable=False, index=True)
     field = Column(String, nullable=False, index=True)
-    # budget_min_aed | budget_max_aed | financing | preapproval_amount_aed |
-    # preapproval_bank | timeline | target_areas | property_type | bedrooms |
-    # must_haves | deal_breakers
+    # budget_min_aed | budget_max_aed | financing | purpose | family_size |
+    # decision_makers | in_dubai_now | viewing_availability |
+    # other_agent_status | urgency | contact_preference | timeline |
+    # target_areas | property_type | bedrooms | must_haves | deal_breakers
     value = Column(JSON, nullable=True)
     provenance = Column(String, nullable=False)  # ai_inferred | agent_confirmed
     confidence = Column(Float, nullable=True)
