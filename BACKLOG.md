@@ -1,6 +1,6 @@
 # Dalya — Backlog
 
-*Last updated: 2026-06-21 (`DAL-184` needs_reply resolved escalation exclusion)*
+*Last updated: 2026-06-21 (`DAL-186` DAL-173C integration plan)*
 
 This document is split into two parts, mirroring [FEATURES.md](./FEATURES.md):
 
@@ -132,6 +132,7 @@ Spec/docs only — **no runtime code changed**, safe parallel work while DAL-172
   - Each spec has a "Current repo alignment" section mapping to existing code (`buyer_profiles.py` provenance model, `hot_list.py` scoring, `summary_worker.py`, draft queue) and naming likely-affected files for later, implementation-only tickets.
   - **No runtime behavior changed.** No DAL-172 files, auth, tenant context, API routes, frontend API client, RLS, production DDL, webhook, lead ingest, WhatsApp send, or chatbot runtime touched. Implementation tickets to be created later: DealReadinessProfile read model, chatbot response planner, buyer card/handoff assembler, deal-readiness-driven hot list, draft-queue context, verified-facts routing.
 - [x] **Verified Dubai Facts filled + docs normalized (2026-06-19).** Eric completed a sourced verification pass on `docs/domain/dubai-real-estate-verified-facts.md` (DLD/RERA primary sources [S1]–[S15]). Docs normalized for a future loader: single `confirmed` status label added to the legend and applied consistently; a top-level **"Runtime usage policy"** section maps each status label → runtime behavior (`direct` / `draft_for_agent_only` / `do_not_state` / `listing_specific_only`); transaction-/listing-specific confirmed facts (timelines, per-deal NOC) held to draft-for-agent; `facts-to-verify.md` reconciled into Resolved / Still-needs-review / Draft-for-agent / Do-not-state buckets (unresolved rows kept, not deleted). New `docs/product/verified-facts-runtime-handoff.md` describes the future loader and chatbot gating. **No runtime behavior changed; runtime implementation remains a later ticket (see below). DAL-172A remains separate and untouched.** Still open for Eric/legal/accountant: off-plan rental legality wording, PDPL response-deadline, brokerage-invoice VAT wording, "pre-approved" definition, §1 qualification thresholds, joint-buyer edge case, per-brokerage fee.
+- [x] **DAL-186: DAL-173C Verified Facts + DealReadiness integration plan.** Added `docs/product/dal-173c-verified-facts-deal-readiness-integration-plan.md`, a design-only adoption plan for wiring DAL-173A/B safely. Recommended split starts with read-only DealReadiness dashboard/API exposure, then chatbot next-question planning, Verified Facts grounding, draft/agent assist, lead-ingest mapping, and hot-list scoring later. No chatbot runtime, WhatsApp send, hot-list ranking, lead ingest, frontend, migrations, RLS/DAL-170E, or DB-backed tests changed/run.
 
 ### Verified Facts — later implementation tickets (do not start during DAL-172A without Eric's approval)
 
