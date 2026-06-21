@@ -39,6 +39,7 @@ from app.core.conversation_takeover import (
     set_ai_mode,
 )
 from app.core.deal_readiness import compute_readiness, fields_from_effective_fields, serialize_readiness
+from app.core.draft_agent_assist import build_draft_agent_assist
 from app.core.hot_list import refresh_morning_hot_list
 from app.db.session import get_db, safe_commit
 from app.models.db_models import (
@@ -51,6 +52,7 @@ from app.models.db_models import (
     DBLeadAssignment,
     DBListing,
     DBMessage,
+    DBBrokerageBuyerProfile,
 )
 
 router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
@@ -1344,6 +1346,49 @@ async def create_draft_reply(
         "offer_ack": f"Hi {buyer_name}, noted. I am reviewing the offer context now and will come back with the right next step.",
     }
     draft_text = templates.get(body.intent, templates["follow_up"])
+    latest_buyer_message = (
+        db.query(DBMessage)
+        .filter(
+            DBMessage.conversation_id == conversation_id,
+            DBMessage.role == "user",
+        )
+        .order_by(DBMessage.timestamp.desc())
+        .first()
+    )
+    profile = (
+        db.query(DBBrokerageBuyerProfile)
+        .filter(
+            DBBrokerageBuyerProfile.brokerage_id == ctx.brokerage_id,
+            DBBrokerageBuyerProfile.buyer_phone == conv.buyer_phone,
+        )
+        .first()
+    )
+    qualification = effective_fields(db, profile) if profile else {}
+    latest_text = (latest_buyer_message.content if latest_buyer_message else "").lower()
+    agent_assist = build_draft_agent_assist(
+        latest_buyer_message=latest_buyer_message.content if latest_buyer_message else None,
+        effective_buyer_fields=qualification,
+        fallback_budget_aed=conv.detected_budget,
+        conversation_ctx={
+            "viewing_intent": bool(
+                body.intent == "viewing_slots"
+                or (latest_buyer_message and latest_buyer_message.intent == "viewing_request")
+                or any(term in latest_text for term in ("viewing", "view the", "see it", "tour"))
+            ),
+            "offer_intent": bool(
+                body.intent == "offer_ack"
+                or (
+                    conv.escalation_reason
+                    and conv.escalation_reason.startswith("offer:")
+                )
+            ),
+            "responsive": bool(latest_buyer_message),
+            "urgent": any(term in latest_text for term in ("urgent", "asap", "serious")),
+            "legal_question": any(term in latest_text for term in ("legal", "law", "lawyer")),
+        },
+        listing_ctx={"listing_id": conv.listing_id},
+        brokerage_id=ctx.brokerage_id,
+    )
 
     draft = DBDraftReply(
         brokerage_id=ctx.brokerage_id,
@@ -1355,7 +1400,11 @@ async def create_draft_reply(
         draft_text=draft_text,
         source="template",
         status="draft",
-        metadata_json={"created_from": "agent_api", "created_at": datetime.utcnow().isoformat()},
+        metadata_json={
+            "created_from": "agent_api",
+            "created_at": datetime.utcnow().isoformat(),
+            "agent_assist": agent_assist,
+        },
     )
     db.add(draft)
     safe_commit(db)
@@ -1364,6 +1413,7 @@ async def create_draft_reply(
         "draft_id": draft.draft_id,
         "draft": draft.draft_text,
         "source": draft.source,
+        "metadata": draft.metadata_json,
         "requires_review": True,
     }
 
