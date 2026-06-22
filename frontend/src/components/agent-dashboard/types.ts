@@ -23,6 +23,10 @@ export interface AgentDashboardData {
     draftCount: number
     error?: string | null
   }
+  emptyState?: {
+    reason: string
+    message: string
+  }
   summary: {
     openTasks: number
     qualifiedBuyers: number

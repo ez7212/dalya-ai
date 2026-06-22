@@ -1,9 +1,8 @@
 """
 Agent dashboard API.
 
-This endpoint returns a denormalized contract for the current agent workspace.
-It uses real brokerage-scoped rows when they exist and falls back to a stable
-sample payload so frontend work can proceed before a brokerage is fully seeded.
+This endpoint returns a denormalized contract for the current agent workspace
+from brokerage-scoped rows.
 """
 
 from datetime import datetime, timedelta
@@ -1325,259 +1324,6 @@ def _average_response_minutes(db: Session, ctx: AgentDashboardContext, *, start:
     return round(sum(deltas) / len(deltas), 1)
 
 
-def _sample_dashboard(ctx: AgentDashboardContext) -> dict:
-    now = datetime.utcnow()
-    return {
-        "sample_data": True,
-        "generated_at": _iso(now),
-        "agent": {
-            "user_id": ctx.user_id,
-            "display_name": ctx.display_name or "Agent",
-            "role": ctx.role,
-        },
-        "brokerage": {
-            "brokerage_id": ctx.brokerage_id,
-            "name": ctx.brokerage_name or "Dalya Internal Pilot",
-        },
-        "metrics": {
-            "hot_leads": 3,
-            "open_tasks": 4,
-            "viewings_today": 1,
-            "stale_leads": 2,
-            "draft_replies": 2,
-            "outreach_drafts": 1,
-            "active_campaigns": 1,
-            "new_owner_leads": 2,
-            "marketing_events_7d": 18,
-            "open_escalations": 2,
-            "conversations": 1,
-            "needs_reply": 1,
-        },
-        "conversations": [
-            {
-                "conversation_id": "sample-conv-1",
-                "buyer": {"name": "Ahmed K.", "phone": "+971502148821", "budget_aed": 2400000},
-                "listing": {"listing_id": "sample-listing-1", "project": "Downtown resale apartment", "unit_number": "2BR", "asking_price_aed": 2450000},
-                "summary": "Budget fit, asked for evening viewing slots.",
-                "next_step_hint": "Call now and confirm two viewing options.",
-                "interest_level": "high",
-                "last_message": "Can I see it after 6 today?",
-                "last_message_role": "user",
-                "last_message_at": _iso(now - timedelta(minutes=18)),
-                "message_count": 6,
-                "offer_count": 0,
-                "open_escalation_count": 1,
-                "needs_reply": True,
-                "needs_reply_reason": "escalation_open",
-                "has_pending_draft": False,
-                "last_buyer_message_at": _iso(now - timedelta(minutes=18)),
-                "last_agent_response_at": _iso(now - timedelta(minutes=42)),
-                "created_at": _iso(now - timedelta(hours=2)),
-                "updated_at": _iso(now - timedelta(minutes=18)),
-            }
-        ],
-        "hot_leads": [
-            {
-                "id": "sample-assignment-1",
-                "conversation_id": "sample-conv-1",
-                "buyer": {"name": "Ahmed K.", "phone": "+971502148821", "budget_aed": 2400000, "stage": "viewing"},
-                "listing": {"listing_id": "sample-listing-1", "project": "Downtown resale apartment", "unit_number": "2BR", "asking_price_aed": 2450000},
-                "signal": "Ready to view",
-                "signal_key": "ready_to_view",
-                "next_action": "Call now",
-                "next_action_key": "call_now",
-                "reason": "Confirmed budget and asked for evening viewing slots.",
-                "urgency_score": 94,
-                "last_message": "Can I see it after 6 today?",
-                "last_message_at": _iso(now - timedelta(minutes=18)),
-                "last_buyer_message_at": _iso(now - timedelta(minutes=18)),
-                "due_at": _iso(now + timedelta(minutes=20)),
-                "status": "viewing",
-            }
-        ],
-        "tasks": [
-            {
-                "task_id": "sample-task-1",
-                "type": "call",
-                "title": "Call Ahmed K. about evening viewing",
-                "description": "Buyer is ready to view and has budget fit.",
-                "status": "open",
-                "priority": "high",
-                "source": "sample",
-                "conversation_id": "sample-conv-1",
-                "due_at": _iso(now + timedelta(minutes=20)),
-                "snoozed_until": None,
-                "metadata": {},
-            }
-        ],
-        "viewings": [
-            {
-                "viewing_id": "sample-viewing-1",
-                "conversation_id": "sample-conv-1",
-                "listing_id": "sample-listing-1",
-                "buyer_phone": "+971502148821",
-                "scheduled_for": _iso(now.replace(hour=18, minute=30, second=0, microsecond=0)),
-                "status": "proposed",
-                "tenant_notice_required": False,
-                "access_notes": "Confirm lobby access before sending calendar invite.",
-            }
-        ],
-        "escalation_threads": [
-            {
-                "thread_id": "sample-thread-1",
-                "conversation_id": "sample-conv-1",
-                "listing_id": "sample-listing-1",
-                "buyer_phone": "+971502148821",
-                "agent_user_id": ctx.user_id,
-                "agent_phone": "+971500000000",
-                "category": "offer",
-                "state": "open",
-                "urgency": "critical",
-                "escalation_type": "offer",
-                "escalation_subtype": "above_threshold_offer",
-                "envelope_token": "SAMPLE123",
-                "latest_route_id": "sample-route-1",
-                "latest_route_expires_at": _iso(now + timedelta(days=7)),
-                "latest_route_consumed_at": None,
-                "question_count": 1,
-                "latest_question": "Can the seller review AED 2.35M today?",
-                "questions": [
-                    {
-                        "question_id": "sample-question-1",
-                        "question_text": "Can the seller review AED 2.35M today?",
-                        "category": "offer",
-                        "escalation_subtype": "above_threshold_offer",
-                        "sort_order": 1,
-                        "added_at": _iso(now - timedelta(minutes=12)),
-                        "resolved_at": None,
-                    }
-                ],
-                "buyer": {"name": "Ahmed K.", "phone": "+971502148821", "budget_aed": 2400000, "summary": None},
-                "listing": {"listing_id": "sample-listing-1", "project": "Downtown resale apartment", "unit_number": "2BR", "asking_price_aed": 2450000, "developer": "Emaar"},
-                "opened_at": _iso(now - timedelta(minutes=12)),
-                "alerted_at": _iso(now - timedelta(minutes=11)),
-                "last_buyer_message_at": _iso(now - timedelta(minutes=12)),
-                "last_update_sent_at": None,
-                "debounce_until": None,
-                "closed_at": None,
-                "close_reason": None,
-            }
-        ],
-        "drafts": {
-            "reply_drafts": [],
-            "ai_drafts": [],
-            "outreach_drafts": [
-                {
-                    "outreach_draft_id": "sample-outreach-draft-1",
-                    "campaign_id": "sample-campaign-1",
-                    "owner_lead_id": "sample-owner-lead-1",
-                    "channel": "whatsapp",
-                    "subject": None,
-                    "body": "Hi, I noticed your unit may be approaching handover. Dalya can help verify resale readiness and buyer demand before you commit to listing.",
-                    "created_at": _iso(now - timedelta(hours=1)),
-                }
-            ],
-        },
-        "campaigns": [
-            {
-                "campaign_id": "sample-campaign-1",
-                "name": "Oasis seller acquisition",
-                "campaign_type": "owner_acquisition",
-                "channel": "whatsapp",
-                "status": "active",
-                "audience": {"project": "The Oasis", "owners": 120},
-                "offer": {"cta": "Upload your SPA"},
-                "metrics": {"sent": 34, "replies": 5, "spa_uploads": 1},
-                "starts_at": _iso(now - timedelta(days=2)),
-                "ends_at": None,
-            }
-        ],
-        "campaign_uploads": [
-            {
-                "upload_id": "sample-upload-1",
-                "campaign_id": "sample-campaign-1",
-                "file_name": "oasis-owner-shortlist.csv",
-                "file_type": "text/csv",
-                "row_count": 120,
-                "status": "processed",
-                "parsed_summary": {"owners": 120, "valid_phone_numbers": 92},
-                "error": None,
-                "created_at": _iso(now - timedelta(days=2)),
-                "processed_at": _iso(now - timedelta(days=2)),
-            }
-        ],
-        "campaign_recipients": [
-            {
-                "recipient_id": "sample-recipient-1",
-                "campaign_id": "sample-campaign-1",
-                "owner_lead_id": "sample-owner-lead-1",
-                "recipient_key": "sample-campaign-1:+971551110000",
-                "name": "Sara M.",
-                "phone": "+971551110000",
-                "email": None,
-                "channel": "whatsapp",
-                "status": "replied",
-                "last_message_at": _iso(now - timedelta(hours=3)),
-                "last_response_at": _iso(now - timedelta(hours=2)),
-            }
-        ],
-        "owner_leads": [
-            {
-                "owner_lead_id": "sample-owner-lead-1",
-                "campaign_id": "sample-campaign-1",
-                "owner_name": "Sara M.",
-                "owner_phone": "+971551110000",
-                "project": "The Oasis",
-                "unit_number": "V-144",
-                "estimated_value_aed": 8200000,
-                "intent": "sell",
-                "stage": "new",
-                "priority": "high",
-                "next_follow_up_at": _iso(now + timedelta(hours=2)),
-            }
-        ],
-        "marketing": {
-            "pages": [
-                {
-                    "page_id": "sample-page-1",
-                    "campaign_id": "sample-campaign-1",
-                    "slug": "oasis-resale-readiness",
-                    "title": "Oasis resale readiness",
-                    "status": "published",
-                    "url": "/campaigns/oasis-resale-readiness",
-                    "metrics": {"views": 18, "whatsapp_clicks": 3},
-                    "published_at": _iso(now - timedelta(days=2)),
-                }
-            ],
-            "events_7d": 18,
-        },
-        "performance": {
-            "scope": "current_agent",
-            "agent_user_id": ctx.user_id,
-            "generated_at": _iso(now),
-            "primary": {
-                "key": "today",
-                "label": "Today",
-                "start_at": _iso(datetime(now.year, now.month, now.day)),
-                "end_at": _iso(now),
-                "metrics": {
-                    "new_buyer_conversations": 3,
-                    "escalations_handled": 1,
-                    "avg_response_minutes": 11.5,
-                    "follow_ups_sent": 4,
-                    "viewings_proposed": 2,
-                    "viewings_confirmed": 1,
-                    "viewings_completed": 1,
-                    "offers_detected": 1,
-                    "hot_leads_active": 5,
-                    "tasks_overdue": 0,
-                },
-            },
-            "windows": [],
-        },
-    }
-
-
 @router.get("/agent/dashboard")
 async def agent_dashboard(
     user: CurrentUser = Depends(get_current_user),
@@ -1603,6 +1349,7 @@ async def agent_dashboard(
             "brokerage_id": ctx.brokerage_id,
             "name": ctx.brokerage_name,
         },
+        "empty_state": None,
         "conversations": _conversation_inbox(db, ctx),
         "hot_leads": _hot_leads(db, ctx),
         "tasks": _tasks(db, ctx),
@@ -1624,7 +1371,7 @@ async def agent_dashboard(
     payload["metrics"] = _metrics(db, ctx, payload)
     payload["performance"] = _performance_metrics(db, ctx)
 
-    has_real_data = any([
+    has_real_collections = any([
         payload["hot_leads"],
         payload["conversations"],
         payload["tasks"],
@@ -1638,8 +1385,19 @@ async def agent_dashboard(
         payload["drafts"]["ai_drafts"],
         payload["drafts"]["outreach_drafts"],
     ])
-    if not has_real_data:
-        return _sample_dashboard(ctx)
+    has_metric_activity = any(
+        value > 0
+        for value in payload["metrics"].values()
+        if isinstance(value, int | float)
+    )
+    if not has_real_collections and not has_metric_activity:
+        payload["empty_state"] = {
+            "reason": "no_workspace_activity",
+            "message": (
+                "No live buyer conversations, tasks, viewings, drafts, escalations, "
+                "or campaigns have landed in this workspace yet."
+            ),
+        }
     return payload
 
 
