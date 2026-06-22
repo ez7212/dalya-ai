@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from app.api import agent, agent_dashboard, crm, leads, listings, media, onboarding, research, seller, spa_parser, telegram, viewings, whatsapp
+from app.api import agent, agent_dashboard, crm, leads, listings, media, onboarding, research, seller, spa_parser, viewings, whatsapp
 from app.core.runtime_config import debug_routes_enabled, is_live_environment, runtime_create_all_allowed
 
 logger = logging.getLogger(__name__)
@@ -106,12 +106,6 @@ async def lifespan(app: FastAPI):
     else:
         logger.info("Research auditor disabled (ENABLE_RESEARCH_AUDITOR=false)")
 
-    # Register Telegram webhook if public URL is configured
-    public_url = os.getenv("PUBLIC_URL", "")
-    if public_url and os.getenv("TELEGRAM_BOT_TOKEN"):
-        from app.api.telegram import register_telegram_webhook
-        await register_telegram_webhook(public_url)
-
     yield
 
     # Shutdown: cancel workers gracefully
@@ -142,7 +136,6 @@ app.add_middleware(
 app.include_router(media.router, tags=["Media"])
 app.include_router(spa_parser.router, prefix="/api/v1", tags=["SPA Parser"])
 app.include_router(whatsapp.router, prefix="/api/v1", tags=["WhatsApp"])
-app.include_router(telegram.router, prefix="/api/v1", tags=["Telegram"])
 app.include_router(onboarding.router, prefix="/api/v1", tags=["Onboarding"])
 app.include_router(listings.router, prefix="/api/v1", tags=["Listings"])
 app.include_router(agent.router, prefix="/api/v1", tags=["Agent"])
@@ -163,7 +156,6 @@ async def health():
         "anthropic_api": "missing",
         "database": "error",
         "twilio": "unconfigured",
-        "telegram": "unconfigured",
         "active_listings": 0,
         "pending_queue_messages": 0,
     }
@@ -176,10 +168,6 @@ async def health():
     # Twilio env vars
     if os.getenv("TWILIO_ACCOUNT_SID") and os.getenv("TWILIO_AUTH_TOKEN"):
         checks["twilio"] = "ok"
-
-    # Telegram env vars
-    if os.getenv("TELEGRAM_BOT_TOKEN") and os.getenv("TELEGRAM_CHAT_ID"):
-        checks["telegram"] = "ok"
 
     # Database connectivity + counts (sync engine, run in threadpool)
     def _db_checks():
@@ -211,7 +199,6 @@ async def health():
         checks["anthropic_api"] != "ok"
         or checks["database"] != "ok"
         or checks["twilio"] != "ok"
-        or checks["telegram"] != "ok"
     ):
         status = "degraded"
 

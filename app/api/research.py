@@ -13,7 +13,6 @@ Endpoints:
 import asyncio
 import json
 import logging
-import os
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
@@ -96,39 +95,15 @@ RESEARCH_TIMEOUT_SECONDS = 1800  # 30 minutes
 
 
 async def _notify_admin_research_complete(project_name: str, result: dict):
-    """Send a Telegram message to admin when research is ready for review."""
-    telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
-    telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID")
-    if not telegram_token or not telegram_chat_id:
-        return
-
     confidence = result.get("research_confidence") or 0
     flags = result.get("audit_flags", [])
     flag_count = len(flags)
-    flag_summary = ""
-    if flags:
-        # Show first 3 flags
-        flag_lines = "\n".join(f"  • {f}" for f in flags[:3])
-        remaining = f"\n  + {flag_count - 3} more" if flag_count > 3 else ""
-        flag_summary = f"\n\nAudit flags ({flag_count}):\n{flag_lines}{remaining}"
-
-    message = (
-        f"📋 Community research complete: {project_name}\n"
-        f"Confidence: {confidence:.0%}\n"
-        f"Status: needs_review{flag_summary}\n\n"
-        f"Review and approve at /api/v1/admin/research"
+    logger.info(
+        "Community research complete: %s confidence=%.0f%% status=needs_review audit_flags=%d",
+        project_name,
+        confidence * 100,
+        flag_count,
     )
-
-    try:
-        import httpx
-        async with httpx.AsyncClient() as client:
-            await client.post(
-                f"https://api.telegram.org/bot{telegram_token}/sendMessage",
-                json={"chat_id": telegram_chat_id, "text": message},
-                timeout=10,
-            )
-    except Exception as e:
-        logger.warning("Failed to send Telegram notification: %s", e)
 
 
 async def _run_research_job(research_id: int, project_name: str, developer: str, sub_community: str | None):
@@ -176,7 +151,6 @@ async def _run_research_job_inner(research_id: int, project_name: str, developer
                 len(result.get("audit_flags", [])),
             )
 
-            # Notify admin via Telegram
             await _notify_admin_research_complete(project_name, result)
 
         except asyncio.TimeoutError:
