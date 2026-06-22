@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-22 (`Task 13` MVP re-review readiness closeout)*
+*Last updated: 2026-06-22 (`DAL-196` legacy Telegram runtime removal)*
 
 ## Mission
 
@@ -129,7 +129,7 @@ Phase 1 backend is now complete for the Morning Hot List + Follow-Up Engine. The
 
 Remaining Phase 1 work is now MVP-critical: scheduled morning refresh instead of refresh-on-dashboard-load, a dedicated draft approval queue, and real send/reject/snooze controls for follow-up drafts.
 
-Phase 2 Smart Escalation backend handoff is now complete for the current MVP. Escalations route to the listing's managing agent through the brokerage's Agents AI number, persist an envelope route, and production webhook replies with `[Ref: TOKEN]` relay back to the buyer through the brokerage's buyer-facing number after token, agent-phone, expiry, opt-out, and brokerage checks. Escalations now have a product-level thread model: same-brokerage/same-buyer/same-listing questions in the same category append to an open `escalation_thread`, the agent receives append-only WhatsApp updates using the original reference token, and a successful agent reply resolves all open questions on that thread. The thread layer also has database-backed initial debounce, update debounce, offer/legal bypass, 24h timeout closure, buyer opt-out closure, question-cap formatting, compliance events for create/append/update/resolve/timeout/opt-out, duplicate-open-thread retry around the partial unique index, keyword-first category mapping for info gaps, BRN normal debounce behavior, legacy pending-question cleanup, and backwards-compatible relay for old routes with no thread ID. `agent_message_routes` remains the transport token layer rather than the product work item.
+Phase 2 Smart Escalation backend handoff is now complete for the current MVP. Escalations route to the listing's managing agent through the brokerage's Agents AI number, persist an envelope route, and production webhook replies with `[Ref: TOKEN]` relay back to the buyer through the brokerage's buyer-facing number after token, agent-phone, expiry, opt-out, and brokerage checks. Escalations now have a product-level thread model: same-brokerage/same-buyer/same-listing questions in the same category append to an open `escalation_thread`, the agent receives append-only WhatsApp updates using the original reference token, and a successful agent reply resolves all open questions on that thread. The thread layer also has database-backed initial debounce, update debounce, offer/legal bypass, 24h timeout closure, buyer opt-out closure, question-cap formatting, compliance events for create/append/update/resolve/timeout/opt-out, duplicate-open-thread retry around the partial unique index, keyword-first category mapping for info gaps, BRN normal debounce behavior, legacy pending-question cleanup, and backwards-compatible relay for old routes with no thread ID. `agent_message_routes` remains the transport token layer rather than the product work item. Telegram is no longer an active runtime integration; historical `telegram_reply_routes` artifacts remain only for schema/RLS history.
 
 Remaining Phase 2 work is now limited to stuck-handoff monitoring and per-brokerage debounce timing unless pilot feedback makes either launch-critical. Dashboard reply composition is built; 360dialog/BSP production-path confirmation remains the final production verification gate.
 

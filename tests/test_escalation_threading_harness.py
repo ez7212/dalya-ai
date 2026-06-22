@@ -554,16 +554,14 @@ def test_repeated_offers_create_distinct_open_threads(threaded_escalation_seed):
         assert {thread.state for thread in threads} == {"open"}
 
 
-def test_successful_threaded_initial_send_does_not_fall_through_to_legacy_telegram(monkeypatch, threaded_escalation_seed):
+def test_successful_threaded_initial_send_uses_agents_ai_only(monkeypatch, threaded_escalation_seed):
     seed = threaded_escalation_seed
     transport = SimulatedTransport()
     set_transport_override(transport)
-    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "test-token")
-    monkeypatch.setenv("TELEGRAM_CHAT_ID", "test-chat")
 
     class FailingAsyncClient:
         async def __aenter__(self):
-            raise AssertionError("legacy Telegram fallback should not run after Agents AI send")
+            raise AssertionError("no external fallback should run after Agents AI send")
 
         async def __aexit__(self, exc_type, exc, tb):
             return False

@@ -8,7 +8,7 @@ Twilio webhook flow:
 2. Twilio POSTs to this endpoint with message details
 3. We process through chatbot engine
 4. We respond via Twilio API
-5. If escalation triggered, alert Eric via Telegram
+5. If escalation triggered, route it through the brokerage's Agents AI path
 
 Setup:
 - Set your Twilio webhook URL to: https://your-domain.com/api/v1/whatsapp/webhook
@@ -93,9 +93,7 @@ def generate_whatsapp_link(
 async def notify_managing_agent(alert: EscalationAlert):
     """
     Route an escalation alert to the listing's managing agent via the
-    brokerage's Agents AI WhatsApp number (the multi-tenant path), and
-    optionally also fire the legacy Telegram alert for Mahoroba's existing
-    operational flow (gated by brokerage.settings.legacy_telegram_alerts).
+    brokerage's Agents AI WhatsApp number (the multi-tenant path).
 
     The Agents AI envelope carries a token so the managing agent's reply
     relays back to the original buyer on the brokerage's Brokerage AI thread.
@@ -109,8 +107,6 @@ async def notify_managing_agent(alert: EscalationAlert):
     from app.models.db_models import (
         DBListing,
     )
-    from app.schemas.conversation import EscalationType
-
     # ── Multi-tenant agent-side relay (primary path) ────────────────────────
     with _service_session() as db:
         listing = db.get(DBListing, alert.listing_id)
@@ -209,115 +205,15 @@ async def notify_managing_agent(alert: EscalationAlert):
             if threaded_result.action in {"debounced", "initial_sent", "update_debounced", "update_sent"}:
                 return
 
-        # If legacy_telegram_alerts is disabled on this brokerage, stop here.
-        legacy_telegram = True
-        if brokerage and isinstance(brokerage.settings, dict):
-            legacy_telegram = bool(brokerage.settings.get("legacy_telegram_alerts", True))
-        if not legacy_telegram:
-            return
-
-    # ── Legacy Telegram alert (Mahoroba operational continuity) ─────────────
-
-    if alert.escalation_type == EscalationType.offer:
-        threshold_line = (
-            f"Negotiation threshold: AED {alert.negotiation_threshold_aed:,.0f}"
-            if alert.negotiation_threshold_aed
-            else "Negotiation threshold: not set"
-        )
-        message = f"""
-💰 OFFER RECEIVED — {alert.buyer_name or 'Unknown buyer'} ({alert.buyer_phone})
-
-Property: {alert.listing_id}
-Listing price: AED {alert.listing_price_aed:,.0f}
-{threshold_line}
-Offer: AED {alert.offer_amount_aed:,.0f}
-
-Their message:
-"{alert.trigger_message}"
-
-Summary: {alert.conversation_summary or 'N/A'}
-""".strip()
-
-    else:  # non-offer alert
-        payload_text = ""
-        if alert.payload:
-            payload_lines = [
-                f"- {key}: {value}"
-                for key, value in alert.payload.items()
-                if value is not None and value != "" and value != []
-            ]
-            if payload_lines:
-                payload_text = "\n\nPayload:\n" + "\n".join(payload_lines)
-        message = f"""
-❓ QUESTIONS FORWARDED — {alert.buyer_name or 'Unknown buyer'} ({alert.buyer_phone})
-
-Property: {alert.listing_id}
-Type: {alert.escalation_type}
-Subtype: {alert.escalation_subtype or 'N/A'}
-
-Questions the AI couldn't answer:
-{alert.trigger_message}
-{payload_text}
-
-Reply to THIS message on Telegram and Dalya will forward it to the buyer on WhatsApp.
-""".strip()
-
-    # Clear pending forwarded questions after sending the alert.
-    # Move them into alerted_questions so they are never re-alerted.
-    if str(alert.escalation_type) in {"unanswerable_question", "info_gap"}:
-        from app.models.db_models import DBConversation
-        with service_session() as db:
-            conv = db.get(DBConversation, alert.conversation_id)
-            if conv and conv.brokerage_id:
-                set_service_db_session_context(db, brokerage_id=conv.brokerage_id)
-            if conv:
-                alerted = list(conv.alerted_questions or [])
-                for q in (conv.pending_forwarded_questions or []):
-                    if q not in alerted:
-                        alerted.append(q)
-                conv.alerted_questions = alerted
-                conv.pending_forwarded_questions = []
-                safe_commit(db)
-
-    telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
-    telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID")
-
-    if telegram_token and telegram_chat_id:
-        import httpx
-        from app.models.db_models import DBTelegramReplyRoute
-        try:
-            async with httpx.AsyncClient() as client:
-                resp = await client.post(
-                    f"https://api.telegram.org/bot{telegram_token}/sendMessage",
-                    json={"chat_id": telegram_chat_id, "text": message},
-                    timeout=10,
-                )
-                data = resp.json()
-                if data.get("ok"):
-                    telegram_message_id = data["result"]["message_id"]
-                    with service_session() as db:
-                        set_service_db_session_context(db, brokerage_id=brokerage.brokerage_id if brokerage else None)
-                        db.add(DBTelegramReplyRoute(
-                            telegram_message_id=telegram_message_id,
-                            buyer_phone=alert.buyer_phone,
-                            conversation_id=alert.conversation_id,
-                            listing_id=alert.listing_id,
-                            buyer_name=alert.buyer_name,
-                            alert_questions=(
-                                alert.trigger_message
-                                if str(alert.escalation_type) == "unanswerable_question"
-                                else None
-                            ),
-                        ))
-                        safe_commit(db)
-        except Exception as e:
-            logger.warning(f"[conv:{alert.conversation_id[:8]}] Failed to send Telegram alert: {e}")
-    else:
-        logger.info(
-            "[conv:%s] Escalation alert (no Telegram configured):\n%s",
-            alert.conversation_id[:8],
-            redact_pii(message),
-        )
+    logger.info(
+        "[conv:%s] Escalation not delivered because no active managing-agent "
+        "Agents AI route is configured. type=%s listing=%s buyer=%s trigger=%s",
+        (alert.conversation_id or "")[:8],
+        alert.escalation_type,
+        alert.listing_id,
+        redact_pii(alert.buyer_phone or ""),
+        redact_pii(alert.trigger_message or ""),
+    )
 
 
 def send_whatsapp_reply(
