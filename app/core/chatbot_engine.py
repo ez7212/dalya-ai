@@ -866,8 +866,13 @@ class ChatbotEngine:
                     ctx=ctx,
                 )
             elif self._detect_offplan_mortgage_query(inbound.body, db_listing, spa):
+                mortgage_fact = self._direct_verified_fact_for_prompt(
+                    "off_plan_mortgage_ltv_policy",
+                    brokerage_id=ctx.brokerage_id or db_listing.brokerage_id or conv.brokerage_id,
+                )
                 deterministic_response = self._compose_offplan_mortgage_response(
-                    asking_price=seller_asking_price if self._message_asks_price(inbound.body) else None
+                    asking_price=seller_asking_price if self._message_asks_price(inbound.body) else None,
+                    verified_fact=mortgage_fact,
                 )
             elif self._detect_affordability_query(inbound.body):
                 monthly_income = self._extract_monthly_income_aed(inbound.body)
@@ -4235,14 +4240,21 @@ Summary:"""
         return not is_ready
 
     @staticmethod
-    def _compose_offplan_mortgage_response(asking_price: Optional[float] = None) -> str:
+    def _compose_offplan_mortgage_response(asking_price: Optional[float] = None, verified_fact=None) -> str:
         price_prefix = f"The asking price is AED {asking_price:,.0f}. " if asking_price else ""
+        if verified_fact is not None:
+            source = ChatbotEngine._source_label_for_verified_fact(verified_fact)
+            source_note = f" Source: {source}." if source else ""
+            return (
+                price_prefix +
+                f"{verified_fact.text}{source_note} "
+                "A mortgage advisor or bank should still confirm the exact policy before you make an offer."
+            )
         return (
             price_prefix +
-            "Off-plan mortgage is possible only in a narrower set of cases. Banks typically cap it around 50% LTV, "
-            "the buyer usually needs to have paid about 50% to the developer first, the developer normally needs to "
-            "be Tier-1 bank-approved, and many banks want 40-50% construction completion before they consider it. "
-            "A mortgage advisor should confirm the exact bank policy before you make an offer."
+            "Off-plan finance depends on the specific bank, buyer profile, developer approval status, construction stage, "
+            "and transaction structure. The listing agent and a mortgage advisor need to confirm the exact policy before "
+            "you rely on it or make an offer."
         )
 
     @staticmethod
@@ -4515,17 +4527,14 @@ Summary:"""
                 "This is a ready property, so there is no remaining developer payment schedule for the buyer to take over. "
                 f"There is no separate seller-equity amount on top of the asking price. Total: AED {lifecycle_total:,.0f}."
             )
-        paid = compute_paid_to_date(spa)
-        remaining = float(paid["remaining_aed"] or 0)
-        seller_equity = max(asking - remaining, 0)
         if is_arabic:
             return (
                 f"على سعر الطلب {asking:,.0f} درهم، تكاليف المشتري في الصفقة هي:\n\n"
                 f"- رسوم دائرة الأراضي {dld_pct_label}: {dld_fee:,.0f} درهم ({dld_source or 'Verified Facts'})\n"
                 f"- رسوم {ctx.brokerage_arabic or ctx.brokerage_short} ({ctx.commission_pct_label}): {brokerage_fee:,.0f} درهم\n\n"
                 "سعر الطلب هو إجمالي سعر العقار، وليس مبلغاً إضافياً فوق رصيد المطور. "
-                f"ينقسم إلى نحو {seller_equity:,.0f} درهم تُسدد للبائع عند التسجيل، "
-                f"و{remaining:,.0f} درهم تُسدد للمطور حسب جدول الدفعات المتبقية.\n\n"
+                "ينقسم بين جزء يُسوّى مع البائع عند التسجيل ورصيد مطور يُتبع حسب جدول الدفعات المتبقية. "
+                f"{ctx.managing_agent_name} يؤكد أرقام الإغلاق الدقيقة قبل الاعتماد عليها.\n\n"
                 f"إجمالي قيمة الشراء مع رسوم دائرة الأراضي ورسوم {ctx.brokerage_arabic or ctx.brokerage_short} هو "
                 f"{lifecycle_total:,.0f} درهم."
             )
@@ -4534,8 +4543,8 @@ Summary:"""
             f"- DLD transfer fee ({dld_pct_label}{dld_source_note}): AED {dld_fee:,.0f}\n"
             f"- {ctx.brokerage_short} fee ({ctx.commission_pct_label}): AED {brokerage_fee:,.0f}\n\n"
             f"The asking price is the total property price, not an amount on top of the SPA balance. "
-            f"It splits into about AED {seller_equity:,.0f} settled to the seller at closing and "
-            f"AED {remaining:,.0f} paid to the developer over the remaining SPA schedule.\n\n"
+            "It splits between a seller-equity portion settled at closing and a developer balance paid under the "
+            f"remaining SPA schedule. {ctx.managing_agent_name} will confirm the exact closing math before you rely on it.\n\n"
             f"Across the transaction value, asking price + DLD + {ctx.brokerage_short} fee is "
             f"AED {lifecycle_total:,.0f}."
         )
@@ -5770,10 +5779,10 @@ DASHBOARD URL: dalya.ai/dashboard"""
         listing_property_type = (db_listing.property_type or "").lower()
         is_ready_listing = listing_property_type == "ready" or status in {"ready", "completed", "complete"}
         noc_line = (
-            "ready resale; NOC/title-deed transfer should be verified through the listing agent, typical developer turnaround is about 1-5 days"
+            "ready resale; NOC/title-deed transfer timing should be verified through the listing agent"
             if is_ready_listing else (
-                "yes" if spa.noc_eligible
-                else "not yet, requires 40% paid"
+                "listing record indicates NOC eligibility; listing agent must verify before reliance" if spa.noc_eligible
+                else "not confirmed; listing agent must verify before reliance"
             )
         )
 
@@ -5845,10 +5854,11 @@ WHAT YOU CAN SHARE:
 	- Bank-specific approvals or final LTV commitments (refer to the buyer's bank)
 	- Generic 80% ready-resale LTV ceilings unless the professional explicitly asks for a generic maximum; residency, value band, use, and bank policy change it
 
-	OFF-PLAN MORTGAGE FACTS:
-	- If this is an off-plan listing, say off-plan finance is constrained: usually around 50% LTV maximum, buyer normally needs about 50% paid to the developer first, Tier-1 bank-approved developers only, and often 40-50% construction completion before banks consider it.
-	- Do not say "most UAE banks finance off-plan" broadly.
-	- Final policy still sits with the buyer's lender.
+		OFF-PLAN MORTGAGE FACTS:
+		- If this is an off-plan listing, do not quote LTV percentages, paid-to-developer thresholds, developer bank-approval rules, or construction-completion thresholds unless an active direct Verified Fact for this buyer turn states them.
+		- Without that fact, say off-plan finance is more constrained and must be confirmed by the buyer's bank or mortgage advisor for the specific deal.
+		- Do not say "most UAE banks finance off-plan" broadly.
+		- Final policy still sits with the buyer's lender.
 
 	OFFERS THROUGH DALYA:
 	- Firm offers can be submitted in this Dalya WhatsApp thread. Dalya records them and routes qualifying offers to the managing agent.
@@ -5871,16 +5881,16 @@ TONE:
 - If giving a brief or inventory, use line items with every item on its own line
 - Split two-topic answers with a blank line
 - Examples:
-  "NOC and title transfer happen after the SPA is signed - usually a 1-5 day developer turnaround, confirmed by the listing agent once an offer's in.
+	  "NOC and title-transfer timing depends on the developer, bank, documents, and transaction structure. The listing agent needs to confirm the current timing before anyone relies on it.
 
-  Your bank will want the NOC in hand before final drawdown, so the sequence is: offer accepted -> SPA signed -> NOC -> mortgage completion."
+	  If bank finance is involved, the bank and listing agent will confirm the sequence before completion."
 
   "Here's the brief on the unit:
 
-  - 4-bed, 6-bath, 5,148 sqft, asking AED 16.99M
-  - Ready resale - completed, available for immediate transfer
-  - No developer payment plan
-  - NOC and title transfer run ~1-5 days once under contract"
+	  - 4-bed, 6-bath, 5,148 sqft, asking AED 16.99M
+	  - Ready resale - completed, available for immediate transfer
+	  - No developer payment plan
+	  - NOC/title-transfer timing is confirmed by the listing agent once under contract"
 - Don't ask "are you looking to invest or end-use?" (they're not the buyer)"""
 
         recent = (conv.messages[-10:] if conv and conv.messages else [])

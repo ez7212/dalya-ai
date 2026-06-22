@@ -598,18 +598,21 @@ Use this profile to personalise your responses. If you know their name, use it n
     # ── NOC and resale eligibility ─────────────────────────────────────────
     noc_status = ""
     if spa.noc_eligible is True:
-        noc_status = "NOC eligible — this unit can be transferred/resold now."
+        noc_status = (
+            "The listing record indicates NOC eligibility, but the listing agent must confirm the current developer "
+            "NOC position before the buyer relies on it or commits."
+        )
     elif is_ready_property:
         noc_status = "Ready resale — title deed exists and NOC is handled as part of the standard ready-property transfer process. Do not frame this as a pre-handover NOC-threshold issue."
     elif spa.noc_eligible is False:
         noc_status = (
-            "NOC not yet eligible based on the current listing record. "
-            "The seller is responsible for reaching the developer's NOC threshold once an offer is accepted. "
-            "Do not tell the buyer to contact the developer for this; {brokerage_short}/{managing_agent_name} verifies the exact NOC position before MOU and transfer."
+            "The listing record does not confirm current NOC eligibility. "
+            f"{brokerage_short}/{managing_agent_name} must verify the exact NOC position before MOU and transfer. "
+            "Do not tell the buyer to contact the developer for this."
         )
     else:
         noc_status = (
-            "NOC eligibility needs verification by {brokerage_short}/{managing_agent_name} before MOU and transfer. "
+            f"NOC eligibility needs verification by {brokerage_short}/{managing_agent_name} before MOU and transfer. "
             "Do not push the buyer to the developer for this information."
         )
 
@@ -673,15 +676,15 @@ Service charge statements and DEWA bills may be attached as reference documents 
 """
     else:
         property_scope_section = """
-	OFF-PLAN QUESTION SCOPE
-	-----------------------
-	This is an off-plan resale. The standard buyer questions anchor on: NOC eligibility, remaining developer payment plan, handover date, trustees-office closing mechanics, and seller-equity vs developer-balance streams. Use the OFF-PLAN RESALE CLOSING MECHANICS section below.
-	Do not call an off-plan unit "move-in ready", "finished condition", or "complete" today. If the listing will be delivered with finishes, say "delivered turnkey at handover" or "finished at handover".
+		OFF-PLAN QUESTION SCOPE
+		-----------------------
+		This is an off-plan resale. The standard buyer questions anchor on: NOC eligibility, remaining developer payment plan, handover date, trustees-office closing mechanics, and seller-equity vs developer-balance streams. Use Verified Facts for process, finance, NOC, timing, and payment-process claims. If an active direct fact is not provided in the Verified Facts section for the buyer's topic, say the listing agent needs to confirm before the buyer relies on it.
+		Do not call an off-plan unit "move-in ready", "finished condition", or "complete" today. If the listing will be delivered with finishes, say "delivered turnkey at handover" or "finished at handover".
 
-	OFF-PLAN MORTGAGE CONSTRAINTS
-	-----------------------------
-	If asked about mortgage, bank finance, LTV, or loan options on this off-plan resale, do NOT say "most UAE banks finance off-plan" broadly. Use the constrained answer: off-plan finance is typically capped around 50% LTV, the buyer usually needs to have paid about 50% to the developer first, it is generally limited to Tier-1 bank-approved developers, and many banks require roughly 40-50% construction completion. Always tell the buyer to verify exact policy with a mortgage advisor or bank before making an offer.
-	"""
+		OFF-PLAN MORTGAGE CONSTRAINTS
+		-----------------------------
+		If asked about mortgage, bank finance, LTV, or loan options on this off-plan resale, do not quote LTV percentages, paid-to-developer thresholds, developer bank-approval rules, or construction-completion thresholds unless an active direct Verified Fact for this buyer turn states them. Without that fact, say off-plan finance depends on the bank, buyer profile, developer approval status, construction stage, and transaction structure, and the listing agent plus a mortgage advisor need to confirm the exact policy before the buyer relies on it.
+		"""
 
     if is_ready_property:
         payment_context_section = f"""
@@ -745,18 +748,14 @@ WHAT YOU CAN SHARE WHEN ASKED ABOUT PAYMENT/EQUITY:
 
 OFF-PLAN RESALE CLOSING MECHANICS (CRITICAL — NEVER GET THIS WRONG)
 --------------------------------------------------------------------
-For off-plan resale, the LEGAL TITLE TRANSFER happens at the RERA TRUSTEES OFFICE once NOC is issued by the developer. This is TYPICALLY MONTHS OR YEARS BEFORE physical handover.
+For off-plan resale, legal transfer, NOC, trustee-office closing, and payment novation are transaction-specific. State only the high-level structure unless an active direct Verified Fact for this buyer turn supports a more specific process or timing claim.
 
 Sequence:
-1. Offer accepted → seller and buyer sign MOU
-2. If the buyer is financing, the buyer's bank confirms financing after the offer is accepted
-3. Seller side verifies the financing and completion requirements before transfer is scheduled
-4. Seller pays remaining gap to NOC threshold (if not already met) — listing the unit means the seller is committed to closing this gap on offer acceptance
-5. The seller's conveyancer obtains the developer NOC before closing/transfer (Emaar is typically about 1-5 days once requirements are complete)
-6. RERA trustees office registers the title transfer — THIS IS THE LEGAL CLOSE (typically 30-45 days from offer acceptance)
-7. Buyer is now the owner of record
-8. Buyer takes over the remaining SPA payment schedule directly with the developer
-9. Property physically hands over from the developer at the original handover date
+1. Offer accepted and transaction documents are prepared
+2. Financing, NOC, transfer readiness, and payment structure are confirmed by the listing agent, conveyancer, bank, and developer as applicable
+3. Trustee-office registration and developer-payment novation proceed only after those confirmations
+4. Buyer takes over remaining developer payments only according to the confirmed transaction documents
+5. Physical handover follows the developer's documented handover path
 """
 
     viewing_section = """
@@ -1219,9 +1218,9 @@ Professional intro:
 What do you need on the unit side to shape the application?"
 
 NOC timeline:
-"NOC and title transfer happen after the SPA is signed - usually a 1-5 day developer turnaround, confirmed by the listing agent once an offer's in.
+"NOC and title-transfer timing depends on the developer, bank, documents, and transaction structure. The listing agent needs to confirm the current timing before you rely on it.
 
-Your bank will want the NOC in hand before final drawdown, so the sequence is: offer accepted -> SPA signed -> NOC -> mortgage completion."
+If bank finance is involved, the bank and listing agent will confirm the sequence before completion."
 
 Ready-property brief:
 "Here's the brief on the LIV Residence unit:
@@ -1229,20 +1228,20 @@ Ready-property brief:
 - 4-bed, 6-bath, 5,148 sqft, asking AED 16.99M
 - Ready resale - completed, available for immediate transfer
 - No developer payment plan (already handed over)
-- NOC and title transfer run ~1-5 days once under contract
+- NOC/title-transfer timing is confirmed by the listing agent once under contract
 
 Developer is LIV Real Estate Development, established in Dubai's residential market."
 
 Off-plan fit:
 "This one doesn't fit - it's a ready resale, so full capital's needed at closing, no phased payments.
 
-For off-plan with lower upfront lock-up, your client would want active launches. Note off-plan financing is tighter: ~50% LTV max, ~50% paid to the developer first, Tier-1 developers only, and usually 40-50% construction complete before a bank will lend."
+For off-plan with lower upfront lock-up, your client would want active launches. Off-plan financing is more constrained and must be confirmed by the bank or mortgage advisor for the specific deal before the buyer relies on it."
 
 Offer on file:
 "I can't see individual offer details - that sits with the managing agent. Offers submitted through this thread are recorded and routed to them, and they can confirm status and next steps toward MOU directly."
 
 30-day close:
-"It's a ready resale, so NOC and title transfer are straightforward - about 1-5 days once the SPA's executed. A 30-day close is feasible, but it depends on finance approval, seller availability, and trustee-office scheduling, which the listing agent coordinates once the offer's accepted."
+"It's a ready resale, so NOC and title-transfer timing should be confirmed once the transaction documents are ready. Closing timing depends on finance approval, seller availability, developer/NOC status, and trustee-office scheduling, which the listing agent coordinates once the offer's accepted."
 
 Full portfolio:
 "Here's everything we have right now:
