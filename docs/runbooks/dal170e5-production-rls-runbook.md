@@ -7,6 +7,31 @@ production once DAL-170E1/E2/E3/E4A/E4B/E4C are merged. It is **planning only**.
 roles or app runtime behaviour.** Production RLS remains on hold until Eric
 approves the rehearsal evidence and explicitly authorises the apply.
 
+## Task 10a friendly-pilot posture
+
+Task 10a is a readiness record only. It does not authorize production/staging
+DDL, RLS enablement, role/grant mutation, app-runtime role switching, or live
+data writes.
+
+Current Task 10a status:
+
+- No dedicated `.env.dal170e5_rehearsal` file is present in this worktree.
+- No approved DAL-170E5 rehearsal DB fingerprint is recorded in this runbook.
+- Existing env files were inventoried by filename only; env-file contents were
+  not read.
+- The DAL-170E5 rehearsal/apply path remains blocked until a fresh dedicated
+  rehearsal branch, approved DB fingerprint, rollback artifact, and maintenance
+  window are provided.
+
+Friendly-pilot data posture until that gate is cleared:
+
+- Synthetic/internal demo data may be used if the rest of the product gates pass.
+- Real-customer data, external brokerage pilot data, and live production data are
+  blocked for this RLS/app-role risk area.
+- Any approval to move beyond synthetic/internal data must be separate from this
+  task and must include the target DB fingerprint, rollback artifact, and
+  maintenance window required by the Eric approval gate below.
+
 It builds on the DAL-170D DDL runbook conventions (`docs/runbooks/dal170d-production-ddl.md`):
 fresh-branch rehearsal, DB-identity confirmation, artifact capture, explicit
 production gates, rollback SQL, and an Eric approval gate.

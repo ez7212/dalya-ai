@@ -215,6 +215,7 @@ def main() -> int:
     role_name = _validate_role_name(args.role_name)
 
     if args.apply:
+        _assert_role_rehearsal_mutation_allowed(allow_rehearsal_mutation=args.allow_rehearsal_mutation)
         _execute(apply_sql(role_name), role_name=role_name, allow_rehearsal_mutation=args.allow_rehearsal_mutation)
         print(f"DAL-170E4B app-role rehearsal grants applied for role {role_name}")
         return 0
