@@ -3,6 +3,8 @@ from __future__ import annotations
 import pytest
 
 from app.core.runtime_config import (
+    UnsafeCorsConfigError,
+    cors_allow_origins,
     debug_routes_enabled,
     public_url_required_for_webhooks,
 )
@@ -62,3 +64,66 @@ def test_public_url_not_required_for_local_webhooks(monkeypatch, dalya_env):
 
     # When / Then: local webhook simulations do not need PUBLIC_URL.
     assert public_url_required_for_webhooks() is False
+
+
+def test_cors_origins_default_to_localhost_for_test_env(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Given: an explicit test environment without CORS env configuration.
+    monkeypatch.setenv("DALYA_ENV", "test")
+    monkeypatch.delenv("APP_ENV", raising=False)
+    monkeypatch.delenv("ENVIRONMENT", raising=False)
+    monkeypatch.delenv("DALYA_CORS_ORIGINS", raising=False)
+
+    # When / Then: local app construction gets an explicit localhost allowlist.
+    assert cors_allow_origins() == [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
+
+
+def test_cors_origins_reflect_configured_allowlist(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Given: a configured live-class pilot allowlist.
+    monkeypatch.setenv("DALYA_ENV", "preview")
+    monkeypatch.delenv("APP_ENV", raising=False)
+    monkeypatch.delenv("ENVIRONMENT", raising=False)
+    monkeypatch.setenv(
+        "DALYA_CORS_ORIGINS",
+        "https://pilot.dalya.ai, https://agents.dalya.ai",
+    )
+
+    # When / Then: comma-separated origins are returned in configured order.
+    assert cors_allow_origins() == [
+        "https://pilot.dalya.ai",
+        "https://agents.dalya.ai",
+    ]
+
+
+def test_cors_origins_fail_closed_without_live_class_allowlist(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Given: a production runtime without an explicit CORS allowlist.
+    monkeypatch.setenv("DALYA_ENV", "production")
+    monkeypatch.delenv("APP_ENV", raising=False)
+    monkeypatch.delenv("ENVIRONMENT", raising=False)
+    monkeypatch.delenv("DALYA_CORS_ORIGINS", raising=False)
+
+    # When / Then: unsafe app construction is blocked.
+    with pytest.raises(UnsafeCorsConfigError, match="DALYA_CORS_ORIGINS"):
+        cors_allow_origins()
+
+
+def test_cors_origins_reject_wildcard_with_credentials(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Given: a live-class runtime configured with a wildcard origin.
+    monkeypatch.setenv("DALYA_ENV", "staging")
+    monkeypatch.delenv("APP_ENV", raising=False)
+    monkeypatch.delenv("ENVIRONMENT", raising=False)
+    monkeypatch.setenv("DALYA_CORS_ORIGINS", "*")
+
+    # When / Then: wildcard origins cannot be combined with credentials.
+    with pytest.raises(UnsafeCorsConfigError, match="wildcard"):
+        cors_allow_origins()
