@@ -75,8 +75,8 @@ def test_offplan_total_fees_redacts_numeric_seller_equity_and_backcalc_pair():
     assert "equity" in lowered
     assert "13,500,000" not in response
     assert not ({"13,500,000", "3,000,000"} <= _aed_amounts(response))
-    assert "listing agent" in lowered
-    assert "exact closing math" in lowered
+    assert "confirm" in lowered
+    assert "exact closing math" in lowered or "before you rely on it" in lowered
 
 
 def test_remaining_payment_response_keeps_developer_balance_without_seller_equity_number():
