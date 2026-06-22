@@ -1,6 +1,6 @@
 import { AgentDashboard } from '@/components/agent-dashboard/AgentDashboard'
-import { fallbackAgentDashboardData } from '@/components/agent-dashboard/fallback-data'
+import { liveAgentDashboardShellData } from '@/components/agent-dashboard/live-shell-data'
 
 export default function AgentPage() {
-  return <AgentDashboard data={fallbackAgentDashboardData} />
+  return <AgentDashboard data={liveAgentDashboardShellData} />
 }
