@@ -25,6 +25,7 @@ import type {
   ReplyDraftItem,
   ViewingItem,
 } from './types'
+import { DashboardConnectionErrorState } from './DashboardConnectionErrorState'
 import { TodayQueue } from './TodayQueue'
 import { buildTodayQueue } from './today-queue'
 
@@ -61,7 +62,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
         setDataState('live')
       } catch {
         if (!active) return
-        setDashboardData(data)
+        setDashboardData(null)
         setDataState('error')
       }
     }
@@ -72,6 +73,10 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
     }
   }, [data, reloadKey])
 
+  function retry() {
+    setReloadKey((key) => key + 1)
+  }
+
   const sourceLabel = dataState === 'live'
     ? 'Live workspace'
     : dataState === 'loading'
@@ -79,6 +84,9 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
       : 'Connection error'
 
   if (!dashboardData) {
+    if (dataState === 'error') {
+      return <DashboardConnectionErrorState onRetry={retry} />
+    }
     return <DashboardLoadingState />
   }
 
@@ -175,10 +183,6 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 
   const dayIsClear = todayQueue.length === 0
 
-  function retry() {
-    setReloadKey((key) => key + 1)
-  }
-
   return (
     <div id="dashboard" className="marketing-surface min-h-[calc(100vh-4rem)] bg-neutral-50">
       <div className="mx-auto max-w-[1600px]">
@@ -228,7 +232,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
                 <span className="material-symbols-outlined text-[20px] text-error-600" aria-hidden="true">cloud_off</span>
                 <div>
                   <p className="text-sm font-semibold text-error-700">Couldn&apos;t load your live workspace</p>
-                  <p className="mt-0.5 text-sm text-error-700/80">Showing the local dashboard fallback. Actions are paused until we reconnect.</p>
+                  <p className="mt-0.5 text-sm text-error-700/80">Retry to reload live buyer activity. Actions are paused until we reconnect.</p>
                 </div>
               </div>
               <button
