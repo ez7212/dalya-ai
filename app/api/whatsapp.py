@@ -270,7 +270,24 @@ def send_whatsapp_reply(
                 )
                 return
 
-    body, _ = validate_and_rewrite_response(body, brokerage_id=brokerage_id)
+    body, validation_telemetry = validate_and_rewrite_response(
+        body,
+        brokerage_id=brokerage_id,
+    )
+    verified_facts_rewrites = int(validation_telemetry["verified_facts_output_rewrites"])
+    verified_facts_topics = tuple(validation_telemetry["verified_facts_output_topics"])
+    if verified_facts_rewrites:
+        logger.info(
+            "[VerifiedFacts] Rewrote standalone outbound WhatsApp body before transport",
+            extra={
+                "brokerage_id": brokerage_id,
+                "conversation_id": conversation_id,
+                "listing_id": listing_id,
+                "buyer_phone": redact_pii(to_number),
+                "verified_facts_output_rewrites": verified_facts_rewrites,
+                "verified_facts_output_topics": verified_facts_topics,
+            },
+        )
 
     result = get_transport().send_to_buyer(
         OutboundBuyerMessage(
@@ -298,6 +315,8 @@ def send_whatsapp_reply(
                     "body_preview": body[:200],
                     "transport": type(get_transport()).__name__,
                     "transport_message_id": result.transport_message_id,
+                    "verified_facts_output_rewrites": verified_facts_rewrites,
+                    "verified_facts_output_topics": verified_facts_topics,
                 },
             )
 

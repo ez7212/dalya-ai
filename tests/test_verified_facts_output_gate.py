@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 
 import pytest
@@ -241,13 +242,17 @@ def test_engine_finalizer_runs_verified_facts_output_gate_on_model_final_text() 
     assert telemetry["verified_facts_output_rewrites"] == 1
 
 
-def test_whatsapp_send_path_runs_verified_facts_output_gate(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_whatsapp_send_path_records_verified_facts_output_gate_telemetry(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
     # Given: a direct WhatsApp outbound body that bypasses chatbot generation.
     from app.api.whatsapp import send_whatsapp_reply
 
     transport = CapturingTransport()
     set_transport_override(transport)
     monkeypatch.setattr("app.api.whatsapp.service_session", None)
+    caplog.set_level(logging.INFO, logger="app.api.whatsapp")
 
     try:
         # When: the buyer-facing WhatsApp send seam sends the body.
@@ -263,3 +268,12 @@ def test_whatsapp_send_path_runs_verified_facts_output_gate(monkeypatch: pytest.
     assert transport.sent_to_buyer is not None
     assert "3-5 days" not in transport.sent_to_buyer.body
     assert "listing agent needs to confirm" in transport.sent_to_buyer.body.lower()
+    rewrite_logs = [
+        record
+        for record in caplog.records
+        if record.getMessage()
+        == "[VerifiedFacts] Rewrote standalone outbound WhatsApp body before transport"
+    ]
+    assert len(rewrite_logs) == 1
+    assert rewrite_logs[0].verified_facts_output_rewrites == 1
+    assert rewrite_logs[0].verified_facts_output_topics == ("noc_transfer",)

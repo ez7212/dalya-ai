@@ -163,10 +163,34 @@ def verify_path_wiring() -> list[dict[str, str]]:
         ),
         _assert_source_contains(
             Path("app/api/whatsapp.py"),
-            "body, _ = validate_and_rewrite_response(body, brokerage_id=brokerage_id)",
-            "whatsapp_send_revalidates_body",
+            "validation_telemetry = validate_and_rewrite_response(",
+            "whatsapp_send_retains_validator_telemetry",
+        ),
+        _assert_source_contains(
+            Path("app/api/whatsapp.py"),
+            '"verified_facts_output_rewrites": verified_facts_rewrites',
+            "whatsapp_send_records_rewrite_count",
+        ),
+        _assert_source_contains(
+            Path("app/api/whatsapp.py"),
+            '"verified_facts_output_topics": verified_facts_topics',
+            "whatsapp_send_records_rewrite_topics",
+        ),
+        _assert_source_contains(
+            Path("app/api/whatsapp.py"),
+            "[VerifiedFacts] Rewrote standalone outbound WhatsApp body before transport",
+            "whatsapp_send_logs_standalone_rewrite",
         ),
     ]
+    _assert_source_lacks(
+        Path("app/api/whatsapp.py"),
+        "body, _ = validate_and_rewrite_response(",
+        "whatsapp_send_does_not_discard_validator_telemetry",
+    )
+    checks.append({
+        "name": "whatsapp_send_does_not_discard_validator_telemetry",
+        "status": "passed",
+    })
     _assert_callable_accepts_keywords(
         Path("app/core/response_validator.py"),
         "validate_and_rewrite_response",
@@ -181,6 +205,12 @@ def _assert_source_contains(path: Path, needle: str, name: str) -> dict[str, str
     if needle not in source:
         raise AssertionError(f"{path} missing {needle!r}")
     return {"name": name, "status": "passed"}
+
+
+def _assert_source_lacks(path: Path, needle: str, name: str) -> None:
+    source = path.read_text()
+    if needle in source:
+        raise AssertionError(f"{path} still contains {needle!r} for {name}")
 
 
 def _assert_callable_accepts_keywords(path: Path, function_name: str, keyword_names: tuple[str, ...]) -> None:
