@@ -20,6 +20,7 @@ Rules enforced (all idempotent):
 """
 import re
 from typing import Optional
+from app.core.verified_facts_output_gate import apply_verified_facts_output_gate
 from app.schemas.conversation import BuyerIntent
 
 
@@ -532,6 +533,8 @@ def strip_unsupported_developer_puffery(text: str) -> str:
 def validate_and_rewrite_response(
     response: str,
     intent: Optional[BuyerIntent] = None,
+    latest_buyer_message: Optional[str] = None,
+    brokerage_id: Optional[str] = None,
 ) -> tuple[str, dict]:
     """
     Single entry point for ALL bot output.
@@ -552,6 +555,8 @@ def validate_and_rewrite_response(
             "whatsapp_spacing_fixed": 0,
             "yield_figures_stripped": 0,
             "developer_puffery_stripped": 0,
+            "verified_facts_output_rewrites": 0,
+            "verified_facts_output_topics": (),
             "sentence_casing_fixed": 0,
         }
 
@@ -569,6 +574,8 @@ def validate_and_rewrite_response(
         "whatsapp_spacing_fixed": 0,
         "yield_figures_stripped": 0,
         "developer_puffery_stripped": 0,
+        "verified_facts_output_rewrites": 0,
+        "verified_facts_output_topics": (),
         "sentence_casing_fixed": 0,
     }
 
@@ -632,6 +639,15 @@ def validate_and_rewrite_response(
     response = strip_unsupported_developer_puffery(response)
     if response != pre_puffery:
         telemetry["developer_puffery_stripped"] = 1
+
+    gate_result = apply_verified_facts_output_gate(
+        response,
+        latest_buyer_message=latest_buyer_message,
+        brokerage_id=brokerage_id,
+    )
+    response = gate_result.response
+    telemetry["verified_facts_output_rewrites"] = gate_result.rewrite_count
+    telemetry["verified_facts_output_topics"] = gate_result.topics
 
     pre_spacing = response
     response = format_whatsapp_spacing(response)
