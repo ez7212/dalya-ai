@@ -28,6 +28,11 @@ from twilio.rest import Client as TwilioClient
 from twilio.request_validator import RequestValidator
 
 from app.core.auth import CurrentUser, get_current_user, require_admin
+from app.core.brokerage_access import (
+    capture_requested_brokerage_context,
+    current_requested_brokerage_id,
+    resolve_request_brokerage_context,
+)
 from app.core.chatbot_engine import engine
 from app.core.pii_redaction import redact_pii
 from app.core.runtime_config import debug_routes_enabled, is_production
@@ -882,7 +887,10 @@ async def send_test_voice_note(
 
 # ── Listing management endpoints ───────────────────────────────────────────────
 
-@router.post("/listings/{listing_id}/activate")
+@router.post(
+    "/listings/{listing_id}/activate",
+    dependencies=[Depends(capture_requested_brokerage_context)],
+)
 async def activate_listing_chatbot(
     listing_id: str,
     seller_asking_price: Optional[float] = None,
@@ -905,12 +913,20 @@ async def activate_listing_chatbot(
     community_research_status = None
 
     with service_session() as db:
+        context = resolve_request_brokerage_context(
+            db,
+            user,
+            current_requested_brokerage_id(),
+        )
+        set_service_db_session_context(db, brokerage_id=context.brokerage_id)
         row = crud.get_listing(db, listing_id)
         if not row:
             raise HTTPException(
                 status_code=404,
                 detail="Listing not found. Parse the SPA first via /api/v1/parse-spa"
             )
+        if row.brokerage_id != context.brokerage_id:
+            raise HTTPException(status_code=404, detail="Listing not found.")
 
         spa = SPAParseResult.model_validate(row.spa_data)
 
@@ -1132,69 +1148,3 @@ async def list_all_listings(admin: CurrentUser = Depends(require_admin)):
             }
 
     return await asyncio.get_event_loop().run_in_executor(None, _query)
-
-
-@router.get("/listings/{listing_id}/portal-links")
-async def get_portal_links(listing_id: str):
-    """Return portal deep links for a listing — WhatsApp, Property Finder, Bayut."""
-    import urllib.parse
-    from app.db import crud
-
-    with service_session() as db:
-        row = crud.get_listing(db, listing_id)
-
-    if not row:
-        raise HTTPException(status_code=404, detail="Listing not found.")
-
-    spa = row.spa_data or {}
-    project_name = spa.get("project", "")
-
-    dalya_number = os.getenv("DALYA_PHONE_NUMBER", "+971500000000")
-    wa_link = generate_whatsapp_link(dalya_number, listing_id, project_name)
-
-    return {
-        "whatsapp": wa_link,
-        "property_finder": f"https://www.propertyfinder.ae/en/search?q={urllib.parse.quote(project_name)}",
-        "bayut": f"https://www.bayut.com/to-rent/property/dubai/?q={urllib.parse.quote(project_name)}",
-    }
-
-
-@router.get("/listings/{listing_id}/stats")
-async def get_listing_stats(listing_id: str):
-    """Get conversation stats for a listing — powers the seller dashboard."""
-    return engine.get_listing_stats(listing_id)
-
-
-@router.get("/listings/{listing_id}/conversations")
-async def get_conversations(listing_id: str):
-    """Get all conversations for a listing."""
-    conversations = engine.get_all_conversations(listing_id)
-    return {
-        "listing_id": listing_id,
-        "conversations": [c.model_dump() for c in conversations],
-    }
-
-
-@router.post("/listings/{listing_id}/media")
-async def add_listing_media(listing_id: str, urls: list[str]):
-    """
-    Append render / floor-plan URLs to a listing's media_urls.
-    Body: {"urls": ["https://..."]}
-    """
-    from app.models.db_models import DBListing
-
-    with service_session() as db:
-        listing = db.get(DBListing, listing_id)
-        if listing and listing.brokerage_id:
-            set_service_db_session_context(db, brokerage_id=listing.brokerage_id)
-        if not listing:
-            raise HTTPException(status_code=404, detail="Listing not found.")
-
-        existing = list(listing.media_urls or [])
-        for url in urls:
-            if url not in existing:
-                existing.append(url)
-        listing.media_urls = existing
-        safe_commit(db)
-
-    return {"listing_id": listing_id, "media_urls": existing}
