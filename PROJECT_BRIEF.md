@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-20 (`DAL-170E4C` service/admin DB context compatibility)*
+*Last updated: 2026-06-22 (`Task 13` MVP re-review readiness closeout)*
 
 ## Mission
 
@@ -61,6 +61,12 @@ The current MVP is still framed by four product blocks, but `GOAL_SPEC_0609` now
 4. **Viewing Logistics Automation + Pre-Viewing Report.** Ready-property logistics, slot proposal, buyer/tenant confirmation, Google Calendar, reminders, pre-viewing brief, and post-viewing feedback.
 
 Full backlog with platform-infrastructure blockers in [`BACKLOG.md`](./BACKLOG.md).
+
+### MVP re-review readiness closeout (2026-06-22)
+
+The June 2026 MVP re-review remediation wave is closed through Task 13. Internal demo is green. Friendly pilot is yellow/conditional and limited to synthetic/internal data, Twilio-only transport, manual review, and the pilot readiness runbook. External brokerage pilot and production/live data remain red/blocked until the separate Task 10b app-role/RLS approval gate clears with Eric's explicit target DB fingerprint, rollback artifact, and maintenance window.
+
+Public evidence is in [`reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md`](./reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md). Tracked visual artifacts are under [`reports/dalya-mvp-rereview-evidence-2026-06-22/`](./reports/dalya-mvp-rereview-evidence-2026-06-22/). Task 10b was not executed in this plan.
 
 ### Final MVP completion order
 
