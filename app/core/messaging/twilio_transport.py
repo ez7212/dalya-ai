@@ -16,7 +16,7 @@ from twilio.rest import Client as TwilioClient
 from twilio.request_validator import RequestValidator
 
 from app.core.pii_redaction import redact_pii, redacted_preview
-from app.core.runtime_config import is_production
+from app.core.runtime_config import is_live_environment
 
 from app.core.messaging.transport import (
     MessagingTransport,
@@ -56,8 +56,8 @@ class TwilioTransport(MessagingTransport):
     ):
         self.account_sid = account_sid or os.getenv("TWILIO_ACCOUNT_SID", "")
         self.auth_token = auth_token or os.getenv("TWILIO_AUTH_TOKEN", "")
-        if is_production() and (not self.account_sid or not self.auth_token):
-            raise RuntimeError("Twilio transport requires TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN in production")
+        if is_live_environment() and (not self.account_sid or not self.auth_token):
+            raise RuntimeError("Twilio transport requires TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN in live-class environments")
         self._client: Optional[TwilioClient] = (
             TwilioClient(self.account_sid, self.auth_token) if self.account_sid else None
         )
@@ -125,15 +125,15 @@ class TwilioTransport(MessagingTransport):
 
     def verify_signature(self, request) -> bool:
         if not self.auth_token:
-            return not is_production()
+            return not is_live_environment()
         validator = RequestValidator(self.auth_token)
         public_url = os.getenv("PUBLIC_URL", "").rstrip("/")
         webhook_url = f"{public_url}/api/v1/whatsapp/webhook"
         signature = request.headers.get("X-Twilio-Signature", "")
         if not public_url:
-            return not is_production()
+            return not is_live_environment()
         try:
             form_data = request._form_data_cache  # type: ignore[attr-defined]
         except AttributeError:
-            return not is_production()
+            return not is_live_environment()
         return validator.validate(webhook_url, form_data, signature)

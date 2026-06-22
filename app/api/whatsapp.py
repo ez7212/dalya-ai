@@ -35,7 +35,7 @@ from app.core.brokerage_access import (
 )
 from app.core.chatbot_engine import engine
 from app.core.pii_redaction import redact_pii
-from app.core.runtime_config import debug_routes_enabled, is_production
+from app.core.runtime_config import debug_routes_enabled, is_live_environment
 from app.core.webhook_security import mark_inbound_provider_event, record_inbound_provider_event
 from app.db.session import safe_commit, service_session, set_service_db_session_context
 from app.schemas.conversation import InboundMessage, EscalationAlert
@@ -433,9 +433,9 @@ async def whatsapp_webhook(
     provider = "twilio"
     endpoint = "whatsapp/webhook"
     public_url = os.getenv("PUBLIC_URL", "").rstrip("/")
-    if is_production() and not TWILIO_AUTH_TOKEN:
+    if is_live_environment() and not TWILIO_AUTH_TOKEN:
         raise HTTPException(status_code=503, detail="Twilio signature verification is not configured")
-    if is_production() and not public_url:
+    if is_live_environment() and not public_url:
         raise HTTPException(status_code=503, detail="PUBLIC_URL is required for Twilio signature verification")
     if TWILIO_AUTH_TOKEN and public_url:
         validator = RequestValidator(TWILIO_AUTH_TOKEN)
