@@ -1,9 +1,0 @@
-{
-  "task": "4. Restrict CORS by environment",
-  "plan": ".omo/plans/dalya-next-mvp-readiness-plan.md",
-  "branch": "codex/restrict-cors-by-env",
-  "public_title": "Restrict CORS by environment",
-  "tracking_mode": "local-only",
-  "reason": "Security-adjacent runtime configuration change; keep detailed evidence local and public metadata generic.",
-  "status": "completed"
-}
