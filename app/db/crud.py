@@ -188,9 +188,8 @@ def get_listing_stats_fast(db: Session, listing_id: str) -> dict:
     rows = db.execute(
         select(
             DBConversation.conversation_id,
-            DBConversation.buyer_phone,
-            DBConversation.buyer_name,
             DBConversation.escalation_triggered,
+            DBConversation.created_at,
             DBConversation.updated_at,
             func.count(DBMessage.id).label("msg_count"),
         )
@@ -199,9 +198,8 @@ def get_listing_stats_fast(db: Session, listing_id: str) -> dict:
         .where(DBConversation.brokerage_id == listing.brokerage_id)
         .group_by(
             DBConversation.conversation_id,
-            DBConversation.buyer_phone,
-            DBConversation.buyer_name,
             DBConversation.escalation_triggered,
+            DBConversation.created_at,
             DBConversation.updated_at,
         )
         .order_by(DBConversation.updated_at.desc())
@@ -211,10 +209,17 @@ def get_listing_stats_fast(db: Session, listing_id: str) -> dict:
     escalated = sum(1 for r in rows if r.escalation_triggered)
     total_messages = sum(r.msg_count for r in rows)
 
+    buyer_labels = {
+        r.conversation_id: f"Buyer {idx}"
+        for idx, r in enumerate(
+            sorted(rows, key=lambda row: row.created_at or datetime.min),
+            start=1,
+        )
+    }
+
     active_buyers = [
         {
-            "phone": r.buyer_phone,
-            "name": r.buyer_name,
+            "buyer_label": buyer_labels[r.conversation_id],
             "messages": r.msg_count,
             "escalated": r.escalation_triggered,
             "last_active": r.updated_at.isoformat() if r.updated_at else None,
