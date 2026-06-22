@@ -2,6 +2,11 @@
 
 import { useEffect, useState, type ReactNode } from 'react'
 import Link from 'next/link'
+import { DealReadinessSummaryLine } from '@/components/readiness/DealReadinessCallout'
+import {
+  normalizeDealReadiness,
+  type DealReadinessMetadata,
+} from '@/components/readiness/deal-readiness'
 import { apiFetch } from '@/lib/api'
 import type {
   AgentDashboardData,
@@ -484,6 +489,10 @@ interface ApiTask {
   } | null
 }
 
+interface ApiReadinessShadow {
+  readonly deal_readiness?: DealReadinessMetadata | null
+}
+
 interface ApiHotLead {
   readonly id?: string | null
   readonly buyer?: ApiBuyer | null
@@ -496,6 +505,7 @@ interface ApiHotLead {
   readonly last_message?: string | null
   readonly last_message_at?: string | null
   readonly due_at?: string | null
+  readonly readiness_shadow?: ApiReadinessShadow | null
 }
 
 interface ApiCampaign {
@@ -544,6 +554,7 @@ interface ApiConversation {
   readonly has_pending_draft?: boolean | null
   readonly last_buyer_message_at?: string | null
   readonly last_agent_response_at?: string | null
+  readonly deal_readiness?: DealReadinessMetadata | null
 }
 
 interface ApiViewing {
@@ -712,6 +723,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
       listingName: lead.listing?.project ?? 'Listing',
       nextAction: lead.next_action ?? 'Open brief',
       due: formatShortTime(lead.due_at),
+      readiness: normalizeDealReadiness(lead.readiness_shadow?.deal_readiness),
     })),
     ...outreachDrafts.slice(0, 1).map((draft, index) => ({
       id: draft.outreach_draft_id ?? `outreach-${index}`,
@@ -759,6 +771,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     target: lead.listing?.project ?? 'Listing',
     recommendedAction: lead.next_action ?? 'Open brief',
     lastSeen: formatShortTime(lead.last_message_at),
+    readiness: normalizeDealReadiness(lead.readiness_shadow?.deal_readiness),
   }))
 
   const mappedConversations: ConversationInboxItem[] = conversations.slice(0, 8).map((conversation, index) => ({
@@ -784,6 +797,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     hasPendingDraft: Boolean(conversation.has_pending_draft),
     lastBuyerMessageAt: formatShortTime(conversation.last_buyer_message_at),
     lastAgentResponseAt: conversation.last_agent_response_at ? formatShortTime(conversation.last_agent_response_at) : null,
+    readiness: normalizeDealReadiness(conversation.deal_readiness),
   }))
 
   const mappedViewings: ViewingItem[] = viewings.slice(0, 4).map((viewing, index) => ({
@@ -1155,6 +1169,7 @@ function MorningQueue({
               </div>
               <h3 className="mt-2 text-sm font-semibold text-neutral-900">{item.title}</h3>
               <p className="mt-1 text-sm leading-relaxed text-neutral-600">{item.context}</p>
+              <DealReadinessSummaryLine readiness={item.readiness} />
               <p className="mt-3 text-xs text-neutral-500">
                 <span className="font-medium text-neutral-700">{item.buyerName}</span>
                 <span aria-hidden="true"> · </span>
@@ -1248,6 +1263,7 @@ function NeedsReply({ items }: { items: ConversationInboxItem[] }) {
               </div>
               <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-neutral-700">{item.summary}</p>
               <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-neutral-500">{item.lastMessage}</p>
+              <DealReadinessSummaryLine readiness={item.readiness} />
               <div className="mt-3 rounded-md bg-neutral-50 px-3 py-2 text-xs font-medium text-neutral-700">
                 {item.nextStep}
               </div>
@@ -1298,6 +1314,7 @@ function HotBuyers({
               <IntentPill intent={item.intent} />
             </div>
             <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.message}</p>
+            <DealReadinessSummaryLine readiness={item.readiness} />
             <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
               <p className="text-sm font-medium leading-snug text-brand-700">{item.recommendedAction}</p>
               <span className="font-mono text-xs text-neutral-500">{item.budget} · {item.lastSeen}</span>

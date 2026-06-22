@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { DealReadinessSummaryLine } from '@/components/readiness/DealReadinessCallout'
+import {
+  normalizeDealReadiness,
+  type DealReadinessMetadata,
+} from '@/components/readiness/deal-readiness'
 import { apiFetch } from '@/lib/api'
 
 type LoadState = 'loading' | 'live' | 'error'
@@ -17,6 +22,7 @@ interface BuyerRow {
     financing?: string | null
     timeline?: string | null
   }
+  deal_readiness?: DealReadinessMetadata | null
   score?: number | null
   last_activity_at?: string | null
   open_offers: number
@@ -142,17 +148,20 @@ export function BuyerList() {
                       {buyer.phone_masked} · {buyer.conversation_count} conversation{buyer.conversation_count !== 1 ? 's' : ''}
                     </p>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {buyer.qualification.budget_max_aed && (
-                      <Chip>≤ AED {Number(buyer.qualification.budget_max_aed).toLocaleString()}</Chip>
-                    )}
-                    {buyer.qualification.financing && <Chip>{label(buyer.qualification.financing)}</Chip>}
-                    {buyer.qualification.timeline && <Chip>{buyer.qualification.timeline}</Chip>}
-                    {buyer.opted_out && (
-                      <span className="rounded-full border border-error-100 bg-error-50 px-2 py-0.5 text-[11px] font-medium text-error-700">
-                        Opted out
-                      </span>
-                    )}
+                  <div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {buyer.qualification.budget_max_aed && (
+                        <Chip>≤ AED {Number(buyer.qualification.budget_max_aed).toLocaleString()}</Chip>
+                      )}
+                      {buyer.qualification.financing && <Chip>{label(buyer.qualification.financing)}</Chip>}
+                      {buyer.qualification.timeline && <Chip>{buyer.qualification.timeline}</Chip>}
+                      {buyer.opted_out && (
+                        <span className="rounded-full border border-error-100 bg-error-50 px-2 py-0.5 text-[11px] font-medium text-error-700">
+                          Opted out
+                        </span>
+                      )}
+                    </div>
+                    <DealReadinessSummaryLine readiness={normalizeDealReadiness(buyer.deal_readiness)} compact />
                   </div>
                   <Cell label="Score" value={buyer.score != null ? String(buyer.score) : '—'} />
                   <Cell label="Open offers" value={String(buyer.open_offers)} />
