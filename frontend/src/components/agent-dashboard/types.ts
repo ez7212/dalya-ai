@@ -1,3 +1,5 @@
+import type { DealReadinessSummary } from '@/components/readiness/deal-readiness'
+
 export type QueuePriority = 'critical' | 'high' | 'normal'
 export type CampaignStatus = 'live' | 'warming' | 'needs_action'
 export type BuyerIntent = 'offer_ready' | 'viewing_ready' | 'financing' | 'researching'
@@ -115,6 +117,7 @@ export interface ConversationInboxItem {
   hasPendingDraft?: boolean
   lastBuyerMessageAt?: string | null
   lastAgentResponseAt?: string | null
+  readiness?: DealReadinessSummary | null
 }
 
 export interface EscalationThreadQuestion {
@@ -153,6 +156,7 @@ export interface QueueItem {
   listingName: string
   nextAction: string
   due: string
+  readiness?: DealReadinessSummary | null
 }
 
 export interface CampaignSnapshot {
@@ -185,6 +189,7 @@ export interface BuyerDigestItem {
   target: string
   recommendedAction: string
   lastSeen: string
+  readiness?: DealReadinessSummary | null
 }
 
 export interface ViewingItem {
