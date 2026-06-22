@@ -13,7 +13,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Optional
 
-from app.core.runtime_config import is_production
+from app.core.runtime_config import is_live_environment
 
 from app.core.messaging.types import (
     InboundEnvelope,
@@ -89,8 +89,8 @@ class MessagingTransport(ABC):
         """Translate a raw webhook payload into a normalized InboundEnvelope."""
 
     def verify_signature(self, request) -> bool:  # pragma: no cover — default permissive
-        """Default permissive outside production; production transports must override."""
-        return not is_production()
+        """Default permissive outside live-class environments; live transports must override."""
+        return not is_live_environment()
 
 
 def now() -> datetime:

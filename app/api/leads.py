@@ -19,7 +19,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core.lead_ingest import ingest_lead_email
-from app.core.runtime_config import is_production
+from app.core.runtime_config import is_live_environment
 from app.core.webhook_security import mark_inbound_provider_event, record_inbound_provider_event
 from app.db.session import get_db, set_service_db_session_context
 
@@ -43,7 +43,7 @@ async def ingest_email(
     db: Session = Depends(get_db),
 ):
     secret = os.getenv("LEAD_INGEST_SECRET", "")
-    if is_production() and not secret:
+    if is_live_environment() and not secret:
         raise HTTPException(status_code=503, detail="Lead ingest verification is not configured")
     if secret and x_ingest_secret != secret:
         raise HTTPException(status_code=403, detail="Invalid ingest secret")

@@ -17,7 +17,7 @@ import os
 import threading
 from typing import Optional
 
-from app.core.runtime_config import is_production
+from app.core.runtime_config import is_live_environment
 from app.core.messaging.transport import MessagingTransport
 
 logger = logging.getLogger(__name__)
@@ -30,13 +30,13 @@ _cached_kind: Optional[str] = None
 
 def _build(kind: str) -> MessagingTransport:
     if kind == "simulated":
-        if is_production():
-            raise RuntimeError("Simulated messaging transport is not allowed in production")
+        if is_live_environment():
+            raise RuntimeError("Simulated messaging transport is not allowed in live-class environments")
         from app.core.messaging.simulated_transport import SimulatedTransport
         return SimulatedTransport()
     if kind == "dialog360":
-        if is_production():
-            raise RuntimeError("360dialog transport is not production-ready until signature verification is implemented")
+        if is_live_environment():
+            raise RuntimeError("360dialog transport is not live-ready until signature verification is implemented")
         from app.core.messaging.dialog360_transport import Dialog360Transport
         return Dialog360Transport()
     # default

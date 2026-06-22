@@ -29,6 +29,10 @@ def is_production() -> bool:
     return env_name() in _PRODUCTION_ENVS
 
 
+def is_live_environment() -> bool:
+    return env_name() in _LIVE_SCHEMA_ENVS
+
+
 def runtime_create_all_allowed() -> bool:
     """
     Return True only for explicit local/test/dev schema bootstrap.
@@ -45,10 +49,10 @@ def runtime_create_all_allowed() -> bool:
 
 
 def debug_routes_enabled() -> bool:
-    if is_production():
+    if is_live_environment():
         return False
     return env_bool("ENABLE_DEBUG_ROUTES", default=True)
 
 
 def public_url_required_for_webhooks() -> bool:
-    return is_production()
+    return is_live_environment()

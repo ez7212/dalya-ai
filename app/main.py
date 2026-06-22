@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from app.api import agent, agent_dashboard, crm, leads, listings, media, onboarding, research, seller, spa_parser, telegram, viewings, whatsapp
-from app.core.runtime_config import debug_routes_enabled, is_production, runtime_create_all_allowed
+from app.core.runtime_config import debug_routes_enabled, is_live_environment, runtime_create_all_allowed
 
 logger = logging.getLogger(__name__)
 
@@ -215,7 +215,7 @@ async def health():
     ):
         status = "degraded"
 
-    if is_production():
+    if is_live_environment():
         return {"status": status}
     return {"status": status, "checks": checks}
 
