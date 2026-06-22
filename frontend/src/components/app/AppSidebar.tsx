@@ -3,29 +3,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { getAppNavItems } from './nav-items'
 
-const NAV_ITEMS = [
-  { label: 'Dashboard', href: '/agent', icon: 'dashboard' },
-  { label: 'Buyers', href: '/agent/buyers', icon: 'groups' },
-  { label: 'Drafts', href: '/agent/drafts', icon: 'edit_note' },
-  { label: 'Viewings', href: '/agent/viewings', icon: 'event_available' },
-  { label: 'Escalations', href: '/agent/escalations', icon: 'support_agent' },
-  { label: 'Calendar', href: '/agent/calendar', icon: 'calendar_month' },
-  { label: 'Campaigns', href: '/campaigns', icon: 'campaign' },
-  { label: 'Inbox', href: '/inbox', icon: 'inbox' },
-  { label: 'Listings', href: '/listings', icon: 'real_estate_agent' },
-  { label: 'Pages', href: '/pages', icon: 'article' },
-  { label: 'Settings', href: '/settings', icon: 'settings' },
-]
+const OWNER_SURFACES_ENABLED = process.env.NEXT_PUBLIC_ENABLE_OWNER_SURFACES === 'true'
 
 export function AppSidebar({
   mobileOpen = false,
   onClose,
+  role,
 }: {
   mobileOpen?: boolean
   onClose?: () => void
+  role?: string | null
 }) {
   const pathname = usePathname()
+  const navItems = getAppNavItems({ ownerSurfacesEnabled: OWNER_SURFACES_ENABLED, role })
 
   return (
     <>
@@ -72,7 +64,7 @@ export function AppSidebar({
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5">
           <nav className="flex flex-col gap-1" aria-label="Agent navigation">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const active = item.href === '/agent'
                 ? pathname === '/agent'
                 : pathname === item.href || pathname.startsWith(`${item.href}/`)

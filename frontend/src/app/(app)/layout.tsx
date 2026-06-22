@@ -28,7 +28,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <BrokerageProvider>
     <div className="min-h-screen bg-neutral-50">
-      <AppSidebar mobileOpen={navOpen} onClose={() => setNavOpen(false)} />
+      <AppSidebar mobileOpen={navOpen} onClose={() => setNavOpen(false)} role={userRoleFromMetadata(user)} />
 
       <div className="min-h-screen lg:pl-64">
         <header className="fixed left-0 right-0 top-0 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur-sm lg:left-64">
@@ -76,4 +76,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
     </BrokerageProvider>
   )
+}
+
+function userRoleFromMetadata(user: ReturnType<typeof useAuth>['user']): string | null {
+  const roleCandidates = [
+    user?.app_metadata?.role,
+    user?.app_metadata?.account_role,
+  ]
+
+  for (const role of roleCandidates) {
+    if (typeof role === 'string' && role.trim()) {
+      return role.trim()
+    }
+  }
+
+  return null
 }
