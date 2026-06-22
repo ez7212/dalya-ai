@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useState, type ReactNode } from 'react'
-import Link from 'next/link'
-import { DealReadinessSummaryLine } from '@/components/readiness/DealReadinessCallout'
 import {
   normalizeDealReadiness,
   type DealReadinessMetadata,
@@ -26,8 +24,9 @@ import type {
   QueuePriority,
   ReplyDraftItem,
   ViewingItem,
-  ViewingStatus,
 } from './types'
+import { TodayQueue } from './TodayQueue'
+import { buildTodayQueue } from './today-queue'
 
 interface AgentDashboardProps {
   data: AgentDashboardData
@@ -172,28 +171,9 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 
   const actionsEnabled = dataState === 'live'
   const needsReply = sortNeedsReply(dashboardData.conversationInbox)
-  const hotBuyers = dashboardData.overnightBuyerDigest
-  const replyDrafts = dashboardData.drafts.replyDrafts
-  const outreachDrafts = dashboardData.drafts.outreachDrafts
-  const draftCount = replyDrafts.length + outreachDrafts.length
-  const viewings = dashboardData.todaysViewings
-  const escalations = dashboardData.escalationInbox
-  const morningQueue = dashboardData.morningQueue
+  const todayQueue = buildTodayQueue({ data: dashboardData, needsReply })
 
-  const sections = [
-    { id: 'needs-reply', label: 'Needs Reply', count: needsReply.length },
-    { id: 'hot-buyers', label: 'Hot Buyers', count: hotBuyers.length },
-    { id: 'drafts', label: 'Drafts', count: draftCount },
-    { id: 'viewings', label: 'Viewings', count: viewings.length },
-    { id: 'escalations', label: 'Escalations', count: escalations.length },
-  ].filter((section) => section.count > 0)
-
-  const dayIsClear = sections.length === 0 && morningQueue.length === 0
-
-  function scrollToSection(id: string) {
-    const target = document.getElementById(id)
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
+  const dayIsClear = todayQueue.length === 0
 
   function retry() {
     setReloadKey((key) => key + 1)
@@ -262,69 +242,21 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
             </div>
           )}
 
-          {/* Today Queue — action-first. Sticky tab-bar jumps between live sections. */}
-          {sections.length > 0 && (
-            <nav
-              aria-label="Today Queue sections"
-              className="sticky top-16 z-30 -mx-4 mb-4 border-y border-neutral-200 bg-neutral-50/95 px-4 py-2 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-            >
-              <div className="flex items-center gap-2 overflow-x-auto">
-                <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-400">Today</span>
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    type="button"
-                    onClick={() => scrollToSection(section.id)}
-                    className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
-                  >
-                    {section.label}
-                    <span className="rounded-full bg-neutral-100 px-1.5 font-mono text-[10px] text-neutral-600">{section.count}</span>
-                  </button>
-                ))}
-              </div>
-            </nav>
-          )}
-
           <div className="mx-auto max-w-4xl space-y-5">
             {dayIsClear ? (
               <DayIsClear sourceLabel={sourceLabel} emptyState={dashboardData.emptyState} />
             ) : (
-              <>
-                {morningQueue.length > 0 && (
-                  <MorningQueue
-                    items={morningQueue}
-                    taskActionState={taskActionState}
-                    actionsEnabled={actionsEnabled}
-                    onDone={(taskId) => updateTask(taskId, 'done')}
-                    onSnooze={(taskId) => updateTask(taskId, 'snoozed')}
-                  />
-                )}
-                {needsReply.length > 0 && <NeedsReply items={needsReply} />}
-                {hotBuyers.length > 0 && (
-                  <HotBuyers
-                    items={hotBuyers}
-                    actionsEnabled={actionsEnabled}
-                    refreshState={refreshState}
-                    onRefresh={refreshHotList}
-                  />
-                )}
-                {draftCount > 0 && (
-                  <DraftsSection
-                    replyDrafts={replyDrafts}
-                    outreachDrafts={outreachDrafts}
-                    actionsEnabled={actionsEnabled}
-                  />
-                )}
-                {viewings.length > 0 && <TodaysViewings items={viewings} />}
-                {escalations.length > 0 && (
-                  <EscalationInboxPanel
-                    items={escalations}
-                    actionState={escalationActionState}
-                    actionsEnabled={actionsEnabled}
-                    onResolve={resolveEscalation}
-                  />
-                )}
-              </>
+              <TodayQueue
+                items={todayQueue}
+                actionsEnabled={actionsEnabled}
+                taskActionState={taskActionState}
+                escalationActionState={escalationActionState}
+                refreshState={refreshState}
+                onTaskDone={(taskId) => updateTask(taskId, 'done')}
+                onTaskSnooze={(taskId) => updateTask(taskId, 'snoozed')}
+                onResolveEscalation={resolveEscalation}
+                onRefreshHotList={refreshHotList}
+              />
             )}
           </div>
 
@@ -483,6 +415,7 @@ interface ApiTask {
   readonly listing_id?: string | null
   readonly buyer_phone?: string | null
   readonly due_at?: string | null
+  readonly created_at?: string | null
   readonly metadata?: {
     readonly reason?: string | null
     readonly entity_label?: string | null
@@ -605,6 +538,7 @@ interface ApiReplyDraft {
   readonly category?: string | null
   readonly intent?: string | null
   readonly body?: string | null
+  readonly created_at?: string | null
 }
 
 interface ApiOutreachDraft {
@@ -706,6 +640,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
   const morningQueue: QueueItem[] = [
     ...tasks.slice(0, 4).map((task, index) => ({
       id: task.task_id ?? `task-${index}`,
+      source: 'task' as const,
       priority: priorityFromTask(task.priority),
       title: task.title ?? 'Review task',
       context: task.description ?? task.metadata?.reason ?? 'Review the next action and update the workspace.',
@@ -713,9 +648,12 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
       listingName: task.metadata?.entity_label ?? task.listing_id ?? 'Agent task',
       nextAction: task.task_type ? labelFromKey(task.task_type) : 'Open task',
       due: formatShortTime(task.due_at),
+      dueAt: task.due_at ?? null,
+      createdAt: task.created_at ?? null,
     })),
     ...hotLeads.slice(0, Math.max(0, 4 - tasks.length)).map((lead, index) => ({
       id: lead.id ?? `lead-${index}`,
+      source: 'hot_lead' as const,
       priority: priorityFromScore(lead.urgency_score),
       title: lead.signal ? `Hot buyer: ${lead.listing?.project ?? 'Property'}` : 'Buyer needs follow-up',
       context: lead.reason ?? lead.last_message ?? 'Buyer activity needs agent review.',
@@ -723,10 +661,12 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
       listingName: lead.listing?.project ?? 'Listing',
       nextAction: lead.next_action ?? 'Open brief',
       due: formatShortTime(lead.due_at),
+      dueAt: lead.due_at ?? null,
       readiness: normalizeDealReadiness(lead.readiness_shadow?.deal_readiness),
     })),
     ...outreachDrafts.slice(0, 1).map((draft, index) => ({
       id: draft.outreach_draft_id ?? `outreach-${index}`,
+      source: 'outreach' as const,
       priority: 'high' as const,
       title: 'Review owner outreach draft',
       context: draft.body ?? 'Campaign draft is ready for review.',
@@ -737,6 +677,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     })),
     ...pages.filter((page) => page.status !== 'published').slice(0, 1).map((page, index) => ({
       id: page.page_id ?? `page-${index}`,
+      source: 'page' as const,
       priority: 'normal' as const,
       title: `One-pager ready: ${page.title ?? 'Marketing page'}`,
       context: 'Review the seller acquisition page before publishing.',
@@ -771,6 +712,9 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     target: lead.listing?.project ?? 'Listing',
     recommendedAction: lead.next_action ?? 'Open brief',
     lastSeen: formatShortTime(lead.last_message_at),
+    urgencyScore: lead.urgency_score ?? null,
+    dueAt: lead.due_at ?? null,
+    lastMessageAt: lead.last_message_at ?? null,
     readiness: normalizeDealReadiness(lead.readiness_shadow?.deal_readiness),
   }))
 
@@ -796,6 +740,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     needsReplyReason: conversation.needs_reply_reason ?? null,
     hasPendingDraft: Boolean(conversation.has_pending_draft),
     lastBuyerMessageAt: formatShortTime(conversation.last_buyer_message_at),
+    lastBuyerMessageAtRaw: conversation.last_buyer_message_at ?? null,
     lastAgentResponseAt: conversation.last_agent_response_at ? formatShortTime(conversation.last_agent_response_at) : null,
     readiness: normalizeDealReadiness(conversation.deal_readiness),
   }))
@@ -803,6 +748,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
   const mappedViewings: ViewingItem[] = viewings.slice(0, 4).map((viewing, index) => ({
     id: viewing.viewing_id ?? `viewing-${index}`,
     time: formatShortTime(viewing.scheduled_for),
+    scheduledFor: viewing.scheduled_for ?? null,
     buyerName: viewing.buyer_phone ?? 'Buyer',
     property: viewing.listing_id ?? 'Property',
     location: viewing.tenant_notice_required ? 'Tenant notice required' : 'Access check',
@@ -823,8 +769,11 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     latestQuestion: thread.latest_question ?? thread.questions?.[thread.questions.length - 1]?.question_text ?? 'Agent review needed.',
     questionCount: Number(thread.question_count ?? thread.questions?.length ?? 1),
     lastBuyerMessageAt: formatShortTime(thread.last_buyer_message_at),
+    lastBuyerMessageAtRaw: thread.last_buyer_message_at ?? null,
     openedAt: formatShortTime(thread.opened_at),
+    openedAtRaw: thread.opened_at ?? null,
     routeExpiresAt: thread.latest_route_expires_at ? formatShortTime(thread.latest_route_expires_at) : null,
+    routeExpiresAtRaw: thread.latest_route_expires_at ?? null,
     questions: Array.isArray(thread.questions)
       ? thread.questions.map((question, questionIndex) => ({
           id: question.question_id ?? `${thread.thread_id ?? index}-q-${questionIndex}`,
@@ -845,6 +794,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     category: draft.category ?? 'general_nurture',
     intent: draft.intent ?? null,
     body: draft.body ?? 'Draft reply is ready for review.',
+    createdAt: draft.created_at ?? null,
   }))
 
   const mappedOutreachDrafts: OutreachDraftItem[] = outreachDrafts.slice(0, 4).map((draft, index) => ({
@@ -1141,375 +1091,6 @@ function Section({
   )
 }
 
-function MorningQueue({
-  items,
-  taskActionState,
-  actionsEnabled,
-  onDone,
-  onSnooze,
-}: {
-  items: QueueItem[]
-  taskActionState: Record<string, 'done' | 'snoozed' | 'error' | 'working'>
-  actionsEnabled: boolean
-  onDone: (taskId: string) => void
-  onSnooze: (taskId: string) => void
-}) {
-  return (
-    <Section
-      eyebrow="Morning Queue"
-      title="What needs agent judgment first"
-    >
-      <div className="divide-y divide-neutral-200">
-        {items.map((item) => (
-          <div key={item.id} className="grid gap-4 px-4 py-4 sm:px-5 lg:grid-cols-[minmax(0,1fr)_170px]">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <PriorityPill priority={item.priority} />
-                <span className="font-mono text-xs text-neutral-500">{item.due}</span>
-              </div>
-              <h3 className="mt-2 text-sm font-semibold text-neutral-900">{item.title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-neutral-600">{item.context}</p>
-              <DealReadinessSummaryLine readiness={item.readiness} />
-              <p className="mt-3 text-xs text-neutral-500">
-                <span className="font-medium text-neutral-700">{item.buyerName}</span>
-                <span aria-hidden="true"> · </span>
-                {item.listingName}
-              </p>
-            </div>
-            <div className="flex items-start justify-between gap-3 lg:block lg:text-right">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500">Next action</p>
-              <p className="mt-1 text-sm font-medium leading-snug text-brand-700">{item.nextAction}</p>
-              <div className="mt-3 flex flex-wrap gap-2 lg:justify-end">
-                <button
-                  type="button"
-                  onClick={() => onDone(item.id)}
-                  disabled={!actionsEnabled || taskActionState[item.id] === 'working'}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 px-2.5 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                    check
-                  </span>
-                  Done
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onSnooze(item.id)}
-                  disabled={!actionsEnabled || taskActionState[item.id] === 'working'}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 px-2.5 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                    schedule
-                  </span>
-                  Snooze
-                </button>
-              </div>
-              {taskActionState[item.id] === 'error' && (
-                <p className="mt-2 text-xs font-medium text-error-600">Could not update this task.</p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function NeedsReply({ items }: { items: ConversationInboxItem[] }) {
-  return (
-    <Section
-      id="needs-reply"
-      eyebrow="Needs Reply"
-      title="Threads awaiting your reply"
-      action={
-        <Link href="/agent/buyers" className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-50 hover:text-brand-700" aria-label="Open all buyer conversations" title="Open all buyer conversations">
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">forum</span>
-        </Link>
-      }
-    >
-      <div className="divide-y divide-neutral-200">
-        {items.length === 0 ? (
-          <div className="px-4 py-6 sm:px-5">
-            <p className="text-sm font-medium text-neutral-800">No buyer conversations yet.</p>
-            <p className="mt-1 text-sm text-neutral-500">Persona and WhatsApp conversations will appear here once buyers engage.</p>
-          </div>
-        ) : (
-          items.map((item) => (
-            <Link key={item.id} href={`/agent/conversations/${item.id}`} className="block px-4 py-4 transition-colors hover:bg-neutral-50 sm:px-5">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="truncate text-sm font-semibold text-neutral-900">{item.buyerName}</h3>
-                    {item.needsReply && (
-                      <span className="rounded-full bg-error-50 px-2 py-0.5 text-[11px] font-semibold text-error-700">
-                        {item.hasPendingDraft ? 'Draft ready' : 'Needs reply'}
-                      </span>
-                    )}
-                    {item.openEscalationCount > 0 && (
-                      <span className="rounded-full bg-warning-50 px-2 py-0.5 text-[11px] font-semibold text-warning-700">
-                        {item.openEscalationCount} escalation{item.openEscalationCount === 1 ? '' : 's'}
-                      </span>
-                    )}
-                    {item.offerCount > 0 && (
-                      <span className="rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-semibold text-brand-700">
-                        {item.offerCount} offer{item.offerCount === 1 ? '' : 's'}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-1 truncate text-xs text-neutral-500">
-                    {item.listingName}{item.unitNumber ? ` · ${item.unitNumber}` : ''} · {item.lastSeen}
-                  </p>
-                </div>
-                <p className="shrink-0 font-mono text-xs text-neutral-500">{item.messageCount} msgs</p>
-              </div>
-              <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-neutral-700">{item.summary}</p>
-              <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-neutral-500">{item.lastMessage}</p>
-              <DealReadinessSummaryLine readiness={item.readiness} />
-              <div className="mt-3 rounded-md bg-neutral-50 px-3 py-2 text-xs font-medium text-neutral-700">
-                {item.nextStep}
-              </div>
-            </Link>
-          ))
-        )}
-      </div>
-    </Section>
-  )
-}
-
-function HotBuyers({
-  items,
-  actionsEnabled,
-  refreshState,
-  onRefresh,
-}: {
-  items: BuyerDigestItem[]
-  actionsEnabled: boolean
-  refreshState: 'idle' | 'working' | 'error'
-  onRefresh: () => void
-}) {
-  return (
-    <Section
-      id="hot-buyers"
-      eyebrow="Hot Buyers"
-      title="High-intent buyers to reach first"
-      action={
-        <button
-          type="button"
-          onClick={onRefresh}
-          disabled={!actionsEnabled || refreshState === 'working'}
-          className="inline-flex h-10 items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">sync</span>
-          <span className="hidden sm:inline">{refreshState === 'working' ? 'Refreshing' : 'Refresh'}</span>
-        </button>
-      }
-    >
-      <div className="divide-y divide-neutral-200">
-        {items.map((item) => (
-          <div key={item.id} className="px-4 py-4 sm:px-5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-neutral-900">{item.buyerName}</h3>
-                <p className="mt-1 text-xs text-neutral-500">{item.target}</p>
-              </div>
-              <IntentPill intent={item.intent} />
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.message}</p>
-            <DealReadinessSummaryLine readiness={item.readiness} />
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-              <p className="text-sm font-medium leading-snug text-brand-700">{item.recommendedAction}</p>
-              <span className="font-mono text-xs text-neutral-500">{item.budget} · {item.lastSeen}</span>
-            </div>
-            <Link href="/agent/buyers" className="mt-3 inline-flex text-sm font-medium text-brand-700 hover:text-brand-800">
-              Open buyer brief
-            </Link>
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function DraftsSection({
-  replyDrafts,
-  outreachDrafts,
-  actionsEnabled,
-}: {
-  replyDrafts: ReplyDraftItem[]
-  outreachDrafts: OutreachDraftItem[]
-  actionsEnabled: boolean
-}) {
-  return (
-    <Section
-      id="drafts"
-      eyebrow="Drafts"
-      title="Replies and outreach awaiting your approval"
-      action={
-        <Link href="/agent/drafts" className="inline-flex h-10 items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 text-sm font-medium text-neutral-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700" aria-label="Open the full draft queue" title="Open the full draft queue">
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">edit_note</span>
-          <span className="hidden sm:inline">Draft queue</span>
-        </Link>
-      }
-    >
-      <div className="divide-y divide-neutral-200">
-        {replyDrafts.map((draft) => (
-          <div key={draft.id} className="px-4 py-4 sm:px-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-brand-100 bg-brand-50 px-2 py-0.5 text-[11px] font-medium text-brand-700">
-                {labelFromKey(draft.category)}
-              </span>
-              <span className="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] font-medium text-neutral-600">Reply</span>
-            </div>
-            <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2">
-              <h3 className="text-sm font-semibold text-neutral-900">{draft.buyerName}</h3>
-              <p className="text-xs text-neutral-500">{draft.listingName}{draft.unitNumber ? ` · ${draft.unitNumber}` : ''}</p>
-            </div>
-            <p className="mt-2 line-clamp-3 rounded-md bg-neutral-50 px-3 py-2 text-sm leading-relaxed text-neutral-700">{draft.body}</p>
-            <DraftActions
-              actionsEnabled={actionsEnabled}
-              conversationId={draft.conversationId}
-            />
-          </div>
-        ))}
-        {outreachDrafts.map((draft) => (
-          <div key={draft.id} className="px-4 py-4 sm:px-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-warning-100 bg-warning-50 px-2 py-0.5 text-[11px] font-medium text-warning-700">Outreach</span>
-              <span className="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] font-medium text-neutral-600">{draft.audience}</span>
-            </div>
-            <h3 className="mt-2 text-sm font-semibold text-neutral-900">{draft.subject}</h3>
-            <p className="mt-2 line-clamp-3 rounded-md bg-neutral-50 px-3 py-2 text-sm leading-relaxed text-neutral-700">{draft.body}</p>
-            <DraftActions actionsEnabled={actionsEnabled} conversationId={null} />
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function DraftActions({
-  actionsEnabled,
-  conversationId,
-}: {
-  actionsEnabled: boolean
-  conversationId?: string | null
-}) {
-  // Draft mutations (send / edit / reject) live on the dedicated /agent/drafts
-  // queue, which owns the draft action endpoints. The dashboard only previews
-  // and links through, so it never mutates drafts directly.
-  return (
-    <div className="mt-3 flex flex-wrap items-center gap-2">
-      {actionsEnabled ? (
-        <Link
-          href="/agent/drafts"
-          className="inline-flex items-center gap-1.5 rounded-md bg-brand-700 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-brand-800"
-        >
-          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">rate_review</span>
-          Review &amp; send
-        </Link>
-      ) : (
-        <button
-          type="button"
-          disabled
-          title="Connect a live workspace to act on drafts."
-          className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-md bg-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-500"
-        >
-          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">rate_review</span>
-          Review &amp; send
-        </button>
-      )}
-      {conversationId && (
-        <Link
-          href={`/agent/conversations/${conversationId}`}
-          className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
-        >
-          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span>
-          Conversation
-        </Link>
-      )}
-    </div>
-  )
-}
-
-function EscalationInboxPanel({
-  items,
-  actionState,
-  actionsEnabled,
-  onResolve,
-}: {
-  items: EscalationThreadItem[]
-  actionState: Record<string, 'resolved' | 'error' | 'working'>
-  actionsEnabled: boolean
-  onResolve: (threadId: string) => void
-}) {
-  return (
-    <Section
-      id="escalations"
-      eyebrow="Escalation Inbox"
-      title="Questions waiting for agent judgment"
-      action={
-        <Link href="/agent/escalations" className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-50 hover:text-brand-700" aria-label="Open escalation inbox" title="Open escalation inbox">
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">support_agent</span>
-        </Link>
-      }
-    >
-      <div className="divide-y divide-neutral-200">
-        {items.length === 0 ? (
-          <div className="px-4 py-6 sm:px-5">
-            <p className="text-sm font-medium text-neutral-800">No open escalations.</p>
-            <p className="mt-1 text-sm text-neutral-500">Dalya will surface buyer questions here when agent judgment is needed.</p>
-          </div>
-        ) : items.map((item) => (
-          <div key={item.id} className="grid gap-4 px-4 py-4 sm:px-5 lg:grid-cols-[minmax(0,1fr)_160px]">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <EscalationUrgencyPill urgency={item.urgency} />
-                <EscalationStatePill state={item.state} />
-                <span className="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] font-medium text-neutral-600">
-                  {labelFromKey(item.category)}
-                </span>
-              </div>
-              <h3 className="mt-2 text-sm font-semibold text-neutral-900">{item.buyerName}</h3>
-              <p className="mt-1 text-xs text-neutral-500">
-                {item.listingName}{item.unitNumber ? ` · ${item.unitNumber}` : ''}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-neutral-700">{item.latestQuestion}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs text-neutral-500">
-                <span>{item.questionCount} question{item.questionCount === 1 ? '' : 's'}</span>
-                <span aria-hidden="true">·</span>
-                <span>Last buyer message {item.lastBuyerMessageAt}</span>
-                {item.token && (
-                  <>
-                    <span aria-hidden="true">·</span>
-                    <span className="font-mono">Ref {item.token}</span>
-                  </>
-                )}
-              </div>
-            </div>
-            <div className="flex items-start justify-between gap-3 lg:block lg:text-right">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500">Action</p>
-              <p className="mt-1 text-sm font-medium leading-snug text-brand-700">Reply from inbox or resolve</p>
-              <div className="mt-3 flex flex-wrap gap-2 lg:justify-end">
-                <button
-                  type="button"
-                  onClick={() => onResolve(item.id)}
-                  disabled={!actionsEnabled || actionState[item.id] === 'working'}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 px-2.5 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">check_circle</span>
-                  Resolve
-                </button>
-              </div>
-              {actionState[item.id] === 'error' && (
-                <p className="mt-2 text-xs font-medium text-error-600">Could not resolve this escalation.</p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
 function CampaignSnapshot({ snapshot }: { snapshot: CampaignSnapshotType }) {
   return (
     <Section
@@ -1581,41 +1162,6 @@ function OvernightBuyerDigest({ items }: { items: BuyerDigestItem[] }) {
               <Fact label="Last seen" value={item.lastSeen} />
             </div>
             <p className="mt-3 text-sm font-medium leading-snug text-brand-700">{item.recommendedAction}</p>
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function TodaysViewings({ items }: { items: ViewingItem[] }) {
-  return (
-    <Section
-      id="viewings"
-      eyebrow="Today's Viewings"
-      title="Confirmed and at-risk appointments"
-      action={
-        <Link href="/agent/viewings" className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-50 hover:text-brand-700" aria-label="Open viewing calendar" title="Open viewing calendar">
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">calendar_month</span>
-        </Link>
-      }
-    >
-      <div id="listings" className="divide-y divide-neutral-200">
-        {items.map((item) => (
-          <div key={item.id} className="grid grid-cols-[56px_minmax(0,1fr)] gap-3 px-4 py-4 sm:px-5">
-            <div className="font-mono text-sm font-semibold text-neutral-900">{item.time}</div>
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="text-sm font-semibold text-neutral-900">{item.buyerName}</h3>
-                <ViewingStatusPill status={item.status} />
-              </div>
-              <p className="mt-1 text-sm text-neutral-700">{item.property}</p>
-              <p className="mt-1 text-xs text-neutral-500">{item.location}</p>
-              <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.preparation}</p>
-              <Link href={`/agent/viewings/${item.id}`} className="mt-3 inline-flex text-sm font-medium text-brand-700 hover:text-brand-800">
-                Open viewing detail
-              </Link>
-            </div>
           </div>
         ))}
       </div>
@@ -1725,21 +1271,6 @@ function IconButton({ icon, label }: { icon: string; label: string }) {
   )
 }
 
-function PriorityPill({ priority }: { priority: QueuePriority }) {
-  const label: Record<QueuePriority, string> = {
-    critical: 'Critical',
-    high: 'High',
-    normal: 'Normal',
-  }
-  const tone: Record<QueuePriority, string> = {
-    critical: 'border-error-100 bg-error-50 text-error-700',
-    high: 'border-warning-100 bg-warning-50 text-warning-700',
-    normal: 'border-neutral-200 bg-neutral-100 text-neutral-700',
-  }
-
-  return <Pill className={tone[priority]}>{label[priority]}</Pill>
-}
-
 function CampaignStatusPill({ status }: { status: CampaignStatus }) {
   const label: Record<CampaignStatus, string> = {
     live: 'Live',
@@ -1770,57 +1301,6 @@ function IntentPill({ intent }: { intent: BuyerIntent }) {
   }
 
   return <Pill className={tone[intent]}>{label[intent]}</Pill>
-}
-
-function ViewingStatusPill({ status }: { status: ViewingStatus }) {
-  const label: Record<ViewingStatus, string> = {
-    confirmed: 'Confirmed',
-    pending: 'Pending',
-    follow_up: 'Follow-up',
-  }
-  const tone: Record<ViewingStatus, string> = {
-    confirmed: 'border-success-100 bg-success-50 text-success-700',
-    pending: 'border-warning-100 bg-warning-50 text-warning-700',
-    follow_up: 'border-brand-100 bg-brand-50 text-brand-700',
-  }
-
-  return <Pill className={tone[status]}>{label[status]}</Pill>
-}
-
-function EscalationUrgencyPill({ urgency }: { urgency: EscalationUrgency }) {
-  const label: Record<EscalationUrgency, string> = {
-    critical: 'Critical',
-    high: 'High',
-    normal: 'Normal',
-  }
-  const tone: Record<EscalationUrgency, string> = {
-    critical: 'border-error-100 bg-error-50 text-error-700',
-    high: 'border-warning-100 bg-warning-50 text-warning-700',
-    normal: 'border-neutral-200 bg-neutral-100 text-neutral-700',
-  }
-
-  return <Pill className={tone[urgency]}>{label[urgency]}</Pill>
-}
-
-function EscalationStatePill({ state }: { state: EscalationState }) {
-  const label: Record<EscalationState, string> = {
-    debouncing: 'Bundling',
-    open: 'Open',
-    updated: 'Updated',
-    resolved: 'Resolved',
-    timed_out: 'Timed out',
-    opt_out_closed: 'Opt-out closed',
-  }
-  const tone: Record<EscalationState, string> = {
-    debouncing: 'border-brand-100 bg-brand-50 text-brand-700',
-    open: 'border-success-100 bg-success-50 text-success-700',
-    updated: 'border-warning-100 bg-warning-50 text-warning-700',
-    resolved: 'border-neutral-200 bg-neutral-100 text-neutral-700',
-    timed_out: 'border-error-100 bg-error-50 text-error-700',
-    opt_out_closed: 'border-neutral-200 bg-neutral-100 text-neutral-700',
-  }
-
-  return <Pill className={tone[state]}>{label[state]}</Pill>
 }
 
 function Pill({ children, className }: { children: ReactNode; className: string }) {

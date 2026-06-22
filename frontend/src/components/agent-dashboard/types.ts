@@ -62,6 +62,7 @@ export interface ReplyDraftItem {
   category: string
   intent?: string | null
   body: string
+  createdAt?: string | null
 }
 
 export interface OutreachDraftItem {
@@ -116,6 +117,7 @@ export interface ConversationInboxItem {
   needsReplyReason?: string | null
   hasPendingDraft?: boolean
   lastBuyerMessageAt?: string | null
+  lastBuyerMessageAtRaw?: string | null
   lastAgentResponseAt?: string | null
   readiness?: DealReadinessSummary | null
 }
@@ -142,13 +144,17 @@ export interface EscalationThreadItem {
   latestQuestion: string
   questionCount: number
   lastBuyerMessageAt: string
+  lastBuyerMessageAtRaw?: string | null
   openedAt: string
+  openedAtRaw?: string | null
   routeExpiresAt?: string | null
+  routeExpiresAtRaw?: string | null
   questions: EscalationThreadQuestion[]
 }
 
 export interface QueueItem {
   id: string
+  source?: 'task' | 'hot_lead' | 'outreach' | 'page'
   priority: QueuePriority
   title: string
   context: string
@@ -156,6 +162,8 @@ export interface QueueItem {
   listingName: string
   nextAction: string
   due: string
+  dueAt?: string | null
+  createdAt?: string | null
   readiness?: DealReadinessSummary | null
 }
 
@@ -189,12 +197,16 @@ export interface BuyerDigestItem {
   target: string
   recommendedAction: string
   lastSeen: string
+  urgencyScore?: number | null
+  dueAt?: string | null
+  lastMessageAt?: string | null
   readiness?: DealReadinessSummary | null
 }
 
 export interface ViewingItem {
   id: string
   time: string
+  scheduledFor?: string | null
   buyerName: string
   property: string
   location: string
