@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 import uuid
 
 import pytest
@@ -90,6 +91,8 @@ def seller_lead_seed():
         ))
         safe_commit(db)
         conversation_id = conversation.conversation_id
+        assert conversation.updated_at is not None
+        expected_last_active = conversation.updated_at.isoformat()
 
     try:
         yield {
@@ -101,6 +104,7 @@ def seller_lead_seed():
             "buyer_name": buyer_name,
             "buyer_handle": buyer_handle,
             "conversation_id": conversation_id,
+            "last_active": expected_last_active,
         }
     finally:
         app.dependency_overrides.pop(get_current_user, None)
@@ -131,12 +135,17 @@ def test_seller_leads_anonymize_active_buyers(client, seller_lead_seed):
     payload = response.json()
     assert payload["lead_count"] == 1
     assert payload["escalated_count"] == 1
+    last_active = payload["leads"][0]["last_active"]
+    assert isinstance(last_active, str)
+    assert datetime.fromisoformat(last_active) == datetime.fromisoformat(
+        seller_lead_seed["last_active"],
+    )
     assert payload["leads"] == [
         {
             "buyer_label": "Buyer 1",
             "messages": 2,
             "escalated": True,
-            "last_active": payload["leads"][0]["last_active"],
+            "last_active": seller_lead_seed["last_active"],
         }
     ]
     leaked_payload = response.text
