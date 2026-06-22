@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { apiFetch } from '@/lib/api'
 import type { EscalationState, EscalationThreadItem, EscalationUrgency } from '@/components/agent-dashboard/types'
+import type { RefObject } from 'react'
 
 type LoadState = 'loading' | 'live' | 'error'
 
@@ -11,6 +12,10 @@ interface InboxPayload {
   threads: any[]
   counts?: Record<string, any>
   generated_at?: string
+}
+
+interface EscalationInboxProps {
+  readonly selectedThreadId?: string | null
 }
 
 const STATE_FILTERS = [
@@ -21,7 +26,7 @@ const STATE_FILTERS = [
   { label: 'Closed', value: 'closed' },
 ]
 
-export function EscalationInbox() {
+export function EscalationInbox({ selectedThreadId = null }: EscalationInboxProps) {
   const [loadState, setLoadState] = useState<LoadState>('loading')
   const [payload, setPayload] = useState<InboxPayload>({ threads: [] })
   const [stateFilter, setStateFilter] = useState('active')
@@ -31,6 +36,7 @@ export function EscalationInbox() {
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({})
   const [aiModeBusy, setAiModeBusy] = useState<Record<string, boolean>>({})
   const [replyFiles, setReplyFiles] = useState<Record<string, File[]>>({})
+  const selectedThreadRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     let active = true
@@ -70,6 +76,14 @@ export function EscalationInbox() {
     }
     return Array.from(set).sort()
   }, [payload.threads])
+
+  useEffect(() => {
+    if (loadState !== 'live' || !selectedThreadId) return
+    const selectedThread = selectedThreadRef.current
+    if (!selectedThread) return
+    selectedThread.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    selectedThread.focus({ preventScroll: true })
+  }, [loadState, selectedThreadId, threads])
 
   async function resolveThread(threadId: string) {
     setActionState((current) => ({ ...current, [threadId]: 'working' }))
@@ -258,6 +272,8 @@ export function EscalationInbox() {
                 <EscalationThreadRow
                   key={thread.id}
                   thread={thread}
+                  isSelected={selectedThreadId === thread.id}
+                  selectedThreadRef={selectedThreadRef}
                   actionState={actionState[thread.id]}
                   replyState={replyState[thread.id]}
                   replyValue={replyDrafts[thread.id] ?? ''}
@@ -280,6 +296,8 @@ export function EscalationInbox() {
 
 function EscalationThreadRow({
   thread,
+  isSelected,
+  selectedThreadRef,
   actionState,
   replyState,
   replyValue,
@@ -292,6 +310,8 @@ function EscalationThreadRow({
   onToggleAiMode,
 }: {
   thread: EscalationThreadItem
+  isSelected: boolean
+  selectedThreadRef: RefObject<HTMLElement | null>
   actionState?: 'working' | 'resolved' | 'error'
   replyState?: 'working' | 'sent' | 'error'
   replyValue: string
@@ -308,7 +328,16 @@ function EscalationThreadRow({
   const aiPaused = thread.aiMode === 'agent_controlled'
 
   return (
-    <article className="grid gap-5 px-4 py-5 sm:px-5 xl:grid-cols-[minmax(0,1fr)_260px]">
+    <article
+      ref={isSelected ? selectedThreadRef : undefined}
+      tabIndex={isSelected ? -1 : undefined}
+      aria-current={isSelected ? 'true' : undefined}
+      data-thread-id={thread.id}
+      data-selected-thread={isSelected ? 'true' : undefined}
+      className={`scroll-mt-24 grid gap-5 px-4 py-5 outline-none transition-colors sm:px-5 xl:grid-cols-[minmax(0,1fr)_260px] ${
+        isSelected ? 'bg-brand-50/70 ring-2 ring-inset ring-brand-100' : 'bg-white'
+      }`}
+    >
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
           <UrgencyPill urgency={thread.urgency} />
