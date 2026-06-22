@@ -93,7 +93,7 @@ function buildEscalationItems(items: readonly EscalationThreadItem[]): RankedQue
       detail: cleanText(item.latestQuestion, 'Agent review needed.'),
       status: `${labelFromKey(item.urgency)} escalation`,
       reason: item.state === 'updated' ? 'Buyer added a new question.' : 'Open escalation is waiting on agent judgment.',
-      href: `/agent/escalations/${item.id}`,
+      href: `/agent/escalations?thread=${encodeURIComponent(item.id)}`,
       timestampLabel: item.lastBuyerMessageAt || item.openedAt || 'Today',
       dueAt: item.routeExpiresAtRaw ?? null,
       lastBuyerMessageAt: item.lastBuyerMessageAtRaw ?? item.lastBuyerMessageAt,
