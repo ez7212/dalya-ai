@@ -3105,6 +3105,7 @@ Summary:"""
         intent: Optional[BuyerIntent],
         conv=None,
         ctx: Optional[BrokerageContext] = None,
+        latest_buyer_message: Optional[str] = None,
     ) -> tuple[str, dict]:
         """Single finalization step. Runs the universal validator, then
         substitutes brokerage context placeholders ({managing_agent_name},
@@ -3115,12 +3116,19 @@ Summary:"""
             response = "I don't have that detail in the listing record. I'll route this to the listing agent so they can confirm."
         if ctx is None:
             ctx = legacy_default_context()
+        if latest_buyer_message is None:
+            latest_buyer_message = self._latest_buyer_message_text(conv)
         # Phase 10: Substitute brokerage context placeholders embedded in
         # response templates (e.g. "I'll record this for {managing_agent_name}.").
         # Templates rendered as plain text — never use Python f-string syntax
         # on tainted buyer input.
         response = self._apply_brokerage_substitutions(response, ctx)
-        response, telemetry = validate_and_rewrite_response(response, intent)
+        response, telemetry = validate_and_rewrite_response(
+            response,
+            intent,
+            latest_buyer_message=latest_buyer_message,
+            brokerage_id=ctx.brokerage_id,
+        )
         response = self._sanitize_public_response(response, ctx)
         response = self._inject_managing_agent_intro_on_first_mention(response, conv, ctx)
         response = self._sanitize_public_response(response, ctx)
@@ -3129,6 +3137,17 @@ Summary:"""
         response = self._ensure_complete_sentence(response)
         response = self._avoid_verbatim_repeat(response, conv)
         return response, telemetry
+
+    @staticmethod
+    def _latest_buyer_message_text(conv) -> Optional[str]:
+        messages = list(getattr(conv, "messages", []) or [])
+        for message in reversed(messages):
+            role = getattr(message, "role", None)
+            role_value = getattr(role, "value", role)
+            if role_value == MessageRole.user.value:
+                content = getattr(message, "content", None)
+                return content if isinstance(content, str) else None
+        return None
 
     @staticmethod
     def _apply_brokerage_substitutions(text: str, ctx: BrokerageContext) -> str:

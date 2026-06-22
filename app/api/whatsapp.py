@@ -234,6 +234,7 @@ def send_whatsapp_reply(
     """
     from app.core.messaging import get_transport
     from app.core.messaging.types import OutboundBuyerMessage
+    from app.core.response_validator import validate_and_rewrite_response
     from app.core.brokerage_access import (
         is_buyer_suppressed,
         record_compliance_event,
@@ -268,6 +269,8 @@ def send_whatsapp_reply(
                     brokerage_id,
                 )
                 return
+
+    body, _ = validate_and_rewrite_response(body, brokerage_id=brokerage_id)
 
     result = get_transport().send_to_buyer(
         OutboundBuyerMessage(
