@@ -1,0 +1,10 @@
+{
+  "access_control_allow_credentials": "true",
+  "access_control_allow_origin": "http://localhost:3000",
+  "configured_allow_origins": [
+    "http://localhost:3000"
+  ],
+  "origin": "http://localhost:3000",
+  "passed": true,
+  "status_code": 200
+}
