@@ -62,7 +62,7 @@ def _aed_amounts(text: str) -> set[str]:
     return set(re.findall(r"AED\s+([0-9][0-9,]*)", text))
 
 
-def test_offplan_total_fees_redacts_numeric_seller_equity_and_backcalc_pair():
+def test_offplan_total_fees_uses_agent_confirmation_without_seller_equity_pair():
     response = ChatbotEngine._compose_total_fees_response(
         _offplan_spa(),
         16_500_000,
@@ -71,15 +71,17 @@ def test_offplan_total_fees_redacts_numeric_seller_equity_and_backcalc_pair():
     )
     lowered = response.lower()
 
-    assert "seller" in lowered
-    assert "equity" in lowered
+    assert "seller-equity" not in lowered
+    assert "seller equity" not in lowered
+    assert "developer balance" not in lowered
+    assert "splits between" not in lowered
     assert "13,500,000" not in response
     assert not ({"13,500,000", "3,000,000"} <= _aed_amounts(response))
     assert "confirm" in lowered
-    assert "exact closing math" in lowered or "before you rely on it" in lowered
+    assert "before you rely on" in lowered
 
 
-def test_remaining_payment_response_keeps_developer_balance_without_seller_equity_number():
+def test_remaining_payment_response_keeps_developer_balance_without_seller_equity_language():
     response = ChatbotEngine._compose_remaining_payment_response(
         _offplan_spa(),
         property_type="off_plan",
@@ -88,7 +90,9 @@ def test_remaining_payment_response_keeps_developer_balance_without_seller_equit
     lowered = response.lower()
 
     assert "AED 3,000,000" in response
-    assert "seller-equity" in lowered
+    assert "seller-equity" not in lowered
+    assert "seller equity" not in lowered
+    assert "seller-side" not in lowered
     assert "13,500,000" not in response
     assert not ({"13,500,000", "3,000,000"} <= _aed_amounts(response))
 
