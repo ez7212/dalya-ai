@@ -30,7 +30,7 @@ interface AgentDashboardProps {
 
 export function AgentDashboard({ data }: AgentDashboardProps) {
   const [dashboardData, setDashboardData] = useState<AgentDashboardData | null>(null)
-  const [dataState, setDataState] = useState<'fallback' | 'loading' | 'live' | 'error'>('loading')
+  const [dataState, setDataState] = useState<'loading' | 'live' | 'error'>('loading')
   const [taskActionState, setTaskActionState] = useState<Record<string, 'done' | 'snoozed' | 'error' | 'working'>>({})
   const [escalationActionState, setEscalationActionState] = useState<Record<string, 'resolved' | 'error' | 'working'>>({})
   const [refreshState, setRefreshState] = useState<'idle' | 'working' | 'error'>('idle')
@@ -54,7 +54,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
         const body = await res.json()
         if (!active) return
         setDashboardData(mapApiDashboard(body, data))
-        setDataState(body.sample_data ? 'fallback' : 'live')
+        setDataState('live')
       } catch {
         if (!active) return
         setDashboardData(data)
@@ -68,15 +68,11 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
     }
   }, [data, reloadKey])
 
-  // The error state intentionally renders the fallback dataset so the workspace
-  // is not blank, but it must never be presented as the real "Sample workspace".
   const sourceLabel = dataState === 'live'
     ? 'Live workspace'
     : dataState === 'loading'
       ? 'Loading workspace'
-      : dataState === 'error'
-        ? 'Connection error'
-        : 'Sample workspace'
+      : 'Connection error'
 
   if (!dashboardData) {
     return <DashboardLoadingState />
@@ -162,7 +158,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
         ...dashboardBody,
         hot_list_refresh: body,
       }, data))
-      setDataState(dashboardBody.sample_data ? 'fallback' : 'live')
+      setDataState('live')
       setRefreshState('idle')
     } catch {
       setRefreshState('error')
@@ -247,7 +243,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
                 <span className="material-symbols-outlined text-[20px] text-error-600" aria-hidden="true">cloud_off</span>
                 <div>
                   <p className="text-sm font-semibold text-error-700">Couldn&apos;t load your live workspace</p>
-                  <p className="mt-0.5 text-sm text-error-700/80">Showing sample data so you can keep looking around. Actions are paused until we reconnect.</p>
+                  <p className="mt-0.5 text-sm text-error-700/80">Showing the local dashboard fallback. Actions are paused until we reconnect.</p>
                 </div>
               </div>
               <button
@@ -286,7 +282,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 
           <div className="mx-auto max-w-4xl space-y-5">
             {dayIsClear ? (
-              <DayIsClear sourceLabel={sourceLabel} />
+              <DayIsClear sourceLabel={sourceLabel} emptyState={dashboardData.emptyState} />
             ) : (
               <>
                 {morningQueue.length > 0 && (
@@ -376,14 +372,26 @@ function sortNeedsReply(items: ConversationInboxItem[]): ConversationInboxItem[]
   return [...items].sort((a, b) => score(b) - score(a))
 }
 
-function DayIsClear({ sourceLabel }: { sourceLabel: string }) {
+function DayIsClear({
+  sourceLabel,
+  emptyState,
+}: {
+  sourceLabel: string
+  emptyState?: AgentDashboardData['emptyState']
+}) {
   return (
     <section className="rounded-lg border border-neutral-200 bg-white px-6 py-12 text-center shadow-card-sm">
       <span className="material-symbols-outlined text-[40px] text-success-600" aria-hidden="true">task_alt</span>
-      <h2 className="mt-3 text-lg font-semibold text-neutral-900">Your day is clear</h2>
+      <h2 className="mt-3 text-lg font-semibold text-neutral-900">
+        {emptyState ? 'Workspace is ready' : 'Your day is clear'}
+      </h2>
       <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-neutral-600">
-        No buyers waiting on a reply, no hot signals, no drafts to review, and no viewings or escalations open right now.
-        New activity lands here the moment a buyer engages.
+        {emptyState?.message ?? (
+          <>
+            No buyers waiting on a reply, no hot signals, no drafts to review, and no viewings or escalations open right now.
+            New activity lands here the moment a buyer engages.
+          </>
+        )}
       </p>
       <p className="mt-3 text-xs text-neutral-400">{sourceLabel}</p>
     </section>
@@ -447,25 +455,245 @@ function LoadingPanel({ rows }: { rows: number }) {
   )
 }
 
-function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashboardData {
-  // Only a sample workspace should be padded with demo content. A real live
-  // workspace with no activity must read as genuinely empty so the "Your day
-  // is clear" state can surface instead of fake sample buyers.
-  const sampleData = Boolean(payload?.sample_data)
+interface ApiBuyer {
+  readonly name?: string | null
+  readonly phone?: string | null
+  readonly budget_aed?: number | null
+  readonly stage?: string | null
+}
+
+interface ApiListing {
+  readonly listing_id?: string | null
+  readonly project?: string | null
+  readonly unit_number?: string | null
+  readonly asking_price_aed?: number | null
+}
+
+interface ApiTask {
+  readonly task_id?: string | null
+  readonly task_type?: string | null
+  readonly title?: string | null
+  readonly description?: string | null
+  readonly priority?: string | null
+  readonly listing_id?: string | null
+  readonly buyer_phone?: string | null
+  readonly due_at?: string | null
+  readonly metadata?: {
+    readonly reason?: string | null
+    readonly entity_label?: string | null
+  } | null
+}
+
+interface ApiHotLead {
+  readonly id?: string | null
+  readonly buyer?: ApiBuyer | null
+  readonly listing?: ApiListing | null
+  readonly signal?: string | null
+  readonly signal_key?: string | null
+  readonly next_action?: string | null
+  readonly reason?: string | null
+  readonly urgency_score?: number | null
+  readonly last_message?: string | null
+  readonly last_message_at?: string | null
+  readonly due_at?: string | null
+}
+
+interface ApiCampaign {
+  readonly campaign_id?: string | null
+  readonly name?: string | null
+  readonly campaign_type?: string | null
+  readonly status?: string | null
+  readonly audience?: {
+    readonly project?: string | null
+  } | null
+  readonly offer?: {
+    readonly cta?: string | null
+  } | null
+  readonly metrics?: {
+    readonly spend?: string | null
+    readonly uploaded?: number | string | null
+    readonly sent?: number | string | null
+    readonly qualified?: number | string | null
+    readonly replies?: number | string | null
+  } | null
+}
+
+interface ApiMarketingPage {
+  readonly page_id?: string | null
+  readonly title?: string | null
+  readonly slug?: string | null
+  readonly status?: string | null
+}
+
+interface ApiConversation {
+  readonly conversation_id?: string | null
+  readonly buyer?: ApiBuyer | null
+  readonly listing?: ApiListing | null
+  readonly listing_id?: string | null
+  readonly summary?: string | null
+  readonly last_message?: string | null
+  readonly next_step_hint?: string | null
+  readonly interest_level?: string | null
+  readonly last_message_at?: string | null
+  readonly updated_at?: string | null
+  readonly message_count?: number | null
+  readonly offer_count?: number | null
+  readonly open_escalation_count?: number | null
+  readonly needs_reply?: boolean | null
+  readonly needs_reply_reason?: string | null
+  readonly has_pending_draft?: boolean | null
+  readonly last_buyer_message_at?: string | null
+  readonly last_agent_response_at?: string | null
+}
+
+interface ApiViewing {
+  readonly viewing_id?: string | null
+  readonly scheduled_for?: string | null
+  readonly buyer_phone?: string | null
+  readonly listing_id?: string | null
+  readonly tenant_notice_required?: boolean | null
+  readonly status?: string | null
+  readonly access_notes?: string | null
+}
+
+interface ApiEscalationQuestion {
+  readonly question_id?: string | null
+  readonly question_text?: string | null
+  readonly added_at?: string | null
+  readonly resolved_at?: string | null
+}
+
+interface ApiEscalationThread {
+  readonly thread_id?: string | null
+  readonly envelope_token?: string | null
+  readonly category?: string | null
+  readonly state?: string | null
+  readonly urgency?: string | null
+  readonly buyer?: ApiBuyer | null
+  readonly buyer_phone?: string | null
+  readonly listing?: ApiListing | null
+  readonly listing_id?: string | null
+  readonly latest_question?: string | null
+  readonly question_count?: number | null
+  readonly last_buyer_message_at?: string | null
+  readonly opened_at?: string | null
+  readonly latest_route_expires_at?: string | null
+  readonly questions?: readonly ApiEscalationQuestion[] | null
+}
+
+interface ApiReplyDraft {
+  readonly reply_draft_id?: string | null
+  readonly draft_id?: string | null
+  readonly conversation_id?: string | null
+  readonly buyer_name?: string | null
+  readonly buyer_phone?: string | null
+  readonly listing_name?: string | null
+  readonly listing?: ApiListing | null
+  readonly listing_id?: string | null
+  readonly unit_number?: string | null
+  readonly category?: string | null
+  readonly intent?: string | null
+  readonly body?: string | null
+}
+
+interface ApiOutreachDraft {
+  readonly outreach_draft_id?: string | null
+  readonly draft_id?: string | null
+  readonly subject?: string | null
+  readonly audience?: {
+    readonly project?: string | null
+  } | null
+  readonly audience_label?: string | null
+  readonly body?: string | null
+}
+
+interface ApiDrafts {
+  readonly reply_drafts?: readonly ApiReplyDraft[] | null
+  readonly outreach_drafts?: readonly ApiOutreachDraft[] | null
+}
+
+interface ApiPerformanceMetrics {
+  readonly new_buyer_conversations?: number | null
+  readonly escalations_handled?: number | null
+  readonly avg_response_minutes?: number | null
+  readonly follow_ups_sent?: number | null
+  readonly viewings_proposed?: number | null
+  readonly viewings_confirmed?: number | null
+  readonly viewings_completed?: number | null
+  readonly offers_detected?: number | null
+  readonly hot_leads_active?: number | null
+  readonly tasks_overdue?: number | null
+}
+
+interface ApiPerformanceWindow {
+  readonly key?: string | null
+  readonly label?: string | null
+  readonly start_at?: string | null
+  readonly end_at?: string | null
+  readonly metrics?: ApiPerformanceMetrics | null
+}
+
+interface ApiPerformance {
+  readonly scope?: string | null
+  readonly agent_user_id?: string | null
+  readonly generated_at?: string | null
+  readonly primary?: ApiPerformanceWindow | null
+  readonly windows?: readonly ApiPerformanceWindow[] | null
+}
+
+interface ApiDashboardPayload {
+  readonly generated_at?: string | null
+  readonly agent?: {
+    readonly display_name?: string | null
+  } | null
+  readonly brokerage?: {
+    readonly name?: string | null
+  } | null
+  readonly hot_list_refresh?: {
+    readonly status?: string | null
+    readonly trigger?: string | null
+    readonly last_refresh_at?: string | null
+    readonly completed_at?: string | null
+    readonly assignment_count?: number | null
+    readonly task_count?: number | null
+    readonly draft_count?: number | null
+    readonly error?: string | null
+  } | null
+  readonly empty_state?: {
+    readonly reason?: string | null
+    readonly message?: string | null
+  } | null
+  readonly metrics?: Record<string, number | null | undefined> | null
+  readonly hot_leads?: readonly ApiHotLead[] | null
+  readonly conversations?: readonly ApiConversation[] | null
+  readonly tasks?: readonly ApiTask[] | null
+  readonly campaigns?: readonly ApiCampaign[] | null
+  readonly viewings?: readonly ApiViewing[] | null
+  readonly escalation_threads?: readonly ApiEscalationThread[] | null
+  readonly drafts?: ApiDrafts | null
+  readonly marketing?: {
+    readonly pages?: readonly ApiMarketingPage[] | null
+    readonly events_7d?: number | null
+  } | null
+  readonly performance?: ApiPerformance | null
+}
+
+function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardData): AgentDashboardData {
   const metrics = payload?.metrics ?? {}
   const hotListRefresh = payload?.hot_list_refresh ?? {}
-  const hotLeads = Array.isArray(payload?.hot_leads) ? payload.hot_leads : []
-  const conversations = Array.isArray(payload?.conversations) ? payload.conversations : []
-  const tasks = Array.isArray(payload?.tasks) ? payload.tasks : []
-  const campaigns = Array.isArray(payload?.campaigns) ? payload.campaigns : []
-  const viewings = Array.isArray(payload?.viewings) ? payload.viewings : []
-  const escalationThreads = Array.isArray(payload?.escalation_threads) ? payload.escalation_threads : []
-  const replyDrafts = Array.isArray(payload?.drafts?.reply_drafts) ? payload.drafts.reply_drafts : []
-  const outreachDrafts = Array.isArray(payload?.drafts?.outreach_drafts) ? payload.drafts.outreach_drafts : []
-  const pages = Array.isArray(payload?.marketing?.pages) ? payload.marketing.pages : []
+  const emptyState = payload?.empty_state
+  const hotLeads: readonly ApiHotLead[] = Array.isArray(payload?.hot_leads) ? payload.hot_leads : []
+  const conversations: readonly ApiConversation[] = Array.isArray(payload?.conversations) ? payload.conversations : []
+  const tasks: readonly ApiTask[] = Array.isArray(payload?.tasks) ? payload.tasks : []
+  const campaigns: readonly ApiCampaign[] = Array.isArray(payload?.campaigns) ? payload.campaigns : []
+  const viewings: readonly ApiViewing[] = Array.isArray(payload?.viewings) ? payload.viewings : []
+  const escalationThreads: readonly ApiEscalationThread[] = Array.isArray(payload?.escalation_threads) ? payload.escalation_threads : []
+  const replyDrafts: readonly ApiReplyDraft[] = Array.isArray(payload?.drafts?.reply_drafts) ? payload.drafts.reply_drafts : []
+  const outreachDrafts: readonly ApiOutreachDraft[] = Array.isArray(payload?.drafts?.outreach_drafts) ? payload.drafts.outreach_drafts : []
+  const pages: readonly ApiMarketingPage[] = Array.isArray(payload?.marketing?.pages) ? payload.marketing.pages : []
 
   const morningQueue: QueueItem[] = [
-    ...tasks.slice(0, 4).map((task: any, index: number) => ({
+    ...tasks.slice(0, 4).map((task, index) => ({
       id: task.task_id ?? `task-${index}`,
       priority: priorityFromTask(task.priority),
       title: task.title ?? 'Review task',
@@ -475,9 +703,9 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       nextAction: task.task_type ? labelFromKey(task.task_type) : 'Open task',
       due: formatShortTime(task.due_at),
     })),
-    ...hotLeads.slice(0, Math.max(0, 4 - tasks.length)).map((lead: any, index: number) => ({
+    ...hotLeads.slice(0, Math.max(0, 4 - tasks.length)).map((lead, index) => ({
       id: lead.id ?? `lead-${index}`,
-      priority: lead.urgency_score >= 90 ? 'critical' : lead.urgency_score >= 70 ? 'high' : 'normal',
+      priority: priorityFromScore(lead.urgency_score),
       title: lead.signal ? `Hot buyer: ${lead.listing?.project ?? 'Property'}` : 'Buyer needs follow-up',
       context: lead.reason ?? lead.last_message ?? 'Buyer activity needs agent review.',
       buyerName: lead.buyer?.name ?? lead.buyer?.phone ?? 'Buyer',
@@ -485,7 +713,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       nextAction: lead.next_action ?? 'Open brief',
       due: formatShortTime(lead.due_at),
     })),
-    ...outreachDrafts.slice(0, 1).map((draft: any, index: number) => ({
+    ...outreachDrafts.slice(0, 1).map((draft, index) => ({
       id: draft.outreach_draft_id ?? `outreach-${index}`,
       priority: 'high' as const,
       title: 'Review owner outreach draft',
@@ -495,7 +723,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       nextAction: 'Review draft',
       due: 'Today',
     })),
-    ...pages.filter((page: any) => page.status !== 'published').slice(0, 1).map((page: any, index: number) => ({
+    ...pages.filter((page) => page.status !== 'published').slice(0, 1).map((page, index) => ({
       id: page.page_id ?? `page-${index}`,
       priority: 'normal' as const,
       title: `One-pager ready: ${page.title ?? 'Marketing page'}`,
@@ -507,7 +735,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     })),
   ].slice(0, 4)
 
-  const mappedCampaigns: CampaignItem[] = campaigns.slice(0, 4).map((campaign: any, index: number) => ({
+  const mappedCampaigns: CampaignItem[] = campaigns.slice(0, 4).map((campaign, index) => ({
     id: campaign.campaign_id ?? `campaign-${index}`,
     name: campaign.name ?? 'Owner outreach campaign',
     audience: campaign.audience?.project
@@ -522,7 +750,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       : 'Review qualified owners, drafts, and compliance blockers before launch.',
   }))
 
-  const buyerDigest: BuyerDigestItem[] = hotLeads.slice(0, 3).map((lead: any, index: number) => ({
+  const buyerDigest: BuyerDigestItem[] = hotLeads.slice(0, 3).map((lead, index) => ({
     id: lead.id ?? `digest-${index}`,
     buyerName: lead.buyer?.name ?? lead.buyer?.phone ?? 'Buyer',
     intent: intentFromSignal(lead.signal_key),
@@ -533,7 +761,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     lastSeen: formatShortTime(lead.last_message_at),
   }))
 
-  const mappedConversations: ConversationInboxItem[] = conversations.slice(0, 8).map((conversation: any, index: number) => ({
+  const mappedConversations: ConversationInboxItem[] = conversations.slice(0, 8).map((conversation, index) => ({
     id: conversation.conversation_id ?? `conversation-${index}`,
     buyerName: conversation.buyer?.name ?? conversation.buyer?.phone ?? 'Buyer',
     buyerPhone: conversation.buyer?.phone ?? '',
@@ -558,7 +786,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     lastAgentResponseAt: conversation.last_agent_response_at ? formatShortTime(conversation.last_agent_response_at) : null,
   }))
 
-  const mappedViewings: ViewingItem[] = viewings.slice(0, 4).map((viewing: any, index: number) => ({
+  const mappedViewings: ViewingItem[] = viewings.slice(0, 4).map((viewing, index) => ({
     id: viewing.viewing_id ?? `viewing-${index}`,
     time: formatShortTime(viewing.scheduled_for),
     buyerName: viewing.buyer_phone ?? 'Buyer',
@@ -568,7 +796,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     preparation: viewing.access_notes ?? 'Confirm access and send reminder.',
   }))
 
-  const mappedEscalations: EscalationThreadItem[] = escalationThreads.slice(0, 4).map((thread: any, index: number) => ({
+  const mappedEscalations: EscalationThreadItem[] = escalationThreads.slice(0, 4).map((thread, index) => ({
     id: thread.thread_id ?? `escalation-${index}`,
     token: thread.envelope_token,
     category: thread.category ?? 'other',
@@ -584,7 +812,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     openedAt: formatShortTime(thread.opened_at),
     routeExpiresAt: thread.latest_route_expires_at ? formatShortTime(thread.latest_route_expires_at) : null,
     questions: Array.isArray(thread.questions)
-      ? thread.questions.map((question: any, questionIndex: number) => ({
+      ? thread.questions.map((question, questionIndex) => ({
           id: question.question_id ?? `${thread.thread_id ?? index}-q-${questionIndex}`,
           text: question.question_text ?? '',
           addedAt: formatShortTime(question.added_at),
@@ -593,7 +821,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       : [],
   }))
 
-  const mappedReplyDrafts: ReplyDraftItem[] = replyDrafts.slice(0, 6).map((draft: any, index: number) => ({
+  const mappedReplyDrafts: ReplyDraftItem[] = replyDrafts.slice(0, 6).map((draft, index) => ({
     id: draft.reply_draft_id ?? draft.draft_id ?? `reply-draft-${index}`,
     conversationId: draft.conversation_id ?? null,
     buyerName: draft.buyer_name ?? draft.buyer_phone ?? 'Buyer',
@@ -605,7 +833,7 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     body: draft.body ?? 'Draft reply is ready for review.',
   }))
 
-  const mappedOutreachDrafts: OutreachDraftItem[] = outreachDrafts.slice(0, 4).map((draft: any, index: number) => ({
+  const mappedOutreachDrafts: OutreachDraftItem[] = outreachDrafts.slice(0, 4).map((draft, index) => ({
     id: draft.outreach_draft_id ?? draft.draft_id ?? `outreach-draft-${index}`,
     subject: draft.subject ?? 'Owner outreach draft',
     audience: draft.audience?.project
@@ -613,6 +841,12 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       : draft.audience_label ?? 'Owner acquisition',
     body: draft.body ?? 'Campaign draft is ready for review.',
   }))
+
+  const hasVisibleActivity = mappedConversations.length > 0
+    || morningQueue.length > 0
+    || mappedEscalations.length > 0
+    || buyerDigest.length > 0
+    || mappedViewings.length > 0
 
   return {
     agent: {
@@ -631,6 +865,12 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       draftCount: Number(hotListRefresh.draft_count ?? 0),
       error: hotListRefresh.error ?? null,
     },
+    emptyState: typeof emptyState?.reason === 'string' && typeof emptyState?.message === 'string'
+      ? {
+          reason: emptyState.reason,
+          message: emptyState.message,
+        }
+      : undefined,
     summary: {
       openTasks: Number(metrics.open_tasks ?? morningQueue.length),
       qualifiedBuyers: Number(metrics.hot_leads ?? buyerDigest.length),
@@ -638,10 +878,10 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
       offersAtRisk: Number(metrics.stale_leads ?? 0),
       openEscalations: Number(metrics.open_escalations ?? mappedEscalations.length),
     },
-    performance: mapPerformance(payload?.performance, fallback.performance),
-    conversationInbox: mappedConversations.length ? mappedConversations : sampleData ? fallback.conversationInbox : [],
-    morningQueue: morningQueue.length ? morningQueue : sampleData ? fallback.morningQueue : [],
-    escalationInbox: mappedEscalations.length ? mappedEscalations : sampleData ? fallback.escalationInbox : [],
+    performance: mapPerformance(payload?.performance),
+    conversationInbox: mappedConversations,
+    morningQueue,
+    escalationInbox: mappedEscalations,
     drafts: {
       replyDrafts: mappedReplyDrafts,
       outreachDrafts: mappedOutreachDrafts,
@@ -649,18 +889,19 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
     campaignSnapshot: {
       headline: mappedCampaigns.length
         ? 'Owner outreach and page activity are ready for review.'
-        : fallback.campaignSnapshot.headline,
+        : 'No owner outreach campaigns are active yet.',
       activeCampaigns: Number(metrics.active_campaigns ?? mappedCampaigns.length),
       newLeads: Number(metrics.new_owner_leads ?? 0),
       qualifiedLeads: mappedCampaigns.reduce((sum, campaign) => sum + campaign.qualified, 0),
-      responseRate: fallback.campaignSnapshot.responseRate,
-      costPerQualifiedLead: fallback.campaignSnapshot.costPerQualifiedLead,
-      campaigns: mappedCampaigns.length ? mappedCampaigns : fallback.campaignSnapshot.campaigns,
+      responseRate: mappedCampaigns.length ? fallback.campaignSnapshot.responseRate : '0%',
+      costPerQualifiedLead: mappedCampaigns.length ? fallback.campaignSnapshot.costPerQualifiedLead : 'AED 0',
+      campaigns: mappedCampaigns,
     },
-    overnightBuyerDigest: buyerDigest.length ? buyerDigest : sampleData ? fallback.overnightBuyerDigest : [],
-    todaysViewings: mappedViewings.length ? mappedViewings : sampleData ? fallback.todaysViewings : [],
+    overnightBuyerDigest: buyerDigest,
+    todaysViewings: mappedViewings,
     personalMomentum: {
       ...fallback.personalMomentum,
+      focus: emptyState?.message ?? fallback.personalMomentum.focus,
       stats: [
         {
           label: 'Replies awaiting review',
@@ -681,26 +922,49 @@ function mapApiDashboard(payload: any, fallback: AgentDashboardData): AgentDashb
           trend: (payload?.marketing?.events_7d ?? 0) > 0 ? 'up' : 'flat',
         },
       ],
+      streaks: hasVisibleActivity
+        ? fallback.personalMomentum.streaks
+        : [],
     },
   }
 }
 
-function mapPerformance(payload: any, fallback: AgentDashboardData['performance']): AgentDashboardData['performance'] {
+function mapPerformance(payload: ApiPerformance | null | undefined): AgentDashboardData['performance'] {
   const windows = Array.isArray(payload?.windows)
-    ? payload.windows.map((window: any) => mapPerformanceWindow(window)).filter(Boolean)
+    ? payload.windows.map((window) => mapPerformanceWindow(window))
     : []
-  const mappedWindows = windows.length ? windows : fallback.windows
-  const primary = payload?.primary ? mapPerformanceWindow(payload.primary) : mappedWindows[0] ?? fallback.primary
+  const primary = payload?.primary ? mapPerformanceWindow(payload.primary) : windows[0] ?? emptyPerformanceWindow()
   return {
-    scope: payload?.scope ?? fallback.scope,
-    agentUserId: payload?.agent_user_id ?? fallback.agentUserId ?? null,
-    generatedAt: payload?.generated_at ?? fallback.generatedAt ?? null,
+    scope: payload?.scope ?? 'agent',
+    agentUserId: payload?.agent_user_id ?? null,
+    generatedAt: payload?.generated_at ?? null,
     primary,
-    windows: mappedWindows,
+    windows,
   }
 }
 
-function mapPerformanceWindow(window: any): AgentDashboardData['performance']['primary'] {
+function emptyPerformanceWindow(): AgentDashboardData['performance']['primary'] {
+  return {
+    key: 'today',
+    label: 'Today',
+    startAt: null,
+    endAt: null,
+    metrics: {
+      newBuyerConversations: 0,
+      escalationsHandled: 0,
+      avgResponseMinutes: null,
+      followUpsSent: 0,
+      viewingsProposed: 0,
+      viewingsConfirmed: 0,
+      viewingsCompleted: 0,
+      offersDetected: 0,
+      hotLeadsActive: 0,
+      tasksOverdue: 0,
+    },
+  }
+}
+
+function mapPerformanceWindow(window: ApiPerformanceWindow): AgentDashboardData['performance']['primary'] {
   const metrics = window?.metrics ?? {}
   return {
     key: window?.key ?? 'today',
@@ -722,27 +986,34 @@ function mapPerformanceWindow(window: any): AgentDashboardData['performance']['p
   }
 }
 
-function priorityFromTask(priority: string | undefined): QueuePriority {
+function priorityFromTask(priority: string | null | undefined): QueuePriority {
   if (priority === 'critical') return 'critical'
   if (priority === 'high') return 'high'
   return 'normal'
 }
 
-function intentFromSignal(signal: string | undefined): BuyerIntent {
+function priorityFromScore(score: number | null | undefined): QueuePriority {
+  const normalizedScore = Number(score ?? 0)
+  if (normalizedScore >= 90) return 'critical'
+  if (normalizedScore >= 70) return 'high'
+  return 'normal'
+}
+
+function intentFromSignal(signal: string | null | undefined): BuyerIntent {
   if (signal === 'firm_offer') return 'offer_ready'
   if (signal === 'ready_to_view') return 'viewing_ready'
   if (signal === 'needs_financing') return 'financing'
   return 'researching'
 }
 
-function escalationState(state: string | undefined): EscalationState {
+function escalationState(state: string | null | undefined): EscalationState {
   if (state === 'debouncing' || state === 'open' || state === 'updated' || state === 'resolved' || state === 'timed_out' || state === 'opt_out_closed') {
     return state
   }
   return 'open'
 }
 
-function escalationUrgency(urgency: string | undefined): EscalationUrgency {
+function escalationUrgency(urgency: string | null | undefined): EscalationUrgency {
   if (urgency === 'critical' || urgency === 'high' || urgency === 'normal') {
     return urgency
   }
