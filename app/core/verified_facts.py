@@ -334,6 +334,16 @@ _TOPIC_FACTS: tuple[tuple[str, str, tuple[str, ...]], ...] = (
         ("noc timing", "noc timeline", "transfer timing", "transfer timeline", "how long"),
     ),
     (
+        "off-plan mortgage/LTV policy",
+        "off_plan_mortgage_ltv_policy",
+        ("mortgage", "loan", "ltv", "finance", "financing", "bank"),
+    ),
+    (
+        "off-plan payment-process mechanics",
+        "off_plan_payment_process_mechanics",
+        ("payment process", "pay seller", "pay developer", "cash to seller", "developer balance"),
+    ),
+    (
         "Trakheesi advertising permit",
         "trakheesi_permit_exists",
         ("trakheesi", "advertising permit", "ad permit", "rera permit", "permit verification"),
@@ -365,6 +375,17 @@ _PROCESS_FEE_TERMS = (
     "rent before handover",
     "payment protection",
     "registration",
+    "mortgage",
+    "loan",
+    "ltv",
+    "finance",
+    "financing",
+    "bank",
+    "payment process",
+    "pay seller",
+    "pay developer",
+    "cash to seller",
+    "developer balance",
 )
 
 
