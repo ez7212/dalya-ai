@@ -1,6 +1,6 @@
 # Dalya — Backlog
 
-*Last updated: 2026-06-21 (`DAL-194` remaining-payment deterministic response wording P0)*
+*Last updated: 2026-06-22 (`Task 7` WhatsApp pilot transport lock)*
 
 This document is split into two parts, mirroring [FEATURES.md](./FEATURES.md):
 
@@ -84,7 +84,7 @@ Canonical launch roadmap: [`MVP_ROADMAP_0609.md`](./MVP_ROADMAP_0609.md).
 7. [x] **DAL-155: Viewing logistics completion.** Added approved buyer/reminder/running-late/reschedule sends, viewing completion API/job, compliance/actions, and post-viewing task/draft trigger. Verification: `tests/test_viewing_logistics.py`; frontend `npm run build`.
 8. [x] **DAL-156: Post-viewing capture.** Added `viewing_feedback`, due feedback request API/job, buyer WhatsApp reply capture, agent feedback form, structured parsing, hot-list/task updates, and viewing-detail feedback summaries. Verification: `tests/test_viewing_logistics.py`; frontend `npm run build`; migration `scripts/migrate_viewing_feedback.py`.
 9. [x] **DAL-157: Agent performance dashboard.** Added `/agent` current-agent performance block for today/7d/30d: buyer conversations, escalations handled, response time, follow-ups, viewing funnel, offers, hot leads, and overdue tasks. Verification: `tests/test_morning_hot_list.py`; frontend `npm run build`.
-10. [x] **DAL-143: WhatsApp/BSP production verification.** Produced `reports/whatsapp_production_readiness_20260610.md`; Twilio Brokerage AI / Agents AI flows, dashboard reply, tenant viewing flow, opt-out, and duplicate-webhook protection are verified. 360dialog BSP remains blocked because the transport is intentionally stubbed pending WABA approval/implementation.
+10. [x] **DAL-143: WhatsApp/BSP production verification.** Produced `reports/whatsapp_production_readiness_20260610.md`; Twilio Brokerage AI / Agents AI flows, dashboard reply, tenant viewing flow, opt-out, and duplicate-webhook protection are verified. 360dialog BSP remains blocked because the transport is intentionally stubbed pending WABA approval/implementation. Task 7 follow-up (2026-06-22): the report now locks the remediation pilot transport as Twilio-only, limits usage to allowlist-configured pilot Brokerage AI / Agents AI numbers and admin-approved pilot users, documents manual Twilio webhook/credential rollback with WhatsApp manual fallback, and keeps 360dialog/BSP as separate future provider work outside P0/P1 blocker remediation.
 
 Resist building broad. These ten items are the MVP; owner outreach/campaigns, AI buyer matching, Mandarin production support, and owner dashboards are deferred.
 
