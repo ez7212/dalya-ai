@@ -1,0 +1,11 @@
+{
+  "task": "12. Add first-run activation and stronger empty/error states",
+  "plan": ".omo/plans/dalya-next-mvp-readiness-plan.md",
+  "branch": "codex/agent-first-run-activation",
+  "public_title": "Improve agent first-run states",
+  "tracking_mode": "local-only",
+  "reason": "Frontend first-run activation must improve empty/error states without reintroducing fake live operational data.",
+  "status": "completed",
+  "completed_at": "2026-06-23",
+  "evidence": ".omo/evidence/task-12-dalya-next-mvp-readiness-plan.md"
+}
