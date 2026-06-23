@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -11,7 +11,12 @@ logger = logging.getLogger(__name__)
 
 from app.core.brokerage_access import can_view_conversation, get_or_create_lead_assignment
 from app.core.buyer_profiles import effective_fields
-from app.core.deal_readiness import compute_readiness, fields_from_effective_fields, serialize_readiness
+from app.core.hot_list_readiness import (
+    ReadinessRankingInput,
+    build_hot_list_readiness_shadow,
+    readiness_profile_for_hot_list,
+    readiness_ranking_input,
+)
 from app.db.session import safe_commit
 from app.models.db_models import (
     DBBrokerage,
@@ -45,6 +50,9 @@ class HotListScore:
     latest_message_at: Optional[datetime]
     buyer_message_count: int
     stale: bool
+    base_urgency_score: Optional[int] = None
+    readiness_ranking_delta: Optional[int] = None
+    readiness_ranking_reason: Optional[str] = None
 
 
 def _latest_message(db: Session, conversation_id: str) -> Optional[DBMessage]:
@@ -197,8 +205,7 @@ def score_conversation(
             due_at = now + timedelta(hours=1)
             reason = "Buyer has gone quiet after meaningful engagement. Send a short check-in."
 
-    score = max(0, min(score, 100))
-    priority = "critical" if score >= 90 else "high" if score >= 70 else "normal"
+    base_score = max(0, min(score, 100))
     title_action = {
         "review_offer": "Review offer",
         "book_viewing": "Book viewing",
@@ -209,91 +216,40 @@ def score_conversation(
     task_title = f"{title_action}: {_buyer_name(conversation)}"
     task_description = f"{reason} Listing: {_listing_name(conversation)}."
 
-    return HotListScore(
+    base_result = HotListScore(
         signal=signal,
-        urgency_score=score,
+        urgency_score=base_score,
         next_action=next_action,
         next_action_reason=reason,
         status=status,
         task_type=task_type,
         task_title=task_title,
         task_description=task_description,
-        task_priority=priority,
+        task_priority="normal",
         due_at=due_at,
         last_buyer_message_at=last_buyer_at,
         latest_message_at=latest_at,
         buyer_message_count=buyer_count,
         stale=stale,
+        base_urgency_score=base_score,
+    )
+    ranking = _hot_list_readiness_ranking_input(
+        db,
+        conversation=conversation,
+        score=base_result,
+    )
+    ranked_score = max(0, min(100, base_score + ranking.delta))
+    priority = "critical" if ranked_score >= 90 else "high" if ranked_score >= 70 else "normal"
+    return replace(
+        base_result,
+        urgency_score=ranked_score,
+        task_priority=priority,
+        readiness_ranking_delta=ranking.delta,
+        readiness_ranking_reason=ranking.reason,
     )
 
 
-def _readiness_conversation_context(score: HotListScore, conversation: DBConversation) -> dict:
-    latest_text = ""
-    latest_message = None
-    try:
-        latest_message = conversation.messages[-1] if conversation.messages else None
-        latest_text = (latest_message.content if latest_message else "").lower()
-    except Exception:
-        latest_text = ""
-    return {
-        "viewing_intent": bool(
-            score.next_action == "book_viewing"
-            or score.signal == "ready_to_view"
-            or (latest_message and latest_message.intent == "viewing_request")
-        ),
-        "offer_intent": bool(
-            score.next_action == "review_offer"
-            or score.signal == "firm_offer"
-            or _is_offer(conversation)
-        ),
-        "responsive": bool(latest_message and latest_message.role == "user"),
-        "urgent": bool((score.urgency_score or 0) >= 70 or any(term in latest_text for term in ("urgent", "asap", "serious"))),
-    }
-
-
-def build_hot_list_readiness_shadow(
-    *,
-    effective_buyer_fields: dict,
-    conversation: DBConversation,
-    score: HotListScore,
-) -> dict:
-    """Read-only DealReadiness metadata for hot-list inspection.
-
-    This is deliberately not an input to hot-list scoring, thresholds, task
-    creation, notifications, drafts, or sends.
-    """
-    listing = conversation.listing
-    fields = fields_from_effective_fields(
-        effective_buyer_fields or {},
-        fallback_budget_aed=conversation.detected_budget,
-    )
-    readiness = compute_readiness(
-        fields,
-        conversation_ctx=_readiness_conversation_context(score, conversation),
-        listing_ctx=(
-            {
-                "listing_id": listing.listing_id,
-                "property_type": listing.property_type,
-            }
-            if listing
-            else {"listing_id": conversation.listing_id}
-        ),
-    )
-    return {
-        "mode": "shadow_read_only",
-        "used_for_ranking": False,
-        "used_for_thresholds": False,
-        "used_for_tasks": False,
-        "deal_readiness": serialize_readiness(readiness),
-    }
-
-
-def _hot_list_readiness_shadow(
-    db: Session,
-    *,
-    conversation: DBConversation,
-    score: HotListScore,
-) -> dict:
+def _profile_fields(db: Session, conversation: DBConversation) -> dict:
     profile = (
         db.query(DBBrokerageBuyerProfile)
         .filter(
@@ -302,9 +258,31 @@ def _hot_list_readiness_shadow(
         )
         .first()
     )
-    fields = effective_fields(db, profile) if profile else {}
+    return effective_fields(db, profile) if profile else {}
+
+
+def _hot_list_readiness_ranking_input(
+    db: Session,
+    *,
+    conversation: DBConversation,
+    score: HotListScore,
+) -> ReadinessRankingInput:
+    readiness = readiness_profile_for_hot_list(
+        effective_buyer_fields=_profile_fields(db, conversation),
+        conversation=conversation,
+        score=score,
+    )
+    return readiness_ranking_input(readiness)
+
+
+def _hot_list_readiness_shadow(
+    db: Session,
+    *,
+    conversation: DBConversation,
+    score: HotListScore,
+) -> dict:
     return build_hot_list_readiness_shadow(
-        effective_buyer_fields=fields,
+        effective_buyer_fields=_profile_fields(db, conversation),
         conversation=conversation,
         score=score,
     )
