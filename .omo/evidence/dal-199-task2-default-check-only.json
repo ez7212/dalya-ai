@@ -1,0 +1,36 @@
+{
+  "check_only": true,
+  "cleanup_occurred": false,
+  "cleanup_reason": "real_run_not_started",
+  "commands": [],
+  "duration_seconds": 0.016,
+  "pytest_args": [
+    "--noconftest",
+    "tests/test_legacy_telegram_removed.py",
+    "tests/test_cors_live_env.py",
+    "tests/test_verified_facts_seed_closing_costs.py",
+    "-q"
+  ],
+  "reason": "python_3.14_refused_for_pinned_deps_expected_3.12_or_3.13;repo_venv_python_broken_symlink:python3.13",
+  "repo_venv_python": {
+    "exists": false,
+    "is_symlink": true,
+    "path": "/Users/eric/dalya-ai/venv/bin/python",
+    "reason": "repo_venv_python_broken_symlink:python3.13",
+    "resolved": null,
+    "symlink_target": "python3.13"
+  },
+  "requirements_file": "/Users/eric/dalya-ai/requirements.txt",
+  "selected_interpreter": {
+    "compatible": false,
+    "major": 3,
+    "minor": 14,
+    "reason": "python_3.14_refused_for_pinned_deps_expected_3.12_or_3.13",
+    "requested": "python3",
+    "resolved": "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+    "version": "3.14.3"
+  },
+  "status": "BLOCKED",
+  "suite_policy": "allowed_no_db_tests_only",
+  "temp_venv_path": "/private/tmp/dalya-focused-backend-qa-venv"
+}

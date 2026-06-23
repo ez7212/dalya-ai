@@ -1,0 +1,34 @@
+{
+  "check_only": false,
+  "cleanup_occurred": false,
+  "cleanup_reason": "real_run_not_started",
+  "commands": [],
+  "duration_seconds": 0.017,
+  "pytest_args": [
+    "--noconftest",
+    "/Users/eric/dalya-ai/tests/test_seller_lead_privacy.py",
+    "-q"
+  ],
+  "reason": "db_backed_tests_disallowed:tests/test_seller_lead_privacy.py(imports SessionLocal and writes/deletes app DB rows)",
+  "repo_venv_python": {
+    "exists": false,
+    "is_symlink": true,
+    "path": "/Users/eric/dalya-ai/venv/bin/python",
+    "reason": "repo_venv_python_broken_symlink:python3.13",
+    "resolved": null,
+    "symlink_target": "python3.13"
+  },
+  "requirements_file": "/Users/eric/dalya-ai/requirements.txt",
+  "selected_interpreter": {
+    "compatible": false,
+    "major": 3,
+    "minor": 14,
+    "reason": "python_3.14_refused_for_pinned_deps_expected_3.12_or_3.13",
+    "requested": "python3",
+    "resolved": "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+    "version": "3.14.3"
+  },
+  "status": "BLOCKED",
+  "suite_policy": "db_backed_tests_disallowed:tests/test_seller_lead_privacy.py(imports SessionLocal and writes/deletes app DB rows)",
+  "temp_venv_path": "/private/tmp/dalya-focused-backend-qa-venv"
+}

@@ -72,7 +72,7 @@ Your next move: approve this plan for `$omo:start-work`, or ask for a high-accur
   Merge guard: docs/scripts/evidence scope only; no product behavior files; no Task 10b; no env-file reads; no dependency/lockfile edits.
   Commit: Y | `docs(readiness): clean up verification closeout`
 
-- [ ] 2. Runtime QA environment repair.
+- [x] 2. Runtime QA environment repair.
   What to do / Must NOT do: Establish a healthy local Python 3.12/3.13 path for focused no-DB backend QA. Implement a small runner script such as `scripts/run_focused_backend_qa.py` plus a docs/runbook wrapper that creates `/private/tmp/dalya-focused-backend-qa-venv`, installs from existing pinned repo dependency files only, runs the final focused backend suite, records output, and cleans up. Do not create `.github/workflows` in this ticket; if no Python 3.12/3.13 interpreter exists locally, the ticket may still merge with the runner and canonical commands plus a deterministic BLOCKED evidence artifact proving no compatible interpreter exists, but it must not claim runtime QA green. Do not touch app behavior, product code, dependency pins, lockfiles, production/staging envs, or DB-backed tests.
   Parallelization: Wave 1 | Blocked by: 1 | Blocks: 3, 4, 5, final
   Branch/PR: `codex/runtime-qa-env-repair`; public PR title `Repair focused runtime QA path`.
