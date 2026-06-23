@@ -83,7 +83,7 @@ Your next move: approve this plan for `$omo:start-work`, or ask for a high-accur
   Merge guard: tooling/docs only; no app source behavior; no dependency/lockfile edits; no production/staging env reads; no DB writes; temp venv removed or BLOCKED evidence recorded.
   Commit: Y | `chore(test): add focused backend QA runner`
 
-- [ ] 3. Final surface QA pass.
+- [x] 3. Final surface QA pass.
   What to do / Must NOT do: Run the F3 browser surface verifier in a safe env and capture screenshots/logs for `/agent`, Today Queue escalation focus, dashboard fetch-failure state, escalation inbox reply affordance, and first-run empty/error states. If `frontend/.env.local` exists, do not let Next read it. Extend `frontend/scripts/verify-next-mvp-final-surface.mjs` with `--safe-temp-workdir <path>`; in that mode it must copy or link the frontend app into the temp workdir while excluding every `.env*` file, `.next`, caches, and local build artifacts, start Next with `cwd=<safe-temp-workdir>`, record `serverCwd`, explicit safe env vars, `.env*` scan results, and cleanup receipt in the transcript. It may link/copy source and use existing installed dependencies only. Do not run `npm install`, modify package or lock files, or weaken the env-file guard.
   Parallelization: Wave 1 | Blocked by: 1, 2 | Blocks: 4, 5, final
   Branch/PR: `codex/final-surface-qa-pass`; public PR title `Capture final surface QA evidence`.

@@ -1,0 +1,80 @@
+{
+  "scenario": "Task 3 screenshot distinction",
+  "images": [
+    {
+      "name": "agent",
+      "path": "<ENV:OUTPUT_DIR>/agent.png",
+      "sha256": "935556e53768d101f45e2f635bbbb2cc0cf8bc73274dfb226681ef986c19b7bd",
+      "bytes": 111338,
+      "width": 1280,
+      "height": 824
+    },
+    {
+      "name": "today-queue-escalation-focus",
+      "path": "<ENV:OUTPUT_DIR>/today-queue-escalation-focus.png",
+      "sha256": "3ee2ab68bfa4cc4c1a259316a304b067513af2bec0c67c9e270a4c3a8e706a26",
+      "bytes": 110358,
+      "width": 1280,
+      "height": 760
+    },
+    {
+      "name": "dashboard-fetch-failure",
+      "path": "<ENV:OUTPUT_DIR>/dashboard-fetch-failure.png",
+      "sha256": "4eb92327ebc5323a8d15f089d16d843834eace469ac2f9b05063e94ea1cab031",
+      "bytes": 66316,
+      "width": 1280,
+      "height": 824
+    },
+    {
+      "name": "escalation-reply-affordance",
+      "path": "<ENV:OUTPUT_DIR>/escalation-reply-affordance.png",
+      "sha256": "c34eb121ee80a6cf31f70e83c4a5756bc83c48b72aa9240421f8452269cd021c",
+      "bytes": 137583,
+      "width": 1280,
+      "height": 1377
+    },
+    {
+      "name": "first-run-empty-state",
+      "path": "<ENV:OUTPUT_DIR>/first-run-empty-state.png",
+      "sha256": "463e3551d77631619b628e35f7ad5e89eee46acc082470ecefde477a484f7787",
+      "bytes": 111097,
+      "width": 1280,
+      "height": 824
+    },
+    {
+      "name": "first-run-error-state",
+      "path": "<ENV:OUTPUT_DIR>/first-run-error-state.png",
+      "sha256": "c1ddbafee40fa12505c11c6c88a219acf49575bd36c9c8ccc73dad4abd45dd68",
+      "bytes": 112864,
+      "width": 1280,
+      "height": 824
+    }
+  ],
+  "duplicateHashGroups": [],
+  "pairs": [
+    {
+      "leftName": "first-run-error-state",
+      "rightName": "dashboard-fetch-failure",
+      "pixelComparable": true,
+      "pixelIdentical": false,
+      "diffPixels": 371398,
+      "totalPixels": 1054720,
+      "diffRatio": 0.3521294751213592
+    },
+    {
+      "leftName": "agent",
+      "rightName": "today-queue-escalation-focus",
+      "pixelComparable": false,
+      "reason": "dimension_mismatch",
+      "leftDimensions": [
+        1280,
+        824
+      ],
+      "rightDimensions": [
+        1280,
+        760
+      ],
+      "pixelIdentical": false
+    }
+  ]
+}

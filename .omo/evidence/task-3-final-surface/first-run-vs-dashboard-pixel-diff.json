@@ -1,0 +1,10 @@
+{
+  "scenario": "first-run-error-state vs dashboard-fetch-failure",
+  "leftName": "first-run-error-state",
+  "rightName": "dashboard-fetch-failure",
+  "pixelComparable": true,
+  "pixelIdentical": false,
+  "diffPixels": 371398,
+  "totalPixels": 1054720,
+  "diffRatio": 0.3521294751213592
+}
