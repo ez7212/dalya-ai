@@ -538,7 +538,7 @@ def dry_run() -> dict[str, Any]:
 
 def _human_print(report: dict[str, Any]) -> None:
     print("Dalya Tenant Root Normalization")
-    print("================================")
+    print("--------------------------------")
     print(f"Environment: {report['environment']}")
     print(f"Mode: {report['mode']}")
     print(f"Writes performed: {report['writes_performed']}")

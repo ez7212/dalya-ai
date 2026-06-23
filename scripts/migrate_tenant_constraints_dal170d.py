@@ -586,7 +586,7 @@ def _execute_plan_statements(
 
 def _print_pre_execution_sql(plan: dict[str, Any]) -> None:
     print("DAL-170D Production DDL Pre-Execution Plan")
-    print("=========================================")
+    print("-----------------------------------------")
     print(f"Phase: {plan['phase']}")
     print(f"Statements: {len(plan['statements'])}")
     print(f"Lock timeout: {plan['timeouts']['lock_timeout_ms']}ms")
@@ -804,7 +804,7 @@ def apply_phase(
 
 def _human_print(plan: dict[str, Any], *, applied: bool) -> None:
     print("DAL-170D Tenant Constraint Migration")
-    print("====================================")
+    print("------------------------------------")
     print(f"Environment: {plan['environment']}")
     print(f"Phase: {plan['phase']}")
     print(f"Mode: {'apply' if applied else 'dry-run'}")
@@ -868,7 +868,7 @@ def main() -> int:
             print(json.dumps(result, indent=2, sort_keys=True, default=str))
         else:
             print("DAL-170D DB Fingerprint")
-            print("=======================")
+            print("-----------------------")
             print(f"DALYA_ENV: {result['dalya_env']}")
             print(f"Phase: {result['phase']}")
             print(f"Database URL host: {result['database_url_host_masked']}")

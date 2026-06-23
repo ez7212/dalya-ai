@@ -447,7 +447,7 @@ def audit() -> list[Finding]:
 
 def print_human(findings: list[Finding]) -> None:
     print("Dalya Tenant Isolation Audit")
-    print("============================")
+    print("----------------------------")
     print("Read-only audit. Findings indicate risk visibility, not script failure.")
     print()
     counts = {severity: 0 for severity in SEVERITY_ORDER}
