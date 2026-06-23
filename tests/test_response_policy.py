@@ -764,6 +764,62 @@ def test_persona_suite_assignment_covers_all_ten_harness_slots():
     assert PERSONA_LISTING_SLOT[16] == PERSONA_LISTING_SLOT[15]
 
 
+def test_current_mvp_profile_covers_required_chatbot_regression_classes():
+    from scripts.chatbot_full_test import build_current_mvp_regression_report
+
+    report = build_current_mvp_regression_report([
+        "python3",
+        "scripts/chatbot_full_test.py",
+        "--mode",
+        "simulated",
+        "--profile",
+        "current-mvp",
+    ])
+
+    assert report["scenario_count"] >= 10
+    assert report["pass_fail"] == {"passed": report["scenario_count"], "failed": 0}
+    assert {
+        "multilingual",
+        "direct_question",
+        "off_plan",
+        "ready_tenancy",
+        "mortgage_ltv",
+        "pushy_buyer",
+        "seller_price_back_calculation",
+        "legal_process",
+        "injection_obfuscated",
+    }.issubset(set(report["categories"]))
+    assert report["success_criteria"]["finance_process_legal_verified_or_deferred"] is True
+    assert report["success_criteria"]["telegram_absent_from_expected_alert_paths"] is True
+    assert report["explicit_unsupported_claim_checks"]["failed"] == 0
+
+
+def test_current_mvp_profile_writes_evidence_with_pass_fail_breakdown(tmp_path):
+    from scripts.chatbot_full_test import write_current_mvp_evidence
+
+    evidence_path = tmp_path / "chatbot-regression.json"
+
+    report = write_current_mvp_evidence(
+        evidence_path,
+        [
+            "python3",
+            "scripts/chatbot_full_test.py",
+            "--mode",
+            "simulated",
+            "--profile",
+            "current-mvp",
+            "--evidence",
+            str(evidence_path),
+        ],
+    )
+
+    assert evidence_path.exists()
+    assert report["command"].endswith(str(evidence_path))
+    assert report["pass_fail"]["failed"] == 0
+    assert report["explicit_unsupported_claim_checks"]["count"] == report["scenario_count"]
+    assert report["telegram_alert_path_matches"] == []
+
+
 def test_portfolio_list_response_does_not_add_followup_question():
     response = ChatbotEngine._compose_portfolio_list_response([
         {
