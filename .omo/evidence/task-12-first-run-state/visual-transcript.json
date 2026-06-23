@@ -1,7 +1,7 @@
 {
   "scenario": "Task 12 visual QA: first-run authenticated empty workspace on desktop and mobile",
   "invocation": "cd frontend && node scripts/verify-task-next-first-run-visual.mjs --desktop .omo/evidence/task-12-first-run-desktop.png --mobile .omo/evidence/task-12-first-run-mobile.png",
-  "baseUrl": "http://127.0.0.1:58199",
+  "baseUrl": "http://127.0.0.1:59238",
   "desktopPath": "/Users/eric/dalya-ai/.omo/evidence/task-12-first-run-desktop.png",
   "mobilePath": "/Users/eric/dalya-ai/.omo/evidence/task-12-first-run-mobile.png",
   "checks": [
@@ -18,9 +18,11 @@
       "details": {}
     },
     {
-      "label": "1280px empty workspace exposes safe demo action",
+      "label": "1280px empty workspace does not expose fake-operational demo preview",
       "passed": true,
-      "details": {}
+      "details": {
+        "previewLeaks": []
+      }
     },
     {
       "label": "390px empty workspace contains no fake operational rows",
@@ -35,9 +37,11 @@
       "details": {}
     },
     {
-      "label": "390px empty workspace exposes safe demo action",
+      "label": "390px empty workspace does not expose fake-operational demo preview",
       "passed": true,
-      "details": {}
+      "details": {
+        "previewLeaks": []
+      }
     }
   ],
   "failureDebug": null,

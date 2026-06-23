@@ -54,6 +54,14 @@ function emptyDashboardPayload() {
   }
 }
 
+function liveZeroQueuePayload() {
+  const payload = emptyDashboardPayload()
+  return {
+    ...payload,
+    empty_state: undefined,
+  }
+}
+
 async function pageBody(page) {
   return await page.locator('body').innerText()
 }
@@ -75,7 +83,7 @@ try {
   await installSharedMocks(emptyPage)
   await emptyPage.route('**/api/v1/agent/dashboard', (route) => route.fulfill(jsonResponse(emptyDashboardPayload())))
   await emptyPage.goto(`${harness.baseUrl}/agent`)
-  await emptyPage.getByText('Leila Agent').first().waitFor({ timeout: 15_000 })
+  await emptyPage.getByRole('heading', { name: 'Good morning, Leila Agent' }).waitFor({ timeout: 15_000 })
   const emptyBody = await pageBody(emptyPage)
   observations.emptyBodyText = emptyBody.slice(0, 3000)
 
@@ -85,11 +93,33 @@ try {
   } else {
     checks.push(assertIncludes(emptyBody, 'Start with an internal pilot rehearsal', 'empty workspace names the safe first-run path'))
     checks.push(assertIncludes(emptyBody, 'synthetic/internal records only', 'empty workspace constrains pilot data class'))
-    checks.push(assertIncludes(emptyBody, 'Preview safe demo states', 'empty workspace links to explicit demo-only preview'))
+    checks.push(assertExcludesAll(emptyBody, ['Preview safe demo states', '/component-showcase'], 'empty workspace does not link to fake operational demo rows'))
     checks.push(assertIncludes(emptyBody, 'Refresh hot list', 'empty workspace keeps retry/refresh action visible'))
     checks.push(assertExcludesAll(emptyBody, fakeOperationalTexts, 'empty workspace renders no fake buyer, phone, queue, offer, or sample rows'))
   }
   await emptyPage.close()
+
+  const clearPage = await harness.context.newPage()
+  await installSharedMocks(clearPage)
+  await clearPage.route('**/api/v1/agent/dashboard', (route) => route.fulfill(jsonResponse(liveZeroQueuePayload())))
+  await clearPage.goto(`${harness.baseUrl}/agent`)
+  await clearPage.getByRole('heading', { name: 'Good morning, Leila Agent' }).waitFor({ timeout: 15_000 })
+  const clearBody = await pageBody(clearPage)
+  observations.clearBodyText = clearBody.slice(0, 3000)
+
+  if (!redMode) {
+    checks.push(assertIncludes(clearBody, 'Your day is clear', 'live zero-queue dashboard keeps a neutral clear-day heading'))
+    checks.push(assertIncludes(clearBody, 'No buyers waiting on a reply', 'live zero-queue dashboard explains the neutral empty queue'))
+    checks.push(assertExcludesAll(clearBody, [
+      'Start with an internal pilot rehearsal',
+      'synthetic/internal records only',
+      'Confirm pilot scope',
+      'data class',
+      'Preview safe demo states',
+    ], 'live zero-queue dashboard renders no first-run/internal-pilot/data-class copy'))
+    checks.push(assertExcludesAll(clearBody, fakeOperationalTexts, 'live zero-queue dashboard renders no fake buyer, phone, queue, offer, or sample rows'))
+  }
+  await clearPage.close()
 
   const errorPage = await harness.context.newPage()
   await installSharedMocks(errorPage)

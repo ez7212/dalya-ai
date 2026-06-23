@@ -69,10 +69,11 @@ async function captureEmptyWorkspace(viewport, path) {
   await page.getByText('Start with an internal pilot rehearsal').waitFor({ timeout: 15_000 })
   const body = await page.locator('body').innerText()
   const leaks = fakeOperationalTexts.filter((text) => body.includes(text))
+  const previewLeaks = ['Preview safe demo states', '/component-showcase'].filter((text) => body.includes(text))
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)
   checks.push(assertCheck(leaks.length === 0, `${viewport.width}px empty workspace contains no fake operational rows`, { leaks }))
   checks.push(assertCheck(!overflow, `${viewport.width}px empty workspace has no horizontal overflow`))
-  checks.push(assertCheck(body.includes('Preview safe demo states'), `${viewport.width}px empty workspace exposes safe demo action`))
+  checks.push(assertCheck(previewLeaks.length === 0, `${viewport.width}px empty workspace does not expose fake-operational demo preview`, { previewLeaks }))
   await page.screenshot({ path, fullPage: true })
   await page.close()
 }

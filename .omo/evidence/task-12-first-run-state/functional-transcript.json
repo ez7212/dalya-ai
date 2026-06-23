@@ -1,7 +1,7 @@
 {
   "scenario": "GREEN: first-run empty state gives safe synthetic/internal next steps and connection error gives retry/manual fallback",
   "invocation": "cd frontend && node scripts/verify-task-next-first-run-state.mjs",
-  "baseUrl": "http://127.0.0.1:58177",
+  "baseUrl": "http://127.0.0.1:59181",
   "checks": [
     {
       "label": "empty workspace names the safe first-run path",
@@ -18,10 +18,10 @@
       }
     },
     {
-      "label": "empty workspace links to explicit demo-only preview",
+      "label": "empty workspace does not link to fake operational demo rows",
       "passed": true,
       "details": {
-        "expected": "Preview safe demo states"
+        "leaks": []
       }
     },
     {
@@ -33,6 +33,34 @@
     },
     {
       "label": "empty workspace renders no fake buyer, phone, queue, offer, or sample rows",
+      "passed": true,
+      "details": {
+        "leaks": []
+      }
+    },
+    {
+      "label": "live zero-queue dashboard keeps a neutral clear-day heading",
+      "passed": true,
+      "details": {
+        "expected": "Your day is clear"
+      }
+    },
+    {
+      "label": "live zero-queue dashboard explains the neutral empty queue",
+      "passed": true,
+      "details": {
+        "expected": "No buyers waiting on a reply"
+      }
+    },
+    {
+      "label": "live zero-queue dashboard renders no first-run/internal-pilot/data-class copy",
+      "passed": true,
+      "details": {
+        "leaks": []
+      }
+    },
+    {
+      "label": "live zero-queue dashboard renders no fake buyer, phone, queue, offer, or sample rows",
       "passed": true,
       "details": {
         "leaks": []
@@ -82,7 +110,8 @@
     }
   ],
   "observations": {
-    "emptyBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\nDubai agent desk\n/\nLive workspace\n/\nUpdated 09:00 AM\nGood morning, Leila Agent\nsync\nRefresh hot list\n\nOPEN TASKS\n\n0\n\nQUALIFIED BUYERS\n\n0\n\nVIEWINGS TODAY\n\n0\n\nESCALATIONS\n\n0\n\ntask_alt\n\nWorkspace is connected\n\nStart with an internal pilot rehearsal\n\nThis authenticated workspace has no live buyer activity yet. Use synthetic/internal records only until Eric approves the pilot users, WhatsApp numbers, and data class.\n\nrule\n\nConfirm pilot scope\n\nUse the friendly-pilot runbook before any rehearsal. Real customer data stays blocked.\n\nscience\n\nTrigger safe activity\n\nSeed or send only approved synthetic/internal records, then refresh the hot list.\n\nrate_review\n\nKeep agent control\n\nReview drafts and handle WhatsApp manually if anything looks off.\n\nNo live buyer activity is assigned to this agent workspace yet.\n\nsync\nRefresh hot list\npreview\nPreview safe demo states\n\nLive workspace\n\nbar_chart\nMore — performance, campaigns & momentum\nexpand_more",
+    "emptyBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\nDubai agent desk\n/\nLive workspace\n/\nUpdated 09:00 AM\nGood morning, Leila Agent\nsync\nRefresh hot list\n\nOPEN TASKS\n\n0\n\nQUALIFIED BUYERS\n\n0\n\nVIEWINGS TODAY\n\n0\n\nESCALATIONS\n\n0\n\ntask_alt\n\nWorkspace is connected\n\nStart with an internal pilot rehearsal\n\nThis authenticated workspace has no live buyer activity yet. Use synthetic/internal records only until Eric approves the pilot users, WhatsApp numbers, and data class.\n\nrule\n\nConfirm pilot scope\n\nUse the friendly-pilot runbook before any rehearsal. Real customer data stays blocked.\n\nscience\n\nTrigger safe activity\n\nSeed or send only approved synthetic/internal records, then refresh the hot list.\n\nrate_review\n\nKeep agent control\n\nReview drafts and handle WhatsApp manually if anything looks off.\n\nNo live buyer activity is assigned to this agent workspace yet.\n\nsync\nRefresh hot list\n\nLive workspace\n\nbar_chart\nMore — performance, campaigns & momentum\nexpand_more",
+    "clearBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\nDubai agent desk\n/\nLive workspace\n/\nUpdated 09:00 AM\nGood morning, Leila Agent\nsync\nRefresh hot list\n\nOPEN TASKS\n\n0\n\nQUALIFIED BUYERS\n\n0\n\nVIEWINGS TODAY\n\n0\n\nESCALATIONS\n\n0\n\ntask_alt\n\nWorkspace is connected\n\nYour day is clear\n\nNo urgent buyer replies, hot signals, drafts, viewings, or escalations are waiting right now.\n\nNo buyers waiting on a reply, no hot signals, no drafts to review, and no viewings or escalations open right now. New activity lands here the moment a buyer engages.\n\nsync\nRefresh hot list\n\nLive workspace\n\nbar_chart\nMore — performance, campaigns & momentum\nexpand_more",
     "errorBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\ncloud_off\n\nCONNECTION ERROR\n\nCouldn't load your live workspace\n\nDalya could not reach the dashboard API, so live buyer activity is hidden until the workspace reconnects.\n\nManual fallback\n\nUse WhatsApp directly for buyer replies and viewing coordination. Record notes when Dalya reconnects; do not use demo data as live activity.\n\nrefresh\nRetry",
     "liveBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\nDubai agent desk\n/\nLive workspace\n/\nUpdated 10:00 AM\nGood morning, Leila Agent\nsync\nRefresh hot list\n\nOPEN TASKS\n\n1\n\nQUALIFIED BUYERS\n\n1\n\nVIEWINGS TODAY\n\n0\n\nESCALATIONS\n\n0\n\nTODAY QUEUE\n\nRanked work for this pilot day\n\nOne ordered queue across escalations, replies, viewings, drafts, hot buyers, and follow-ups.\n\nsync\nRefresh\nforum\n01\nReply\nNeeds reply\n09:44 AM\nNoura Live\n\nDubai Creek Residence\n\nCan I view after 6 today?\n\nBUYER INTENT\n\nBuyer reply needed\n\nKNOWN\n\nBuyer: Noura Live, Listing: Dubai Creek Residence · 1802, Last signal: 09:44 AM\n\nMISSING\n\nNo visible blockers\n\nSUGGESTED ACTION\n\nReply in conversation\n\nWORK SURFACE\n\nConversation composer\n\nSOURCE\n\nConversation inbox\n\nopen_in_new\nReply in conversation\nlocal_fire_department\n02\nHot buyer\nViewing Ready buyer\n09:44 AM\nNoura Live\n\nDubai Creek Residence\n\nCan I view after 6 today?\n\nBUYER INTENT\n\nViewing Ready buyer\n\nKNOWN\n\nBuyer: Noura Live, Listing: Dubai Creek Residence, Budget: AED 4,200,000, Last signal: 09:44 AM\n\nMISSING\n\nNo visible blockers\n\nSUGGESTED ACTION\n\nConfirm viewing window\n\nWORK SURFACE\n\nBuyers workspace\n\nSOURCE\n\nHot-list readiness\n\nopen_in_new\nConfirm viewing window\nbar_chart\nMore — performance, campaigns & momentum\nexpand_more"
   },
