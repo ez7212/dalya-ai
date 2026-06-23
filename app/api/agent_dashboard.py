@@ -6,6 +6,7 @@ from brokerage-scoped rows.
 """
 
 from datetime import datetime, timedelta
+import re
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -29,6 +30,7 @@ from app.core.hot_list import (
     refresh_hotlist_with_run,
     refresh_morning_hot_list,
 )
+from app.core.intent_rules import detect_intent_rules
 from app.db.session import get_db, safe_commit
 from app.models.db_models import (
     DBAIDraft,
@@ -61,6 +63,72 @@ from app.models.db_models import (
 router = APIRouter(dependencies=[Depends(capture_requested_brokerage_context)])
 
 TERMINAL_ESCALATION_STATES = {"resolved", "timed_out", "opt_out_closed"}
+OPEN_ESCALATION_STATES = {"debouncing", "open", "updated"}
+HIGH_NEEDS_REPLY_INTENTS = {
+    "viewing_request",
+    "offer_submission",
+    "payment_plan_query",
+    "price_negotiation",
+    "speak_to_human",
+}
+HIGH_NEEDS_REPLY_TERMS = (
+    "document",
+    "documents",
+    "noc",
+    "mou",
+    "title deed",
+    "transfer",
+    "trustee",
+    "mortgage",
+    "valuation",
+    "service charge",
+    "ejari",
+    "process",
+    "procedure",
+    "seller take",
+    "seller accept",
+    "take aed",
+    "accept aed",
+    "offer",
+    "counter",
+)
+QUESTION_STARTERS = (
+    "can ",
+    "could ",
+    "do ",
+    "does ",
+    "is ",
+    "are ",
+    "what ",
+    "when ",
+    "where ",
+    "how ",
+    "why ",
+    "which ",
+)
+LOW_INTENT_ACK_WORDS = {
+    "ok",
+    "okay",
+    "k",
+    "thanks",
+    "thank",
+    "you",
+    "thx",
+    "ty",
+    "great",
+    "cool",
+    "noted",
+    "sure",
+    "fine",
+    "perfect",
+    "yes",
+    "yep",
+}
+NEEDS_REPLY_PRIORITY_SCORE = {
+    "high": 90,
+    "medium": 50,
+    "low": 10,
+}
 
 
 class AgentDashboardContext(BaseModel):
@@ -277,6 +345,92 @@ def _latest_messages_by_conversation(db: Session, conversation_ids: list[str]) -
     return {message.conversation_id: message for message in latest_rows}
 
 
+def _latest_buyer_messages_by_conversation(db: Session, conversation_ids: list[str]) -> dict[str, DBMessage]:
+    if not conversation_ids:
+        return {}
+
+    ranked_messages = (
+        db.query(
+            DBMessage,
+            func.row_number()
+            .over(
+                partition_by=DBMessage.conversation_id,
+                order_by=DBMessage.timestamp.desc(),
+            )
+            .label("message_rank"),
+        )
+        .filter(
+            DBMessage.conversation_id.in_(conversation_ids),
+            DBMessage.role == "user",
+        )
+        .subquery()
+    )
+    latest_message = aliased(DBMessage, ranked_messages)
+    latest_rows = (
+        db.query(latest_message)
+        .filter(ranked_messages.c.message_rank == 1)
+        .all()
+    )
+    return {message.conversation_id: message for message in latest_rows}
+
+
+def _is_low_intent_acknowledgement(message: str) -> bool:
+    normalized = re.sub(r"[^a-z0-9\s']", " ", message.lower()).strip()
+    words = normalized.split()
+    if not words:
+        return True
+    return all(word in LOW_INTENT_ACK_WORDS for word in words)
+
+
+def _has_question_shape(message: str) -> bool:
+    normalized = message.strip().lower()
+    return "?" in normalized or any(normalized.startswith(starter) for starter in QUESTION_STARTERS)
+
+
+def _needs_reply_signal(message: Optional[DBMessage], has_pending_draft: bool) -> dict[str, str | int]:
+    if has_pending_draft:
+        return {
+            "intent": "draft_ready",
+            "priority": "high",
+            "reason": "draft_ready",
+            "score": NEEDS_REPLY_PRIORITY_SCORE["high"],
+        }
+    if message is None or not message.content:
+        return {
+            "intent": "empty_message",
+            "priority": "low",
+            "reason": "buyer_awaiting",
+            "score": NEEDS_REPLY_PRIORITY_SCORE["low"],
+        }
+
+    detected = detect_intent_rules(message.content)
+    detected_intent = str(detected.get("intent") or "general_enquiry")
+    message_text = message.content.lower()
+
+    if _is_low_intent_acknowledgement(message.content):
+        priority = "low"
+        reason = "acknowledgement"
+    elif detected_intent in HIGH_NEEDS_REPLY_INTENTS:
+        priority = "high"
+        reason = detected_intent
+    elif _has_question_shape(message.content) and any(term in message_text for term in HIGH_NEEDS_REPLY_TERMS):
+        priority = "high"
+        reason = "process_question"
+    elif _has_question_shape(message.content):
+        priority = "medium"
+        reason = "buyer_question"
+    else:
+        priority = "medium"
+        reason = "buyer_awaiting"
+
+    return {
+        "intent": detected_intent,
+        "priority": priority,
+        "reason": reason,
+        "score": NEEDS_REPLY_PRIORITY_SCORE[priority],
+    }
+
+
 def _label_signal(signal: Optional[str]) -> str:
     labels = {
         "firm_offer": "Firm offer",
@@ -476,6 +630,7 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         )
     } if rows else {}
     latest_messages = _latest_messages_by_conversation(db, conversation_ids)
+    latest_buyer_messages = _latest_buyer_messages_by_conversation(db, conversation_ids)
     message_counts = dict(
         db.query(DBMessage.conversation_id, func.count(DBMessage.id))
         .filter(DBMessage.conversation_id.in_(conversation_ids))
@@ -492,7 +647,19 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         db.query(DBEscalationThread.conversation_id, func.count(DBEscalationThread.thread_id))
         .filter(
             DBEscalationThread.conversation_id.in_(conversation_ids),
-            DBEscalationThread.state.in_(["debouncing", "open", "updated"]),
+            DBEscalationThread.state.in_(OPEN_ESCALATION_STATES),
+        )
+        .group_by(DBEscalationThread.conversation_id)
+        .all()
+    ) if conversation_ids else {}
+    open_thread_latest_buyer_at = dict(
+        db.query(
+            DBEscalationThread.conversation_id,
+            func.max(DBEscalationThread.last_buyer_message_at),
+        )
+        .filter(
+            DBEscalationThread.conversation_id.in_(conversation_ids),
+            DBEscalationThread.state.in_(OPEN_ESCALATION_STATES),
         )
         .group_by(DBEscalationThread.conversation_id)
         .all()
@@ -578,31 +745,46 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         listing = conv.listing
         spa = (listing.spa_data or {}) if listing else {}
         latest = latest_messages.get(conv.conversation_id)
+        latest_buyer = latest_buyer_messages.get(conv.conversation_id)
         summary = conv.ai_summary or {}
         buyer_at = last_buyer_message_at.get(conv.conversation_id)
         agent_at = last_agent_response_at.get(conv.conversation_id)
         has_pending_draft = conv.conversation_id in pending_draft_convs
         is_suppressed = bool(conv.buyer_phone) and conv.buyer_phone in suppressed_phones
         terminal_at = terminal_thread_completed_at.get(conv.conversation_id)
+        open_thread_buyer_at = open_thread_latest_buyer_at.get(conv.conversation_id)
         terminal_covers_latest_buyer = bool(
             buyer_at is not None
             and terminal_at is not None
             and terminal_at >= buyer_at
+        )
+        open_thread_covers_latest_buyer = bool(
+            buyer_at is not None
+            and open_thread_buyer_at is not None
+            and open_thread_buyer_at >= buyer_at
+        )
+        reply_signal = _needs_reply_signal(latest_buyer, has_pending_draft)
+        low_priority_open_escalation_duplicate = bool(
+            open_thread_covers_latest_buyer
+            and reply_signal["priority"] == "low"
+            and not has_pending_draft
         )
         needs_reply = bool(
             buyer_at is not None
             and (agent_at is None or buyer_at > agent_at)
             and not terminal_covers_latest_buyer
             and not is_suppressed
+            and not low_priority_open_escalation_duplicate
         )
         if not needs_reply:
-            needs_reply_reason = None
+            if low_priority_open_escalation_duplicate:
+                needs_reply_reason = "covered_by_open_escalation"
+            else:
+                needs_reply_reason = None
         elif has_pending_draft:
             needs_reply_reason = "draft_ready"
-        elif int(open_thread_counts.get(conv.conversation_id, 0)) > 0:
-            needs_reply_reason = "escalation_open"
         else:
-            needs_reply_reason = "buyer_awaiting"
+            needs_reply_reason = reply_signal["reason"]
         items.append({
             "conversation_id": conv.conversation_id,
             "buyer": {
@@ -638,15 +820,19 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
             ),
             "needs_reply": needs_reply,
             "needs_reply_reason": needs_reply_reason,
+            "needs_reply_intent": reply_signal["intent"],
+            "needs_reply_priority": reply_signal["priority"],
+            "needs_reply_priority_score": reply_signal["score"],
             "has_pending_draft": has_pending_draft,
             "last_buyer_message_at": _iso(buyer_at),
             "last_agent_response_at": _iso(agent_at),
             "created_at": _iso(conv.created_at),
             "updated_at": _iso(conv.updated_at),
         })
-    # Rank needs_reply threads first; preserve the existing recency order within
-    # each group (Python's sort is stable).
-    items.sort(key=lambda item: 0 if item["needs_reply"] else 1)
+    items.sort(key=lambda item: (
+        0 if item["needs_reply"] else 1,
+        -int(item["needs_reply_priority_score"] or 0),
+    ))
     return items
 
 

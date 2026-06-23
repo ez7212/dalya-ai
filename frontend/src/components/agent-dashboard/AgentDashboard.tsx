@@ -298,16 +298,11 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 }
 
 function sortNeedsReply(items: ConversationInboxItem[]): ConversationInboxItem[] {
-  // The server now provides an authoritative `needs_reply` signal (DAL-170E5),
-  // derived from last buyer-vs-agent message timestamps and opt-out state, and
-  // already ranks needs_reply threads first. We re-assert that ordering here so
-  // it survives any client-side reshuffling, then fall back to a lightweight
-  // urgency heuristic (open escalations > offers > high interest) as a tiebreak.
   function score(item: ConversationInboxItem): number {
-    let value = item.needsReply ? 1000 : 0
-    if (item.openEscalationCount > 0) value += 100 + item.openEscalationCount
-    if (item.offerCount > 0) value += 40 + item.offerCount
-    if ((item.interestLevel ?? '').toLowerCase() === 'high') value += 10
+    let value = item.needsReply ? 1000 + Number(item.needsReplyPriorityScore ?? 0) : 0
+    if (item.openEscalationCount > 0) value += Math.min(item.openEscalationCount, 3)
+    if (item.offerCount > 0) value += Math.min(item.offerCount, 3)
+    if ((item.interestLevel ?? '').toLowerCase() === 'high') value += 1
     return value
   }
   return [...items].sort((a, b) => score(b) - score(a))
@@ -488,6 +483,7 @@ interface ApiConversation {
   readonly open_escalation_count?: number | null
   readonly needs_reply?: boolean | null
   readonly needs_reply_reason?: string | null
+  readonly needs_reply_priority_score?: number | null
   readonly has_pending_draft?: boolean | null
   readonly last_buyer_message_at?: string | null
   readonly last_agent_response_at?: string | null
@@ -742,6 +738,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     interestLevel: conversation.interest_level,
     needsReply: Boolean(conversation.needs_reply),
     needsReplyReason: conversation.needs_reply_reason ?? null,
+    needsReplyPriorityScore: conversation.needs_reply_priority_score ?? null,
     hasPendingDraft: Boolean(conversation.has_pending_draft),
     lastBuyerMessageAt: formatShortTime(conversation.last_buyer_message_at),
     lastBuyerMessageAtRaw: conversation.last_buyer_message_at ?? null,
