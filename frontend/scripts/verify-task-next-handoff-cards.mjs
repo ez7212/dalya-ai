@@ -86,7 +86,21 @@ function dashboardFixture() {
         },
       },
     ],
-    morningQueue: [],
+    morningQueue: [
+      {
+        id: 'task-follow-up',
+        source: 'task',
+        priority: 'high',
+        title: 'Call seller after viewing',
+        context: 'Buyer wants seller feedback before deciding.',
+        buyerName: 'Nadia Ali',
+        listingName: 'Creek Harbour 2BR',
+        nextAction: 'Call seller after viewing',
+        due: '09:30',
+        dueAt: '2026-06-22T09:30:00+04:00',
+        createdAt: '2026-06-21T16:00:00+04:00',
+      },
+    ],
     escalationInbox: [escalationFixture()],
     drafts: { replyDrafts: [], outreachDrafts: [] },
     campaignSnapshot: { headline: '', activeCampaigns: 0, newLeads: 0, qualifiedLeads: 0, responseRate: '0%', costPerQualifiedLead: 'AED 0', campaigns: [] },
@@ -165,6 +179,7 @@ async function runGreenChecks() {
     const data = dashboardFixture()
     const queue = buildTodayQueue({ data, needsReply: data.conversationInbox, now: new Date('2026-06-22T10:00:00+04:00') })
     const escalationItem = queue.find((item) => item.kind === 'escalation')
+    const taskItem = queue.find((item) => item.kind === 'overdue_task')
     const needsReplyItem = queue.find((item) => item.kind === 'needs_reply')
 
     const queueMarkup = renderToStaticMarkup(createElement(TodayQueue, {
@@ -182,12 +197,17 @@ async function runGreenChecks() {
     const needsReplyCardMarkup = needsReplyItem
       ? renderToStaticMarkup(createElement(QueueHandoffCard, { item: needsReplyItem }))
       : ''
-    const renderedText = textFromMarkup(`${queueMarkup} ${escalationCardMarkup} ${needsReplyCardMarkup}`)
+    const taskCardMarkup = taskItem
+      ? renderToStaticMarkup(createElement(QueueHandoffCard, { item: taskItem }))
+      : ''
+    const taskCardText = textFromMarkup(taskCardMarkup)
+    const renderedText = textFromMarkup(`${queueMarkup} ${escalationCardMarkup} ${needsReplyCardMarkup} ${taskCardMarkup}`)
     const labels = interactiveLabels(queueMarkup)
     const forbiddenAutonomousLabels = new Set(['Open', 'Send', 'Send reply', 'Counter', 'Counter offer', 'Accept offer', 'Submit offer', 'Auto-send'])
 
     return [
       assertCheck(Boolean(escalationItem), 'fixture builds an escalation queue item'),
+      assertCheck(Boolean(taskItem), 'fixture builds an overdue task queue item'),
       assertCheck(Boolean(needsReplyItem), 'fixture builds a needs-reply offer queue item'),
       assertCheck(escalationItem?.href === '/agent/escalations?thread=esc-offer', 'escalation queue item has exact route href', { href: escalationItem?.href }),
       assertCheck(needsReplyItem?.href === '/agent/conversations/conv-offer', 'needs-reply queue item has exact route href', { href: needsReplyItem?.href }),
@@ -217,6 +237,13 @@ async function runGreenChecks() {
       assertCheck(queueMarkup.includes('href="/agent/escalations?thread=esc-offer"'), 'rendered queue includes exact escalation href'),
       assertCheck(queueMarkup.includes('href="/agent/conversations/conv-offer"'), 'rendered queue includes exact conversation href'),
       assertCheck(escalationCardMarkup.includes('href="/agent/escalations?thread=esc-offer"'), 'rendered escalation panel includes exact thread href'),
+      assertCheck(includesAll(taskCardText, [
+        'Buyer: Nadia Ali',
+        'Listing: Creek Harbour 2BR',
+        'Suggested action',
+        'Call seller after viewing',
+      ]), 'rendered task handoff uses task buyer/listing fields'),
+      assertCheck(!taskCardText.includes('Buyer: Call seller after viewing') && !taskCardText.includes('Listing: Nadia Ali'), 'rendered task handoff does not swap task title and buyer'),
       assertCheck(!labels.some((label) => forbiddenAutonomousLabels.has(label)), 'rendered action/link labels do not introduce generic or autonomous send behavior', { labels }),
     ]
   } finally {

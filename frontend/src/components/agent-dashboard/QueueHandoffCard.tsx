@@ -131,11 +131,11 @@ function queueIntent(item: TodayQueueItem): string {
 
 function baseKnownFields(item: TodayQueueItem): readonly string[] {
   const listing = listingLabel(
-    item.escalation?.listingName ?? item.conversation?.listingName ?? item.draft?.listingName ?? item.subject,
+    item.escalation?.listingName ?? item.conversation?.listingName ?? item.draft?.listingName ?? item.task?.listingName ?? item.subject,
     item.escalation?.unitNumber ?? item.conversation?.unitNumber ?? item.draft?.unitNumber,
   )
   return uniqueList([
-    item.title ? `Buyer: ${item.title}` : null,
+    item.task?.buyerName ? `Buyer: ${item.task.buyerName}` : item.title ? `Buyer: ${item.title}` : null,
     listing ? `Listing: ${listing}` : null,
     item.buyer?.budget ? `Budget: ${item.buyer.budget}` : null,
     item.timestampLabel ? `Last signal: ${item.timestampLabel}` : null,
