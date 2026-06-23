@@ -701,7 +701,7 @@ def audit_child_candidate(name: str) -> dict[str, Any]:
 
 def _human_print(report: dict[str, Any]) -> None:
     print("DAL-170D Tenant Constraint Preflight")
-    print("====================================")
+    print("------------------------------------")
     print(f"Parent candidates: {report['summary']['parent_candidates']}")
     print(f"Child candidates: {report['summary']['child_candidates']}")
     print(f"First-FK safe now: {report['summary']['safe_first_fk_count']}")

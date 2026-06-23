@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-23 (Task 9B bounded DealReadiness ranking input)*
+*Last updated: 2026-06-23 (Task 13 next MVP readiness closeout)*
 
 ## Mission
 
@@ -62,11 +62,11 @@ The current MVP is still framed by four product blocks, but `GOAL_SPEC_0609` now
 
 Full backlog with platform-infrastructure blockers in [`BACKLOG.md`](./BACKLOG.md).
 
-### MVP re-review readiness closeout (2026-06-22)
+### Next MVP readiness closeout (2026-06-23)
 
-The June 2026 MVP re-review remediation wave is closed through Task 13. Internal demo is green. Friendly pilot is yellow/conditional and limited to synthetic/internal data, Twilio-only transport, manual review, and the pilot readiness runbook. External brokerage pilot and production/live data remain red/blocked until the separate Task 10b app-role/RLS approval gate clears with Eric's explicit target DB fingerprint, rollback artifact, and maintenance window.
+The next-MVP readiness remediation wave is closed through Tasks 1-12 plus 9A/9B and Task 13. Internal demo is green because the route/fallback/security/chatbot gates are merged and have final verification evidence. Friendly pilot is yellow/conditional and limited to synthetic/internal data, Twilio-only transport, manual review, explicit CORS allowlists, manual WhatsApp fallback, and the pilot readiness runbook. External brokerage real-customer use and production/live data remain red/blocked until the separate Task 10b app-role/RLS approval gate clears with Eric's explicit target DB fingerprint, rollback artifact, and maintenance window.
 
-Public evidence is in [`reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md`](./reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md). Tracked visual artifacts are under [`reports/dalya-mvp-rereview-evidence-2026-06-22/`](./reports/dalya-mvp-rereview-evidence-2026-06-22/). Task 10b was not executed in this plan.
+Public evidence is in [`reports/dalya-next-mvp-readiness-closeout-2026-06-23.md`](./reports/dalya-next-mvp-readiness-closeout-2026-06-23.md), with the older June 22 re-review pack preserved at [`reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md`](./reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md). Final local QA artifacts are under `.omo/evidence/task-13-*` and `.omo/evidence/final-next-mvp-*`. Task 10b was not executed in this plan.
 
 ### Final MVP completion order
 

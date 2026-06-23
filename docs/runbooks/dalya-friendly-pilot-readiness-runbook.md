@@ -1,7 +1,8 @@
 # Dalya Friendly Pilot Readiness Runbook
 
 Date: 2026-06-22
-Scope: MVP re-review readiness Task 11.
+Updated: 2026-06-23
+Scope: Next MVP readiness closeout Task 13.
 
 This runbook defines the only allowed friendly-pilot posture after Tasks 3-9 and
 10a. It is an operator checklist, not a launch claim.
@@ -11,7 +12,7 @@ This runbook defines the only allowed friendly-pilot posture after Tasks 3-9 and
 | Target | Status | Reason |
 | --- | --- | --- |
 | Internal demo | Green | P0 blockers from Tasks 3, 4, and 5 are closed; agent workspace Tasks 8 and 9 are merged. |
-| Friendly pilot with synthetic/internal data | Yellow/allowed by operator | Allowed only inside the constraints below, with Twilio-only transport, manual review, and RLS/app-role risk accepted for synthetic/internal data only. |
+| Friendly pilot with synthetic/internal data | Yellow/allowed by operator | Allowed only inside the constraints below, with Twilio-only transport, explicit CORS origins, manual review, manual fallback, and RLS/app-role risk accepted for synthetic/internal data only. |
 | External brokerage pilot with real customer data | Blocked | Requires separate approval for the data class, verified provider posture, and production RLS/app-role gate 10b. |
 | Production/live data | Blocked | Requires Task 10b approval and evidence: target DB fingerprint, rollback artifact, maintenance window, app-role smoke tests, and post-change tenant isolation proof. |
 
@@ -61,6 +62,18 @@ Pilot transport is Twilio-only.
 - The simulated transport is local/test only.
 - 360dialog/BSP is not an allowed pilot path. Do not set
   `MESSAGING_TRANSPORT=dialog360` for this pilot.
+- Telegram is removed as an active runtime integration. Do not configure or
+  expect Telegram webhooks, Telegram alert sends, or Telegram reply handling.
+  Historical Telegram database artifacts may remain only for schema history.
+
+## CORS Posture
+
+- Live-class environments must use explicit HTTP/HTTPS origins through
+  `DALYA_CORS_ORIGINS`.
+- Wildcard origins are not allowed with credentialed browser requests.
+- If the approved pilot dashboard origin is not listed in the operator handoff,
+  treat browser access as not approved until Eric/operator supplies the exact
+  origin.
 
 ## Manual Review Requirements
 
@@ -73,6 +86,9 @@ Pilot transport is Twilio-only.
   approved agent/operator during the pilot.
 - Any unexpected WhatsApp behavior, claim-safety issue, or tenant/data concern
   triggers the pause procedure below.
+- Manual fallback is part of the allowed pilot posture: if Dalya is paused or a
+  provider/API path is uncertain, agents handle the buyer directly in WhatsApp
+  until restoration is explicitly approved.
 
 ## RLS And App-Role Caveat
 
@@ -118,18 +134,26 @@ Rollback for product readiness is a process rollback, not a database migration:
 
 Before calling the synthetic/internal friendly pilot allowed, confirm:
 
-- Task 3: legacy listing routes gated or removed; unauthenticated access denied.
-- Task 4: buyer-facing off-plan finance/process claims gated through Verified
-  Facts or fail-closed agent-confirmation language.
-- Task 5: authenticated dashboard empty states return real empty data with
-  `sample_data: false`.
-- Task 6: staging and preview treated as live-class security environments.
-- Task 7: WhatsApp pilot transport documented as Twilio-only; 360dialog/BSP
-  remains blocked.
-- Task 8: DealReadiness reasons surfaced to agents without ranking changes.
-- Task 9: `/agent` uses one ranked Today Queue and pilot-focused navigation.
-- Task 10a: RLS/app-role posture recorded as synthetic/internal-only until the
-  Task 10b gate.
+- Task 1: Today Queue escalation links route to the live escalation inbox.
+- Task 2: authenticated dashboard fetch failure shows error/retry, not sample
+  operational rows.
+- Task 3: Telegram runtime is removed; Twilio/Agents AI paths remain.
+- Task 4: CORS uses explicit origins in live-class environments.
+- Task 5: seller-visible lead payloads anonymize buyer identity.
+- Task 6: buyer-facing off-plan finance/process claims are gated through
+  Verified Facts or fail-closed agent-confirmation language.
+- Task 7: confirmed closing-cost facts are seeded without promoting draft-only
+  or listing-specific claims to direct buyer answers.
+- Task 8: current chatbot regression evidence exists and expects no Telegram
+  alert path.
+- Task 9A/9B: DealReadiness was calibrated first and then added only as a
+  bounded ranking input.
+- Task 10: `needs_reply` priority distinguishes acknowledgements from concrete
+  buyer questions.
+- Task 11: queue/escalation handoff cards show exact next actions.
+- Task 12: first-run/error states guide safe synthetic/internal activation and
+  manual fallback without fake live rows.
+- Task 13: final evidence pack and readiness verdict are published.
 - Task 10b: not executed under this plan. It remains required before
   production/live data or external brokerage real-customer readiness.
 
@@ -140,6 +164,7 @@ Eric/operator must confirm all of the following before running the pilot:
 - The pilot users and WhatsApp numbers are explicitly approved.
 - The data class is synthetic/internal only.
 - Agents know manual review and manual WhatsApp fallback expectations.
+- The exact dashboard origin is included in `DALYA_CORS_ORIGINS`.
 - The pause owner can disable the Twilio webhook URL or revoke the provider
   credential.
-- The final Task 12 evidence pack does not contain an open P0 blocker.
+- The final Task 13 evidence pack does not contain an open P0 blocker.
