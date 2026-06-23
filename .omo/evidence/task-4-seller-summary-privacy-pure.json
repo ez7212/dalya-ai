@@ -1,0 +1,34 @@
+{
+  "pure_first_name_redaction": true,
+  "pure_phone_redaction": true,
+  "pure_recursive_preservation": true,
+  "redacted_output": {
+    "buyer_context": {
+      "one_line": "[redacted buyer] wants a viewing tomorrow [redacted phone]"
+    },
+    "summary": {
+      "details": [
+        "[redacted buyer] asked for documents via [redacted email]",
+        {
+          "raw": "[redacted whatsapp]; wants a viewing tomorrow"
+        }
+      ],
+      "one_line": "[redacted buyer] wants a viewing tomorrow [redacted phone]"
+    },
+    "topics": [
+      {
+        "raw": "[redacted buyer] wants a viewing tomorrow [redacted phone]"
+      },
+      {
+        "[redacted buyer] [redacted phone]": "wants a viewing tomorrow"
+      },
+      [
+        "[redacted buyer] asked to view at [redacted phone]"
+      ]
+    ]
+  },
+  "safe_context_preserved": true,
+  "scenario": "pure seller summary sanitizer redacts first-name, phones, email, WhatsApp, conversation IDs, nested dict keys, and recursive nested values without app DB imports",
+  "seeded_secrets_absent": true,
+  "status": "PASS"
+}

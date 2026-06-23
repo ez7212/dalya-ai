@@ -1,0 +1,13 @@
+{
+  "agent_identity_preserved": false,
+  "agent_status_code": -1,
+  "forbidden_response_leak_free": false,
+  "forbidden_runtime_blocker": "missing_module:dotenv",
+  "forbidden_status_code": -1,
+  "safe_context_preserved": false,
+  "seller_redaction_placeholders_present": [],
+  "seller_status_code": -1,
+  "status": "BLOCKED",
+  "stored_conversation_identity_preserved": false,
+  "stored_summary_unchanged": false
+}

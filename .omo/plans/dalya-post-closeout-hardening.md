@@ -94,7 +94,7 @@ Your next move: approve this plan for `$omo:start-work`, or ask for a high-accur
   Merge guard: verifier/evidence/docs only; no product behavior change; no production/staging env reads; no hidden dev server left running; no dependency/lockfile edits.
   Commit: Y | `test(frontend): capture final surface QA`
 
-- [ ] 4. Seller conversation summary PII.
+- [x] 4. Seller conversation summary PII.
   What to do / Must NOT do: Sanitize seller-visible `ai_summary` values returned by `GET /api/v1/seller/listings/{listing_id}/conversations`. Redact buyer names, phone numbers, WhatsApp handles, direct conversation IDs, emails, and direct identifiers from structured fields such as `topics`, `key_question`, `next_step_hint`, `buyer_context`, `_fallback`, and any string/list/dict nested under `summary`. Preserve the existing anonymized `buyer_label` numbering and agent-facing conversation summaries. Sanitize only the seller-visible response serialization copy. Do not mutate stored `ai_summary`, conversation rows, seller `/leads` aggregation already anonymized, agent dashboard/inbox summaries, or raw stored conversation data.
   Parallelization: Wave 2 | Blocked by: 1, 2, 3 | Blocks: 5, final
   Branch/PR: `codex/sanitize-seller-conversation-summary`; public PR title `Sanitize seller conversation summaries`.

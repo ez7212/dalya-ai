@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-23 (DAL-198 verification closeout cleanup)*
+*Last updated: 2026-06-23 (DAL-201 seller summary privacy hardening)*
 
 ## Mission
 
@@ -67,6 +67,8 @@ Full backlog with platform-infrastructure blockers in [`BACKLOG.md`](./BACKLOG.m
 The next-MVP readiness remediation wave is closed through Tasks 1-12 plus 9A/9B and Task 13. Internal demo is green because the route/fallback/security/chatbot gates are merged and have final verification evidence. Friendly pilot is yellow/conditional and limited to synthetic/internal data, Twilio-only transport, manual review, explicit CORS allowlists, manual WhatsApp fallback, and the pilot readiness runbook. External brokerage real-customer use and production/live data remain red/blocked until the separate Task 10b app-role/RLS approval gate clears with Eric's explicit target DB fingerprint, rollback artifact, and maintenance window.
 
 Public evidence is in [`reports/dalya-next-mvp-readiness-closeout-2026-06-23.md`](./reports/dalya-next-mvp-readiness-closeout-2026-06-23.md), with the older June 22 re-review pack preserved at [`reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md`](./reports/dalya-mvp-rereview-evidence-pack-2026-06-22.md). Final local QA artifacts are under `.omo/evidence/task-13-*` and `.omo/evidence/final-next-mvp-*`. DAL-198 tightened closeout verification by making F1/F2/F4 PASS and F3 BLOCKED explicit, documenting PR #67 merge `ddae7bb231e4e5c2d3f3353010d6113bd54d0aab`, and requiring rationale allowlists for historical audit/migrate helper-script edits. Task 10b was not executed in this plan.
+
+DAL-201 hardens the archived seller conversation-summary API by redacting seller-visible structured `ai_summary` response copies for full buyer names, meaningful buyer-name tokens such as first-name-only mentions, UAE international and local `05x` phones, non-UAE plus-country phones, WhatsApp handles, emails, and direct conversation identifiers. Allowed seller summary fields, including nested `summary`, `topics`, `key_question`, `next_step_hint`, `buyer_context`, and `_fallback` dict/list/string values, are sanitized recursively so safe context is preserved; nested dict keys and values are both redacted. Unknown top-level seller-visible summary keys are dropped so prompt/model-injected PII cannot expose through JSON keys. The stored summaries, raw conversation rows, seller `/leads` aggregation, and agent-facing dashboard identity payloads are intentionally preserved.
 
 ### Final MVP completion order
 

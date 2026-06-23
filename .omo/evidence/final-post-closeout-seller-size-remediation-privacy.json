@@ -1,0 +1,19 @@
+{
+  "agent_identity_preserved": false,
+  "agent_status_code": -1,
+  "dotenv_reads_blocked": true,
+  "failed_before_app_db_import": true,
+  "forbidden_response_leak_free": false,
+  "forbidden_runtime_blocker": "missing_module:sqlalchemy",
+  "forbidden_status_code": -1,
+  "isolated_sqlite_database": null,
+  "pure_first_name_redaction": true,
+  "pure_phone_redaction": true,
+  "pure_recursive_preservation": true,
+  "safe_context_preserved": false,
+  "seller_redaction_placeholders_present": [],
+  "seller_status_code": -1,
+  "status": "BLOCKED",
+  "stored_conversation_identity_preserved": false,
+  "stored_summary_unchanged": false
+}
