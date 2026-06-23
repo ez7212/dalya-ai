@@ -143,6 +143,7 @@ function buildNeedsReplyItems(items: readonly ConversationInboxItem[]): RankedQu
       href: `/agent/conversations/${item.id}`,
       timestampLabel: item.lastSeen,
       lastBuyerMessageAt: item.lastBuyerMessageAtRaw ?? item.lastBuyerMessageAt,
+      urgencyScore: item.needsReplyPriorityScore ?? null,
       readiness: item.readiness ?? null,
       conversation: item,
     }))
@@ -211,7 +212,10 @@ function compareRankedQueueItems(left: RankedQueueItem, right: RankedQueueItem):
   const bucketDelta = left.bucket - right.bucket
   if (bucketDelta !== 0) return bucketDelta
 
-  if (left.kind === 'hot_buyer' && right.kind === 'hot_buyer') {
+  if (
+    (left.kind === 'hot_buyer' && right.kind === 'hot_buyer') ||
+    (left.kind === 'needs_reply' && right.kind === 'needs_reply')
+  ) {
     const urgencyDelta = Number(right.urgencyScore ?? 0) - Number(left.urgencyScore ?? 0)
     if (urgencyDelta !== 0) return urgencyDelta
   }

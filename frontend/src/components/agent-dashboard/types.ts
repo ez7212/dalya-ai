@@ -115,6 +115,7 @@ export interface ConversationInboxItem {
   interestLevel?: string | null
   needsReply: boolean
   needsReplyReason?: string | null
+  needsReplyPriorityScore?: number | null
   hasPendingDraft?: boolean
   lastBuyerMessageAt?: string | null
   lastBuyerMessageAtRaw?: string | null
