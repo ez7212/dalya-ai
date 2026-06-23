@@ -1,0 +1,325 @@
+{
+  "scenario": "F3 final next MVP surface QA",
+  "invocation": "cd frontend && node scripts/verify-next-mvp-final-surface.mjs --safe-temp-workdir <ENV:SAFE_TEMP_WORKDIR> --base-url http://127.0.0.1:3000 --output-dir ../.omo/evidence/task-3-final-surface",
+  "baseUrl": "http://127.0.0.1:3000",
+  "serverCwd": "<ENV:SAFE_TEMP_WORKDIR>",
+  "envSafetyMode": "safe-temp-workdir",
+  "envSummary": {
+    "mode": "safe-temp-workdir",
+    "valuePolicy": "names-and-categories-only; no environment values recorded",
+    "variables": [
+      {
+        "name": "PATH",
+        "category": "process-runtime",
+        "valueRecorded": false
+      },
+      {
+        "name": "HOME",
+        "category": "process-runtime",
+        "valueRecorded": false
+      },
+      {
+        "name": "TMPDIR",
+        "category": "process-runtime",
+        "valueRecorded": false
+      },
+      {
+        "name": "USER",
+        "category": "process-runtime",
+        "valueRecorded": false
+      },
+      {
+        "name": "LOGNAME",
+        "category": "process-runtime",
+        "valueRecorded": false
+      },
+      {
+        "name": "NEXT_TELEMETRY_DISABLED",
+        "category": "explicit-safe-control",
+        "valueRecorded": false
+      },
+      {
+        "name": "NEXT_PUBLIC_SUPABASE_URL",
+        "category": "local-synthetic-supabase-stub",
+        "valueRecorded": false
+      },
+      {
+        "name": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "category": "explicit-synthetic-public-key",
+        "valueRecorded": false
+      },
+      {
+        "name": "npm_config_cache",
+        "category": "safe-temp-cache-path",
+        "valueRecorded": false
+      }
+    ]
+  },
+  "envScan": {
+    "fixtureFrontendRoot": "<FRONTEND_ROOT>",
+    "fixtureRootNextEnvFiles": [
+      ".env.example",
+      ".env.local"
+    ],
+    "fixtureEnvFiles": [
+      ".env.example",
+      ".env.local"
+    ],
+    "safeTempValidation": {
+      "ok": true,
+      "failures": [],
+      "safeTempWorkdir": "<ENV:SAFE_TEMP_WORKDIR>",
+      "parentReal": "<TEMP_ROOT>",
+      "expectedTempRoots": [
+        "<ENV:TMPDIR>",
+        "<TEMP_ROOT>"
+      ],
+      "requiredNamePrefixes": [
+        "dalya-final-surface-",
+        "dalya-next-mvp-final-surface-"
+      ],
+      "existingPath": false,
+      "existingEntryCount": 0,
+      "verifierMarker": ".dalya-final-surface-verifier-temp"
+    },
+    "staging": {
+      "sourceRoot": "<FRONTEND_ROOT>",
+      "safeTempWorkdir": "<ENV:SAFE_TEMP_WORKDIR>",
+      "verifierMarker": ".dalya-final-surface-verifier-temp",
+      "copiedEntries": [
+        "src",
+        "public",
+        "scripts",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "tailwind.config.ts",
+        "postcss.config.mjs",
+        "eslint.config.mjs",
+        "next.config.ts"
+      ],
+      "linkedEntries": [
+        "node_modules"
+      ],
+      "skippedEntries": [
+        ".env*",
+        ".next",
+        ".turbo",
+        ".cache",
+        "coverage",
+        "playwright-report",
+        "test-results",
+        "tsconfig.tsbuildinfo",
+        "next-env.d.ts"
+      ],
+      "sourceEnvFiles": [
+        ".env.example",
+        ".env.local"
+      ],
+      "safeTempEnvFiles": []
+    }
+  },
+  "domAssertions": [
+    {
+      "label": "/agent renders authenticated workspace header",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "Today Queue focused escalation text is visible",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "/agent surface does not render fake fallback operational rows",
+      "passed": true,
+      "details": {
+        "leakedTexts": []
+      }
+    },
+    {
+      "label": "dashboard-fetch-failure exposes retry action",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "dashboard-fetch-failure exposes manual fallback text",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "dashboard-fetch-failure warns against demo data as live activity",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "dashboard-fetch-failure does not render fake fallback operational rows",
+      "passed": true,
+      "details": {
+        "leakedTexts": []
+      }
+    },
+    {
+      "label": "escalation reply affordance label is visible",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "escalation reply placeholder gives buyer-safe instruction",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "empty escalation reply keeps Send to buyer disabled",
+      "passed": true,
+      "details": {
+        "reason": "reply body is empty"
+      }
+    },
+    {
+      "label": "selected escalation question text is visible",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "escalation reply affordance does not render fake fallback operational rows",
+      "passed": true,
+      "details": {
+        "leakedTexts": []
+      }
+    },
+    {
+      "label": "first-run empty state shows safe activation headline",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run empty state requires safe synthetic/internal activation",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run empty state keeps real customer data blocked",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run empty state does not render fake fallback operational rows",
+      "passed": true,
+      "details": {
+        "leakedTexts": []
+      }
+    },
+    {
+      "label": "first-run error state preserves safe activation headline",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run error state shows synthetic refresh failure",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run error state keeps safe synthetic/internal activation visible",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run error state keeps real customer data blocked",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "first-run error state does not render fake fallback operational rows",
+      "passed": true,
+      "details": {
+        "leakedTexts": []
+      }
+    }
+  ],
+  "screenshotPaths": [
+    "<ENV:OUTPUT_DIR>/agent.png",
+    "<ENV:OUTPUT_DIR>/today-queue-escalation-focus.png",
+    "<ENV:OUTPUT_DIR>/dashboard-fetch-failure.png",
+    "<ENV:OUTPUT_DIR>/escalation-reply-affordance.png",
+    "<ENV:OUTPUT_DIR>/first-run-empty-state.png",
+    "<ENV:OUTPUT_DIR>/first-run-error-state.png"
+  ],
+  "captures": [
+    {
+      "name": "agent",
+      "path": "<ENV:OUTPUT_DIR>/agent.png",
+      "route": "/agent",
+      "captureKind": "full-page",
+      "assertions": [
+        "Good morning, Leila Agent",
+        "Can we confirm access before the 11 AM viewing?"
+      ]
+    },
+    {
+      "name": "today-queue-escalation-focus",
+      "path": "<ENV:OUTPUT_DIR>/today-queue-escalation-focus.png",
+      "route": "/agent",
+      "captureKind": "viewport-focused",
+      "assertions": [
+        "Can we confirm access before the 11 AM viewing?"
+      ]
+    },
+    {
+      "name": "dashboard-fetch-failure",
+      "path": "<ENV:OUTPUT_DIR>/dashboard-fetch-failure.png",
+      "route": "/agent",
+      "captureKind": "full-page",
+      "assertions": [
+        "Retry",
+        "Manual fallback",
+        "do not use demo data as live activity"
+      ]
+    },
+    {
+      "name": "escalation-reply-affordance",
+      "path": "<ENV:OUTPUT_DIR>/escalation-reply-affordance.png",
+      "route": "/agent/escalations?thread=esc-critical-1",
+      "captureKind": "full-page",
+      "assertions": [
+        "Reply to buyer",
+        "Write the buyer-safe answer",
+        "Send to buyer disabled because reply body is empty"
+      ]
+    },
+    {
+      "name": "first-run-empty-state",
+      "path": "<ENV:OUTPUT_DIR>/first-run-empty-state.png",
+      "route": "/agent",
+      "captureKind": "full-page",
+      "assertions": [
+        "Start with an internal pilot rehearsal",
+        "synthetic/internal records",
+        "Real customer data stays blocked"
+      ]
+    },
+    {
+      "name": "first-run-error-state",
+      "path": "<ENV:OUTPUT_DIR>/first-run-error-state.png",
+      "route": "/agent",
+      "captureKind": "full-page",
+      "assertions": [
+        "Start with an internal pilot rehearsal",
+        "Refresh failed.",
+        "synthetic/internal records",
+        "Real customer data stays blocked"
+      ]
+    }
+  ],
+  "cleanup": {
+    "server": "server exited after SIGTERM",
+    "supabaseStub": "closed",
+    "safeTempWorkdir": "removed <ENV:SAFE_TEMP_WORKDIR>"
+  },
+  "passed": true,
+  "transcriptValuePolicy": {
+    "environmentValues": "redacted before transcript write",
+    "paths": "repo, temp, cache, and environment-derived paths are tokenized when recorded"
+  }
+}
