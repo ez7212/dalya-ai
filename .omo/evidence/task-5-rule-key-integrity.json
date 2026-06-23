@@ -1,0 +1,109 @@
+{
+  "generated_at": "2026-06-23T17:43:02.507992+00:00",
+  "passed": true,
+  "rule_count": 10,
+  "non_null_fact_keys": [
+    "dld_registration_fee_pct",
+    "generic_noc_fee",
+    "off_plan_mortgage_ltv_policy",
+    "off_plan_payment_process_mechanics",
+    "seller_original_purchase_price",
+    "specific_noc_transfer_timing"
+  ],
+  "seed_present_rule_keys": [
+    "dld_registration_fee_pct",
+    "seller_original_purchase_price",
+    "specific_noc_transfer_timing"
+  ],
+  "expected_missing_output_gate_fact_keys": {
+    "off_plan_mortgage_ltv_policy": {
+      "reason": "Mortgage and LTV terms vary by buyer, bank, and listing; output claims must defer until the agent confirms deal-specific finance context.",
+      "runtime_policy": "defer_only"
+    },
+    "generic_noc_fee": {
+      "reason": "Developer NOC fees are transaction-specific and intentionally absent from direct seed facts; generic buyer-facing amounts must defer to the agent.",
+      "runtime_policy": "defer_only"
+    },
+    "off_plan_payment_process_mechanics": {
+      "reason": "Paid-to-date, seller cash, and developer-balance mechanics are listing-specific payment assertions that must defer unless grounded by transaction documents.",
+      "runtime_policy": "defer_only"
+    }
+  },
+  "mapper_reported_missing_keys": [
+    "off_plan_mortgage_ltv_policy",
+    "generic_noc_fee",
+    "off_plan_payment_process_mechanics",
+    "seller_original_purchase_price"
+  ],
+  "mapper_discrepancies_verified_by_loader": [
+    "seller_original_purchase_price"
+  ],
+  "fact_key_none_topics": [
+    "generic_fee_amount",
+    "legal_tax_advice",
+    "tenancy_legal_process"
+  ],
+  "rules": [
+    {
+      "topic": "dld_fee",
+      "fact_key": "dld_registration_fee_pct",
+      "seed_status": "seed_present",
+      "runtime_policy": "seed_resolved"
+    },
+    {
+      "topic": "generic_fee_amount",
+      "fact_key": null,
+      "seed_status": "defer_only_none",
+      "runtime_policy": "defer_only"
+    },
+    {
+      "topic": "mortgage_ltv",
+      "fact_key": "off_plan_mortgage_ltv_policy",
+      "seed_status": "expected_missing",
+      "runtime_policy": "defer_only"
+    },
+    {
+      "topic": "noc_timeline",
+      "fact_key": "specific_noc_transfer_timing",
+      "seed_status": "seed_present",
+      "runtime_policy": "seed_resolved"
+    },
+    {
+      "topic": "trustee_closing_timeline",
+      "fact_key": "specific_noc_transfer_timing",
+      "seed_status": "seed_present",
+      "runtime_policy": "seed_resolved"
+    },
+    {
+      "topic": "noc_fee",
+      "fact_key": "generic_noc_fee",
+      "seed_status": "expected_missing",
+      "runtime_policy": "defer_only"
+    },
+    {
+      "topic": "legal_tax_advice",
+      "fact_key": null,
+      "seed_status": "defer_only_none",
+      "runtime_policy": "defer_only"
+    },
+    {
+      "topic": "tenancy_legal_process",
+      "fact_key": null,
+      "seed_status": "defer_only_none",
+      "runtime_policy": "defer_only"
+    },
+    {
+      "topic": "off_plan_payment_mechanics",
+      "fact_key": "off_plan_payment_process_mechanics",
+      "seed_status": "expected_missing",
+      "runtime_policy": "defer_only"
+    },
+    {
+      "topic": "seller_original_price",
+      "fact_key": "seller_original_purchase_price",
+      "seed_status": "seed_present",
+      "runtime_policy": "seed_resolved"
+    }
+  ],
+  "failures": []
+}

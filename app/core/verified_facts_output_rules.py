@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Collection, Mapping, Sequence
 from dataclasses import dataclass
+from typing import Final, Literal, TypedDict
 
 
 AGENT_CONFIRMATION_LINE = (
@@ -19,6 +21,85 @@ class OutputClaimRule:
     patterns: tuple[re.Pattern[str], ...]
     deferral: str
     require_numeric_fact_match: bool = True
+
+
+class ExpectedMissingOutputGateFactKey(TypedDict):
+    reason: str
+    runtime_policy: str
+
+
+OutputRuleFactKeyIntegrityProblem = Literal[
+    "expected_missing_empty_reason",
+    "expected_missing_runtime_policy",
+    "missing_seed_fact_key",
+]
+
+
+@dataclass(frozen=True)
+class OutputRuleFactKeyIntegrityFailure:
+    fact_key: str
+    topic: str | None
+    problem: OutputRuleFactKeyIntegrityProblem
+
+
+EXPECTED_MISSING_OUTPUT_GATE_FACT_KEYS: Final[dict[str, ExpectedMissingOutputGateFactKey]] = {
+    "off_plan_mortgage_ltv_policy": {
+        "reason": "Mortgage and LTV terms vary by buyer, bank, and listing; output claims must defer until the agent confirms deal-specific finance context.",
+        "runtime_policy": "defer_only",
+    },
+    "generic_noc_fee": {
+        "reason": "Developer NOC fees are transaction-specific and intentionally absent from direct seed facts; generic buyer-facing amounts must defer to the agent.",
+        "runtime_policy": "defer_only",
+    },
+    "off_plan_payment_process_mechanics": {
+        "reason": "Paid-to-date, seller cash, and developer-balance mechanics are listing-specific payment assertions that must defer unless grounded by transaction documents.",
+        "runtime_policy": "defer_only",
+    },
+}
+
+
+def verify_claim_rule_fact_keys(
+    rules: Sequence[OutputClaimRule],
+    seeded_fact_keys: Collection[str],
+    *,
+    expected_missing: Mapping[str, ExpectedMissingOutputGateFactKey] = EXPECTED_MISSING_OUTPUT_GATE_FACT_KEYS,
+) -> tuple[OutputRuleFactKeyIntegrityFailure, ...]:
+    failures: list[OutputRuleFactKeyIntegrityFailure] = []
+
+    for fact_key, metadata in expected_missing.items():
+        if not metadata["reason"].strip():
+            failures.append(
+                OutputRuleFactKeyIntegrityFailure(
+                    fact_key=fact_key,
+                    topic=None,
+                    problem="expected_missing_empty_reason",
+                )
+            )
+        if metadata["runtime_policy"] != "defer_only":
+            failures.append(
+                OutputRuleFactKeyIntegrityFailure(
+                    fact_key=fact_key,
+                    topic=None,
+                    problem="expected_missing_runtime_policy",
+                )
+            )
+
+    for rule in rules:
+        if rule.fact_key is None:
+            continue
+        if rule.fact_key in seeded_fact_keys:
+            continue
+        if rule.fact_key in expected_missing:
+            continue
+        failures.append(
+            OutputRuleFactKeyIntegrityFailure(
+                fact_key=rule.fact_key,
+                topic=rule.topic,
+                problem="missing_seed_fact_key",
+            )
+        )
+
+    return tuple(failures)
 
 
 MONEY_PATTERN = r"(?:AED|Dh|Dhs)\s*\d[\d,]*(?:\.\d+)?"

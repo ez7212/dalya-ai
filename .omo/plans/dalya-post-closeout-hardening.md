@@ -105,7 +105,7 @@ Your next move: approve this plan for `$omo:start-work`, or ask for a high-accur
   Merge guard: privacy/security scope only; no agent-facing PII removal; no DB schema/migration; no production/staging env reads; no external DB tests/live writes.
   Commit: Y | `fix(seller): redact conversation summary pii`
 
-- [ ] 5. Verified Facts rule-key integrity.
+- [x] 5. Verified Facts rule-key integrity.
   What to do / Must NOT do: Add a small integrity test/helper proving every non-null `fact_key` in `app/core/verified_facts_output_rules.py::CLAIM_RULES` resolves to a seed fact in `app/core/data/verified_facts_seed.json` or is explicitly listed in a new constant `EXPECTED_MISSING_OUTPUT_GATE_FACT_KEYS` in `app/core/verified_facts_output_rules.py` with fields `reason` and `runtime_policy` set to `defer_only`. Each expected-missing key must include a short comment or structured reason explaining why it is intentionally defer-only and not a seed omission bug. `fact_key=None` rules must be treated as explicit defer-only. Do not change behavior unless the new test finds an actual typo; if a typo is found, fix only that key or add the explicit expected-missing annotation.
   Parallelization: Wave 2 | Blocked by: 1, 2, 3, 4 | Blocks: final
   Branch/PR: `codex/verified-facts-rule-key-integrity`; public PR title `Verify Verified Facts rule keys`.
