@@ -1,0 +1,39 @@
+{
+  "check_only": false,
+  "cleanup_occurred": false,
+  "cleanup_reason": "real_run_not_started",
+  "commands": [],
+  "duration_seconds": 0.003,
+  "pytest_args": [
+    "--noconftest",
+    "tests/test_legacy_telegram_removed.py",
+    "tests/test_cors_live_env.py",
+    "tests/test_seller_lead_privacy.py",
+    "tests/test_verified_facts_output_gate.py",
+    "tests/test_verified_facts_seed_closing_costs.py",
+    "tests/test_needs_reply_priority.py",
+    "-q"
+  ],
+  "reason": "db_backed_tests_disallowed:tests/test_seller_lead_privacy.py(imports SessionLocal and writes/deletes app DB rows),tests/test_verified_facts_output_gate.py(imports ChatbotEngine/WhatsApp paths that reach dotenv/SessionLocal),tests/test_needs_reply_priority.py(imports SessionLocal/engine and writes/deletes app DB rows)",
+  "repo_venv_python": {
+    "exists": false,
+    "is_symlink": true,
+    "path": "/Users/eric/dalya-ai/venv/bin/python",
+    "reason": "repo_venv_python_broken_symlink:python3.13",
+    "resolved": null,
+    "symlink_target": "python3.13"
+  },
+  "requirements_file": "/Users/eric/dalya-ai/requirements.txt",
+  "selected_interpreter": {
+    "compatible": false,
+    "major": null,
+    "minor": null,
+    "reason": "interpreter_not_found:python3.12",
+    "requested": "python3.12",
+    "resolved": null,
+    "version": null
+  },
+  "status": "BLOCKED",
+  "suite_policy": "db_backed_tests_disallowed:tests/test_seller_lead_privacy.py(imports SessionLocal and writes/deletes app DB rows),tests/test_verified_facts_output_gate.py(imports ChatbotEngine/WhatsApp paths that reach dotenv/SessionLocal),tests/test_needs_reply_priority.py(imports SessionLocal/engine and writes/deletes app DB rows)",
+  "temp_venv_path": "/private/tmp/dalya-focused-backend-qa-venv"
+}
