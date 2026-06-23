@@ -1,0 +1,22 @@
+{
+  "scenario": "Task 1 helper-script allowlist for next-MVP closeout scope guard",
+  "linear_ticket": "DAL-198",
+  "allowed_helper_script_edits": [
+    {
+      "path": "scripts/audit_tenant_constraints_dal170d.py",
+      "rationale": "Known closeout cleanup only: replaced a decorative equals separator with hyphens so conflict-marker scans do not confuse helper output with merge conflict markers; no audit, SQL, DDL, RLS, role, or grant behavior changed."
+    },
+    {
+      "path": "scripts/audit_tenant_isolation.py",
+      "rationale": "Known closeout cleanup only: replaced a decorative equals separator with hyphens so conflict-marker scans do not confuse helper output with merge conflict markers; no audit, SQL, DDL, RLS, role, or grant behavior changed."
+    },
+    {
+      "path": "scripts/migrate_tenant_constraints_dal170d.py",
+      "rationale": "Known closeout cleanup only: replaced decorative equals separators with hyphens so conflict-marker scans do not confuse helper output with merge conflict markers; no migration, SQL, DDL, RLS, role, grant, or execution behavior changed."
+    },
+    {
+      "path": "scripts/migrate_tenant_root_normalization.py",
+      "rationale": "Known closeout cleanup only: replaced a decorative equals separator with hyphens so conflict-marker scans do not confuse helper output with merge conflict markers; no migration, SQL, DDL, RLS, role, grant, or execution behavior changed."
+    }
+  ]
+}

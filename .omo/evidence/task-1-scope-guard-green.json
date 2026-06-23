@@ -1,0 +1,48 @@
+{
+  "base": "3482a7fb863c542836fa2aabef707ad8fd503b71",
+  "changed_path_count": 76,
+  "passed": true,
+  "results": [
+    {
+      "evidence": [],
+      "label": "no env or migration path edits",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "label": "no dependency lockfile edits",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "label": "no DDL/RLS/role/readiness-forbidden diff markers",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "label": "no owner-dashboard expansion",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "label": "no Telegram replacement provider implementation",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "label": "helper-script allowlist is well formed",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "scripts/audit_tenant_constraints_dal170d.py",
+        "scripts/audit_tenant_isolation.py",
+        "scripts/migrate_tenant_constraints_dal170d.py",
+        "scripts/migrate_tenant_root_normalization.py"
+      ],
+      "label": "approved audit/migrate helper-script edits only",
+      "passed": true
+    }
+  ],
+  "scenario": "F4 next MVP scope fidelity guard"
+}

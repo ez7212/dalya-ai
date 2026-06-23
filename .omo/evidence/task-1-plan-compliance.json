@@ -1,0 +1,184 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-1-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-1-escalation-route.png"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "7167d9e",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 54,
+      "task_id": "1",
+      "title": "Today Queue escalation routing"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-2-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-2-dashboard-fallback.png"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "d68185a",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 55,
+      "task_id": "2",
+      "title": "Live dashboard fallback"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-3-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-3-telegram-routes.json"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "bf04efe",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 56,
+      "task_id": "3",
+      "title": "Legacy Telegram removal"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-4-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-4-cors.json"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "fc5a79e",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 57,
+      "task_id": "4",
+      "title": "CORS by environment"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-5-dalya-next-mvp-readiness-plan.md"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "44748c9",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 58,
+      "task_id": "5",
+      "title": "Seller lead PII"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-6-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-6-verified-facts-output.json"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "fc07406",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 59,
+      "task_id": "6",
+      "title": "Verified Facts output gate"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-7-dalya-next-mvp-readiness-plan.md"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "e40ef21",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 60,
+      "task_id": "7",
+      "title": "Verified Facts seed expansion"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-8-chatbot-regression.json"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "303ce63",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 61,
+      "task_id": "8",
+      "title": "Chatbot regression"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-9a-deal-readiness-calibration.md"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "3511d97",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 62,
+      "task_id": "9A",
+      "title": "DealReadiness calibration"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-9b-dalya-next-mvp-readiness-plan.md"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "9895268",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 63,
+      "task_id": "9B",
+      "title": "Bounded DealReadiness ranking"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-10-dalya-next-mvp-readiness-plan.md"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "1b0c9d3",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 64,
+      "task_id": "10",
+      "title": "needs_reply priority"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-11-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-11-handoff-cards.png"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "bb45281",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 65,
+      "task_id": "11",
+      "title": "Handoff action cards"
+    },
+    {
+      "evidence_paths": [
+        ".omo/evidence/task-12-dalya-next-mvp-readiness-plan.md",
+        ".omo/evidence/task-12-first-run-desktop.png",
+        ".omo/evidence/task-12-first-run-mobile.png"
+      ],
+      "local_branch_absent": true,
+      "merge_commit": "24ca573",
+      "merge_present": true,
+      "passed": true,
+      "plan_checked": true,
+      "pr_number": 66,
+      "task_id": "12",
+      "title": "First-run activation"
+    }
+  ],
+  "scenario": "F1 plan compliance audit for Tasks 1-12 plus 9A/9B and Task 13 closeout assets",
+  "task13_closeout_assets_present": true
+}
