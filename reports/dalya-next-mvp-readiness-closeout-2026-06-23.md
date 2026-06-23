@@ -26,6 +26,7 @@
 | 10 | #64 | `1b0c9d3a4c8ab8926a45006d5801aefb89ce3e9c` | `needs_reply` now distinguishes low-intent acknowledgements from actionable viewing/offer/process questions. | `.omo/evidence/task-10-dalya-next-mvp-readiness-plan.md` |
 | 11 | #65 | `bb45281e8b473ebbf451468ce73354928fc0d20b` | Today Queue and escalation rows show structured 15-second handoff cards and exact actions. | `.omo/evidence/task-11-dalya-next-mvp-readiness-plan.md`, `.omo/evidence/task-11-handoff-cards.png` |
 | 12 | #66 | `24ca573b8fa609c2b66941dc9fea535afcdb96cf` | First-run and error states guide safe synthetic/internal activation without fake operational data. | `.omo/evidence/task-12-dalya-next-mvp-readiness-plan.md`, `.omo/evidence/task-12-first-run-desktop.png`, `.omo/evidence/task-12-first-run-mobile.png` |
+| 13 | #67 | `ddae7bb231e4e5c2d3f3353010d6113bd54d0aab` | Final evidence pack, closeout report, helper scripts, backlog, project brief, and pilot runbook updates. | `.omo/evidence/task-13-next-mvp-readiness-closeout.md`, `.omo/evidence/final-next-mvp-plan-compliance.json`, `.omo/evidence/final-next-mvp-code-review.md`, `.omo/evidence/final-next-mvp-scope-guard.json` |
 
 ## Final QA Wave
 
@@ -46,6 +47,20 @@ Required captured artifacts:
 - `.omo/evidence/final-next-mvp-surface/` (`BLOCKED.md` is acceptable only when the local surface cannot be safely launched)
 - `.omo/evidence/task-13-next-mvp-readiness-closeout.md`
 
+Final wave status:
+
+| Gate | Status | Artifact / basis |
+| --- | --- | --- |
+| F1 plan compliance audit | PASS | `.omo/evidence/final-next-mvp-plan-compliance.json` verifies Tasks 1-12 plus 9A/9B first-parent merges, checked plan rows, branch cleanup, and closeout assets. |
+| F2 code quality review | PASS | `.omo/evidence/final-next-mvp-code-review.md` reports narrow closeout coverage, no dependency/lockfile edits, no migration/DDL scope, and no forbidden readiness or Telegram runtime terms. |
+| F3 real manual QA | BLOCKED | `.omo/evidence/final-next-mvp-surface/BLOCKED.md` records that `http://127.0.0.1:3000` was unreachable and `frontend/.env.local` existed, so the verifier did not start a server that could read local env-file contents. |
+| F4 scope fidelity | PASS | `.omo/evidence/final-next-mvp-scope-guard.json` and the DAL-198 rerun `.omo/evidence/task-1-scope-guard-green.json` confirm no prohibited paths, lockfiles, forbidden markers, owner-dashboard expansion, Telegram replacement provider work, or unapproved audit/migrate helper-script edits. |
+
+## Merge-Guard History Notes
+
+- PR #59 (`fc0740694bfd5bdc779af614bc7b4c3f9ce38e9d`) had an earlier BLOCKED merge-guard artifact because the current-head code-review approval was missing and runtime pytest was blocked locally. A later final merge gate recorded APPROVE after the current-head review existed, with runtime pytest still explicitly blocked/not green and direct no-DB verifier evidence green. Classification: accepted residual risk under the blocked-pytest policy; the earlier missing-review BLOCKED artifact was superseded by the later APPROVE gate.
+- PR #62 (`3511d978c35eca51c9d82d78fddfbfa4460e187b`) had an earlier BLOCKED merge-guard artifact because no current independent code-review PASS/APPROVE existed for the PR head. A later cleanup gate recorded the technical merge guard as green but still marked the actual merge/cleanup blocked because that reviewer was in a read-only final-gate role. Classification: process error in the closeout record; the merged result remains covered by first-parent plan compliance and the calibration-only artifact, but future gates should avoid merging while the latest cleanup artifact is still RED/BLOCKED.
+
 ## Residual Risk
 
 - Friendly pilot remains constrained to synthetic/internal data unless Eric separately approves the data class and the Task 10b gate.
@@ -60,3 +75,4 @@ Required captured artifacts:
 - No production/staging DDL, migrations, RLS enablement, role/grant mutation, live writes, external DB tests, dependency/lockfile edits, or production/staging env-file content reads are part of this closeout.
 - Telegram is removed as an active runtime integration and was not replaced in this plan.
 - This report does not claim external brokerage readiness or production/live-data readiness.
+- DAL-198 tightened the scope guard so future `scripts/audit_*.py` and `scripts/migrate_*.py` edits fail unless explicitly allowlisted with rationale; only the known separator-only helper-script edits are allowlisted.
