@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { EscalationHandoffPanel } from '@/components/agent-dashboard/QueueHandoffCard'
 import { apiFetch } from '@/lib/api'
 import type { EscalationState, EscalationThreadItem, EscalationUrgency } from '@/components/agent-dashboard/types'
 import type { RefObject } from 'react'
@@ -375,13 +376,16 @@ function EscalationThreadRow({
       </div>
 
       <aside className="rounded-lg border border-neutral-200 bg-white p-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500">Thread status</p>
-        <dl className="mt-3 grid gap-3 text-sm">
-          <Fact label="Questions" value={String(thread.questionCount)} />
-          <Fact label="Opened" value={thread.openedAt} />
-          <Fact label="Last buyer message" value={thread.lastBuyerMessageAt} />
-          <Fact label="Route expires" value={thread.routeExpiresAt ?? 'No active route'} />
-        </dl>
+        <EscalationHandoffPanel thread={thread} />
+        <div className="mt-4 border-t border-neutral-200 pt-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500">Thread status</p>
+          <dl className="mt-3 grid gap-3 text-sm">
+            <Fact label="Questions" value={String(thread.questionCount)} />
+            <Fact label="Opened" value={thread.openedAt} />
+            <Fact label="Last buyer message" value={thread.lastBuyerMessageAt} />
+            <Fact label="Route expires" value={thread.routeExpiresAt ?? 'No active route'} />
+          </dl>
+        </div>
         {canAct && (
           <div className="mt-4 border-t border-neutral-200 pt-4">
             <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500" htmlFor={`reply-${thread.id}`}>

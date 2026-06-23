@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { DealReadinessSummaryLine } from '../readiness/DealReadinessCallout'
+import { QueueHandoffCard, queueActionLabel } from './QueueHandoffCard'
 import type { TodayQueueItem } from './today-queue'
 
 interface TodayQueueProps {
@@ -93,8 +93,7 @@ export function TodayQueue({
               <h3 className="mt-2 text-sm font-semibold text-neutral-900">{item.title}</h3>
               <p className="mt-1 text-xs text-neutral-500">{item.subject}</p>
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-700">{item.detail}</p>
-              <p className="mt-3 rounded-md bg-neutral-50 px-3 py-2 text-xs font-medium leading-relaxed text-neutral-700">{item.reason}</p>
-              <DealReadinessSummaryLine readiness={item.readiness} compact missingLimit={2} />
+              <QueueHandoffCard item={item} />
             </div>
 
             <div className="flex flex-wrap items-start gap-2 lg:justify-end">
@@ -174,14 +173,14 @@ function QueueActions({
           <span className="material-symbols-outlined text-[16px]" aria-hidden="true">task_alt</span>
           Resolve
         </button>
-        {item.href && <QueueLink href={item.href} label="Open" />}
+        {item.href && <QueueLink href={item.href} label={queueActionLabel(item)} />}
         {escalationState === 'error' && <p className="basis-full text-xs font-medium text-error-600 lg:text-right">Could not resolve this escalation.</p>}
       </>
     )
   }
 
   if (item.href) {
-    return <QueueLink href={item.href} label="Open" />
+    return <QueueLink href={item.href} label={queueActionLabel(item)} />
   }
 
   return null
