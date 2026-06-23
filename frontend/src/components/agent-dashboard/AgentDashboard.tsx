@@ -26,6 +26,7 @@ import type {
   ViewingItem,
 } from './types'
 import { DashboardConnectionErrorState } from './DashboardConnectionErrorState'
+import { DayIsClear } from './DayIsClear'
 import { TodayQueue } from './TodayQueue'
 import { buildTodayQueue } from './today-queue'
 
@@ -248,7 +249,12 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 
           <div className="mx-auto max-w-4xl space-y-5">
             {dayIsClear ? (
-              <DayIsClear sourceLabel={sourceLabel} emptyState={dashboardData.emptyState} />
+              <DayIsClear
+                sourceLabel={sourceLabel}
+                emptyState={dashboardData.emptyState}
+                refreshState={refreshState}
+                onRefreshHotList={refreshHotList}
+              />
             ) : (
               <TodayQueue
                 items={todayQueue}
@@ -306,32 +312,6 @@ function sortNeedsReply(items: ConversationInboxItem[]): ConversationInboxItem[]
     return value
   }
   return [...items].sort((a, b) => score(b) - score(a))
-}
-
-function DayIsClear({
-  sourceLabel,
-  emptyState,
-}: {
-  sourceLabel: string
-  emptyState?: AgentDashboardData['emptyState']
-}) {
-  return (
-    <section className="rounded-lg border border-neutral-200 bg-white px-6 py-12 text-center shadow-card-sm">
-      <span className="material-symbols-outlined text-[40px] text-success-600" aria-hidden="true">task_alt</span>
-      <h2 className="mt-3 text-lg font-semibold text-neutral-900">
-        {emptyState ? 'Workspace is ready' : 'Your day is clear'}
-      </h2>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-neutral-600">
-        {emptyState?.message ?? (
-          <>
-            No buyers waiting on a reply, no hot signals, no drafts to review, and no viewings or escalations open right now.
-            New activity lands here the moment a buyer engages.
-          </>
-        )}
-      </p>
-      <p className="mt-3 text-xs text-neutral-400">{sourceLabel}</p>
-    </section>
-  )
 }
 
 function DashboardLoadingState() {

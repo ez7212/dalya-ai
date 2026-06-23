@@ -1,0 +1,28 @@
+{
+  "scenario": "RED: first-run empty state lacks activation guidance and connection error lacks manual fallback",
+  "invocation": "cd frontend && node scripts/verify-task-next-first-run-state.mjs --red",
+  "baseUrl": "http://127.0.0.1:57984",
+  "checks": [
+    {
+      "label": "RED empty workspace lacks internal pilot activation guidance",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "RED empty workspace lacks an explicit safe demo action",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "RED connection error lacks a named manual fallback",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "observations": {
+    "emptyBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\nDubai agent desk\n/\nLive workspace\n/\nUpdated 09:00 AM\nGood morning, Leila Agent\nsync\nRefresh hot list\n\nOPEN TASKS\n\n0\n\nQUALIFIED BUYERS\n\n0\n\nVIEWINGS TODAY\n\n0\n\nESCALATIONS\n\n0\n\ntask_alt\nWorkspace is ready\n\nNo live buyer activity is assigned to this agent workspace yet.\n\nLive workspace\n\nbar_chart\nMore — performance, campaigns & momentum\nexpand_more",
+    "errorBodyText": "Skip to content\ndashboard\nDashboard\ngroups\nBuyers\nedit_note\nDrafts\nevent_available\nViewings\nsupport_agent\nEscalations\ncalendar_month\nCalendar\nsettings\nSettings\narrow_back\nBack\nBROKERAGE\nLuqman Realty\nLeila Agent\nSign out\nL\ncloud_off\n\nCONNECTION ERROR\n\nCouldn't load your live workspace\n\nDalya could not reach the dashboard API, so live buyer activity is hidden until the workspace reconnects.\n\nrefresh\nRetry"
+  },
+  "failureDebug": null,
+  "cleanup": "Closed Playwright browser/context, sent SIGTERM to the local Next dev server, and closed the local Supabase auth stub."
+}

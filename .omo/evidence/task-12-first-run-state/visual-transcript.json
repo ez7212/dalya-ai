@@ -1,0 +1,45 @@
+{
+  "scenario": "Task 12 visual QA: first-run authenticated empty workspace on desktop and mobile",
+  "invocation": "cd frontend && node scripts/verify-task-next-first-run-visual.mjs --desktop .omo/evidence/task-12-first-run-desktop.png --mobile .omo/evidence/task-12-first-run-mobile.png",
+  "baseUrl": "http://127.0.0.1:58199",
+  "desktopPath": "/Users/eric/dalya-ai/.omo/evidence/task-12-first-run-desktop.png",
+  "mobilePath": "/Users/eric/dalya-ai/.omo/evidence/task-12-first-run-mobile.png",
+  "checks": [
+    {
+      "label": "1280px empty workspace contains no fake operational rows",
+      "passed": true,
+      "details": {
+        "leaks": []
+      }
+    },
+    {
+      "label": "1280px empty workspace has no horizontal overflow",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px empty workspace exposes safe demo action",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "390px empty workspace contains no fake operational rows",
+      "passed": true,
+      "details": {
+        "leaks": []
+      }
+    },
+    {
+      "label": "390px empty workspace has no horizontal overflow",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "390px empty workspace exposes safe demo action",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "failureDebug": null,
+  "cleanup": "Closed Playwright browser/context, sent SIGTERM to the local Next dev server, and closed the local Supabase auth stub."
+}

@@ -10,6 +10,12 @@ export function DashboardConnectionErrorState({ onRetry }: { onRetry: () => void
             <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-neutral-600">
               Dalya could not reach the dashboard API, so live buyer activity is hidden until the workspace reconnects.
             </p>
+            <div className="mx-auto mt-5 max-w-lg rounded-md border border-error-100 bg-error-50 px-4 py-3 text-left">
+              <p className="text-sm font-semibold text-error-700">Manual fallback</p>
+              <p className="mt-1 text-sm leading-relaxed text-error-700/80">
+                Use WhatsApp directly for buyer replies and viewing coordination. Record notes when Dalya reconnects; do not use demo data as live activity.
+              </p>
+            </div>
             <button
               type="button"
               onClick={onRetry}
