@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-22 (`DAL-196` legacy Telegram runtime removal)*
+*Last updated: 2026-06-23 (Task 9B bounded DealReadiness ranking input)*
 
 ## Mission
 
@@ -125,7 +125,7 @@ Build from the agent's daily workflow outward, not from a generic CRM feature ma
 
 Phase 0 is backend-complete. The remaining foundation work is product polish: owner-facing compliance UI, a scheduled aggregation job once customer volume justifies it, and an admin UI for brokerage config.
 
-Phase 1 backend is now complete for the Morning Hot List + Follow-Up Engine. The agent dashboard refreshes a deterministic hot-list engine that ranks visible buyer conversations, persists `DBLeadAssignment` state, creates deduped open `DBLeadTask` rows, and drafts review-only follow-up nudges for stale buyers.
+Phase 1 backend is now complete for the Morning Hot List + Follow-Up Engine. The agent dashboard refreshes a deterministic hot-list engine that ranks visible buyer conversations, persists `DBLeadAssignment` state, creates deduped open `DBLeadTask` rows, and drafts review-only follow-up nudges for stale buyers. Task 9B adds DealReadiness only as a bounded ranking input for strongly actionable hot/viewing-ready/offer-ready buyers, with missing or malformed readiness falling back to the prior urgency score and no new task/send behavior.
 
 Remaining Phase 1 work is now MVP-critical: scheduled morning refresh instead of refresh-on-dashboard-load, a dedicated draft approval queue, and real send/reject/snooze controls for follow-up drafts.
 

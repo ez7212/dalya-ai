@@ -5,14 +5,63 @@ lead ingest, frontend, migrations, RLS, task creation, or notifications.
 """
 from __future__ import annotations
 
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
 
-from app.core.hot_list import HotListScore, build_hot_list_readiness_shadow
-from app.models.db_models import DBConversation, DBListing, DBMessage
+from app.core.hot_list_readiness import build_hot_list_readiness_shadow
 
 
-def _score(**overrides) -> HotListScore:
+@dataclass(frozen=True)
+class Score:
+    signal: str
+    urgency_score: int
+    next_action: str
+    next_action_reason: str
+    status: str
+    task_type: str
+    task_title: str
+    task_description: str
+    task_priority: str
+    due_at: datetime
+    last_buyer_message_at: datetime | None
+    latest_message_at: datetime | None
+    buyer_message_count: int
+    stale: bool
+    base_urgency_score: int | None = None
+    readiness_ranking_delta: int | None = None
+
+
+@dataclass
+class Listing:
+    listing_id: str
+    brokerage_id: str
+    property_type: str
+    spa_data: dict
+
+
+@dataclass
+class Message:
+    conversation_id: str
+    role: str
+    content: str
+    intent: str | None
+    timestamp: datetime
+
+
+@dataclass
+class Conversation:
+    conversation_id: str
+    brokerage_id: str
+    listing_id: str
+    buyer_phone: str
+    buyer_name: str
+    detected_budget: int | None
+    escalation_reason: str | None = None
+    listing: Listing | None = None
+    messages: list[Message] | None = None
+
+
+def _score(**overrides) -> Score:
     now = datetime(2026, 6, 21, 9, 0, 0)
     base = {
         "signal": "ready_to_view",
@@ -31,17 +80,17 @@ def _score(**overrides) -> HotListScore:
         "stale": False,
     }
     base.update(overrides)
-    return HotListScore(**base)
+    return Score(**base)
 
 
-def _conversation(*, detected_budget=None, latest_intent="viewing_request") -> DBConversation:
-    listing = DBListing(
+def _conversation(*, detected_budget=None, latest_intent="viewing_request") -> Conversation:
+    listing = Listing(
         listing_id="listing-1",
         brokerage_id="brokerage-1",
         property_type="ready",
         spa_data={"project": "Shadow Tower"},
     )
-    conv = DBConversation(
+    conv = Conversation(
         conversation_id="conversation-1",
         brokerage_id="brokerage-1",
         listing_id="listing-1",
@@ -51,7 +100,7 @@ def _conversation(*, detected_budget=None, latest_intent="viewing_request") -> D
     )
     conv.listing = listing
     conv.messages = [
-        DBMessage(
+        Message(
             conversation_id="conversation-1",
             role="user",
             content="Can I view it tomorrow?",
@@ -90,8 +139,9 @@ def test_readiness_shadow_metadata_appears_for_profile_fields():
         score=_score(),
     )
 
-    assert shadow["mode"] == "shadow_read_only"
-    assert shadow["used_for_ranking"] is False
+    assert shadow["mode"] == "ranking_input"
+    assert shadow["used_for_ranking"] is True
+    assert shadow["ranking_delta"] > 0
     assert shadow["used_for_thresholds"] is False
     assert shadow["used_for_tasks"] is False
     assert shadow["deal_readiness"]["stage"] == "viewing_ready"
@@ -106,18 +156,21 @@ def test_missing_readiness_data_still_produces_shadow_without_dropping_candidate
         score=_score(signal="cold", urgency_score=20, next_action="follow_up"),
     )
 
-    assert shadow["mode"] == "shadow_read_only"
+    assert shadow["mode"] == "ranking_input"
+    assert shadow["used_for_ranking"] is False
+    assert shadow["ranking_delta"] == 0
+    assert shadow["ranked_urgency_score"] == 20
     assert shadow["deal_readiness"]["stage"] == "new"
     assert "budget" in shadow["deal_readiness"]["missing_fields"]
 
 
-def test_shadow_does_not_mutate_hot_list_score_or_order_inputs():
+def test_ranking_input_does_not_mutate_hot_list_score_objects():
     score_a = _score(urgency_score=90, signal="firm_offer", next_action="review_offer")
     score_b = _score(urgency_score=70, signal="ready_to_view", next_action="book_viewing")
     before_a = asdict(score_a)
     before_b = asdict(score_b)
 
-    build_hot_list_readiness_shadow(
+    shadow_a = build_hot_list_readiness_shadow(
         effective_buyer_fields=_effective(budget_max_aed=2_000_000),
         conversation=_conversation(),
         score=score_a,
@@ -130,7 +183,7 @@ def test_shadow_does_not_mutate_hot_list_score_or_order_inputs():
 
     assert asdict(score_a) == before_a
     assert asdict(score_b) == before_b
-    assert sorted([score_b, score_a], key=lambda row: row.urgency_score, reverse=True) == [score_a, score_b]
+    assert shadow_a["base_urgency_score"] == 90
 
 
 def test_shadow_metadata_does_not_reference_side_effect_scope():
