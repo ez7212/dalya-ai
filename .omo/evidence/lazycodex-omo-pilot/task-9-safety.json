@@ -1,0 +1,37 @@
+{
+  "brokerage_id": "mahoroba-realty",
+  "scope": "minimal first-run safety (NOT a full audit)",
+  "verdict": "PASS",
+  "checks": {
+    "no_live_sends": {
+      "result": "PASS",
+      "detail": "MESSAGING_TRANSPORT=simulated \u2192 SimulatedTransport"
+    },
+    "unauthenticated_denied": {
+      "result": "PASS",
+      "detail": "GET /agent/escalations unauth \u2192 403"
+    },
+    "wrong_brokerage_denied": {
+      "result": "PASS",
+      "detail": "wrong X-Brokerage-Id (no JWT) \u2192 403"
+    },
+    "opt_out_suppressed": {
+      "result": "PASS",
+      "detail": "opt_out status=PASS"
+    },
+    "no_seller_private_leak": {
+      "result": "PASS",
+      "detail": "0 scenario(s) leaked seller-private text"
+    },
+    "verified_facts_defers": {
+      "result": "PASS",
+      "detail": "off-plan finance + weak-listing fact gaps defer to the agent"
+    }
+  },
+  "deferred": [
+    "full tenant isolation audit",
+    "media URL signing depth",
+    "live / sandbox provider readiness",
+    "production RLS / app-role rollout"
+  ]
+}

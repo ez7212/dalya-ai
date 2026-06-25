@@ -1,0 +1,19 @@
+{
+  "slug": "opt_out",
+  "listing_id": "fbb77de0-ffa6-4bd3-b964-82046d9622ab",
+  "buyer_phone": "+971551000007",
+  "message": "stop",
+  "bot_response": "Understood. We won't contact you again on this brokerage.",
+  "escalation": null,
+  "agents_ai_envelopes": [
+    {
+      "to": "+971500000000",
+      "tags": []
+    }
+  ],
+  "buyer_messages": [],
+  "checks": {
+    "suppressed_no_marketing_push": true
+  },
+  "status": "PASS"
+}

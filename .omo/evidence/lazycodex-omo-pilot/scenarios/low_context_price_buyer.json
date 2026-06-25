@@ -1,0 +1,15 @@
+{
+  "slug": "low_context_price_buyer",
+  "listing_id": "fbb77de0-ffa6-4bd3-b964-82046d9622ab",
+  "buyer_phone": "+971551000003",
+  "message": "price?",
+  "bot_response": "AED 7,500,000 is the asking price for this 3-bed villa in Golf Grove.",
+  "escalation": null,
+  "agents_ai_envelopes": [],
+  "buyer_messages": [],
+  "checks": {
+    "responds": true,
+    "does_not_over_qualify": true
+  },
+  "status": "PASS"
+}

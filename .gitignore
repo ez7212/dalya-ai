@@ -56,3 +56,7 @@ supabase/.temp/
 
 # pilot virtualenv (do not commit)
 .venv-pilot/
+
+# Pilot browser session (Eric Supabase auth) — never commit
+.omo/pilots/.eric-auth.json
+.omo/pilots/.eric-session.json

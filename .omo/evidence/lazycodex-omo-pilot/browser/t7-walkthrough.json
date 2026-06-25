@@ -1,0 +1,70 @@
+{
+  "results": [
+    {
+      "name": "dashboard",
+      "path": "/agent",
+      "data_status": "NO_RESPONSE",
+      "load_secs": 45,
+      "seeded_hits": [],
+      "status": "CHECK"
+    },
+    {
+      "name": "listings",
+      "path": "/listings",
+      "data_status": "NO_RESPONSE",
+      "load_secs": 45,
+      "seeded_hits": [],
+      "status": "CHECK"
+    },
+    {
+      "name": "buyers",
+      "path": "/agent/buyers",
+      "data_status": 200,
+      "load_secs": 8.4,
+      "seeded_hits": [
+        "Adam",
+        "Priya",
+        "Tom",
+        "Hassan",
+        "Mei",
+        "+97155"
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "drafts",
+      "path": "/agent/drafts",
+      "data_status": 200,
+      "load_secs": 4.9,
+      "seeded_hits": [],
+      "status": "PASS(empty?)"
+    },
+    {
+      "name": "viewings",
+      "path": "/agent/viewings",
+      "data_status": 200,
+      "load_secs": 4.8,
+      "seeded_hits": [
+        "Adam",
+        "Golf Grove"
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "escalations",
+      "path": "/agent/escalations",
+      "data_status": 200,
+      "load_secs": 8.1,
+      "seeded_hits": [
+        "Priya",
+        "Tom",
+        "Mei",
+        "Park Ridge",
+        "The Oasis",
+        "The Nest",
+        "+97155"
+      ],
+      "status": "PASS"
+    }
+  ]
+}

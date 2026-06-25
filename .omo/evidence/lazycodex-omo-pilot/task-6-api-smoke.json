@@ -1,0 +1,98 @@
+{
+  "base_url": "http://localhost:8000",
+  "brokerage_id": "mahoroba-realty",
+  "auth_available": false,
+  "note": "Unauth/wrong-brokerage smoke proves routing + tenant-auth guard. Full data PASS needs Eric's JWT.",
+  "aggregate": {
+    "smoke_pass": 7,
+    "pass": 0,
+    "fail": 0,
+    "full_auth_blocked": true
+  },
+  "checks": [
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/hot-list",
+      "label": "hot-list / today queue",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/buyers",
+      "label": "buyers list / card",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/drafts",
+      "label": "draft queue",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/escalations",
+      "label": "escalation inbox",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/offers",
+      "label": "offers",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/viewings",
+      "label": "viewings",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/v1/agent/leads/pilot_conv_adam",
+      "label": "conversation detail",
+      "auth_mode": "unauth",
+      "status": 403,
+      "assertion": "rejects unauthenticated (401/403)",
+      "result": "SMOKE PASS",
+      "wrong_brokerage_status": 403,
+      "wrong_brokerage_rejected": true,
+      "full_auth": "BLOCKED \u2014 no Eric JWT (set --jwt or ERIC_PILOT_JWT)"
+    }
+  ]
+}
