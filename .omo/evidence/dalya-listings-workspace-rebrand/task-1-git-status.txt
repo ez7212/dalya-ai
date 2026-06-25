@@ -1,0 +1,21 @@
+ M BACKLOG.md
+ M app/main.py
+ M frontend/src/app/(app)/listings/new/portal/page.tsx
+ M frontend/src/app/(app)/listings/page.tsx
+ M frontend/src/components/app/nav-items.ts
+ M frontend/src/components/listings/FinishedListingFlow.tsx
+ M frontend/src/lib/queries.ts
+ M tests/test_brokerage_context_dal172.py
+?? .omo/boulder.json
+?? .omo/drafts/
+?? .omo/evidence/dalya-listings-workspace-rebrand/
+?? .omo/pilots/
+?? .omo/plans/dalya-internal-omo-pilot.md
+?? .omo/plans/dalya-listings-workspace-rebrand.md
+?? .omo/start-work/
+?? .venv-pilot/
+?? app/api/listing_inventory.py
+?? claude-pilot/
+?? codex-pilot/
+?? frontend/src/components/listings/AgentListingsIndex.tsx
+?? frontend/src/components/listings/AgentListingsTable.tsx

@@ -1,0 +1,18 @@
+Scoped banned legacy token scan for T8 canonical listing subroutes
+Files scanned:
+ - frontend/src/app/(app)/listings/[id]/layout.tsx
+ - frontend/src/app/(app)/listings/[id]/knowledge/page.tsx
+ - frontend/src/app/(app)/listings/[id]/logistics/page.tsx
+ - frontend/src/app/(app)/listings/[id]/offers/page.tsx
+ - frontend/src/components/listings/ListingWorkspaceShell.tsx
+ - frontend/src/components/listings/ListingKnowledgeWorkspace.tsx
+ - frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx
+ - frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx
+ - frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx
+ - frontend/src/components/listings/ListingLogisticsWorkspace.tsx
+ - frontend/src/components/listings/ListingOffersWorkspace.tsx
+ - frontend/src/components/viewings/ListingLogisticsForm.tsx
+
+Pattern: text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E
+
+No matches in scoped T8 files.

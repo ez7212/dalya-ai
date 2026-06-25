@@ -1,0 +1,186 @@
+{
+  "scenario": "Task 9 listings workspace inventory verifier",
+  "invocation": "cd frontend && node scripts/verify-listings-workspace.mjs",
+  "binaryObservable": {
+    "actionCases": 8,
+    "checks": 25,
+    "scannedFiles": [
+      "src/components/listings/AgentListingsControls.tsx",
+      "src/components/listings/AgentListingsIndex.tsx",
+      "src/components/listings/AgentListingsTable.tsx",
+      "src/components/listings/FinishedListingFlow.tsx",
+      "src/components/listings/ListingDocumentsWorkspace.tsx",
+      "src/components/listings/ListingKnowledgeFactsPanel.tsx",
+      "src/components/listings/ListingKnowledgeSourcePanels.tsx",
+      "src/components/listings/ListingKnowledgeSummaryPanel.tsx",
+      "src/components/listings/ListingKnowledgeTypes.ts",
+      "src/components/listings/ListingKnowledgeWorkspace.tsx",
+      "src/components/listings/ListingLogisticsWorkspace.tsx",
+      "src/components/listings/ListingOffersWorkspace.tsx",
+      "src/components/listings/ListingOverviewWorkspace.tsx",
+      "src/components/listings/ListingWorkspaceShell.tsx",
+      "src/components/listings/NewListingFlow.tsx",
+      "src/components/listings/listingIndexActions.ts",
+      "src/components/listings/listingIndexLabels.ts",
+      "src/app/(app)/listings/[id]/documents/page.tsx",
+      "src/app/(app)/listings/[id]/knowledge/page.tsx",
+      "src/app/(app)/listings/[id]/layout.tsx",
+      "src/app/(app)/listings/[id]/logistics/page.tsx",
+      "src/app/(app)/listings/[id]/offers/page.tsx",
+      "src/app/(app)/listings/[id]/page.tsx",
+      "src/app/(app)/listings/new/manual/finished/page.tsx",
+      "src/app/(app)/listings/new/manual/off-plan/page.tsx",
+      "src/app/(app)/listings/new/manual/page.tsx",
+      "src/app/(app)/listings/new/page.tsx",
+      "src/app/(app)/listings/new/portal/page.tsx",
+      "src/app/(app)/listings/page.tsx"
+    ]
+  },
+  "checks": [
+    {
+      "label": "action review_knowledge maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1/knowledge"
+      }
+    },
+    {
+      "label": "action set_logistics maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1/logistics"
+      }
+    },
+    {
+      "label": "action manage_viewings maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1/logistics"
+      }
+    },
+    {
+      "label": "action review_offers maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1/offers"
+      }
+    },
+    {
+      "label": "action review_documents maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1/documents"
+      }
+    },
+    {
+      "label": "action upload_documents maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1/documents"
+      }
+    },
+    {
+      "label": "action follow_up_buyers maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1"
+      }
+    },
+    {
+      "label": "action open_listing maps to canonical workspace href",
+      "passed": true,
+      "details": {
+        "href": "/listings/listing-1"
+      }
+    },
+    {
+      "label": "search matches building/project fields",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "search matches listing id case-insensitively",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "ready status filter uses property type",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "draft status filter uses listing status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "attention filter catches knowledge and logistics work",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "buyers filter catches active buyer conversations",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "offers filter catches open offers",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "viewings filter catches active viewings",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "recent filter is bounded to seeded timestamps",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "price sort puts highest asking price first",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "unsupported sort falls back to last activity",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "extracted inventory helper source wires search, filters, and sort",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "control parsers default unsupported values safely",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "row open links use canonical workspace hrefs",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "all supported action variants are covered by verifier",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "unsupported action fails loudly",
+      "passed": true,
+      "details": {
+        "unsupportedActionMessage": "Unsupported listing index action: open_legacy_dashboard"
+      }
+    },
+    {
+      "label": "legacy href scanner fails on injected old href",
+      "passed": true,
+      "details": {
+        "legacyProbeMessage": "Legacy dashboard listing hrefs found: /var/folders/hx/f576wpbx55dbztm_j5tw7n040000gn/T/dalya-legacy-href-probe-lv6kya/probe.tsx"
+      }
+    }
+  ]
+}

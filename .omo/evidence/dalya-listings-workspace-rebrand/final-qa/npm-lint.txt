@@ -1,0 +1,91 @@
+
+> frontend@0.1.0 lint
+> eslint
+
+
+/Users/eric/dalya-ai/frontend/scripts/verify-listings-workspace.mjs
+  202:9  warning  'indexSource' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/eric/dalya-ai/frontend/scripts/verify-next-mvp-final-surface.mjs
+  72:100  warning  'extraTranscriptValues' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/eric/dalya-ai/frontend/scripts/verify-task-next-escalation-route-visual.mjs
+  3:10  warning  'existsSync' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/eric/dalya-ai/frontend/src/app/(app)/admin/crm/[phone]/page.tsx
+  24:10  warning  'StagePill' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/eric/dalya-ai/frontend/src/app/(app)/admin/crm/page.tsx
+  60:9  warning  The 'buyers' logical expression could make the dependencies of useMemo Hook (at line 76) change on every render. Move it inside the useMemo callback. Alternatively, wrap the initialization of 'buyers' in its own useMemo() Hook  react-hooks/exhaustive-deps
+
+/Users/eric/dalya-ai/frontend/src/app/(app)/admin/page.tsx
+  37:9  warning  'isAdmin' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/eric/dalya-ai/frontend/src/app/(app)/dashboard/activity/page.tsx
+  54:9  warning  The 'events' logical expression could make the dependencies of useMemo Hook (at line 62) change on every render. Move it inside the useMemo callback. Alternatively, wrap the initialization of 'events' in its own useMemo() Hook  react-hooks/exhaustive-deps
+
+/Users/eric/dalya-ai/frontend/src/app/layout.tsx
+  48:9  warning  Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+
+/Users/eric/dalya-ai/frontend/src/components/conversations/ConversationDetail.tsx
+  331:112  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  475:30   error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/eric/dalya-ai/frontend/src/components/escalations/EscalationInbox.tsx
+   13:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   14:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  505:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  524:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/eric/dalya-ai/frontend/src/components/sections/ListingGallery.tsx
+  9:27  warning  '_id' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/eric/dalya-ai/frontend/src/components/sections/SellerUpload.tsx
+  166:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/eric/dalya-ai/frontend/src/components/sections/SellerUpload.tsx:166:7
+  164 |   useEffect(() => {
+  165 |     if (!active) {
+> 166 |       setProgress(0)
+      |       ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  167 |       setStageIndex(0)
+  168 |       return
+  169 |     }  react-hooks/set-state-in-effect
+
+/Users/eric/dalya-ai/frontend/src/components/shared-ui/InspectionAudioInput.tsx
+  55:9  error  Error: Cannot access variable before it is declared
+
+`stopRecording` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/eric/dalya-ai/frontend/src/components/shared-ui/InspectionAudioInput.tsx:55:9
+  53 |       setLevel((current) => (current + 23) % 100)
+  54 |       if (nextElapsed >= maxLengthSeconds) {
+> 55 |         stopRecording()
+     |         ^^^^^^^^^^^^^ `stopRecording` accessed before it is declared
+  56 |       }
+  57 |     }, 250)
+  58 |     return () => window.clearInterval(interval)
+
+/Users/eric/dalya-ai/frontend/src/components/shared-ui/InspectionAudioInput.tsx:101:3
+   99 |   }
+  100 |
+> 101 |   const stopRecording = () => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |     if (recorderRef.current?.state === 'recording') recorderRef.current.stop()
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 103 |     setRecording(false)
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 104 |   }
+      | ^^^^ `stopRecording` is declared here
+  105 |
+  106 |   const discard = () => {
+  107 |     setPending(null)  react-hooks/immutability
+
+✖ 17 problems (8 errors, 9 warnings)
+

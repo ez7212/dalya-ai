@@ -1,0 +1,31 @@
+surface browser-ui
+invocation {"command":"node /Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs","devServerCommand":"cd frontend && npm run dev -- --webpack --hostname 127.0.0.1 --port 51915","baseUrl":"http://127.0.0.1:51915","pid":52751}
+file:///Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:174
+    if (child.exitCode !== null) throw new Error(`dev server exited with ${child.exitCode}\n${readLogs()}`)
+                                       ^
+
+Error: dev server exited with 1
+
+> frontend@0.1.0 dev
+> next dev --webpack --hostname 127.0.0.1 --port 51915
+
+▲ Next.js 16.2.1 (webpack)
+- Local:         http://127.0.0.1:51915
+- Network:       http://127.0.0.1:51915
+- Environments: .env.local
+✓ Ready in 150ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          25996
+- Dir:          /Users/eric/dalya-ai/frontend
+- Log:          .next/dev/logs/next-development.log
+
+Run kill 25996 to stop it.
+[?25h
+
+    at waitForServer (file:///Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:174:40)
+    at async run (file:///Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:300:5)
+    at async file:///Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:398:1
+
+Node.js v24.14.0

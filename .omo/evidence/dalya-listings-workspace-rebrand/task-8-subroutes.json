@@ -1,0 +1,214 @@
+{
+  "task": "T8 migrate knowledge, logistics, and offers routes into canonical /listings/[id] workspace",
+  "status": "complete",
+  "changed_files": [
+    "frontend/src/app/(app)/listings/[id]/knowledge/page.tsx",
+    "frontend/src/app/(app)/listings/[id]/logistics/page.tsx",
+    "frontend/src/app/(app)/listings/[id]/offers/page.tsx",
+    "frontend/src/components/listings/ListingKnowledgeWorkspace.tsx",
+    "frontend/src/components/listings/ListingKnowledgeTypes.ts",
+    "frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx",
+    "frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx",
+    "frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx",
+    "frontend/src/components/listings/ListingLogisticsWorkspace.tsx",
+    "frontend/src/components/listings/ListingOffersWorkspace.tsx",
+    "frontend/src/components/viewings/ListingLogisticsForm.tsx",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+  ],
+  "commands": [
+    {
+      "scenario": "legacy-token scan across canonical listings scope",
+      "invocation": "omo sparkshell --shell 'rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/'\\''(app)'\\''/listings frontend/src/components/listings frontend/src/components/viewings/ListingLogisticsForm.tsx || true' --budget 20000",
+      "result": "exit 0; no matches in owned T8 route/component files. Matches were limited to unowned creation-flow files: frontend/src/components/listings/FinishedListingFlow.tsx lines 520, 589, 756, 783, 831, 858, 924, 942, 946, 1019, 1147, 1182, 1219, 1467 and frontend/src/components/listings/NewListingFlow.tsx line 56. Those matches are CSS variable names containing surface-1 and are outside T8 write scope.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+    },
+    {
+      "scenario": "owned-file legacy-token confirmation",
+      "invocation": "rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" 'frontend/src/app/(app)/listings/[id]/knowledge/page.tsx' 'frontend/src/app/(app)/listings/[id]/logistics/page.tsx' 'frontend/src/app/(app)/listings/[id]/offers/page.tsx' frontend/src/components/listings/ListingKnowledgeWorkspace.tsx frontend/src/components/listings/ListingKnowledgeTypes.ts frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx frontend/src/components/listings/ListingLogisticsWorkspace.tsx frontend/src/components/listings/ListingOffersWorkspace.tsx frontend/src/components/viewings/ListingLogisticsForm.tsx || true",
+      "result": "exit 0; empty output",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+    },
+    {
+      "scenario": "frontend type check",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "result": "exit 0; empty output",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+    },
+    {
+      "scenario": "post-write pure LOC check",
+      "invocation": "awk '!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/' <changed source file> | wc -l",
+      "result": "ListingKnowledgeWorkspace.tsx 218; ListingKnowledgeFactsPanel.tsx 72; ListingKnowledgeSourcePanels.tsx 79; ListingKnowledgeSummaryPanel.tsx 44; ListingKnowledgeTypes.ts 56; ListingOffersWorkspace.tsx 145; ListingLogisticsWorkspace.tsx 26; ListingLogisticsForm.tsx 243.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+    },
+    {
+      "scenario": "whitespace diff check",
+      "invocation": "git diff --check 'frontend/src/app/(app)/listings/[id]/knowledge/page.tsx' 'frontend/src/app/(app)/listings/[id]/logistics/page.tsx' 'frontend/src/app/(app)/listings/[id]/offers/page.tsx' frontend/src/components/viewings/ListingLogisticsForm.tsx frontend/src/components/listings .omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json",
+      "result": "exit 0; empty output",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+    }
+  ],
+  "acceptance_checklist": [
+    {
+      "criterion": "/listings/[id]/knowledge renders adapted useful content under ListingWorkspaceShell",
+      "observable": "route page imports ListingKnowledgeWorkspace; workspace has data-listing-workspace-route=\"knowledge\", GET /api/v1/listings/{id}/knowledge, fact review buttons, regenerate summary, and add document text form",
+      "status": "done"
+    },
+    {
+      "criterion": "/listings/[id]/logistics renders adapted useful content under ListingWorkspaceShell",
+      "observable": "route page imports ListingLogisticsWorkspace; workspace has data-listing-workspace-route=\"logistics\" and renders ListingLogisticsForm against /api/v1/agent/listings/{id}/logistics",
+      "status": "done"
+    },
+    {
+      "criterion": "/listings/[id]/offers renders adapted useful content under ListingWorkspaceShell",
+      "observable": "route page imports ListingOffersWorkspace; workspace has data-listing-workspace-route=\"offers\", useSellerOffers, active/past sections, asking/threshold/received fields",
+      "status": "done"
+    },
+    {
+      "criterion": "legacy dark/gold classes converted in owned files",
+      "observable": "owned-file rg scan returned empty output",
+      "status": "done"
+    },
+    {
+      "criterion": "forms have visible focus/error/loading states",
+      "observable": "knowledge add-document form has brand focus rings, form error role=alert, pending button label; logistics form has skeleton loading, brick error alert, brand focus rings, disabled save state",
+      "status": "done"
+    },
+    {
+      "criterion": "offer statuses use sage/copper/brick/slate semantics",
+      "observable": "ListingOffersWorkspace maps accepted to sage, pending/submitted/countered/draft_pending_confirm to copper, rejected/declined/discarded/expired/withdrawn to brick, and fallback to slate/brand",
+      "status": "done"
+    },
+    {
+      "criterion": "stayed within write scope",
+      "observable": "changed files are limited to the three canonical route pages, new listing-specific components under frontend/src/components/listings, ListingLogisticsForm.tsx, and this evidence JSON",
+      "status": "done"
+    }
+  ],
+  "known_limitations": [
+    "The required full-scope legacy-token scan reports unowned creation-flow files under frontend/src/components/listings because the broad command includes all listing components. I did not edit FinishedListingFlow.tsx or NewListingFlow.tsx because they are outside T8 write scope.",
+    "The initially requested unquoted zsh git diff --check invocation fails on the literal [id] route segment; the final check is run with quoted route paths so Git receives the intended files.",
+    "Browser QA was captured after the first implementation pass under .omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/. The live localhost route redirected unauthenticated traffic to /login, so the QA executor used a temporary frontend copy with local auth and API fulfillments to render the actual Next route surfaces at 1280, 768, and 375 widths."
+  ],
+  "adversarial_notes": [
+    "Legacy dashboard knowledge/logistics/offers files were already redirects to /listings/[id]/* when read; I did not modify them.",
+    "The canonical /listings/[id] directory and several listing components were untracked before this task; I did not stage or clean them.",
+    "Knowledge document addition uses text-backed POST /api/v1/listings/{id}/documents, not binary upload, matching the supported endpoint in app/api/listings.py.",
+    "Seller offers endpoint currently returns pending offers derived from escalation reasons; the UI still supports past statuses for forward compatibility."
+  ],
+  "browser_qa": {
+    "status": "pass",
+    "route_id": "T8-QA-SEA-HAVEN",
+    "routes": [
+      "/listings/T8-QA-SEA-HAVEN/knowledge",
+      "/listings/T8-QA-SEA-HAVEN/logistics",
+      "/listings/T8-QA-SEA-HAVEN/offers"
+    ],
+    "widths": [
+      1280,
+      768,
+      375
+    ],
+    "commands": [
+      {
+        "scenario": "live localhost auth boundary",
+        "invocation": "curl -i http://localhost:3000/listings/T8-QA-SEA-HAVEN/knowledge",
+        "result": "307 Temporary Redirect to /login with unauthenticated local server",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/curl-existing-server-redirect.txt"
+      },
+      {
+        "scenario": "browser route rendering with local auth and API fulfillments",
+        "invocation": "T8_FRONTEND_ROOT=/private/tmp/dalya-t8-qa-frontend node .omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/run-t8-browser-qa.mjs",
+        "result": "PASS; screenshots, transcript, QA matrix, token scan, and cleanup receipt written",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/manualQa.json"
+      }
+    ],
+    "artifacts": [
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/manualQa.json",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-browser-transcript.json",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-knowledge-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-knowledge-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-knowledge-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-logistics-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-logistics-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-logistics-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-offers-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-offers-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-offers-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/cleanup-receipt.txt"
+    ],
+    "limitations": [
+      "The screenshots use local Playwright API fulfillments because the real local route is authenticated and redirected unauthenticated requests to /login.",
+      "The browser QA pass preceded the review-blocker fix; the blocker fix was validated separately with typecheck, no-excuse, grep, and source inspection."
+    ]
+  },
+  "review_blocker_fix_pass": {
+    "date": "2026-06-24",
+    "status": "complete",
+    "changed_files": [
+      "frontend/src/components/listings/ListingKnowledgeTypes.ts",
+      "frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx",
+      "frontend/src/components/viewings/ListingLogisticsForm.tsx",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+    ],
+    "fixes": [
+      {
+        "criterion": "HIGH blocker: production-shaped knowledge missing/risk arrays must not crash React rendering",
+        "observable": "KnowledgeSummary now models missing_information as string or {fact_group,label}, risk_flags as string or {fact_id,fact_key,label,value}; ListingKnowledgeSummaryPanel maps both arrays to Signal rows and renders item.label/item.detail, never the raw item object.",
+        "status": "done"
+      },
+      {
+        "criterion": "MEDIUM blocker: logistics form must not overwrite unsaved edits on React Query refetch",
+        "observable": "ListingLogisticsForm tracks dirtyRef; data hydration exits while dirtyRef.current is true, marks dirty on section edits, resets on listingId changes, and clears dirty before successful save invalidation so server reloads remain sensible.",
+        "status": "done"
+      }
+    ],
+    "commands": [
+      {
+        "scenario": "legacy-token scan from original T8 canonical listings prompt",
+        "invocation": "rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/'(app)'/listings frontend/src/components/listings frontend/src/components/viewings/ListingLogisticsForm.tsx || true",
+        "binary_observable": "exit 0; output only contained pre-existing out-of-scope creation-flow token variable names in FinishedListingFlow.tsx and NewListingFlow.tsx; no matches in the changed T8 blocker files.",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      },
+      {
+        "scenario": "frontend typecheck",
+        "invocation": "cd frontend && npx --no-install tsc --noEmit",
+        "binary_observable": "exit 0; empty output",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      },
+      {
+        "scenario": "path-safe whitespace diff check after evidence update",
+        "invocation": "git diff --check -- 'frontend/src/app/(app)/listings/[id]/knowledge/page.tsx' 'frontend/src/app/(app)/listings/[id]/logistics/page.tsx' 'frontend/src/app/(app)/listings/[id]/offers/page.tsx' 'frontend/src/components/viewings/ListingLogisticsForm.tsx' 'frontend/src/components/listings/ListingKnowledgeTypes.ts' 'frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx' '.omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json'",
+        "binary_observable": "exit 0; empty output",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      },
+      {
+        "scenario": "focused blocker grep proving no direct React child rendering of knowledge object-array items",
+        "invocation": "rg -n \"missing_information: readonly string\\[\\]|risk_flags: readonly string\\[\\]|\\{item\\}</li>|\\{item\\}</span>|items=\\{summary\\?\\.(missing_information|risk_flags)|items\\.map\\(\\(item\\).*\\{item\\}\" frontend/src/components/listings/ListingKnowledgeTypes.ts frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx frontend/src/components/listings/ListingKnowledgeWorkspace.tsx || true",
+        "binary_observable": "exit 0; empty output",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      },
+      {
+        "scenario": "positive inspection of safe summary rendering and logistics dirty guard",
+        "invocation": "rg -n \"MissingInformationItem|RiskFlagItem|missingSignal|riskSignal|item\\.label|item\\.detail|dirtyRef|setAccess\\(\\{\\}\\)|invalidateQueries\" frontend/src/components/listings/ListingKnowledgeTypes.ts frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx frontend/src/components/viewings/ListingLogisticsForm.tsx",
+        "binary_observable": "exit 0; showed typed missing/risk item unions, missingSignal/riskSignal adapters, item.label/item.detail rendering, dirtyRef hydration guard, dirty reset on listingId, and dirty clear before invalidateQueries.",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      },
+      {
+        "scenario": "post-write pure LOC check",
+        "invocation": "for file in frontend/src/components/listings/ListingKnowledgeTypes.ts frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx frontend/src/components/viewings/ListingLogisticsForm.tsx; do printf '%s ' \"$file\"; awk '!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/' \"$file\" | wc -l; done",
+        "binary_observable": "exit 0; ListingKnowledgeTypes.ts 70, ListingKnowledgeSummaryPanel.tsx 64, ListingLogisticsForm.tsx 246.",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      },
+      {
+        "scenario": "TypeScript no-excuse checker",
+        "invocation": "NODE_PATH=/Users/eric/dalya-ai/frontend/node_modules bun run /Users/eric/.codex/plugins/cache/sisyphuslabs/omo/4.13.0/skills/programming/scripts/typescript/check-no-excuse-rules.ts frontend/src/components/listings/ListingKnowledgeTypes.ts frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx frontend/src/components/viewings/ListingLogisticsForm.tsx",
+        "binary_observable": "exit 0; No violations in 3 file(s).",
+        "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-8-subroutes.json"
+      }
+    ],
+    "risks": [
+            "Browser QA artifacts exist for the migrated route surfaces before the blocker fix. The blocker fix itself was validated with static/type checks focused on production-shaped knowledge summary items and logistics dirty-form hydration.",
+      "The broad legacy-token scan still reports out-of-scope creation-flow files under frontend/src/components/listings; those files were not edited."
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+Focused unconditional adversarial PASS scan
+Command: rg -n "verdict:\s*'PASS'|verdict\":\s*\"PASS\"" .omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs
+no unconditional verdict PASS literals found
+
+Derived adversarial verdict expressions:
+316:      verdict: result.hasTitle && !result.hasOldDashboardLink && !result.hasHorizontalOverflow && result.noLegacyVisibleText && (result.route === 'index' || result.routeMarker === result.route) ? 'PASS' : 'FAIL',
+325:      verdict: result.finalPath === result.expected ? 'PASS' : 'FAIL',
+359:    { scenarioId: 'final-stale-state', criterionRef: 'T12 adversarial', adversarialClass: 'stale_state', expectedBehavior: 'Fresh server, API stubs, auth cookie, and direct route loads render current workspace state.', verdict: routeEvidenceOk && noUnstubbedApi ? 'PASS' : 'FAIL', artifactRefs: ['browser-transcript'] },
+360:    { scenarioId: 'final-dirty-worktree', criterionRef: 'T12 adversarial', adversarialClass: 'dirty_worktree', expectedBehavior: 'QA runs against current dirty tree with a T12 boundary receipt and without reverting or broad product edits.', verdict: dirtyReceiptOk && routeEvidenceOk ? 'PASS' : 'FAIL', artifactRefs: ['browser-transcript', 'cleanup-receipt', 't12-dirty-worktree-receipt'] },
+361:    { scenarioId: 'final-misleading-success-output', criterionRef: 'T12 adversarial', adversarialClass: 'misleading_success_output', expectedBehavior: 'Browser PASS requires screenshot files plus DOM route/link/overflow checks, not just HTTP 200.', verdict: screenshotEvidenceOk && routeEvidenceOk ? 'PASS' : 'FAIL', artifactRefs: ['browser-transcript'] },
+362:    { scenarioId: 'final-hung-or-long-commands', criterionRef: 'T12 adversarial', adversarialClass: 'hung_or_long_commands', expectedBehavior: 'The QA-owned server is stopped, the safe temp workdir is removed, and the QA port is closed after cleanup.', verdict: cleanupEvidenceOk ? 'PASS' : 'FAIL', artifactRefs: ['cleanup-receipt'] },
+363:    { scenarioId: 'final-flaky-tests', criterionRef: 'T12 adversarial', adversarialClass: 'flaky_tests', expectedBehavior: 'Focused browser harness uses deterministic fixtures and records exact routes/screenshots.', verdict: deterministicFixtureOk && screenshotEvidenceOk ? 'PASS' : 'FAIL', artifactRefs: ['browser-transcript'] },

@@ -1,0 +1,60 @@
+qaServerPid=94296
+qaServerBaseUrl=http://127.0.0.1:52310
+cleanup=server exited after SIGTERM
+qaPortClosedAfterCleanup=true
+supabaseStub=closed
+safeTempWorkdir=removed /private/tmp/dalya-final-surface-listings-final-qa
+preExistingPort3000=left untouched; see curl/lsof artifacts
+timestamp=2026-06-24T21:21:02.021Z
+
+
+> frontend@0.1.0 dev
+> next dev --webpack --hostname 127.0.0.1 --port 52310
+
+▲ Next.js 16.2.1 (webpack)
+- Local:         http://127.0.0.1:52310
+- Network:       http://127.0.0.1:52310
+✓ Ready in 151ms
+
+Image with src "/brand-mockups/agent-dashboard.png" is using quality "95" which is not configured in images.qualities [75]. Please update your config to [75, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+ GET / 200 in 2.2s (next.js: 2.1s, application-code: 178ms)
+ GET /listings 200 in 373ms (next.js: 222ms, proxy.ts: 88ms, application-code: 63ms)
+ GET /listings/FINAL-QA-LISTING-001 200 in 955ms (next.js: 872ms, proxy.ts: 5ms, application-code: 78ms)
+ GET /listings/FINAL-QA-LISTING-001/documents 200 in 422ms (next.js: 345ms, proxy.ts: 3ms, application-code: 74ms)
+ GET /listings/FINAL-QA-LISTING-001/knowledge 200 in 434ms (next.js: 361ms, proxy.ts: 3ms, application-code: 69ms)
+ GET /listings/FINAL-QA-LISTING-001/logistics 200 in 500ms (next.js: 426ms, proxy.ts: 3ms, application-code: 70ms)
+ GET /listings/FINAL-QA-LISTING-001/offers 200 in 901ms (next.js: 824ms, proxy.ts: 4ms, application-code: 72ms)
+ GET /listings 200 in 27ms (next.js: 7ms, proxy.ts: 4ms, application-code: 15ms)
+ GET /listings/FINAL-QA-LISTING-001 200 in 31ms (next.js: 9ms, proxy.ts: 3ms, application-code: 19ms)
+ GET /listings/FINAL-QA-LISTING-001/documents 200 in 30ms (next.js: 9ms, proxy.ts: 3ms, application-code: 18ms)
+ GET /listings/FINAL-QA-LISTING-001/knowledge 200 in 30ms (next.js: 9ms, proxy.ts: 4ms, application-code: 18ms)
+ GET /listings/FINAL-QA-LISTING-001/logistics 200 in 28ms (next.js: 9ms, proxy.ts: 3ms, application-code: 17ms)
+ GET /listings/FINAL-QA-LISTING-001/offers 200 in 23ms (next.js: 3ms, proxy.ts: 4ms, application-code: 17ms)
+ GET /listings 200 in 16ms (next.js: 837µs, proxy.ts: 3ms, application-code: 13ms)
+ GET /listings/FINAL-QA-LISTING-001 200 in 23ms (next.js: 2ms, proxy.ts: 3ms, application-code: 17ms)
+ GET /listings/FINAL-QA-LISTING-001/documents 200 in 20ms (next.js: 2ms, proxy.ts: 2ms, application-code: 15ms)
+ GET /listings/FINAL-QA-LISTING-001/knowledge 200 in 25ms (next.js: 3ms, proxy.ts: 3ms, application-code: 19ms)
+ GET /listings/FINAL-QA-LISTING-001/logistics 200 in 21ms (next.js: 2ms, proxy.ts: 2ms, application-code: 16ms)
+ GET /listings/FINAL-QA-LISTING-001/offers 200 in 21ms (next.js: 2ms, proxy.ts: 3ms, application-code: 16ms)
+ GET /dashboard/listings/FINAL-QA-LISTING-001 200 in 635ms (next.js: 531ms, proxy.ts: 2ms, application-code: 102ms)
+ GET /listings/FINAL-QA-LISTING-001 200 in 33ms (next.js: 9ms, proxy.ts: 4ms, application-code: 19ms)
+ GET /listings/FINAL-QA-LISTING-001 200 in 33ms (next.js: 19ms, proxy.ts: 5ms, application-code: 9ms)
+ GET /dashboard/listings/FINAL-QA-LISTING-001/knowledge 200 in 527ms (next.js: 434ms, proxy.ts: 4ms, application-code: 89ms)
+ GET /listings/FINAL-QA-LISTING-001/knowledge 200 in 36ms (next.js: 6ms, proxy.ts: 3ms, application-code: 27ms)
+ GET /listings/FINAL-QA-LISTING-001/knowledge 200 in 36ms (next.js: 15ms, proxy.ts: 3ms, application-code: 18ms)
+ GET /dashboard/listings/FINAL-QA-LISTING-001/logistics 200 in 477ms (next.js: 403ms, proxy.ts: 4ms, application-code: 70ms)
+ GET /listings/FINAL-QA-LISTING-001/logistics 200 in 30ms (next.js: 18ms, proxy.ts: 4ms, application-code: 8ms)
+ GET /listings/FINAL-QA-LISTING-001/logistics 200 in 31ms (next.js: 9ms, proxy.ts: 4ms, application-code: 18ms)
+ GET /dashboard/listings/FINAL-QA-LISTING-001/offers 200 in 493ms (next.js: 417ms, proxy.ts: 5ms, application-code: 71ms)
+ GET /listings/FINAL-QA-LISTING-001/offers 200 in 31ms (next.js: 9ms, proxy.ts: 3ms, application-code: 19ms)
+ GET /listings/FINAL-QA-LISTING-001/offers 200 in 32ms (next.js: 19ms, proxy.ts: 4ms, application-code: 9ms)
+ GET /dashboard/listings/FINAL-QA-LISTING-001/spa 200 in 554ms (next.js: 478ms, proxy.ts: 4ms, application-code: 71ms)
+ GET /listings/FINAL-QA-LISTING-001/documents 200 in 30ms (next.js: 9ms, proxy.ts: 3ms, application-code: 18ms)
+ GET /listings/FINAL-QA-LISTING-001/documents 200 in 30ms (next.js: 18ms, proxy.ts: 4ms, application-code: 8ms)
+[?25h
+npm notice
+npm notice New minor version of npm available! 11.9.0 -> 11.17.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.17.0
+npm notice To update run: npm install -g npm@11.17.0
+npm notice

@@ -1,0 +1,43 @@
+
+> frontend@0.1.0 build
+> next build
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Turbopack build encountered 3 warnings:
+[next]/internal/font/google/inter_1ec0685a.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap
+
+
+[next]/internal/font/google/jetbrains_mono_9030c4a6.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap
+
+
+[next]/internal/font/google/plus_jakarta_sans_b72ad2e9.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap
+
+
+
+> Build error occurred
+Error: Turbopack build failed with 3 errors:
+[next]/internal/font/google/inter_1ec0685a.module.css
+next/font: error:
+Failed to fetch `Inter` from Google Fonts.
+
+
+[next]/internal/font/google/jetbrains_mono_9030c4a6.module.css
+next/font: error:
+Failed to fetch `JetBrains Mono` from Google Fonts.
+
+
+[next]/internal/font/google/plus_jakarta_sans_b72ad2e9.module.css
+next/font: error:
+Failed to fetch `Plus Jakarta Sans` from Google Fonts.
+
+
+    at ignore-listed frames

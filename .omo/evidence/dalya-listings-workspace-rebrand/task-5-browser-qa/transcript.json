@@ -1,0 +1,1624 @@
+{
+  "scenario": "T5 visual/manual QA for /listings inventory index",
+  "invocation": "node .omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/run-listings-qa.mjs",
+  "surface": "http://127.0.0.1:3197/listings on staged frontend copy",
+  "server": {
+    "preExistingServerUsed": false,
+    "startedServer": true,
+    "baseUrl": "http://127.0.0.1:3197",
+    "serverCwd": "/private/tmp/dalya-final-surface-listings-qa"
+  },
+  "env": {
+    "policy": "sanitized local QA env; values not recorded",
+    "fixtureFrontendRoot": "/Users/eric/dalya-ai/frontend",
+    "sourceEnvFiles": [
+      ".env.example",
+      ".env.local"
+    ],
+    "names": [
+      "PATH",
+      "HOME",
+      "TMPDIR",
+      "USER",
+      "LOGNAME",
+      "NEXT_TELEMETRY_DISABLED",
+      "NEXT_PUBLIC_SUPABASE_URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "npm_config_cache"
+    ]
+  },
+  "checks": [
+    {
+      "label": "source has loadingState",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "source has errorState",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "source has emptyState",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "source has noResultsState",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "source has canonicalLinksOnly",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "source has controls",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Inventory command center",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Search",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Work",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Sort",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Sidra upgraded five bedroom villa",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Live",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Ready property",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Dubai Hills Estate",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes AED 14,250,000",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Leila Agent",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes 12 conversations",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Knowledge needs attention",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes 3 missing facts",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Logistics needs attention",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes 2 viewings",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes 1 offers",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px includes Review knowledge",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "1280px has no /dashboard/listings links",
+      "passed": true,
+      "details": {
+        "dashboardLinks": []
+      }
+    },
+    {
+      "label": "1280px exposes knowledge next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "1280px exposes offers next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "1280px exposes logistics next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "1280px has no page-level horizontal overflow",
+      "passed": true,
+      "details": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "overflowing": []
+      }
+    },
+    {
+      "label": "1280px readiness badges are not visually clipped",
+      "passed": true,
+      "details": {
+        "clippedBadges": []
+      }
+    },
+    {
+      "label": "1280px no-results state renders after unmatched search",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Inventory command center",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Search",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Work",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Sort",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Sidra upgraded five bedroom villa",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Live",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Ready property",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Dubai Hills Estate",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes AED 14,250,000",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Leila Agent",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes 12 conversations",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Knowledge needs attention",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes 3 missing facts",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Logistics needs attention",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes 2 viewings",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes 1 offers",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px includes Review knowledge",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "768px has no /dashboard/listings links",
+      "passed": true,
+      "details": {
+        "dashboardLinks": []
+      }
+    },
+    {
+      "label": "768px exposes knowledge next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "768px exposes offers next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "768px exposes logistics next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "768px has no page-level horizontal overflow",
+      "passed": true,
+      "details": {
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "overflowing": [
+          {
+            "tag": "aside",
+            "text": "closedashboardDashboardreal_estate_agentListingsgroupsBuyersedit_noteDraftsevent_availableViewingssupport_agentEscalatio",
+            "rect": {
+              "left": -256,
+              "right": 0,
+              "width": 256
+            }
+          },
+          {
+            "tag": "div",
+            "text": "close",
+            "rect": {
+              "left": -256,
+              "right": -1,
+              "width": 255
+            }
+          },
+          {
+            "tag": "a",
+            "text": "",
+            "rect": {
+              "left": -236,
+              "right": -133.53125,
+              "width": 102.46875
+            }
+          },
+          {
+            "tag": "img",
+            "text": "",
+            "rect": {
+              "left": -236,
+              "right": -133.53125,
+              "width": 102.46875
+            }
+          },
+          {
+            "tag": "button",
+            "text": "close",
+            "rect": {
+              "left": -49,
+              "right": -13,
+              "width": 36
+            }
+          },
+          {
+            "tag": "span",
+            "text": "close",
+            "rect": {
+              "left": -43,
+              "right": -19,
+              "width": 24
+            }
+          },
+          {
+            "tag": "div",
+            "text": "dashboardDashboardreal_estate_agentListingsgroupsBuyersedit_noteDraftsevent_availableViewingssupport_agentEscalationscal",
+            "rect": {
+              "left": -256,
+              "right": -1,
+              "width": 255
+            }
+          },
+          {
+            "tag": "nav",
+            "text": "dashboardDashboardreal_estate_agentListingsgroupsBuyersedit_noteDraftsevent_availableViewingssupport_agentEscalationscal",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "a",
+            "text": "dashboardDashboard",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "dashboard",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "real_estate_agentListings",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "real_estate_agent",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "groupsBuyers",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "groups",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "edit_noteDrafts",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "edit_note",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "event_availableViewings",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "event_available",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "support_agentEscalations",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "support_agent",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "768px readiness badges are not visually clipped",
+      "passed": true,
+      "details": {
+        "clippedBadges": []
+      }
+    },
+    {
+      "label": "768px no-results state renders after unmatched search",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Inventory command center",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Search",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Work",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Sort",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Sidra upgraded five bedroom villa",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Live",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Ready property",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Dubai Hills Estate",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes AED 14,250,000",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Leila Agent",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes 12 conversations",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Knowledge needs attention",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes 3 missing facts",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Logistics needs attention",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes 2 viewings",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes 1 offers",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px includes Review knowledge",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "375px has no /dashboard/listings links",
+      "passed": true,
+      "details": {
+        "dashboardLinks": []
+      }
+    },
+    {
+      "label": "375px exposes knowledge next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "375px exposes offers next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "375px exposes logistics next-action route",
+      "passed": true,
+      "details": {
+        "canonicalLinks": [
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-ready-dubai-hills-001/knowledge",
+          "/listings/lst-ready-dubai-hills-001",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-offplan-oasis-002/offers",
+          "/listings/lst-offplan-oasis-002",
+          "/listings/lst-ready-marina-003",
+          "/listings/lst-ready-marina-003/logistics",
+          "/listings/lst-ready-marina-003"
+        ]
+      }
+    },
+    {
+      "label": "375px has no page-level horizontal overflow",
+      "passed": true,
+      "details": {
+        "clientWidth": 375,
+        "scrollWidth": 375,
+        "overflowing": [
+          {
+            "tag": "aside",
+            "text": "closedashboardDashboardreal_estate_agentListingsgroupsBuyersedit_noteDraftsevent_availableViewingssupport_agentEscalatio",
+            "rect": {
+              "left": -256,
+              "right": 0,
+              "width": 256
+            }
+          },
+          {
+            "tag": "div",
+            "text": "close",
+            "rect": {
+              "left": -256,
+              "right": -1,
+              "width": 255
+            }
+          },
+          {
+            "tag": "a",
+            "text": "",
+            "rect": {
+              "left": -236,
+              "right": -133.53125,
+              "width": 102.46875
+            }
+          },
+          {
+            "tag": "img",
+            "text": "",
+            "rect": {
+              "left": -236,
+              "right": -133.53125,
+              "width": 102.46875
+            }
+          },
+          {
+            "tag": "button",
+            "text": "close",
+            "rect": {
+              "left": -49,
+              "right": -13,
+              "width": 36
+            }
+          },
+          {
+            "tag": "span",
+            "text": "close",
+            "rect": {
+              "left": -43,
+              "right": -19,
+              "width": 24
+            }
+          },
+          {
+            "tag": "div",
+            "text": "dashboardDashboardreal_estate_agentListingsgroupsBuyersedit_noteDraftsevent_availableViewingssupport_agentEscalationscal",
+            "rect": {
+              "left": -256,
+              "right": -1,
+              "width": 255
+            }
+          },
+          {
+            "tag": "nav",
+            "text": "dashboardDashboardreal_estate_agentListingsgroupsBuyersedit_noteDraftsevent_availableViewingssupport_agentEscalationscal",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "a",
+            "text": "dashboardDashboard",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "dashboard",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "real_estate_agentListings",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "real_estate_agent",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "groupsBuyers",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "groups",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "edit_noteDrafts",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "edit_note",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "event_availableViewings",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "event_available",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          },
+          {
+            "tag": "a",
+            "text": "support_agentEscalations",
+            "rect": {
+              "left": -240,
+              "right": -17,
+              "width": 223
+            }
+          },
+          {
+            "tag": "span",
+            "text": "support_agent",
+            "rect": {
+              "left": -228,
+              "right": -204,
+              "width": 24
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "375px readiness badges are not visually clipped",
+      "passed": true,
+      "details": {
+        "clippedBadges": []
+      }
+    },
+    {
+      "label": "375px no-results state renders after unmatched search",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "captures": [
+    {
+      "id": "source-state-receipt",
+      "kind": "transcript",
+      "description": "Source-level receipt for loading/error/empty/no-results states and canonical links",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/source-state-receipt.json"
+    },
+    {
+      "id": "screenshot-1280",
+      "kind": "screenshot",
+      "description": "/listings populated command center at 1280px width",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-1280.png"
+    },
+    {
+      "id": "screenshot-768",
+      "kind": "screenshot",
+      "description": "/listings populated command center at 768px width",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-768.png"
+    },
+    {
+      "id": "screenshot-375",
+      "kind": "screenshot",
+      "description": "/listings populated command center at 375px width",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-375.png"
+    },
+    {
+      "id": "screenshot-375-no-results",
+      "kind": "screenshot",
+      "description": "/listings no-results state at 375px width after unmatched search",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-375-no-results.png"
+    }
+  ],
+  "observations": [
+    {
+      "width": 1280,
+      "clientWidth": 1280,
+      "scrollWidth": 1280,
+      "viewportHorizontalOverflow": false,
+      "badgeMetrics": [
+        {
+          "text": "Knowledge needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "3 missing facts",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge needs attention",
+          "clientWidth": 165,
+          "scrollWidth": 165,
+          "rect": {
+            "left": 309,
+            "top": 659.609375,
+            "width": 165.390625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 154,
+          "scrollWidth": 154,
+          "rect": {
+            "left": 309,
+            "top": 689.3125,
+            "width": 154.125,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "3 missing facts",
+          "clientWidth": 99,
+          "scrollWidth": 99,
+          "rect": {
+            "left": 309,
+            "top": 719.015625,
+            "width": 99.109375,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 111,
+          "scrollWidth": 111,
+          "rect": {
+            "left": 309,
+            "top": 1033.328125,
+            "width": 110.5625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics ready",
+          "clientWidth": 99,
+          "scrollWidth": 99,
+          "rect": {
+            "left": 425.5625,
+            "top": 1033.328125,
+            "width": 99.296875,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 111,
+          "scrollWidth": 111,
+          "rect": {
+            "left": 309,
+            "top": 1363.9375,
+            "width": 110.5625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 154,
+          "scrollWidth": 154,
+          "rect": {
+            "left": 309,
+            "top": 1393.640625,
+            "width": 154.125,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "clientWidth": 768,
+      "scrollWidth": 768,
+      "viewportHorizontalOverflow": false,
+      "badgeMetrics": [
+        {
+          "text": "Knowledge needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "3 missing facts",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge needs attention",
+          "clientWidth": 161,
+          "scrollWidth": 161,
+          "rect": {
+            "left": 45,
+            "top": 1054.109375,
+            "width": 160.5,
+            "height": 39.40625
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 154,
+          "scrollWidth": 154,
+          "rect": {
+            "left": 45,
+            "top": 1099.515625,
+            "width": 154.125,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "3 missing facts",
+          "clientWidth": 99,
+          "scrollWidth": 99,
+          "rect": {
+            "left": 45,
+            "top": 1129.21875,
+            "width": 99.109375,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 111,
+          "scrollWidth": 111,
+          "rect": {
+            "left": 45,
+            "top": 1443.53125,
+            "width": 110.5625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics ready",
+          "clientWidth": 99,
+          "scrollWidth": 99,
+          "rect": {
+            "left": 45,
+            "top": 1473.234375,
+            "width": 99.296875,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 111,
+          "scrollWidth": 111,
+          "rect": {
+            "left": 45,
+            "top": 1787.546875,
+            "width": 110.5625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 154,
+          "scrollWidth": 154,
+          "rect": {
+            "left": 45,
+            "top": 1817.25,
+            "width": 154.125,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        }
+      ]
+    },
+    {
+      "width": 375,
+      "clientWidth": 375,
+      "scrollWidth": 375,
+      "viewportHorizontalOverflow": false,
+      "badgeMetrics": [
+        {
+          "text": "Knowledge needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "3 missing facts",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 0,
+          "scrollWidth": 0,
+          "rect": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge needs attention",
+          "clientWidth": 149,
+          "scrollWidth": 149,
+          "rect": {
+            "left": 33,
+            "top": 1334.8125,
+            "width": 148.5,
+            "height": 39.40625
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 149,
+          "scrollWidth": 149,
+          "rect": {
+            "left": 33,
+            "top": 1380.21875,
+            "width": 148.5,
+            "height": 39.40625
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "3 missing facts",
+          "clientWidth": 99,
+          "scrollWidth": 99,
+          "rect": {
+            "left": 33,
+            "top": 1425.625,
+            "width": 99.109375,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 111,
+          "scrollWidth": 111,
+          "rect": {
+            "left": 33,
+            "top": 1803.640625,
+            "width": 110.5625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics ready",
+          "clientWidth": 99,
+          "scrollWidth": 99,
+          "rect": {
+            "left": 33,
+            "top": 1833.34375,
+            "width": 99.296875,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Knowledge ready",
+          "clientWidth": 111,
+          "scrollWidth": 111,
+          "rect": {
+            "left": 33,
+            "top": 2211.359375,
+            "width": 110.5625,
+            "height": 23.703125
+          },
+          "overflowX": "visible"
+        },
+        {
+          "text": "Logistics needs attention",
+          "clientWidth": 149,
+          "scrollWidth": 149,
+          "rect": {
+            "left": 33,
+            "top": 2241.0625,
+            "width": 148.5,
+            "height": 39.40625
+          },
+          "overflowX": "visible"
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "server": "server exited after SIGTERM",
+    "supabaseStub": "closed",
+    "safeTempWorkdir": "removed /private/tmp/dalya-final-surface-listings-qa",
+    "receipt": "Browser/context closed; Next dev server stopped; local Supabase auth stub closed; safe temp frontend removed."
+  },
+  "staging": {
+    "sourceRoot": "/Users/eric/dalya-ai/frontend",
+    "safeTempWorkdir": "/private/tmp/dalya-final-surface-listings-qa",
+    "verifierMarker": ".dalya-final-surface-verifier-temp",
+    "copiedEntries": [
+      "src",
+      "public",
+      "scripts",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "tailwind.config.ts",
+      "postcss.config.mjs",
+      "eslint.config.mjs",
+      "next.config.ts"
+    ],
+    "linkedEntries": [
+      "node_modules"
+    ],
+    "skippedEntries": [
+      ".env*",
+      ".next",
+      ".turbo",
+      ".cache",
+      "coverage",
+      "playwright-report",
+      "test-results",
+      "tsconfig.tsbuildinfo",
+      "next-env.d.ts"
+    ],
+    "sourceEnvFiles": [
+      ".env.example",
+      ".env.local"
+    ],
+    "safeTempEnvFiles": []
+  },
+  "passed": true,
+  "artifactPaths": [
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/source-state-receipt.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-1280.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-768.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-375.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-375-no-results.png"
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "task": "T6 Build ListingWorkspaceShell",
+  "plan": ".omo/plans/dalya-listings-workspace-rebrand.md",
+  "status": "done",
+  "changed_files": [
+    "frontend/src/components/listings/ListingWorkspaceShell.tsx",
+    "frontend/src/app/(app)/listings/[id]/layout.tsx"
+  ],
+  "baseline": {
+    "scenario": "failing-first proof that canonical skeleton routes lacked the shared ListingWorkspaceShell/header/tabs before T6 edits",
+    "invocation": "omo sparkshell --shell 'rg -n \"ListingWorkspaceShell|Listings /|Knowledge|Documents|primary next action|aria-current\" frontend/src/app/\\(app\\)/listings frontend/src/components/listings || true' --budget 30000",
+    "result": "exit 0; no ListingWorkspaceShell, breadcrumb, primary next action, or aria-current matches. Matches were only pre-existing document state in FinishedListingFlow and skeleton route names for knowledge/documents.",
+    "observable": "baseline output did not contain ListingWorkspaceShell or aria-current under canonical listing workspace files"
+  },
+  "implementation": {
+    "scenario": "shared route shell for every canonical /listings/[id] subroute",
+    "observable": "frontend/src/app/(app)/listings/[id]/layout.tsx wraps children with <ListingWorkspaceShell id={id}>; Next layout inheritance covers page.tsx, knowledge/page.tsx, logistics/page.tsx, offers/page.tsx, and documents/page.tsx.",
+    "source_excerpt": [
+      "return <ListingWorkspaceShell id={id}>{children}</ListingWorkspaceShell>",
+      "const WORKSPACE_TABS: readonly WorkspaceTab[] = [",
+      "{ label: 'Overview', href: (id) => `/listings/${id}`",
+      "{ label: 'Knowledge', href: (id) => `/listings/${id}/knowledge`",
+      "{ label: 'Logistics', href: (id) => `/listings/${id}/logistics`",
+      "{ label: 'Offers', href: (id) => `/listings/${id}/offers`",
+      "{ label: 'Documents', href: (id) => `/listings/${id}/documents`",
+      "aria-current={active ? 'page' : undefined}",
+      "aria-label={`Primary next action: ${action.label}`}"
+    ]
+  },
+  "verification": [
+    {
+      "scenario": "TypeScript validates the new shell and route layout",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "result": "exit 0; stdout empty",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-6-shell.json"
+    },
+    {
+      "scenario": "Static route-backed shell QA proves canonical tabs and shell markers exist",
+      "invocation": "omo sparkshell --shell 'rg -n \"ListingWorkspaceShell|Listings /|Overview|Knowledge|Logistics|Offers|Documents|aria-current|/listings/\\$\\{id\\}\" frontend/src/app/'\\''(app)'\\''/listings frontend/src/components/listings' --budget 30000",
+      "result": "exit 0; output includes ListingWorkspaceShell import/use in [id]/layout.tsx, five canonical tab hrefs in ListingWorkspaceShell.tsx, breadcrumb aria-label source with Listings /, and aria-current on active tab. Output also includes pre-existing FinishedListingFlow document references outside T6 scope.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-6-shell.json"
+    },
+    {
+      "scenario": "Whitespace and conflict marker check across T6-scoped files plus evidence",
+      "invocation": "omo sparkshell --shell 'git diff --check frontend/src/app/'\\''(app)'\\''/listings frontend/src/components/listings/ListingWorkspaceShell.tsx .omo/evidence/dalya-listings-workspace-rebrand/task-6-shell.json' --budget 20000",
+      "result": "exit 0; stdout empty",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-6-shell.json"
+    },
+    {
+      "scenario": "Next generated route types refreshed after adding a new dynamic layout",
+      "invocation": "cd frontend && npx --no-install next typegen",
+      "result": "exit 0; output: Generating route types... / Types generated successfully",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-6-shell.json"
+    }
+  ],
+  "manual_qa": {
+    "channel": "static route-backed shell QA",
+    "artifact_paths": [
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-6-shell.json"
+    ],
+    "scenarios": [
+      {
+        "scenario": "Every canonical subroute inherits the same shell",
+        "invocation": "find frontend/src/app/\\(app\\)/listings/\\[id\\] -maxdepth 2 -type f | sort",
+        "result": "output lists documents/page.tsx, knowledge/page.tsx, layout.tsx, logistics/page.tsx, offers/page.tsx, and page.tsx under frontend/src/app/(app)/listings/[id]."
+      },
+      {
+        "scenario": "Tabs link only to canonical /listings/<id> routes",
+        "invocation": "source inspection of frontend/src/components/listings/ListingWorkspaceShell.tsx",
+        "result": "WORKSPACE_TABS hrefs are /listings/${id}, /knowledge, /logistics, /offers, and /documents; no /dashboard/listings href was introduced."
+      },
+      {
+        "scenario": "Malformed or partial listing fields do not crash shell rendering",
+        "invocation": "source inspection of listingTitle, priceLabel, communityLabel, propertyTypeLabel, listingIdFromParams",
+        "result": "all required shell fields have Unknown/Unassigned/not-set fallbacks and layout params are parsed from unknown without assertions."
+      }
+    ],
+    "browser_qa": "not run; no dev server was running and T6 acceptance allows static route shell mapping plus tsc"
+  },
+  "post_implementation_review": {
+    "visual_qa_skill": "read; no browser capture run because T6 explicitly accepts static route-backed shell QA when no dev server/browser is already available and cleanup scope says no servers/processes.",
+    "review_work_skill": "read; five-subagent orchestration not run because the available multi_agent_v1.spawn_agent tool states not to spawn sub-agents unless the user explicitly asks for sub-agents, delegation, or parallel agent work.",
+    "main_agent_review_result": "PASS based on final tsc, static route mapping grep, source inspection, JSON parse, diff --check, and scoped dirty-worktree review."
+  },
+  "adversarial_qa": {
+    "dirty_worktree": {
+      "applicable": true,
+      "pre_status": "pre-existing dirty/untracked files included frontend/src/app/(app)/listings/page.tsx, frontend/src/components/listings/FinishedListingFlow.tsx, frontend/src/lib/queries.ts, frontend/src/app/(app)/listings/[id]/ skeleton routes, AgentListingsIndex.tsx, and AgentListingsTable.tsx.",
+      "post_status": "T6 added frontend/src/components/listings/ListingWorkspaceShell.tsx and frontend/src/app/(app)/listings/[id]/layout.tsx; existing dirty files were not reverted."
+    },
+    "stale_state": {
+      "applicable": true,
+      "result": "reran shell grep after edits; Next route type metadata refreshed with next typegen before final tsc."
+    },
+    "misleading_success_output": {
+      "applicable": true,
+      "result": "inspected layout and WORKSPACE_TABS source instead of relying only on grep exit code."
+    },
+    "generated_or_cached_artifacts": {
+      "applicable": true,
+      "result": "Next generated route types were regenerated with npx --no-install next typegen after adding frontend/src/app/(app)/listings/[id]/layout.tsx; no generated files were intentionally staged or edited manually."
+    },
+    "malformed_input": {
+      "applicable": true,
+      "result": "shell uses fallbacks for missing listing title, agent, price, community, type, detail status, and unknown route params."
+    },
+    "prompt_injection": {
+      "applicable": false
+    },
+    "cancel_resume": {
+      "applicable": false
+    },
+    "long_external_commands": {
+      "applicable": false
+    },
+    "flaky_tests": {
+      "applicable": false
+    },
+    "repeated_interruptions": {
+      "applicable": false
+    }
+  },
+  "cleanup": {
+    "servers_or_processes_started": false,
+    "cleanup_receipt": "none needed"
+  },
+  "risks": [
+    "Header data is limited by existing useListingDetail plus useAgentListings responses; if T3/T5 response fields change, labels still fall back but some health badges may be conservative.",
+    "Browser screenshot QA was not run because no dev server was already available; T6 accepted static route shell mapping plus tsc as the observable.",
+    "The required grep includes pre-existing FinishedListingFlow document matches outside T6 scope."
+  ]
+}

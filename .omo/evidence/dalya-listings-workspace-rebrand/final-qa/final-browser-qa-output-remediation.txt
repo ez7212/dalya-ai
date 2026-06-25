@@ -1,0 +1,118 @@
+surface browser-ui
+invocation {"command":"node /Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs","devServerCommand":"cd /private/tmp/dalya-final-surface-listings-final-qa && npm run dev -- --webpack --hostname 127.0.0.1 --port 52310","baseUrl":"http://127.0.0.1:52310","pid":94296,"staging":{"sourceRoot":"/Users/eric/dalya-ai/frontend","safeTempWorkdir":"/private/tmp/dalya-final-surface-listings-final-qa","verifierMarker":".dalya-final-surface-verifier-temp","copiedEntries":["src","public","scripts","package.json","package-lock.json","tsconfig.json","tailwind.config.ts","postcss.config.mjs","eslint.config.mjs","next.config.ts"],"linkedEntries":["node_modules"],"skippedEntries":[".env*",".next",".turbo",".cache","coverage","playwright-report","test-results","tsconfig.tsbuildinfo","next-env.d.ts"],"sourceEnvFiles":[".env.example",".env.local"],"safeTempEnvFiles":[]}}
+navigate {"width":1280,"route":"index","url":"http://127.0.0.1:52310/listings"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/listings/mine -> 200
+navigate {"width":1280,"route":"overview","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/seller/listings/FINAL-QA-LISTING-001/leads -> 200
+api GET /api/v1/agent/listings/FINAL-QA-LISTING-001/buyer-matches -> 200
+navigate {"width":1280,"route":"documents","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/seller/listings/FINAL-QA-LISTING-001/leads -> 200
+api GET /api/v1/listings/FINAL-QA-LISTING-001/documents -> 200
+navigate {"width":1280,"route":"knowledge","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/seller/listings/FINAL-QA-LISTING-001/leads -> 200
+api GET /api/v1/listings/FINAL-QA-LISTING-001/knowledge -> 200
+navigate {"width":1280,"route":"logistics","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/agent/listings/FINAL-QA-LISTING-001/logistics -> 200
+navigate {"width":1280,"route":"offers","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/seller/listings/FINAL-QA-LISTING-001/offers -> 200
+navigate {"width":768,"route":"index","url":"http://127.0.0.1:52310/listings"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+navigate {"width":768,"route":"overview","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/agent/listings/FINAL-QA-LISTING-001/buyer-matches -> 200
+navigate {"width":768,"route":"documents","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/listings/FINAL-QA-LISTING-001/documents -> 200
+navigate {"width":768,"route":"knowledge","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+navigate {"width":768,"route":"logistics","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+navigate {"width":768,"route":"offers","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/seller/listings/FINAL-QA-LISTING-001/offers -> 200
+navigate {"width":375,"route":"index","url":"http://127.0.0.1:52310/listings"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+navigate {"width":375,"route":"overview","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/agent/listings/FINAL-QA-LISTING-001/buyer-matches -> 200
+navigate {"width":375,"route":"documents","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/listings/FINAL-QA-LISTING-001/documents -> 200
+navigate {"width":375,"route":"knowledge","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+navigate {"width":375,"route":"logistics","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+navigate {"width":375,"route":"offers","url":"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers"}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/seller/listings/FINAL-QA-LISTING-001/offers -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/agent/listings/FINAL-QA-LISTING-001/buyer-matches -> 200
+legacy-redirect {"oldPath":"/dashboard/listings/FINAL-QA-LISTING-001","expected":"/listings/FINAL-QA-LISTING-001","finalPath":"/listings/FINAL-QA-LISTING-001","status":200}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+legacy-redirect {"oldPath":"/dashboard/listings/FINAL-QA-LISTING-001/knowledge","expected":"/listings/FINAL-QA-LISTING-001/knowledge","finalPath":"/listings/FINAL-QA-LISTING-001/knowledge","status":200}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+legacy-redirect {"oldPath":"/dashboard/listings/FINAL-QA-LISTING-001/logistics","expected":"/listings/FINAL-QA-LISTING-001/logistics","finalPath":"/listings/FINAL-QA-LISTING-001/logistics","status":200}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+legacy-redirect {"oldPath":"/dashboard/listings/FINAL-QA-LISTING-001/offers","expected":"/listings/FINAL-QA-LISTING-001/offers","finalPath":"/listings/FINAL-QA-LISTING-001/offers","status":200}
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/me/brokerages -> 200
+api GET /api/v1/listings/FINAL-QA-LISTING-001/documents -> 200
+legacy-redirect {"oldPath":"/dashboard/listings/FINAL-QA-LISTING-001/spa","expected":"/listings/FINAL-QA-LISTING-001/documents","finalPath":"/listings/FINAL-QA-LISTING-001/documents","status":200}
+{
+  "passed": true,
+  "surfaceEvidence": 23,
+  "adversarialCases": 5,
+  "matrixPath": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/manualQa.json",
+  "cleanup": "server exited after SIGTERM"
+}

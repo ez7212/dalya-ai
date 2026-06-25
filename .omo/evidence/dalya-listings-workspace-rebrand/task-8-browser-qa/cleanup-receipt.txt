@@ -1,0 +1,30 @@
+devServerPid=11597
+cleanup=dev server exited code=0 signal=null
+supabaseStub=closed
+baseUrl=http://127.0.0.1:61883
+timestamp=2026-06-24T19:10:24.030Z
+
+dev server log tail:
+
+> frontend@0.1.0 dev
+> next dev --webpack --hostname 127.0.0.1 --port 61883
+
+▲ Next.js 16.2.1 (webpack)
+- Local:         http://127.0.0.1:61883
+- Network:       http://127.0.0.1:61883
+- Environments: .env.local
+✓ Ready in 150ms
+
+Image with src "/brand-mockups/agent-dashboard.png" is using quality "95" which is not configured in images.qualities [75]. Please update your config to [75, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+ GET / 200 in 848ms (next.js: 660ms, application-code: 188ms)
+ GET /listings/T8-QA-SEA-HAVEN/knowledge 200 in 596ms (next.js: 434ms, proxy.ts: 93ms, application-code: 68ms)
+ GET /listings/T8-QA-SEA-HAVEN/logistics 200 in 634ms (next.js: 540ms, proxy.ts: 10ms, application-code: 84ms)
+ GET /listings/T8-QA-SEA-HAVEN/offers 200 in 440ms (next.js: 360ms, proxy.ts: 4ms, application-code: 76ms)
+ GET /listings/T8-QA-SEA-HAVEN/knowledge 200 in 29ms (next.js: 7ms, proxy.ts: 4ms, application-code: 19ms)
+ GET /listings/T8-QA-SEA-HAVEN/logistics 200 in 28ms (next.js: 7ms, proxy.ts: 4ms, application-code: 18ms)
+ GET /listings/T8-QA-SEA-HAVEN/offers 200 in 23ms (next.js: 2ms, proxy.ts: 4ms, application-code: 17ms)
+ GET /listings/T8-QA-SEA-HAVEN/knowledge 200 in 23ms (next.js: 3ms, proxy.ts: 3ms, application-code: 17ms)
+ GET /listings/T8-QA-SEA-HAVEN/logistics 200 in 21ms (next.js: 3ms, proxy.ts: 3ms, application-code: 15ms)
+ GET /listings/T8-QA-SEA-HAVEN/offers 200 in 24ms (next.js: 3ms, proxy.ts: 3ms, application-code: 18ms)
+[?25h

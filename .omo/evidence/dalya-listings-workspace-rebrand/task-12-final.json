@@ -1,0 +1,398 @@
+{
+  "task": "T12 final verification for .omo/plans/dalya-listings-workspace-rebrand.md",
+  "status": "PASS",
+  "timestamp": "2026-06-24T21:22:18.684Z",
+  "changedFiles": [
+    "BACKLOG.md",
+    "PROJECT_BRIEF.md",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-report.md",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-12-final.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/*"
+  ],
+  "productCodeChangedByT12": false,
+  "planCheckboxEdited": false,
+  "commands": [
+    {
+      "surface": "Frontend TypeScript static check",
+      "exactInvocation": "cd frontend && npx --no-install tsc --noEmit",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "TypeScript completed with no output.",
+      "artifactRefs": [
+        "tsc"
+      ]
+    },
+    {
+      "surface": "Listings workspace verifier",
+      "exactInvocation": "cd frontend && node scripts/verify-listings-workspace.mjs",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "25 checks passed, including canonical next-action hrefs, search, filters, sorts, unsupported-action failure, and injected legacy href detection.",
+      "artifactRefs": [
+        "verify-listings-workspace"
+      ]
+    },
+    {
+      "surface": "Legacy listing redirects verifier",
+      "exactInvocation": "cd frontend && node scripts/verify-listing-legacy-redirects.mjs",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "Static Next route modules redirect /dashboard/listings/[id] routes to /listings/[id] equivalents; /spa maps to /documents.",
+      "artifactRefs": [
+        "verify-listing-legacy-redirects"
+      ]
+    },
+    {
+      "surface": "Focused listing inventory API pytest",
+      "exactInvocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "exitCode": 4,
+      "verdict": "BLOCKED_RETRIED",
+      "summary": "Sandboxed run failed during conftest DB connection with DNS resolution failure for the configured Neon test host. No secrets were printed.",
+      "artifactRefs": [
+        "pytest-listing-inventory-sandboxed"
+      ]
+    },
+    {
+      "surface": "Focused listing inventory API pytest with network escalation",
+      "exactInvocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "6 passed, 56 warnings in 50.38s.",
+      "artifactRefs": [
+        "pytest-listing-inventory-escalated"
+      ]
+    },
+    {
+      "surface": "Frontend lint",
+      "exactInvocation": "cd frontend && npm run lint",
+      "exitCode": 1,
+      "verdict": "BLOCKED_NON_PRODUCT_LIMITATION",
+      "summary": "Full lint is blocked by pre-existing unrelated errors outside listings workspace: ConversationDetail.tsx no-unescaped-entities, EscalationInbox.tsx no-explicit-any, SellerUpload.tsx set-state-in-effect, InspectionAudioInput.tsx hook/immutability issue. One listings verifier warning exists for an unused variable, but no listings-workspace lint error was reported.",
+      "artifactRefs": [
+        "npm-lint"
+      ]
+    },
+    {
+      "surface": "Frontend production build",
+      "exactInvocation": "cd frontend && npm run build",
+      "exitCode": 1,
+      "verdict": "BLOCKED_RETRIED",
+      "summary": "Sandboxed build failed only on next/font Google Fonts fetches for Inter, JetBrains Mono, and Plus Jakarta Sans.",
+      "artifactRefs": [
+        "npm-build-sandboxed"
+      ]
+    },
+    {
+      "surface": "Frontend production build with network escalation",
+      "exactInvocation": "cd frontend && npm run build",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "Next build compiled, ran TypeScript, generated 38 static pages, and listed canonical /listings plus legacy /dashboard/listings routes.",
+      "artifactRefs": [
+        "npm-build-escalated"
+      ]
+    },
+    {
+      "surface": "Canonical navigation scan",
+      "exactInvocation": "rg -n \"/dashboard/listings\" frontend/src/app/'(app)'/listings frontend/src/components/listings > .omo/evidence/dalya-listings-workspace-rebrand/final-qa/canonical-dashboard-link-scan.txt 2>&1",
+      "exitCode": 1,
+      "verdict": "PASS",
+      "summary": "No canonical /listings or listings component /dashboard/listings links found.",
+      "artifactRefs": [
+        "canonical-dashboard-link-scan"
+      ]
+    },
+    {
+      "surface": "Broad legacy token scan",
+      "exactInvocation": "rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/'(app)'/listings frontend/src/components/listings frontend/src/components/viewings/ListingLogisticsForm.tsx > .omo/evidence/dalya-listings-workspace-rebrand/final-qa/banned-legacy-token-scan.txt 2>&1",
+      "exitCode": 0,
+      "verdict": "PASS_WITH_FALSE_POSITIVE_NOTES",
+      "summary": "Matches are --color-surface-1 CSS variable references in deferred creation-flow files such as FinishedListingFlow.tsx/NewListingFlow.tsx, not canonical dark/gold class leakage.",
+      "artifactRefs": [
+        "banned-legacy-token-scan"
+      ]
+    },
+    {
+      "surface": "Precise canonical workspace legacy token scan",
+      "exactInvocation": "rg -n \"text-gold|btn-gold|(^|[[:space:]\\\"'])surface-1([[:space:]\\\"']|$)|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" <canonical workspace files>",
+      "exitCode": 1,
+      "verdict": "PASS",
+      "summary": "No precise banned legacy class/token matches in canonical listing workspace files or ListingLogisticsForm.",
+      "artifactRefs": [
+        "canonical-workspace-precise-legacy-scan"
+      ]
+    },
+    {
+      "surface": "Browser UI final QA",
+      "exactInvocation": "node .omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs > .omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-remediation.txt 2>&1",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "Remediated staged local-auth Playwright QA passed 23 surface scenarios and 5 evidence-derived adversarial cases for /listings, overview, documents, knowledge, logistics, offers, and legacy route redirects at 1280/768/375 where applicable.",
+      "artifactRefs": [
+        "manualQa",
+        "browser-transcript",
+        "cleanup-receipt",
+        "final-browser-qa-output-remediation",
+        "t12-dirty-worktree-receipt",
+        "json-parse-checks-remediation",
+        "unconditional-adversarial-pass-scan"
+      ]
+    },
+    {
+      "surface": "Command Center activity log",
+      "exactInvocation": "COMMAND_CENTER_WORKING_DIR=\"$PWD\" npm --prefix /Users/eric/command-center run activity-log -- --project dalya --title \"Verified listings workspace rebrand\" --work-type coding --labels qa,verification,listings --purpose \"Confirm DAL-203 Pass 1 listings workspace migration is deliverable and evidence-backed.\" --process \"Ran required frontend, backend, scan, build, and browser QA checks; captured screenshots/transcripts; updated backlog and project brief; documented lint/build/network limitations.\" --outcome \"Final verification passed for DAL-203 with browser QA evidence for /listings, workspace subroutes, and legacy redirects; frontend lint remains blocked by unrelated pre-existing errors outside listings.\"",
+      "exitCode": 0,
+      "verdict": "PASS",
+      "summary": "activity-log ok, id dalya-2026-06-24-verified-listings-workspace-rebrand-4098a9cf.",
+      "artifactRefs": [
+        "command-center-activity-log"
+      ]
+    }
+  ],
+  "manualQa": {
+    "surfaceEvidenceCount": 23,
+    "adversarialCaseCount": 5,
+    "matrixPath": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/manualQa.json",
+    "browserScreenshots": [
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-375.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-1280.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-768.png",
+      ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-375.png"
+    ],
+    "adversarialClasses": [
+      {
+        "class": "stale_state",
+        "verdict": "PASS",
+        "evidenceDerived": true,
+        "artifactRefs": [
+          "browser-transcript"
+        ]
+      },
+      {
+        "class": "dirty_worktree",
+        "verdict": "PASS",
+        "evidenceDerived": true,
+        "artifactRefs": [
+          "browser-transcript",
+          "cleanup-receipt",
+          "t12-dirty-worktree-receipt"
+        ]
+      },
+      {
+        "class": "misleading_success_output",
+        "verdict": "PASS",
+        "evidenceDerived": true,
+        "artifactRefs": [
+          "browser-transcript"
+        ]
+      },
+      {
+        "class": "hung_or_long_commands",
+        "verdict": "PASS",
+        "evidenceDerived": true,
+        "artifactRefs": [
+          "cleanup-receipt"
+        ]
+      },
+      {
+        "class": "flaky_tests",
+        "verdict": "PASS",
+        "evidenceDerived": true,
+        "artifactRefs": [
+          "browser-transcript"
+        ]
+      }
+    ]
+  },
+  "cleanup": {
+    "preExistingPort3000": {
+      "status": "left untouched",
+      "evidence": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/lsof-port-3000-after.txt",
+      "notes": "Pre-existing node listener on 127.0.0.1:3000 PID 25996 was present. curl to localhost:3000 and 127.0.0.1:3000 failed during T12, so final browser QA used a staged server."
+    },
+    "qaServer": {
+      "pid": 94296,
+      "baseUrl": "http://127.0.0.1:52310",
+      "status": "server exited after SIGTERM",
+      "qaPortClosedAfterCleanup": true,
+      "safeTempWorkdir": "removed /private/tmp/dalya-final-surface-listings-final-qa",
+      "evidence": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/cleanup-receipt.txt"
+    }
+  },
+  "knownLimitations": [
+    "Full npm run lint is blocked by unrelated pre-existing lint errors outside the listings workspace. This is documented and not fixed under T12 scope.",
+    "Broad legacy-token regex catches --color-surface-1 CSS variable references in deferred creation-flow files. Precise canonical workspace scan has no banned legacy class/token matches.",
+    "Sandboxed pytest/build/browser server attempts were blocked by network or loopback restrictions; escalated reruns produced the pass evidence.",
+    "Port 3000 pre-existing server was not killed and was not used because it was unreachable.",
+    "The final browser QA harness is 351 pure LOC after removing unused helpers; this is documented as a one-off evidence-harness exception and it does not control product behavior.",
+    "A true pre-T12 dirty-worktree snapshot cannot be recreated; the T12 receipt uses Task 1 baseline, pre-remediation status, and post-remediation status to distinguish evidence-only remediation from product-code changes."
+  ],
+  "deliveryArtifacts": [
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-report.md",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-12-final.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/manualQa.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/browser-transcript.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/command-center-activity-log.txt",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-code-quality-review.md",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-receipt.txt",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-remediation.txt",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/lsof-qa-port-after-remediation.txt",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/json-parse-checks-remediation.txt",
+    ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/unconditional-adversarial-pass-scan.txt"
+  ],
+  "artifactRefs": [
+    {
+      "id": "tsc",
+      "kind": "command-output",
+      "description": "TypeScript check output",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/tsc.txt"
+    },
+    {
+      "id": "verify-listings-workspace",
+      "kind": "command-output",
+      "description": "Listings workspace verifier JSON output",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/verify-listings-workspace.txt"
+    },
+    {
+      "id": "verify-listing-legacy-redirects",
+      "kind": "command-output",
+      "description": "Legacy redirect verifier JSON output",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/verify-listing-legacy-redirects.txt"
+    },
+    {
+      "id": "pytest-listing-inventory-sandboxed",
+      "kind": "command-output",
+      "description": "Initial sandboxed pytest DNS failure",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/pytest-listing-inventory.txt"
+    },
+    {
+      "id": "pytest-listing-inventory-escalated",
+      "kind": "command-output",
+      "description": "Escalated focused pytest pass",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/pytest-listing-inventory-escalated.txt"
+    },
+    {
+      "id": "npm-lint",
+      "kind": "command-output",
+      "description": "Full frontend lint blocker output",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/npm-lint.txt"
+    },
+    {
+      "id": "npm-build-sandboxed",
+      "kind": "command-output",
+      "description": "Initial sandboxed build Google Fonts network failure",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/npm-build.txt"
+    },
+    {
+      "id": "npm-build-escalated",
+      "kind": "command-output",
+      "description": "Escalated frontend build pass",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/npm-build-escalated.txt"
+    },
+    {
+      "id": "canonical-dashboard-link-scan",
+      "kind": "command-output",
+      "description": "No canonical /dashboard/listings links",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/canonical-dashboard-link-scan.txt"
+    },
+    {
+      "id": "banned-legacy-token-scan",
+      "kind": "command-output",
+      "description": "Broad legacy token scan with creation-flow false positives",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/banned-legacy-token-scan.txt"
+    },
+    {
+      "id": "canonical-workspace-precise-legacy-scan",
+      "kind": "command-output",
+      "description": "Precise canonical workspace legacy token scan",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/canonical-workspace-precise-legacy-scan.txt"
+    },
+    {
+      "id": "manualQa",
+      "kind": "json",
+      "description": "Manual QA matrix",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/manualQa.json"
+    },
+    {
+      "id": "browser-transcript",
+      "kind": "browser-transcript",
+      "description": "Browser action log, API stubs, route results, and redirect evidence",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/browser-transcript.json"
+    },
+    {
+      "id": "cleanup-receipt",
+      "kind": "text",
+      "description": "QA server cleanup and port 3000 disposition",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/cleanup-receipt.txt"
+    },
+    {
+      "id": "command-center-activity-log",
+      "kind": "command-output",
+      "description": "Command Center activity log output",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/command-center-activity-log.txt"
+    },
+    {
+      "id": "final-browser-qa-output-remediation",
+      "kind": "command-output",
+      "description": "Remediated final browser QA harness output",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-remediation.txt"
+    },
+    {
+      "id": "t12-code-quality-review",
+      "kind": "markdown",
+      "description": "Focused T12 final code-quality/slop review",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-code-quality-review.md"
+    },
+    {
+      "id": "t12-dirty-worktree-receipt",
+      "kind": "text",
+      "description": "T12 dirty-worktree boundary receipt",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-receipt.txt"
+    },
+    {
+      "id": "lsof-qa-port-after-remediation",
+      "kind": "command-output",
+      "description": "Post-remediation lsof proof for the QA-owned port and safe temp absence",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/lsof-qa-port-after-remediation.txt"
+    },
+    {
+      "id": "json-parse-checks-remediation",
+      "kind": "command-output",
+      "description": "JSON parse checks for task-12-final, manualQa, and browser transcript",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/json-parse-checks-remediation.txt"
+    },
+    {
+      "id": "unconditional-adversarial-pass-scan",
+      "kind": "command-output",
+      "description": "Focused grep proof that no unconditional adversarial PASS verdict literals remain in the harness",
+      "path": ".omo/evidence/dalya-listings-workspace-rebrand/final-qa/unconditional-adversarial-pass-scan.txt"
+    }
+  ],
+  "remediation": {
+    "status": "PASS",
+    "gateReview": ".omo/evidence/dalya-listings-workspace-rebrand-t12-gate-review.md",
+    "correctedIssues": [
+      "Manual QA adversarial verdicts are now derived from route counts, screenshot file checks, transcript contents, cleanup state, closed QA port, and dirty-worktree receipt presence.",
+      "Added focused T12 code-quality/slop review for the final QA harness, manualQa.json, task-12-final.json, tests/evidence, and production diff boundary.",
+      "Documented the evidence-harness size exception: 351 pure LOC, evidence-only, not imported by product code, writes only final QA artifacts, and fails on any FAIL verdict.",
+      "Added T12 dirty-worktree receipt with explicit limitation that true pre-T12 status cannot be reconstructed."
+    ],
+    "noProductCodeEditedByRemediation": true,
+    "planCheckboxEdited": false
+  }
+}

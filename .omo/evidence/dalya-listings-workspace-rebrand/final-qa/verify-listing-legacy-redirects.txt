@@ -1,0 +1,25 @@
+{
+  "scenario": "listing legacy dashboard route compatibility redirects",
+  "verification_mode": "static Next route module verification",
+  "sample_id": "legacy-smoke-listing-123",
+  "final_url_map": {
+    "/dashboard/listings/legacy-smoke-listing-123": "/listings/legacy-smoke-listing-123",
+    "/dashboard/listings/legacy-smoke-listing-123/knowledge": "/listings/legacy-smoke-listing-123/knowledge",
+    "/dashboard/listings/legacy-smoke-listing-123/logistics": "/listings/legacy-smoke-listing-123/logistics",
+    "/dashboard/listings/legacy-smoke-listing-123/offers": "/listings/legacy-smoke-listing-123/offers",
+    "/dashboard/listings/legacy-smoke-listing-123/spa": "/listings/legacy-smoke-listing-123/documents"
+  },
+  "checked_files": [
+    "layout.tsx",
+    "page.tsx",
+    "knowledge/page.tsx",
+    "logistics/page.tsx",
+    "offers/page.tsx",
+    "spa/page.tsx"
+  ],
+  "limitations": [
+    "Live browser navigation was not used because these app routes are auth-protected; this check verifies the Next redirect() targets and legacy UI absence directly in the route modules."
+  ],
+  "status": "pass",
+  "failures": []
+}
