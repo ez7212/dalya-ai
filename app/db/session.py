@@ -147,15 +147,20 @@ def _normalise_context_value(value) -> str:
 
 
 def _apply_rls_context_to_connection(connection, context: dict[str, object]) -> None:
-    """Apply request-scoped DB context to the current transaction only."""
-    for key in _RLS_CONTEXT_KEYS:
-        connection.execute(
-            text("select set_config(:setting_name, :setting_value, true)"),
-            {
-                "setting_name": key,
-                "setting_value": _normalise_context_value(context.get(key)),
-            },
-        )
+    """Apply request-scoped DB context to the current transaction only.
+
+    All RLS keys are set in a SINGLE round-trip — on a high-latency database the
+    prior per-key statements (one network round-trip each) dominated request
+    time. SET LOCAL semantics (transaction-scoped) are unchanged.
+    """
+    selects = ", ".join(
+        f"set_config(:name_{i}, :val_{i}, true)" for i in range(len(_RLS_CONTEXT_KEYS))
+    )
+    params: dict[str, object] = {}
+    for i, key in enumerate(_RLS_CONTEXT_KEYS):
+        params[f"name_{i}"] = key
+        params[f"val_{i}"] = _normalise_context_value(context.get(key))
+    connection.execute(text(f"SELECT {selects}"), params)
 
 
 @event.listens_for(SASession, "after_begin")
