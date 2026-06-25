@@ -71,6 +71,58 @@ export interface SellerListingsResponse {
   total_escalated: number
 }
 
+export type AgentListingPropertyType = 'ready' | 'off_plan' | null
+export type AgentListingStatus = 'live' | 'draft'
+export type AgentListingReadinessStatus = 'ready' | 'needs_attention' | 'empty'
+export type AgentListingLogisticsStatus = 'ready' | 'needs_attention' | 'not_required'
+export type AgentListingPrimaryNextAction =
+  | 'review_knowledge'
+  | 'set_logistics'
+  | 'manage_viewings'
+  | 'review_offers'
+  | 'review_documents'
+  | 'upload_documents'
+  | 'follow_up_buyers'
+  | 'open_listing'
+
+export interface AgentListingSummary {
+  readonly id: string
+  readonly title: string
+  readonly property_type: AgentListingPropertyType
+  readonly community: string | null
+  readonly subcommunity: string | null
+  readonly building_or_project: string | null
+  readonly unit_number: string | null
+  readonly bedrooms: number | null
+  readonly bathrooms: number | null
+  readonly size_sqft: number | null
+  readonly asking_price_aed: number | null
+  readonly price_per_sqft_aed: number | null
+  readonly status: AgentListingStatus
+  readonly lead_count: number
+  readonly escalated_count: number
+  readonly source_url: string | null
+  readonly first_image_url: string | null
+  readonly reference_document_count: number
+  readonly created_at: string | null
+  readonly last_activity_at: string | null
+  readonly assigned_agent_name: string | null
+  readonly knowledge_status: AgentListingReadinessStatus
+  readonly missing_fact_count: number
+  readonly active_viewing_count: number
+  readonly open_offer_count: number
+  readonly buyer_conversation_count: number
+  readonly logistics_status: AgentListingLogisticsStatus
+  readonly primary_next_action: AgentListingPrimaryNextAction
+}
+
+export interface AgentListingsResponse {
+  readonly listings: readonly AgentListingSummary[]
+  readonly total_listings: number
+  readonly total_conversations: number
+  readonly total_escalated: number
+}
+
 export interface ListingLogisticsPayload {
   logistics_id?: string
   listing_id: string
@@ -242,6 +294,21 @@ export function useBuyerListingMatches(listingId: string, enabled: boolean = tru
   })
 }
 
+export function useAgentListings(enabled: boolean = true) {
+  return useQuery<AgentListingsResponse>({
+    queryKey: ['agent-listings'],
+    enabled,
+    queryFn: async () => {
+      const res = await apiFetch('/api/v1/listings/mine')
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(body?.detail ?? `Failed to load listings (${res.status})`)
+      }
+      return res.json()
+    },
+  })
+}
+
 export function useListingLogistics(listingId: string, enabled: boolean = true) {
   return useQuery<ListingLogisticsResponse>({
     queryKey: ['listing-logistics', listingId],
@@ -355,7 +422,7 @@ export interface OfferItem {
   amount_aed: number
   vs_asking: string
   status: 'pending' | 'accepted' | 'rejected'
-  received_at: string
+  received_at: string | null
 }
 
 export interface OffersResponse {

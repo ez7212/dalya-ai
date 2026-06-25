@@ -312,6 +312,32 @@ def test_listing_knowledge_respects_explicit_context(client, brokerage_context_s
     assert response.json()["listing_id"] == brokerage_context_seed["listing_a"]
 
 
+def test_my_listings_returns_assigned_agent_inventory(client, brokerage_context_seed):
+    with _as_user(brokerage_context_seed["single_user"]):
+        response = client.get("/api/v1/listings/mine")
+
+    assert response.status_code == 200
+    payload = response.json()
+    listings = payload["listings"]
+    listing = next(item for item in listings if item["id"] == brokerage_context_seed["listing_a"])
+    assert listing["title"] == "DAL-172 Tower"
+    assert listing["unit_number"] == "172A"
+    assert listing["property_type"] == "ready"
+    assert payload["total_listings"] >= 1
+
+
+def test_my_listings_hides_unassigned_inventory_for_non_manager(client, brokerage_context_seed):
+    with _as_user(brokerage_context_seed["multi_user"]):
+        response = client.get(
+            "/api/v1/listings/mine",
+            headers={"X-Brokerage-Id": brokerage_context_seed["brokerage_a"]},
+        )
+
+    assert response.status_code == 200
+    listing_ids = {item["id"] for item in response.json()["listings"]}
+    assert brokerage_context_seed["listing_a"] not in listing_ids
+
+
 def _listing_payload(seed: dict, *, managing_agent_user_id: str | None = None) -> dict:
     payload = {
         "property_type": "ready",

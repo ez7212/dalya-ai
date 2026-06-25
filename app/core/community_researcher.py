@@ -210,12 +210,32 @@ class CommunityResearcher:
     """
 
     # Model selection: Opus for synthesis/judgment, Sonnet for structured extraction
-    MODEL_OPUS = "claude-opus-4-6"      # Rounds 1 (synthesis) and 5 (audit)
-    MODEL_SONNET = "claude-sonnet-4-6"  # Rounds 2 (gap fill), 3 (sub-dev), 4 (verification)
+    MODEL_OPUS = "claude-opus-4-6"      # deep-mode synthesis/audit
+    MODEL_SONNET = "claude-sonnet-4-6"  # fast structured extraction
+
+    # Performance: the full 5-pass Opus/Sonnet chain (synthesis → gap-fill → per-sub-dev →
+    # verification → audit) reliably ran past the 30-min job timeout. FAST mode (default) does
+    # one combined search batch + a single Sonnet synthesis pass, which finishes in a few minutes
+    # and produces a complete KB (the synthesis prompt already asks for all sub-developments).
+    # Set RESEARCH_FULL_PIPELINE=true to restore the deep multi-pass chain.
+    FULL_PIPELINE = os.getenv("RESEARCH_FULL_PIPELINE", "false").strip().lower() in {"1", "true", "yes", "on"}
+    SYNTHESIS_MODEL = MODEL_OPUS if FULL_PIPELINE else MODEL_SONNET
+
+    # Tavily credit budget per research run (one research_community() call). Tavily bills
+    # "basic" search = 1 credit, "advanced" = 2 credits. A hard budget keeps each project's
+    # research affordable (target ~50 credits → ~100 projects/month on a 4k plan); cached
+    # queries are free and do not draw from the budget. Configurable via env.
+    SEARCH_DEPTH = os.getenv("TAVILY_SEARCH_DEPTH", "basic")  # "basic" (1cr) or "advanced" (2cr)
+    MAX_SEARCH_CREDITS = int(os.getenv("TAVILY_MAX_CREDITS_PER_RUN", "50"))
 
     def __init__(self):
         self.anthropic = anthropic.Anthropic()
         self.tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+        self._search_credits_used = 0
+
+    @property
+    def _search_credit_cost(self) -> int:
+        return 2 if self.SEARCH_DEPTH == "advanced" else 1
 
     async def research_community(
         self,
@@ -235,6 +255,36 @@ class CommunityResearcher:
         )
 
         all_source_urls: list[str] = []
+
+        if not self.FULL_PIPELINE:
+            # ── FAST mode: one combined search batch + one synthesis pass ──
+            logger.info("FAST research: combined discovery + portal/price searches")
+            queries = self._build_broad_queries(project_name, developer, sub_community) + [
+                f'site:propertyfinder.ae "{project_name}" for sale',
+                f'site:bayut.com "{project_name}" for sale',
+                f'"{project_name}" {developer} DLD transaction prices 2024 2025',
+                f'"{project_name}" floor plan brochure unit types',
+            ]
+            results = await self._search_web(queries)
+            all_source_urls.extend(r["url"] for r in results)
+            logger.info("FAST research: %d results from %d queries", len(results), len(queries))
+            if not results:
+                raise ValueError(
+                    f"No web search results found for '{project_name}' by {developer}. "
+                    "Cannot proceed with research."
+                )
+            draft = await self._research_pass(project_name, developer, sub_community, results)
+            draft.setdefault("metadata", {})
+            draft["metadata"]["source_urls"] = list(set(all_source_urls))
+            audit_flags = draft.get("metadata", {}).get("audit_flags", [])
+            file_path = self._save_draft(draft, project_name, developer)
+            logger.info("FAST research complete. Draft saved to %s", file_path)
+            return {
+                "file_path": file_path,
+                "research_confidence": draft.get("metadata", {}).get("research_confidence"),
+                "source_urls": list(set(all_source_urls)),
+                "audit_flags": audit_flags,
+            }
 
         # ── Round 1: Broad discovery ──────────────────────────────────────
         logger.info("Round 1/5: Broad discovery searches")
@@ -417,9 +467,10 @@ class CommunityResearcher:
         seen_urls: set[str] = set()
         cache_hits = 0
 
+        skipped_budget = 0
         for i, query in enumerate(queries):
             try:
-                # Check cache first
+                # Check cache first — cached queries are free and never draw from the budget.
                 cached = _get_cached(query)
                 if cached is not None:
                     cache_hits += 1
@@ -430,16 +481,22 @@ class CommunityResearcher:
                             all_results.append(result)
                     continue
 
+                # Enforce the per-run Tavily credit budget on live (uncached) searches.
+                if self._search_credits_used + self._search_credit_cost > self.MAX_SEARCH_CREDITS:
+                    skipped_budget += 1
+                    continue
+
                 logger.debug("Tavily search %d/%d: %s", i + 1, len(queries), query[:80])
                 response = await loop.run_in_executor(
                     None,
                     lambda q=query: self.tavily.search(
                         query=q,
-                        search_depth="advanced",
+                        search_depth=self.SEARCH_DEPTH,
                         include_raw_content=True,
                         max_results=5,
                     ),
                 )
+                self._search_credits_used += self._search_credit_cost
                 query_results: list[dict] = []
                 for result in response.get("results", []):
                     url = result.get("url", "")
@@ -468,6 +525,11 @@ class CommunityResearcher:
 
         if cache_hits:
             logger.info("Search cache: %d/%d queries served from cache", cache_hits, len(queries))
+        if skipped_budget:
+            logger.info(
+                "Tavily budget reached (%d/%d credits used); skipped %d live queries this batch",
+                self._search_credits_used, self.MAX_SEARCH_CREDITS, skipped_budget,
+            )
 
         all_results.sort(key=lambda r: r.get("score", 0), reverse=True)
         return all_results
@@ -539,7 +601,7 @@ CRITICAL INSTRUCTIONS:
 
 Produce the complete JSON now."""
 
-        return await self._call_claude(prompt, model=self.MODEL_OPUS)
+        return await self._call_claude(prompt, model=self.SYNTHESIS_MODEL)
 
     async def _gap_fill_pass(
         self, draft: dict, project_name: str, gap_results: list[dict], null_fields: list[str],
@@ -699,7 +761,9 @@ Return the audited JSON now."""
             None,
             lambda: self.anthropic.messages.create(
                 model=model,
-                max_tokens=16000,
+                # The full community KB JSON can exceed 16k output tokens, which truncated the
+                # response mid-string ("Unterminated string") and failed the parse. Give it room.
+                max_tokens=32000,
                 temperature=0.2,
                 messages=[{"role": "user", "content": prompt}],
             ),
@@ -834,17 +898,32 @@ Malformed JSON:
         logger.info("Saved draft KB file: %s", file_path)
         return relative_path
 
+    # Prompt-size guardrails. Claude's context is large but finite; with sub-development
+    # query expansion the raw source set can reach hundreds of results / millions of tokens,
+    # which fails the request outright. Cap by source count and a cumulative character budget
+    # (results arrive pre-sorted by relevance score, so the most useful sources survive).
+    MAX_PROMPT_SOURCES = 50
+    MAX_PROMPT_SOURCE_CHARS = 500_000  # ~125k tokens, well under the model limit with room for schema/example
+
     def _format_web_results(self, results: list[dict]) -> str:
-        """Format web results into a readable text block for prompts."""
+        """Format web results into a readable text block for prompts, bounded in total size."""
         parts = []
-        for i, r in enumerate(results, 1):
+        total_chars = 0
+        used = 0
+        for r in results[: self.MAX_PROMPT_SOURCES]:
             content = r.get("raw_content") or r.get("content", "")
             if len(content) > 8000:
                 content = content[:8000] + "\n... [truncated]"
-            parts.append(
-                f"--- SOURCE {i} ---\n"
+            block = (
+                f"--- SOURCE {used + 1} ---\n"
                 f"URL: {r['url']}\n"
                 f"Title: {r['title']}\n"
                 f"Content:\n{content}\n"
             )
+            if total_chars + len(block) > self.MAX_PROMPT_SOURCE_CHARS and used > 0:
+                parts.append(f"\n... [{len(results) - used} further sources omitted to fit the prompt budget]")
+                break
+            parts.append(block)
+            total_chars += len(block)
+            used += 1
         return "\n".join(parts)

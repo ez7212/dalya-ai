@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from app.api import agent, agent_dashboard, crm, leads, listings, media, onboarding, research, seller, spa_parser, viewings, whatsapp
+from app.api import agent, agent_dashboard, crm, leads, listing_inventory, listings, media, onboarding, research, seller, spa_parser, viewings, whatsapp
 from app.core.runtime_config import (
     cors_allow_origins,
     debug_routes_enabled,
@@ -142,6 +142,7 @@ app.include_router(media.router, tags=["Media"])
 app.include_router(spa_parser.router, prefix="/api/v1", tags=["SPA Parser"])
 app.include_router(whatsapp.router, prefix="/api/v1", tags=["WhatsApp"])
 app.include_router(onboarding.router, prefix="/api/v1", tags=["Onboarding"])
+app.include_router(listing_inventory.router, prefix="/api/v1", tags=["Listings"])
 app.include_router(listings.router, prefix="/api/v1", tags=["Listings"])
 app.include_router(agent.router, prefix="/api/v1", tags=["Agent"])
 app.include_router(agent_dashboard.router, prefix="/api/v1", tags=["Agent Dashboard"])
