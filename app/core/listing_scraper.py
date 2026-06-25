@@ -172,7 +172,7 @@ def _get_path(obj, *path):
 
 
 def _append_unique(values: list[str], value: Optional[str]) -> None:
-    if value and value not in values:
+    if isinstance(value, str) and value and value not in values:
         values.append(value)
 
 
@@ -250,10 +250,10 @@ def _extract_image_url(value) -> Optional[str]:
         return value
     if isinstance(value, dict):
         direct_url = _first_value(value, ("url", "src", "full", "large", "medium", "main", "photo", "image", "original"))
-        if direct_url:
+        if isinstance(direct_url, str) and direct_url:
             return direct_url
         image_id = _first_value(value, ("id", "externalID", "externalId", "photoID", "photoId"))
-        if image_id:
+        if image_id and not isinstance(image_id, bool):
             return f"https://images.bayut.com/thumbnails/{image_id}-800x600.webp"
     return None
 

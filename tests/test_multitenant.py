@@ -292,6 +292,7 @@ def test_listing_scraper_bayut_rapidapi_property_payload_prefills_draft(monkeypa
         "media": {
             "cover_photo": {"url": "https://images.bayut.com/cover.jpg"},
             "photos": [{"url": "https://images.bayut.com/one.jpg"}],
+            "image": True,
         },
         "amenities": [{"name": "Private Garden"}],
     }
@@ -321,3 +322,4 @@ def test_listing_scraper_bayut_rapidapi_property_payload_prefills_draft(monkeypa
         "https://images.bayut.com/cover.jpg",
         "https://images.bayut.com/one.jpg",
     ]
+    assert all(isinstance(image_url, str) for image_url in result.image_urls)
