@@ -605,6 +605,42 @@ class DBAgentCommunityRemark(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
+class DBAgentCommunityOverride(Base):
+    """
+    Agent-scoped, per-field correction to a project's community research.
+
+    Scope: (brokerage_id, agent_user_id, project_key, field_key). `project_key`
+    is the slug of the research project (e.g. "golf_grove") — NOT the broader
+    master community — so a correction like "166 units" applies to all of the
+    agent's Golf Grove listings (now and future) without bleeding onto their
+    other projects in the same master community.
+
+    Private to the owning agent — never leaks across agents or brokerages, and
+    never mutates the shared DBCommunityResearch / approved KB. The Property
+    Advisor injects these as high-trust "agent-verified corrections" above the
+    shared community KB ONLY for listings whose assigned_agent_id matches and
+    whose project matches this row's project_key.
+    """
+    __tablename__ = "agent_community_overrides"
+    __table_args__ = (
+        UniqueConstraint(
+            "brokerage_id", "agent_user_id", "project_key", "field_key",
+            name="uq_agent_community_override_scope_field",
+        ),
+    )
+
+    override_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    brokerage_id = Column(String, ForeignKey("brokerages.brokerage_id"), nullable=False, index=True)
+    agent_user_id = Column(String, nullable=False, index=True)
+    project_key = Column(String, nullable=False, index=True)
+    field_key = Column(String, nullable=False)
+    value_text = Column(Text, nullable=False)
+    note = Column(Text, nullable=True)
+    buyer_safe = Column(Boolean, default=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
 class DBAgentMessageRoute(Base):
     """
     Transport-agnostic reply-routing record.

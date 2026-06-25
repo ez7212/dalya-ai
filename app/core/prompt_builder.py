@@ -255,6 +255,7 @@ def build_system_prompt(
     dashboard_url: str = "dalya.ai/dashboard",
     property_type: str = "off_plan",
     agent_private_notes: Optional[list[str]] = None,
+    agent_community_overrides: Optional[list[dict]] = None,
     unit_profile: Optional[dict] = None,
     reference_documents: Optional[list[dict]] = None,
     ready_property_knowledge: Optional[dict] = None,
@@ -769,6 +770,26 @@ If a buyer asks for a viewing, site visit, or to "see the property":
 - Do NOT escalate to a human agent for this — handle it yourself
 """
 
+    # ── Agent-verified corrections to community research (scoped to assigned agent) ──
+    agent_overrides_section = ""
+    if agent_community_overrides:
+        correction_lines = []
+        for item in agent_community_overrides:
+            label = (item or {}).get("label")
+            value = (item or {}).get("value")
+            if not label or value in (None, ""):
+                continue
+            note = (item or {}).get("note")
+            correction_lines.append(f"- {label}: {value}" + (f"  (agent note: {note})" if note else ""))
+        if correction_lines:
+            agent_overrides_section = f"""
+AGENT-VERIFIED CORRECTIONS — HIGHEST TRUST FOR THIS LISTING
+----------------------------------------------------------
+The managing agent has verified the following facts for this project and they OVERRIDE any conflicting value in the general community knowledge below. When a buyer asks about any of these, use the agent-verified value, not the researched one. Do not attribute them to "the agent" — state them naturally as fact.
+
+{chr(10).join(correction_lines)}
+"""
+
     # ── Agent's PRIVATE notes on this community (scoped to assigned agent) ──
     agent_private_section = ""
     if agent_private_notes:
@@ -975,7 +996,7 @@ OTHER STYLE RULES
 - Do not cite developer credit ratings, delivery percentages, unit/home counts, or market-outperformance claims unless those exact figures are provided in this prompt from a named source.
 - For furnishing on off-plan units that are still under construction, default to unfurnished unless listing data says otherwise.
 - For pet questions in Dubai communities, if the listing does not specify the exact building rule, say most Dubai developments are pet-friendly subject to HOA/building rules, and that the listing agent can confirm the specific restriction.
-{community_section}{listing_enrichment_section}{buyer_section}{readiness_next_question_section}{verified_facts_grounding_section}{portfolio_section}{seller_qa_section}{seller_instructions}{media_section}{unit_profile_section}{ready_property_knowledge_section}{property_scope_section}{agent_private_section}{reference_documents_section}{additional_fees_block}{downward_revision_section}
+{agent_overrides_section}{community_section}{listing_enrichment_section}{buyer_section}{readiness_next_question_section}{verified_facts_grounding_section}{portfolio_section}{seller_qa_section}{seller_instructions}{media_section}{unit_profile_section}{ready_property_knowledge_section}{property_scope_section}{agent_private_section}{reference_documents_section}{additional_fees_block}{downward_revision_section}
 YOUR RULES — FOLLOW THESE STRICTLY
 ------------------------------------
 1. NEVER quote a price lower than {format_aed(asking_price)} without escalating to the human agent
