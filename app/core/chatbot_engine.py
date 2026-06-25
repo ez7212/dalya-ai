@@ -4289,9 +4289,10 @@ Summary:"""
             )
         return (
             price_prefix +
-            "Off-plan finance depends on the specific bank, buyer profile, developer approval status, construction stage, "
-            "and transaction structure. The listing agent and a mortgage advisor need to confirm the exact policy before "
-            "you rely on it or make an offer."
+            "Off-plan properties may become eligible for a mortgage once construction reaches roughly 50% completion, "
+            "at which point a bank can typically finance the remaining balance of the price. Whether this is available, "
+            "and on what terms, depends on the specific developer and bank, so you should consult a mortgage advisor or "
+            "bank to confirm the exact policy before you rely on it or make an offer."
         )
 
     @staticmethod
