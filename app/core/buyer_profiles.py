@@ -194,17 +194,12 @@ def confirm_field(
     return row
 
 
-def effective_fields(db: Session, profile: DBBrokerageBuyerProfile) -> dict:
+def effective_fields_from_rows(rows) -> dict:
+    """Compute the effective qualification snapshot from pre-fetched field rows.
+
+    Pure (no DB access) so callers listing many buyers can batch the
+    `DBBuyerProfileField` fetch once and avoid an N+1 per profile.
     """
-    Effective qualification snapshot: confirmed-over-inferred per field, with
-    suggestion chips where a differing inference exists alongside a confirmed
-    value.
-    """
-    rows = (
-        db.query(DBBuyerProfileField)
-        .filter(DBBuyerProfileField.profile_id == profile.profile_id)
-        .all()
-    )
     by_field: dict[str, dict] = {}
     for row in rows:
         entry = by_field.setdefault(row.field, {})
@@ -232,6 +227,20 @@ def effective_fields(db: Session, profile: DBBrokerageBuyerProfile) -> dict:
             }
         snapshot[field] = item
     return snapshot
+
+
+def effective_fields(db: Session, profile: DBBrokerageBuyerProfile) -> dict:
+    """
+    Effective qualification snapshot: confirmed-over-inferred per field, with
+    suggestion chips where a differing inference exists alongside a confirmed
+    value.
+    """
+    rows = (
+        db.query(DBBuyerProfileField)
+        .filter(DBBuyerProfileField.profile_id == profile.profile_id)
+        .all()
+    )
+    return effective_fields_from_rows(rows)
 
 
 def profile_to_schema(

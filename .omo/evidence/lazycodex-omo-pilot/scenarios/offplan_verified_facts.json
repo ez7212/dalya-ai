@@ -1,0 +1,16 @@
+{
+  "slug": "offplan_verified_facts",
+  "listing_id": "94b141d1-4c92-441d-ba30-1f6f2c3fbdc4",
+  "buyer_phone": "+971551000002",
+  "message": "What LTV can I get on this off-plan, and what's the NOC and handover process?",
+  "bot_response": "Off-plan finance is more constrained than ready resale and varies significantly by bank. I can't quote an LTV percentage without knowing the buyer's lender, their specific policies, and construction progress at handover. That needs to come from the buyer's bank or mortgage advisor once formally engaged.\n\nNOC and handover timing sit with Emaar and the buyer's bank. The listing agent will confirm both the developer's NOC release process and the bank's disbursement sequence once under contract, those two timelines need to align.\n\nWhat I can confirm: 5-bed, 8,048 sqft off-plan unit in The Oasis, asking AED 15.173M, handover targeted September 2029.",
+  "escalation": null,
+  "agents_ai_envelopes": [],
+  "buyer_messages": [],
+  "checks": {
+    "responds": true,
+    "defers_legal_finance": true,
+    "no_invented_ltv_ratio": true
+  },
+  "status": "PASS"
+}

@@ -134,10 +134,17 @@ def threaded_escalation_seed():
             db.query(DBAgentRelaySession).filter(DBAgentRelaySession.brokerage_id == brokerage_id).delete(synchronize_session=False)
             db.query(DBAgentMessageRoute).filter(DBAgentMessageRoute.conversation_id == conversation_id).delete(synchronize_session=False)
             if thread_ids:
+                # `offers` (DBOffer) FK-references escalation_threads (offers_thread_id_fkey) — clear before threads.
+                from app.models.db_models import DBOffer
+                db.query(DBOffer).filter(DBOffer.thread_id.in_(thread_ids)).delete(synchronize_session=False)
                 db.query(DBEscalationThread).filter(DBEscalationThread.thread_id.in_(thread_ids)).delete(synchronize_session=False)
             db.query(DBMessage).filter(DBMessage.conversation_id == conversation_id).delete(synchronize_session=False)
             db.query(DBLeadAssignment).filter(DBLeadAssignment.conversation_id == conversation_id).delete(synchronize_session=False)
             db.query(DBConversation).filter(DBConversation.conversation_id == conversation_id).delete(synchronize_session=False)
+            # Brokerage-scoped buyer rows the engine creates also FK-reference brokerages — clear before it.
+            from app.models.db_models import DBBrokerageBuyerProfile, DBBuyerPreferenceProfile, DBBuyerProfile, DBLeadTask
+            for _Model in (DBBrokerageBuyerProfile, DBBuyerProfile, DBBuyerPreferenceProfile, DBLeadTask):
+                db.query(_Model).filter(_Model.brokerage_id == brokerage_id).delete(synchronize_session=False)
             db.query(DBListing).filter(DBListing.listing_id == listing_id).delete(synchronize_session=False)
             db.query(DBAgentProfile).filter(DBAgentProfile.brokerage_id == brokerage_id).delete(synchronize_session=False)
             db.query(DBBrokerage).filter(DBBrokerage.brokerage_id == brokerage_id).delete(synchronize_session=False)

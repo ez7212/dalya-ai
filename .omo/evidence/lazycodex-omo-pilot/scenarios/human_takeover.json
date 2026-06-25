@@ -1,0 +1,15 @@
+{
+  "slug": "human_takeover",
+  "listing_id": "2caa927e-315e-47ba-881c-4f3ac1827762",
+  "buyer_phone": "+971551000005",
+  "message": "I'd prefer to speak directly with a human agent about this property.",
+  "bot_response": "Got it. Eric, the listing agent at Mahoroba Realty, will reach out to you directly on this number shortly to discuss the property.",
+  "escalation": null,
+  "agents_ai_envelopes": [],
+  "buyer_messages": [],
+  "checks": {
+    "responds": true,
+    "routes_to_human": true
+  },
+  "status": "PASS"
+}

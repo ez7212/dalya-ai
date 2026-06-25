@@ -23,7 +23,7 @@ from app.core.brokerage_access import (
     record_compliance_event,
     resolve_request_brokerage_context,
 )
-from app.core.buyer_profiles import effective_fields
+from app.core.buyer_profiles import effective_fields, effective_fields_from_rows
 from app.core.deal_readiness import compute_readiness, fields_from_effective_fields, serialize_readiness
 from app.core.hot_list import (
     latest_hotlist_refresh_run,
@@ -215,6 +215,20 @@ def _conversation_is_visible(db: Session, ctx: AgentDashboardContext, conversati
         brokerage_id=ctx.brokerage_id,
         role=ctx.role,
     )
+
+
+def _visible_conversation_ids(db: Session, ctx, conversation_ids) -> set:
+    """Batched visibility: fetch all referenced conversations once and return the
+    subset of ids the agent may view (avoids a per-row `_conversation_is_visible`)."""
+    ids = [cid for cid in conversation_ids if cid]
+    if not ids:
+        return set()
+    convs = db.query(DBConversation).filter(DBConversation.conversation_id.in_(ids)).all()
+    return {
+        c.conversation_id
+        for c in convs
+        if can_view_conversation(db, c, user_id=ctx.user_id, brokerage_id=ctx.brokerage_id, role=ctx.role)
+    }
 
 
 def _get_visible_reply_draft_or_404(
@@ -492,8 +506,14 @@ def _readiness_payload(
     summary: Optional[dict] = None,
     offer_count: int = 0,
     open_thread_count: int = 0,
+    effective: Optional[dict] = None,
 ) -> dict:
-    qualification = effective_fields(db, profile) if profile else {}
+    # `effective` may be pre-fetched by a batched caller to avoid an N+1; falls
+    # back to a per-profile query when omitted.
+    if effective is not None:
+        qualification = effective
+    else:
+        qualification = effective_fields(db, profile) if profile else {}
     fields = fields_from_effective_fields(
         qualification,
         fallback_budget_aed=conversation.detected_budget,
@@ -629,6 +649,17 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
             .all()
         )
     } if rows else {}
+    # Batch the qualification-field rows once (was an N+1 inside _readiness_payload).
+    from collections import defaultdict as _defaultdict
+
+    from app.models.db_models import DBBuyerProfileField as _DBBuyerProfileField
+
+    _profile_ids = [p.profile_id for p in buyer_profiles.values()]
+    fields_by_profile: dict = _defaultdict(list)
+    if _profile_ids:
+        for _fr in db.query(_DBBuyerProfileField).filter(_DBBuyerProfileField.profile_id.in_(_profile_ids)).all():
+            fields_by_profile[_fr.profile_id].append(_fr)
+
     latest_messages = _latest_messages_by_conversation(db, conversation_ids)
     latest_buyer_messages = _latest_buyer_messages_by_conversation(db, conversation_ids)
     message_counts = dict(
@@ -817,6 +848,11 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
                 summary=summary,
                 offer_count=int(offer_counts.get(conv.conversation_id, 0)),
                 open_thread_count=int(open_thread_counts.get(conv.conversation_id, 0)),
+                effective=(
+                    effective_fields_from_rows(fields_by_profile.get(_p.profile_id, []))
+                    if (_p := buyer_profiles.get(conv.buyer_phone)) is not None
+                    else {}
+                ),
             ),
             "needs_reply": needs_reply,
             "needs_reply_reason": needs_reply_reason,
@@ -849,7 +885,8 @@ def _tasks(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         .limit(30)
         .all()
     )
-    rows = [task for task in rows if _conversation_is_visible(db, ctx, task.conversation_id)]
+    _visible = _visible_conversation_ids(db, ctx, [task.conversation_id for task in rows])
+    rows = [task for task in rows if not task.conversation_id or task.conversation_id in _visible]
     return [
         {
             "task_id": task.task_id,
@@ -884,7 +921,8 @@ def _viewings(db: Session, ctx: AgentDashboardContext) -> list[dict]:
         .limit(15)
         .all()
     )
-    rows = [viewing for viewing in rows if _conversation_is_visible(db, ctx, viewing.conversation_id)]
+    _visible = _visible_conversation_ids(db, ctx, [viewing.conversation_id for viewing in rows])
+    rows = [viewing for viewing in rows if not viewing.conversation_id or viewing.conversation_id in _visible]
     return [
         {
             "viewing_id": viewing.viewing_id,
@@ -1516,13 +1554,24 @@ async def agent_dashboard(
     db: Session = Depends(get_db),
 ):
     ctx = _agent_context(user, db)
-    refresh_morning_hot_list(
-        db,
-        brokerage_id=ctx.brokerage_id,
-        user_id=ctx.user_id,
-        role=ctx.role,
-        limit=50,
+    # Throttle the hot-list recompute (same policy as GET /agent/hot-list): skip
+    # it if assignments were refreshed within the TTL, otherwise recompute
+    # brokerage-wide. Avoids a ~30s recompute+write on every dashboard load.
+    _now = datetime.utcnow()
+    _last_refresh = (
+        db.query(func.max(DBLeadAssignment.updated_at))
+        .filter(DBLeadAssignment.brokerage_id == ctx.brokerage_id)
+        .scalar()
     )
+    if not (_last_refresh and _last_refresh >= _now - timedelta(minutes=5)):
+        refresh_morning_hot_list(
+            db,
+            brokerage_id=ctx.brokerage_id,
+            user_id=ctx.user_id,
+            role=ctx.role,
+            limit=50,
+            now=_now,
+        )
     payload = {
         "sample_data": False,
         "generated_at": _iso(datetime.utcnow()),

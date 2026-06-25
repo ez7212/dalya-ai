@@ -1,16 +1,16 @@
 {
-  "verdict": "Red",
+  "verdict": "Yellow",
   "modes": {
-    "smoke": false,
-    "chatbot": false,
+    "smoke": true,
+    "chatbot": true,
     "browser": false
   },
-  "safety": "BLOCKED",
+  "safety": "PASS",
   "rows": [
     {
       "label": "Phase 0 safety gate",
       "mode": "smoke",
-      "status": "BLOCKED",
+      "status": "PRESENT",
       "path": "task-2-safety.json"
     },
     {
@@ -22,19 +22,19 @@
     {
       "label": "Dependent seed summary",
       "mode": "smoke",
-      "status": "BLOCKED",
+      "status": "PRESENT",
       "path": "seed-summary.json"
     },
     {
       "label": "Buyer scenario runner",
       "mode": "chatbot",
-      "status": "BLOCKED",
+      "status": "PRESENT",
       "path": "scenarios"
     },
     {
       "label": "Pilot-critical API smoke",
       "mode": "smoke",
-      "status": "BLOCKED",
+      "status": "PRESENT",
       "path": "task-6-api-smoke.json"
     },
     {

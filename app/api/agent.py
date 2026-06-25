@@ -32,7 +32,7 @@ from app.core.brokerage_config import (
     runtime_config_for_brokerage,
     serialize_runtime_config,
 )
-from app.core.buyer_profiles import effective_fields
+from app.core.buyer_profiles import effective_fields, effective_fields_from_rows
 from app.core.conversation_takeover import (
     AI_MODES,
     conversation_ai_mode,
@@ -343,27 +343,115 @@ async def update_notification_preferences(
     return {"events": updated["events"], "quiet_hours": updated["quiet_hours"]}
 
 
+_HOT_LIST_CACHE_TTL = timedelta(minutes=5)
+
+
 @router.get("/agent/hot-list")
 async def hot_list(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    """Today queue.
+
+    A GET no longer recomputes the whole hot list on every load. If a refresh
+    ran for this brokerage within the TTL we serve the cached assignments
+    (fast); otherwise we recompute brokerage-wide once, record the run, and then
+    read. The explicit `POST /agent/hot-list/refresh` still forces a recompute.
+    """
+    from sqlalchemy import func
+
+    from app.core.hot_list import ACTIVE_ASSIGNMENT_STATUSES
+    from app.models.db_models import DBConversationAccessGrant
+
     ctx = _agent_context(user, db)
-    assignments = refresh_morning_hot_list(
-        db,
-        brokerage_id=ctx.brokerage_id,
-        user_id=ctx.user_id,
-        role=ctx.role,
-        limit=50,
+    now = datetime.utcnow()
+
+    # Throttle off the freshest assignment for this brokerage — no extra record to
+    # write (and nothing for test teardowns to leak). A recompute upserts
+    # assignments, bumping their updated_at, so the next load inside the TTL reads
+    # cached. The explicit POST /agent/hot-list/refresh still forces a recompute.
+    last_refresh = (
+        db.query(func.max(DBLeadAssignment.updated_at))
+        .filter(DBLeadAssignment.brokerage_id == ctx.brokerage_id)
+        .scalar()
     )
+    is_fresh = bool(last_refresh and last_refresh >= now - _HOT_LIST_CACHE_TTL)
+    if not is_fresh:
+        # Recompute brokerage-wide (user_id=None) so one refresh serves every agent.
+        refresh_morning_hot_list(
+            db, brokerage_id=ctx.brokerage_id, user_id=None, role="owner", limit=50, now=now
+        )
+
+    # ── Read active assignments (cached) and build leads with batched lookups. ──
+    assignments = (
+        db.query(DBLeadAssignment)
+        .filter(
+            DBLeadAssignment.brokerage_id == ctx.brokerage_id,
+            DBLeadAssignment.status.in_(tuple(ACTIVE_ASSIGNMENT_STATUSES)),
+        )
+        .all()
+    )
+    conv_ids = [a.conversation_id for a in assignments]
+    convs_by_id: dict = {}
+    if conv_ids:
+        for c in db.query(DBConversation).filter(DBConversation.conversation_id.in_(conv_ids)).all():
+            convs_by_id[c.conversation_id] = c
+
+    managing = is_managing_agent(ctx.role)
+    grant_ids: set = set()
+    if not managing and conv_ids:
+        grant_ids = {
+            g.conversation_id
+            for g in db.query(DBConversationAccessGrant.conversation_id).filter(
+                DBConversationAccessGrant.brokerage_id == ctx.brokerage_id,
+                DBConversationAccessGrant.agent_user_id == ctx.user_id,
+                DBConversationAccessGrant.active.is_(True),
+            ).all()
+        }
+    listing_owner: dict = {}
+    _lids = list({c.listing_id for c in convs_by_id.values() if c.listing_id})
+    if _lids:
+        for lst in db.query(DBListing.listing_id, DBListing.assigned_agent_id).filter(
+            DBListing.listing_id.in_(_lids)
+        ).all():
+            listing_owner[lst.listing_id] = lst.assigned_agent_id
+
+    def _visible(conv):
+        if not conv or conv.brokerage_id != ctx.brokerage_id:
+            return False
+        if managing:
+            return True
+        owner = conv.assigned_agent_id or (listing_owner.get(conv.listing_id) if conv.listing_id else None)
+        if owner and owner == ctx.user_id:
+            return True
+        return conv.conversation_id in grant_ids
+
+    visible = [a for a in assignments if _visible(convs_by_id.get(a.conversation_id))]
+
+    vis_conv_ids = [a.conversation_id for a in visible]
+    latest_by_conv: dict = {}
+    if vis_conv_ids:
+        for msg in (
+            db.query(DBMessage)
+            .filter(DBMessage.conversation_id.in_(vis_conv_ids))
+            .order_by(DBMessage.timestamp.desc())
+            .all()
+        ):
+            latest_by_conv.setdefault(msg.conversation_id, msg)
+    listings_by_id: dict = {}
+    _alids = list({convs_by_id[cid].listing_id for cid in vis_conv_ids
+                   if convs_by_id.get(cid) and convs_by_id[cid].listing_id})
+    if _alids:
+        for lst in db.query(DBListing).filter(DBListing.listing_id.in_(_alids)).all():
+            listings_by_id[lst.listing_id] = lst
 
     leads = []
-    for assignment in assignments:
-        conv = assignment.conversation
+    for assignment in visible:
+        conv = convs_by_id.get(assignment.conversation_id)
         if not conv:
             continue
-        latest = _latest_message(db, conv.conversation_id)
-        listing = conv.listing
+        latest = latest_by_conv.get(conv.conversation_id)
+        listing = listings_by_id.get(conv.listing_id)
         spa = (listing.spa_data or {}) if listing else {}
         metadata = assignment.metadata_json or {}
         hot_list_metadata = metadata.get("hot_list") if isinstance(metadata, dict) else {}
@@ -387,7 +475,7 @@ async def hot_list(
             "readiness_shadow": (hot_list_metadata or {}).get("readiness_shadow"),
         })
 
-    leads.sort(key=lambda item: item["urgency_score"], reverse=True)
+    leads.sort(key=lambda item: item["urgency_score"] or 0, reverse=True)
     return {"leads": leads[:25]}
 
 
@@ -585,6 +673,9 @@ def _visible_profile_or_404(db: Session, *, profile_id: str, ctx: AgentContext):
     return profile, visible
 
 
+_READINESS_MISSING = object()
+
+
 def _buyer_readiness_payload(
     db: Session,
     *,
@@ -593,18 +684,27 @@ def _buyer_readiness_payload(
     assignment: Optional[DBLeadAssignment] = None,
     open_offers: int = 0,
     has_next_viewing: bool = False,
+    effective=_READINESS_MISSING,
+    latest_message=_READINESS_MISSING,
+    listing=_READINESS_MISSING,
 ) -> dict:
-    qualification = effective_fields(db, profile)
+    # `effective`, `latest_message`, `listing` may be pre-fetched by a batched
+    # caller (list_buyers) to avoid an N+1; default sentinels keep single-buyer
+    # callers (buyer_card) querying lazily.
+    qualification = effective_fields(db, profile) if effective is _READINESS_MISSING else effective
     fields = fields_from_effective_fields(
         qualification,
         fallback_budget_aed=top_conversation.detected_budget,
     )
-    latest = (
-        db.query(DBMessage)
-        .filter(DBMessage.conversation_id == top_conversation.conversation_id)
-        .order_by(DBMessage.timestamp.desc())
-        .first()
-    )
+    if latest_message is _READINESS_MISSING:
+        latest = (
+            db.query(DBMessage)
+            .filter(DBMessage.conversation_id == top_conversation.conversation_id)
+            .order_by(DBMessage.timestamp.desc())
+            .first()
+        )
+    else:
+        latest = latest_message
     summary = top_conversation.ai_summary or {}
     summary_text = ""
     if isinstance(summary, dict):
@@ -634,13 +734,13 @@ def _buyer_readiness_payload(
         "responsive": bool(latest and latest.role == "user"),
         "urgent": bool((assignment and (assignment.urgency_score or 0) >= 70) or "urgent" in text),
     }
-    listing = top_conversation.listing
+    listing_obj = top_conversation.listing if listing is _READINESS_MISSING else listing
     listing_ctx = (
         {
-            "listing_id": listing.listing_id,
-            "property_type": listing.property_type,
+            "listing_id": listing_obj.listing_id,
+            "property_type": listing_obj.property_type,
         }
-        if listing
+        if listing_obj
         else (
             {"listing_id": top_conversation.listing_id}
             if top_conversation.listing_id
@@ -680,60 +780,155 @@ async def list_buyers(
     )
     now = datetime.utcnow()
     rows = []
-    for profile in profiles:
-        conversations = (
-            db.query(DBConversation)
-            .filter(
-                DBConversation.brokerage_id == ctx.brokerage_id,
-                DBConversation.buyer_phone == profile.buyer_phone,
-            )
-            .order_by(DBConversation.updated_at.desc())
-            .all()
+
+    # ── Batch every per-buyer lookup into brokerage-wide queries (no N+1). ──
+    from collections import defaultdict
+    from sqlalchemy import func
+    from app.models.db_models import DBBuyerProfileField, DBConversationAccessGrant
+
+    phones = [p.buyer_phone for p in profiles]
+    profile_ids = [p.profile_id for p in profiles]
+
+    convs = (
+        db.query(DBConversation)
+        .filter(
+            DBConversation.brokerage_id == ctx.brokerage_id,
+            DBConversation.buyer_phone.in_(phones) if phones else False,
         )
-        visible = [
-            conv for conv in conversations
-            if can_view_conversation(db, conv, user_id=ctx.user_id, brokerage_id=ctx.brokerage_id, role=ctx.role)
-        ]
-        if not visible:
-            continue
-        top = visible[0]
-        assignment = (
-            db.query(DBLeadAssignment)
-            .filter(DBLeadAssignment.conversation_id == top.conversation_id)
-            .first()
+        .order_by(DBConversation.updated_at.desc())
+        .all()
+    ) if phones else []
+    convs_by_phone: dict = defaultdict(list)
+    for c in convs:
+        convs_by_phone[c.buyer_phone].append(c)
+
+    all_conv_ids = [c.conversation_id for c in convs]
+    assignments_by_conv: dict = {}
+    if all_conv_ids:
+        for a in db.query(DBLeadAssignment).filter(DBLeadAssignment.conversation_id.in_(all_conv_ids)).all():
+            assignments_by_conv.setdefault(a.conversation_id, a)
+
+    # Listing-owner fallback map (preserves conversation_owner_user_id's last resort).
+    conv_listing_owner: dict = {}
+    _all_listing_ids = list({c.listing_id for c in convs if c.listing_id})
+    if _all_listing_ids:
+        for lst in db.query(DBListing.listing_id, DBListing.assigned_agent_id).filter(
+            DBListing.listing_id.in_(_all_listing_ids)
+        ).all():
+            conv_listing_owner[lst.listing_id] = lst.assigned_agent_id
+
+    # Visibility: managing agents see all; others by owner==self or an active grant.
+    managing = is_managing_agent(ctx.role)
+    grant_ids: set = set()
+    if not managing and all_conv_ids:
+        grant_ids = {
+            g.conversation_id
+            for g in db.query(DBConversationAccessGrant.conversation_id).filter(
+                DBConversationAccessGrant.brokerage_id == ctx.brokerage_id,
+                DBConversationAccessGrant.agent_user_id == ctx.user_id,
+                DBConversationAccessGrant.active.is_(True),
+            ).all()
+        }
+
+    def _owner(conv):
+        if conv.assigned_agent_id:
+            return conv.assigned_agent_id
+        a = assignments_by_conv.get(conv.conversation_id)
+        if a and a.assigned_agent_id:
+            return a.assigned_agent_id
+        if conv.listing_id:
+            return conv_listing_owner.get(conv.listing_id)
+        return None
+
+    def _visible(conv):
+        if conv.brokerage_id != ctx.brokerage_id:
+            return False
+        if managing:
+            return True
+        owner = _owner(conv)
+        if owner and owner == ctx.user_id:
+            return True
+        return conv.conversation_id in grant_ids
+
+    offers_by_phone = dict(
+        db.query(DBOffer.buyer_phone, func.count())
+        .filter(
+            DBOffer.brokerage_id == ctx.brokerage_id,
+            DBOffer.buyer_phone.in_(phones),
+            DBOffer.status.in_(OPEN_OFFER_STATUSES),
         )
-        open_offers = (
-            db.query(DBOffer)
-            .filter(
-                DBOffer.brokerage_id == ctx.brokerage_id,
-                DBOffer.buyer_phone == profile.buyer_phone,
-                DBOffer.status.in_(OPEN_OFFER_STATUSES),
-            )
-            .count()
-        )
-        next_viewing = (
+        .group_by(DBOffer.buyer_phone)
+        .all()
+    ) if phones else {}
+
+    next_viewing_by_phone: dict = {}
+    if phones:
+        for v in (
             db.query(DBViewing)
             .filter(
                 DBViewing.brokerage_id == ctx.brokerage_id,
-                DBViewing.buyer_phone == profile.buyer_phone,
+                DBViewing.buyer_phone.in_(phones),
                 DBViewing.scheduled_for.isnot(None),
                 DBViewing.scheduled_for >= now,
                 DBViewing.status.in_(["proposed", "confirmed"]),
             )
             .order_by(DBViewing.scheduled_for.asc())
-            .first()
-        )
-        opted_out = (
-            db.query(DBBuyerSuppression)
-            .filter(
+            .all()
+        ):
+            next_viewing_by_phone.setdefault(v.buyer_phone, v)
+
+    suppressed: set = set()
+    if phones:
+        suppressed = {
+            r.buyer_phone
+            for r in db.query(DBBuyerSuppression.buyer_phone).filter(
                 DBBuyerSuppression.brokerage_id == ctx.brokerage_id,
-                DBBuyerSuppression.buyer_phone == profile.buyer_phone,
+                DBBuyerSuppression.buyer_phone.in_(phones),
                 DBBuyerSuppression.active.is_(True),
-            )
-            .count()
-            > 0
-        )
-        fields = effective_fields(db, profile)
+            ).all()
+        }
+
+    fields_by_profile: dict = defaultdict(list)
+    if profile_ids:
+        for fr in db.query(DBBuyerProfileField).filter(DBBuyerProfileField.profile_id.in_(profile_ids)).all():
+            fields_by_profile[fr.profile_id].append(fr)
+
+    # Resolve each profile's top (most-recent visible) conversation.
+    top_by_profile: dict = {}
+    visible_count_by_profile: dict = {}
+    for profile in profiles:
+        visibles = [c for c in convs_by_phone.get(profile.buyer_phone, []) if _visible(c)]
+        visible_count_by_profile[profile.profile_id] = len(visibles)
+        if visibles:
+            top_by_profile[profile.profile_id] = visibles[0]
+
+    top_conv_ids = [c.conversation_id for c in top_by_profile.values()]
+    latest_msg_by_conv: dict = {}
+    if top_conv_ids:
+        for m in (
+            db.query(DBMessage)
+            .filter(DBMessage.conversation_id.in_(top_conv_ids))
+            .order_by(DBMessage.timestamp.desc())
+            .all()
+        ):
+            latest_msg_by_conv.setdefault(m.conversation_id, m)
+
+    listing_ids = [c.listing_id for c in top_by_profile.values() if c.listing_id]
+    listings_by_id: dict = {}
+    if listing_ids:
+        for lst in db.query(DBListing).filter(DBListing.listing_id.in_(listing_ids)).all():
+            listings_by_id[lst.listing_id] = lst
+
+    for profile in profiles:
+        top = top_by_profile.get(profile.profile_id)
+        if top is None:
+            continue
+        assignment = assignments_by_conv.get(top.conversation_id)
+        open_offers = int(offers_by_phone.get(profile.buyer_phone, 0))
+        next_viewing = next_viewing_by_phone.get(profile.buyer_phone)
+        opted_out = profile.buyer_phone in suppressed
+        fields = effective_fields_from_rows(fields_by_profile.get(profile.profile_id, []))
+        listing = listings_by_id.get(top.listing_id)
         deal_readiness = _buyer_readiness_payload(
             db,
             profile=profile,
@@ -741,8 +936,10 @@ async def list_buyers(
             assignment=assignment,
             open_offers=open_offers,
             has_next_viewing=bool(next_viewing),
+            effective=fields,
+            latest_message=latest_msg_by_conv.get(top.conversation_id),
+            listing=listing,
         )
-        listing = top.listing
         spa = (listing.spa_data or {}) if listing else {}
         last_activity = top.updated_at
         stale = bool(last_activity and last_activity <= now - timedelta(hours=48))
@@ -764,7 +961,7 @@ async def list_buyers(
             "next_viewing_at": next_viewing.scheduled_for.isoformat() if next_viewing else None,
             "opted_out": opted_out,
             "stale": stale,
-            "conversation_count": len(visible),
+            "conversation_count": visible_count_by_profile.get(profile.profile_id, 0),
         }
         if filter == "has_open_offer" and not open_offers:
             continue

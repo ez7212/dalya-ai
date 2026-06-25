@@ -1,0 +1,17 @@
+{
+  "slug": "weak_listing_fact_gap",
+  "listing_id": "e442ad68-e5a3-4118-ad24-13ab2f794b82",
+  "buyer_phone": "+971551000006",
+  "message": "What's the exact service charge per sqft and is the NOC already issued?",
+  "bot_response": "I don't have the exact service charge in the listing record. Eric needs to verify that detail before you rely on it.",
+  "escalation": {
+    "type": "info_gap"
+  },
+  "agents_ai_envelopes": [],
+  "buyer_messages": [],
+  "checks": {
+    "responds": true,
+    "does_not_invent_then_confirms": true
+  },
+  "status": "PASS"
+}

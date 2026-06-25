@@ -1,0 +1,15 @@
+{
+  "brokerage_id": "mahoroba-realty",
+  "mode": "APPLIED",
+  "marker": "mahoroba-first-run",
+  "counts": {
+    "listings_resolved": 4,
+    "agents": 3,
+    "buyers": 7,
+    "conversations": 7,
+    "offers": 1,
+    "viewings": 1,
+    "drafts": 2,
+    "escalation_threads": 3
+  }
+}
