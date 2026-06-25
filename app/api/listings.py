@@ -316,10 +316,28 @@ async def draft_listing_from_url(
     _ensure_member_brokerage(user, db)
     scraped = scrape_any(body.url)
     community_key = _slugify_community(scraped.community or scraped.building_or_project)
+    has_structured_data = any(
+        [
+            scraped.listing_title,
+            scraped.asking_price_aed,
+            scraped.bedrooms,
+            scraped.bathrooms,
+            scraped.size_sqft,
+            scraped.community,
+            scraped.image_urls,
+        ]
+    )
+    scrape_warning = None
+    if not has_structured_data and scraped.source == "bayut" and scraped.raw_extracts.get("captcha"):
+        scrape_warning = (
+            "Bayut blocked direct scraping with a captcha and no property-detail API data was available. "
+            "Check the Bayut RapidAPI subscription for this environment or fill the form manually."
+        )
     return {
         "scrape": {
             "source": scraped.source,
             "source_url": scraped.source_url,
+            "warning": scrape_warning,
             "property_type": scraped.property_type,
             "listing_title": scraped.listing_title,
             "listing_reference": scraped.listing_reference,

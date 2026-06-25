@@ -40,8 +40,8 @@ _HTTP_HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
 
-_BAYUT_RAPIDAPI_HOST = "byut-api.p.rapidapi.com"
-_BAYUT_RAPIDAPI_URL = f"https://{_BAYUT_RAPIDAPI_HOST}/details/property"
+_BAYUT_RAPIDAPI_HOST = "uae-real-estate-data-api-2.p.rapidapi.com"
+_BAYUT_RAPIDAPI_URL = f"https://{_BAYUT_RAPIDAPI_HOST}/property-details"
 
 
 @dataclass
@@ -241,8 +241,70 @@ def _extract_image_url(value) -> Optional[str]:
     if isinstance(value, str):
         return value
     if isinstance(value, dict):
-        return _first_value(value, ("url", "src", "full", "large", "medium", "main", "photo", "image"))
+        direct_url = _first_value(value, ("url", "src", "full", "large", "medium", "main", "photo", "image", "original"))
+        if direct_url:
+            return direct_url
+        image_id = _first_value(value, ("id", "externalID", "externalId", "photoID", "photoId"))
+        if image_id:
+            return f"https://images.bayut.com/thumbnails/{image_id}-800x600.webp"
     return None
+
+
+def _extract_license_number(value) -> Optional[str]:
+    if isinstance(value, dict):
+        return _stringify(_first_value(value, ("licenseNumber", "license_number", "number", "rera", "orn")))
+    if isinstance(value, list):
+        for item in value:
+            license_number = _extract_license_number(item)
+            if license_number:
+                return license_number
+    return _stringify(value)
+
+
+def _apply_bayut_location(out: ScrapedListing, value) -> None:
+    location_names = _extract_location_names(value)
+    if location_names:
+        out.community = out.community or (location_names[-2] if len(location_names) > 1 else location_names[-1])
+        out.subcommunity = out.subcommunity or location_names[-1]
+    if not isinstance(value, dict):
+        return
+    community = value.get("community") if isinstance(value.get("community"), dict) else {}
+    subcommunity = value.get("sub_community") or value.get("subCommunity")
+    subcommunity = subcommunity if isinstance(subcommunity, dict) else {}
+    cluster = value.get("cluster") if isinstance(value.get("cluster"), dict) else {}
+    building = value.get("building") if isinstance(value.get("building"), dict) else {}
+    out.community = out.community or _stringify(_first_value(community, ("name", "title")))
+    out.subcommunity = out.subcommunity or _stringify(
+        _first_value(subcommunity, ("name", "title")) or _first_value(cluster, ("name", "title"))
+    )
+    out.building_or_project = out.building_or_project or _stringify(_first_value(building, ("name", "title")))
+
+
+def _append_bayut_amenities(out: ScrapedListing, value) -> None:
+    if isinstance(value, list):
+        for item in value:
+            _append_bayut_amenities(out, item)
+    elif isinstance(value, dict):
+        _append_unique(out.amenities, _stringify(_first_value(value, ("text", "name", "title"))))
+        nested = _first_value(value, ("items", "amenities", "features"))
+        if nested is not None:
+            _append_bayut_amenities(out, nested)
+    else:
+        _append_unique(out.amenities, _stringify(value))
+
+
+def _append_bayut_images(out: ScrapedListing, value) -> None:
+    if isinstance(value, list):
+        for item in value:
+            _append_bayut_images(out, item)
+    elif isinstance(value, dict):
+        _append_unique(out.image_urls, _extract_image_url(value))
+        for key in ("cover_photo", "coverPhoto", "photos", "images", "items"):
+            nested = value.get(key)
+            if nested is not None:
+                _append_bayut_images(out, nested)
+    else:
+        _append_unique(out.image_urls, _extract_image_url(value))
 
 
 def _meta_content(html: str, prop: str) -> Optional[str]:
@@ -529,27 +591,50 @@ def scrape_bayut(url: str, html: Optional[str] = None) -> ScrapedListing:
     return out
 
 
-def _fetch_bayut_rapidapi(property_external_id: str) -> Optional[dict]:
-    api_key = os.getenv("BAYUT_RAPIDAPI_KEY") or os.getenv("RAPIDAPI_KEY")
-    if not api_key:
-        return None
+def _payload_has_provider_error(payload: dict) -> bool:
+    status_code = _safe_int(payload.get("status_code") or payload.get("statusCode") or payload.get("code"))
+    data = payload.get("data")
+    message = _stringify(payload.get("message"))
+    success = payload.get("success")
+    if success is False:
+        return True
+    if status_code and status_code >= 400:
+        return True
+    return message == "Error" and data in (None, "", [], {})
+
+
+def _fetch_rapidapi_json(url: str, host: str, api_key: str, params: dict) -> Optional[dict]:
     try:
         with httpx.Client(timeout=15) as client:
             response = client.get(
-                _BAYUT_RAPIDAPI_URL,
-                params={"property_external_id": property_external_id},
+                url,
+                params=params,
                 headers={
                     "Content-Type": "application/json",
-                    "x-rapidapi-host": _BAYUT_RAPIDAPI_HOST,
+                    "x-rapidapi-host": host,
                     "x-rapidapi-key": api_key,
                 },
             )
             response.raise_for_status()
             payload = response.json()
-            return payload if isinstance(payload, dict) else {"data": payload}
-    except Exception as exc:
-        logger.warning("bayut rapidapi fetch failed for %s: %s", property_external_id, exc)
+            if not isinstance(payload, dict) or _payload_has_provider_error(payload):
+                return None
+            return payload
+    except (httpx.HTTPError, json.JSONDecodeError) as exc:
+        logger.warning("bayut rapidapi fetch failed for host %s: %s", host, exc)
         return None
+
+
+def _fetch_bayut_rapidapi(property_external_id: str) -> Optional[dict]:
+    api_key = os.getenv("BAYUT_RAPIDAPI_KEY") or os.getenv("RAPIDAPI_KEY")
+    if not api_key:
+        return None
+    return _fetch_rapidapi_json(
+        _BAYUT_RAPIDAPI_URL,
+        _BAYUT_RAPIDAPI_HOST,
+        api_key,
+        {"langs": "en", "external_id": property_external_id},
+    )
 
 
 def _apply_bayut_api_payload(out: ScrapedListing, payload: dict) -> None:
@@ -558,6 +643,8 @@ def _apply_bayut_api_payload(out: ScrapedListing, payload: dict) -> None:
         payload.get("data") if isinstance(payload.get("data"), dict) else None,
         payload.get("property") if isinstance(payload.get("property"), dict) else None,
         payload.get("result") if isinstance(payload.get("result"), dict) else None,
+        payload.get("ad") if isinstance(payload.get("ad"), dict) else None,
+        payload.get("listing") if isinstance(payload.get("listing"), dict) else None,
     ]
     candidate = next((item for item in candidates if isinstance(item, dict) and len(item) > 3), payload)
     ad = _first_dict_matching(candidate, {"price", "title"}) or _first_dict_matching(candidate, {"externalID"}) or candidate
@@ -566,7 +653,9 @@ def _apply_bayut_api_payload(out: ScrapedListing, payload: dict) -> None:
         _first_value(ad, ("externalID", "externalId", "property_external_id", "id", "objectID"))
     )
     out.portal_reference = out.portal_reference or _stringify(_first_value(ad, ("objectID", "sourceID", "id")))
-    out.listing_reference = out.listing_reference or _stringify(_first_value(ad, ("referenceNumber", "reference", "reference_number")))
+    out.listing_reference = out.listing_reference or _stringify(
+        _first_value(ad, ("referenceNumber", "reference", "reference_number", "referenceNo"))
+    )
     out.listing_title = out.listing_title or _stringify(_first_value(ad, ("title", "name")))
     out.description = out.description or _stringify(_first_value(ad, ("description", "descriptionTranslated")))
 
@@ -591,13 +680,17 @@ def _apply_bayut_api_payload(out: ScrapedListing, payload: dict) -> None:
     if out.asking_price_aed and out.size_sqft and not out.price_per_sqft_aed:
         out.price_per_sqft_aed = round(out.asking_price_aed / out.size_sqft, 2)
 
-    out.completion_status = out.completion_status or _stringify(_first_value(ad, ("completionStatus", "completion_status")))
-    out.furnishing = out.furnishing or _stringify(_first_value(ad, ("furnishingStatus", "furnished", "furnishing")))
+    details = ad.get("details") if isinstance(ad.get("details"), dict) else {}
+    out.completion_status = out.completion_status or _stringify(
+        _first_value(ad, ("completionStatus", "completion_status"))
+        or _first_value(details, ("completionStatus", "completion_status"))
+    )
+    out.furnishing = out.furnishing or _stringify(
+        _first_value(ad, ("furnishingStatus", "furnished", "furnishing", "furnishing_status"))
+        or _first_value(details, ("furnishingStatus", "furnishing_status", "furnished", "furnishing"))
+    )
 
-    location_names = _extract_location_names(_first_value(ad, ("location", "geography", "locations")))
-    if location_names:
-        out.community = out.community or (location_names[-2] if len(location_names) > 1 else location_names[-1])
-        out.subcommunity = out.subcommunity or location_names[-1]
+    _apply_bayut_location(out, _first_value(ad, ("location", "geography", "locations")))
     out.building_or_project = out.building_or_project or _stringify(
         _first_value(ad, ("project", "projectName", "project_name", "buildingName", "building"))
     )
@@ -623,29 +716,30 @@ def _apply_bayut_api_payload(out: ScrapedListing, payload: dict) -> None:
 
     agency = ad.get("agency") if isinstance(ad.get("agency"), dict) else {}
     out.broker_name = out.broker_name or _stringify(_first_value(agency, ("name", "title")))
-    out.broker_license = out.broker_license or _stringify(_first_value(agency, ("licenseNumber", "license_number", "rera")))
-    out.agent_name = out.agent_name or _stringify(_first_value(ad, ("contactName", "agentName", "agent_name")))
-    out.agent_phone = out.agent_phone or _stringify(_first_value(ad, ("phoneNumber", "phone", "mobile")))
+    out.broker_license = out.broker_license or (
+        _stringify(_first_value(agency, ("licenseNumber", "license_number", "rera", "orn")))
+        or _extract_license_number(agency.get("licenses"))
+    )
+    agent = ad.get("agent") if isinstance(ad.get("agent"), dict) else {}
+    out.agent_name = out.agent_name or _stringify(_first_value(ad, ("contactName", "agentName", "agent_name")) or _first_value(agent, ("name", "title")))
+    out.agent_email = out.agent_email or _stringify(_first_value(agent, ("email", "emailAddress")))
+    out.agent_phone = out.agent_phone or _stringify(_first_value(ad, ("phoneNumber", "phone", "mobile")) or _first_value(agent, ("phone", "phoneNumber", "mobile")))
+    out.agent_license = out.agent_license or _extract_license_number(agent.get("licenses"))
 
     verification = ad.get("verification") if isinstance(ad.get("verification"), dict) else {}
+    legal = ad.get("legal") if isinstance(ad.get("legal"), dict) else {}
     out.permit_number = out.permit_number or _stringify(
         _first_value(ad, ("permitNumber", "permit_number", "dldPermitNumber"))
         or _first_value(verification, ("permitNumber", "permit_number", "truCheckPermitNumber"))
+        or _first_value(legal, ("permitNumber", "permit_number", "dldPermitNumber"))
     )
 
-    for amenity in _first_value(ad, ("amenities", "features")) or []:
-        if isinstance(amenity, dict):
-            _append_unique(out.amenities, _stringify(_first_value(amenity, ("text", "name", "title"))))
-        else:
-            _append_unique(out.amenities, _stringify(amenity))
+    _append_bayut_amenities(out, _first_value(ad, ("amenities", "features")))
 
     for image_group_key in ("photos", "images", "photoIDs", "coverPhoto", "imageUrls"):
         images = ad.get(image_group_key)
-        if isinstance(images, list):
-            for image in images:
-                _append_unique(out.image_urls, _extract_image_url(image))
-        else:
-            _append_unique(out.image_urls, _extract_image_url(images))
+        _append_bayut_images(out, images)
+    _append_bayut_images(out, ad.get("media"))
 
 
 def scrape_any(url: str, html: Optional[str] = None) -> ScrapedListing:

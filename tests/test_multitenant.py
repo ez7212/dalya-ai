@@ -253,3 +253,69 @@ def test_listing_scraper_property_finder_parses_basic_jsonld():
     assert result.bedrooms == 3
     assert result.size_sqft == 1_800.0
     assert "https://img1" in result.image_urls
+
+
+def test_listing_scraper_bayut_rapidapi_property_payload_prefills_draft(monkeypatch):
+    from app.core import listing_scraper
+
+    payload = {
+        "id": 15029244,
+        "reference_number": "BAYUT-REF-15029244",
+        "title": "Vacant 3 Bed Villa Near Park",
+        "description": "Ready villa with landscaped garden.",
+        "price": 4_750_000,
+        "purpose": "for-sale",
+        "type": {"name": "Villa"},
+        "area": 2_450.0,
+        "rooms": 3,
+        "baths": 4,
+        "location": {
+            "community": {"name": "Dubai Hills Estate"},
+            "sub_community": {"name": "Maple"},
+        },
+        "details": {
+            "completion_status": "completed",
+            "furnishing_status": "unfurnished",
+        },
+        "agency": {
+            "name": "Mahoroba Realty",
+            "licenses": [{"number": "ORN-123"}],
+        },
+        "agent": {
+            "name": "Luqman Ali",
+            "phone": "+971500000000",
+        },
+        "legal": {
+            "permit_number": "7111111111",
+        },
+        "media": {
+            "cover_photo": {"url": "https://images.bayut.com/cover.jpg"},
+            "photos": [{"url": "https://images.bayut.com/one.jpg"}],
+        },
+        "amenities": [{"name": "Private Garden"}],
+    }
+
+    monkeypatch.setattr(listing_scraper, "_fetch_bayut_rapidapi", lambda _listing_id: payload)
+
+    result = listing_scraper.scrape_bayut("https://www.bayut.com/property/details-15029244.html")
+
+    assert result.raw_extracts["rapidapi"] is True
+    assert result.portal_listing_id == "15029244"
+    assert result.listing_reference == "BAYUT-REF-15029244"
+    assert result.listing_title == "Vacant 3 Bed Villa Near Park"
+    assert result.asking_price_aed == 4_750_000.0
+    assert result.bedrooms == 3
+    assert result.bathrooms == 4
+    assert result.size_sqft == 2_450.0
+    assert result.community == "Dubai Hills Estate"
+    assert result.subcommunity == "Maple"
+    assert result.property_type == "Villa"
+    assert result.furnishing == "unfurnished"
+    assert result.permit_number == "7111111111"
+    assert result.broker_name == "Mahoroba Realty"
+    assert result.agent_name == "Luqman Ali"
+    assert "Private Garden" in result.amenities
+    assert result.image_urls == [
+        "https://images.bayut.com/cover.jpg",
+        "https://images.bayut.com/one.jpg",
+    ]
