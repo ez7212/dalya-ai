@@ -81,6 +81,7 @@ type SelectOption = {
 type DraftFromUrlResponse = {
   readonly draft: Draft
   readonly scrape: {
+    readonly warning?: string | null
     readonly property_type?: string | null
     readonly asking_price_aed?: number | null
     readonly bedrooms?: number | null
@@ -377,7 +378,7 @@ export function FinishedListingFlow({ startManual = false }: { startManual?: boo
       setScrapeMessage(
         filled.length > 0
           ? `Prefilled from listing: ${filled.join(', ')}. Review and complete the rest below.`
-          : 'Scrape returned no structured data — fill the form manually.'
+          : (scraped.warning ?? 'Scrape returned no structured data — fill the form manually.')
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Scrape failed')
