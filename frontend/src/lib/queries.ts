@@ -668,3 +668,87 @@ export function useAddBuyerNote(phone: string) {
     },
   })
 }
+
+// ── Community research view + agent per-field overrides ───────────────────
+
+export interface CommunityOverride {
+  readonly override_id: string
+  readonly field_key: string
+  readonly value_text: string
+  readonly note: string | null
+  readonly buyer_safe: boolean
+  readonly updated_at: string | null
+}
+
+export interface CommunityField {
+  readonly key: string
+  readonly label: string
+  readonly group: string
+  readonly researched_value: string | null
+  readonly override: CommunityOverride | null
+}
+
+export interface ListingCommunityResponse {
+  readonly project_name: string | null
+  readonly project_key: string | null
+  readonly research_status: 'approved' | 'in_review' | 'none'
+  readonly research_confidence: number | null
+  readonly source_count: number
+  readonly fields: readonly CommunityField[]
+}
+
+export function useListingCommunity(id: string, enabled: boolean = true) {
+  return useQuery<ListingCommunityResponse>({
+    queryKey: ['listing-community', id],
+    enabled,
+    queryFn: async () => {
+      const res = await apiFetch(`/api/v1/listings/${id}/community`)
+      if (!res.ok) {
+        const err = await res.json().catch(() => null)
+        throw new Error(err?.detail ?? `Failed to load community data (${res.status})`)
+      }
+      return res.json()
+    },
+  })
+}
+
+export interface CommunityOverrideInput {
+  readonly fieldKey: string
+  readonly value_text: string
+  readonly note?: string | null
+  readonly buyer_safe: boolean
+}
+
+export function useUpsertCommunityOverride(id: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ fieldKey, value_text, note, buyer_safe }: CommunityOverrideInput) => {
+      const res = await apiFetch(`/api/v1/listings/${id}/community/overrides/${fieldKey}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ value_text, note: note ?? null, buyer_safe }),
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => null)
+        throw new Error(err?.detail ?? `Save failed (${res.status})`)
+      }
+      return res.json() as Promise<ListingCommunityResponse>
+    },
+    onSuccess: (data) => queryClient.setQueryData(['listing-community', id], data),
+  })
+}
+
+export function useDeleteCommunityOverride(id: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (fieldKey: string) => {
+      const res = await apiFetch(`/api/v1/listings/${id}/community/overrides/${fieldKey}`, { method: 'DELETE' })
+      if (!res.ok) {
+        const err = await res.json().catch(() => null)
+        throw new Error(err?.detail ?? `Remove failed (${res.status})`)
+      }
+      return res.json() as Promise<ListingCommunityResponse>
+    },
+    onSuccess: (data) => queryClient.setQueryData(['listing-community', id], data),
+  })
+}

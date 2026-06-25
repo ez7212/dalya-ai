@@ -1216,6 +1216,23 @@ class ChatbotEngine:
                         )
                         agent_private_notes = [r.body for r in rows if r.body]
 
+                    # Agent-verified per-field corrections to this project's community research.
+                    agent_community_overrides = []
+                    if db_listing.assigned_agent_id and db_listing.brokerage_id:
+                        from app.core.agent_community_overrides import (
+                            overrides_for_prompt,
+                            project_key_from_name,
+                            project_name_for_listing,
+                        )
+                        _project_key = project_key_from_name(project_name_for_listing(db_listing))
+                        if _project_key:
+                            agent_community_overrides = overrides_for_prompt(
+                                db,
+                                brokerage_id=db_listing.brokerage_id,
+                                agent_user_id=db_listing.assigned_agent_id,
+                                project_key=_project_key,
+                            )
+
                     listing_amenities, listing_anchor_times = latest_listing_enrichment(db, listing_id)
 
                     from app.core.ready_property_knowledge import ready_property_knowledge_for_prompt
@@ -1271,6 +1288,7 @@ class ChatbotEngine:
                         dashboard_url=ctx.dashboard_url,
                         property_type=db_listing.property_type or "off_plan",
                         agent_private_notes=agent_private_notes or None,
+                        agent_community_overrides=agent_community_overrides or None,
                         unit_profile=db_listing.unit_profile or None,
                         reference_documents=list(db_listing.reference_documents or []) or None,
                         ready_property_knowledge=ready_property_knowledge_for_prompt(db, listing_id),
@@ -4271,9 +4289,10 @@ Summary:"""
             )
         return (
             price_prefix +
-            "Off-plan finance depends on the specific bank, buyer profile, developer approval status, construction stage, "
-            "and transaction structure. The listing agent and a mortgage advisor need to confirm the exact policy before "
-            "you rely on it or make an offer."
+            "Off-plan properties may become eligible for a mortgage once construction reaches roughly 50% completion, "
+            "at which point a bank can typically finance the remaining balance of the price. Whether this is available, "
+            "and on what terms, depends on the specific developer and bank, so you should consult a mortgage advisor or "
+            "bank to confirm the exact policy before you rely on it or make an offer."
         )
 
     @staticmethod

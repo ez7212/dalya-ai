@@ -40,7 +40,13 @@ from app.core.ready_property_knowledge import (
     rebuild_knowledge_summary,
 )
 from app.db.session import get_db, safe_commit
+from app.core.agent_community_overrides import (
+    agent_holds_listing_in_project,
+    build_community_view,
+)
+from app.core.community_field_catalog import FIELD_BY_KEY
 from app.models.db_models import (
+    DBAgentCommunityOverride,
     DBBrokerageMember,
     DBCommunityResearch,
     DBListing,
@@ -742,3 +748,96 @@ async def regenerate_listing_knowledge(
     payload = _knowledge_payload(db, listing)
     payload["summary"] = _serialize_summary(summary)
     return payload
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Community research view + agent per-field overrides
+# ──────────────────────────────────────────────────────────────────────────
+
+
+class CommunityOverrideRequest(BaseModel):
+    value_text: str = Field(..., min_length=1)
+    note: Optional[str] = None
+    buyer_safe: bool = True
+
+
+@router.get("/listings/{listing_id}/community")
+async def get_listing_community(
+    listing_id: str,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Structured community research for the listing's project, with this agent's overrides merged."""
+    listing, member = _get_scoped_listing(listing_id, user, db)
+    return build_community_view(
+        db, listing=listing, brokerage_id=member.brokerage_id, agent_user_id=user.id
+    )
+
+
+@router.put("/listings/{listing_id}/community/overrides/{field_key}")
+async def upsert_community_override(
+    listing_id: str,
+    field_key: str,
+    body: CommunityOverrideRequest,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Create or update this agent's override for one community field (applies to all their project listings)."""
+    if field_key not in FIELD_BY_KEY:
+        raise HTTPException(status_code=422, detail=f"Unknown community field: {field_key}")
+    listing, member = _get_scoped_listing(listing_id, user, db)
+    view = build_community_view(db, listing=listing, brokerage_id=member.brokerage_id, agent_user_id=user.id)
+    project_key = view.get("project_key")
+    if not project_key:
+        raise HTTPException(status_code=422, detail="This listing has no resolvable project to override.")
+    if not agent_holds_listing_in_project(
+        db, brokerage_id=member.brokerage_id, agent_user_id=user.id, project_key=project_key
+    ):
+        raise HTTPException(status_code=403, detail="You can only correct projects where you hold a listing.")
+
+    override = (
+        db.query(DBAgentCommunityOverride)
+        .filter(
+            DBAgentCommunityOverride.brokerage_id == member.brokerage_id,
+            DBAgentCommunityOverride.agent_user_id == user.id,
+            DBAgentCommunityOverride.project_key == project_key,
+            DBAgentCommunityOverride.field_key == field_key,
+        )
+        .first()
+    )
+    if override is None:
+        override = DBAgentCommunityOverride(
+            brokerage_id=member.brokerage_id,
+            agent_user_id=user.id,
+            project_key=project_key,
+            field_key=field_key,
+        )
+        db.add(override)
+    override.value_text = body.value_text.strip()
+    override.note = (body.note or "").strip() or None
+    override.buyer_safe = body.buyer_safe
+    override.updated_at = datetime.utcnow()
+    safe_commit(db)
+    return build_community_view(db, listing=listing, brokerage_id=member.brokerage_id, agent_user_id=user.id)
+
+
+@router.delete("/listings/{listing_id}/community/overrides/{field_key}")
+async def delete_community_override(
+    listing_id: str,
+    field_key: str,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Remove this agent's override for one community field (reverts to the researched value)."""
+    listing, member = _get_scoped_listing(listing_id, user, db)
+    view = build_community_view(db, listing=listing, brokerage_id=member.brokerage_id, agent_user_id=user.id)
+    project_key = view.get("project_key")
+    if project_key:
+        db.query(DBAgentCommunityOverride).filter(
+            DBAgentCommunityOverride.brokerage_id == member.brokerage_id,
+            DBAgentCommunityOverride.agent_user_id == user.id,
+            DBAgentCommunityOverride.project_key == project_key,
+            DBAgentCommunityOverride.field_key == field_key,
+        ).delete()
+        safe_commit(db)
+    return build_community_view(db, listing=listing, brokerage_id=member.brokerage_id, agent_user_id=user.id)

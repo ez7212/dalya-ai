@@ -14,6 +14,12 @@ from app.schemas.spa import PaymentInstalment, SPAParseResult
 pytestmark = pytest.mark.no_db
 
 
+def _dld_fact():
+    # The fee path is grounded: production resolves the global DLD verified fact
+    # and passes it to the fee composer. Tests must do the same.
+    return ChatbotEngine._direct_verified_fact_for_prompt("dld_registration_fee_pct", brokerage_id=None)
+
+
 def _sample_spa() -> SPAParseResult:
     return SPAParseResult(
         project="Test Residences",
@@ -337,7 +343,7 @@ def test_compute_paid_to_date_ready_without_schedule_has_zero_remaining():
 
 
 def test_deterministic_total_fees_response_uses_asking_price():
-    response = ChatbotEngine._compose_total_fees_response(_sample_spa(), 16_500_000)
+    response = ChatbotEngine._compose_total_fees_response(_sample_spa(), 16_500_000, dld_fee_fact=_dld_fact())
 
     assert "AED 16,500,000" in response
     assert "AED 660,000" in response
@@ -357,7 +363,7 @@ def test_ready_property_fee_response_has_no_developer_schedule_or_savings_pitch(
         payment_schedule=[],
     )
 
-    response = ChatbotEngine._compose_total_fees_response(spa, 2_800_000, property_type="ready")
+    response = ChatbotEngine._compose_total_fees_response(spa, 2_800_000, property_type="ready", dld_fee_fact=_dld_fact())
 
     assert "ready property" in response.lower()
     assert "no remaining developer payment schedule" in response.lower()
@@ -390,13 +396,16 @@ def test_ready_remaining_payment_response_keeps_no_schedule_behavior():
     assert "{managing_agent_name}" not in response
 
 
-def test_offplan_mortgage_response_encodes_real_constraints():
+def test_offplan_mortgage_response_states_post_construction_rule():
     response = ChatbotEngine._compose_offplan_mortgage_response().lower()
 
-    assert "50% ltv" in response
-    assert "paid about 50%" in response
-    assert "tier-1" in response
-    assert "40-50% construction" in response
+    # States the real rule: mortgage-eligible after ~50% construction; bank finances the remaining balance.
+    assert "50% completion" in response
+    assert "remaining balance of the price" in response
+    assert "depends on the specific developer and bank" in response
+    # Always caveated to a mortgage advisor; never a specific unverified LTV-ratio claim.
+    assert "mortgage advisor" in response
+    assert "50% ltv" not in response
     assert "most uae banks finance off-plan" not in response
 
 
@@ -476,12 +485,12 @@ def test_unbacked_forwarding_claim_removed_without_stitching():
 
 
 def test_offplan_fee_response_does_not_double_count_developer_balance():
-    response = ChatbotEngine._compose_total_fees_response(_sample_spa(), 16_500_000, property_type="off_plan")
+    response = ChatbotEngine._compose_total_fees_response(_sample_spa(), 16_500_000, property_type="off_plan", dld_fee_fact=_dld_fact())
     lowered = response.lower()
 
     assert "total property price" in lowered
-    assert "not an amount on top" in lowered
-    assert "paid to the developer over the remaining spa schedule" in lowered
+    assert "not an amount on top of the spa balance" in lowered
+    assert "remaining payment mechanics are transaction-specific" in lowered
     assert "you also take over" not in lowered
 
 
@@ -876,6 +885,7 @@ def test_ready_total_fees_response_has_no_seller_equity_double_count():
         spa=spa,
         seller_asking_price=16_990_000,
         property_type="ready",
+        dld_fee_fact=_dld_fact(),
     )
     lowered = response.lower()
 

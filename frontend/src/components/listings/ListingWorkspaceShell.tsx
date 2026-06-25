@@ -29,6 +29,7 @@ type NextAction = {
 const WORKSPACE_TABS: readonly WorkspaceTab[] = [
   { label: 'Overview', href: (id) => `/listings/${id}`, match: (pathname, id) => pathname === `/listings/${id}` },
   { label: 'Knowledge', href: (id) => `/listings/${id}/knowledge`, match: (pathname, id) => pathname.startsWith(`/listings/${id}/knowledge`) },
+  { label: 'Community Data', href: (id) => `/listings/${id}/community`, match: (pathname, id) => pathname.startsWith(`/listings/${id}/community`) },
   { label: 'Logistics', href: (id) => `/listings/${id}/logistics`, match: (pathname, id) => pathname.startsWith(`/listings/${id}/logistics`) },
   { label: 'Offers', href: (id) => `/listings/${id}/offers`, match: (pathname, id) => pathname.startsWith(`/listings/${id}/offers`) },
   { label: 'Documents', href: (id) => `/listings/${id}/documents`, match: (pathname, id) => pathname.startsWith(`/listings/${id}/documents`) },
