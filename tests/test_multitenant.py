@@ -267,6 +267,7 @@ def test_listing_scraper_bayut_rapidapi_property_payload_prefills_draft(monkeypa
         "purpose": "for-sale",
         "type": {"name": "Villa"},
         "area": 2_450.0,
+        "plotArea": 3_000.0,
         "rooms": 3,
         "baths": 4,
         "location": {
@@ -306,7 +307,8 @@ def test_listing_scraper_bayut_rapidapi_property_payload_prefills_draft(monkeypa
     assert result.asking_price_aed == 4_750_000.0
     assert result.bedrooms == 3
     assert result.bathrooms == 4
-    assert result.size_sqft == 2_450.0
+    assert result.size_sqft == pytest.approx(26_371.58, abs=0.01)
+    assert result.plot_size_sqft == pytest.approx(32_291.73, abs=0.01)
     assert result.community == "Dubai Hills Estate"
     assert result.subcommunity == "Maple"
     assert result.property_type == "Villa"

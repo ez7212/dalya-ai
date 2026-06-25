@@ -42,6 +42,7 @@ _HTTP_HEADERS = {
 
 _BAYUT_RAPIDAPI_HOST = "uae-real-estate-data-api-2.p.rapidapi.com"
 _BAYUT_RAPIDAPI_URL = f"https://{_BAYUT_RAPIDAPI_HOST}/property-details"
+_SQM_TO_SQFT = 10.76391041671
 
 
 @dataclass
@@ -109,6 +110,13 @@ def _safe_float(value) -> Optional[float]:
         return float(value)
     except (TypeError, ValueError):
         return None
+
+
+def _sqm_to_sqft(value) -> Optional[float]:
+    size_sqm = _safe_float(value)
+    if size_sqm is None:
+        return None
+    return round(size_sqm * _SQM_TO_SQFT, 2)
 
 
 def _fetch_html(url: str) -> Optional[str]:
@@ -675,8 +683,14 @@ def _apply_bayut_api_payload(out: ScrapedListing, payload: dict) -> None:
     out.asking_price_aed = out.asking_price_aed or _money_value(_first_value(ad, ("price", "priceValue", "price_value")))
     out.bedrooms = out.bedrooms or _safe_int(_first_value(ad, ("rooms", "bedrooms", "beds")))
     out.bathrooms = out.bathrooms or _safe_int(_first_value(ad, ("baths", "bathrooms")))
-    out.size_sqft = out.size_sqft or _safe_float(_first_value(ad, ("area", "size", "builtUpArea", "bua", "bua_sqft")))
-    out.plot_size_sqft = out.plot_size_sqft or _safe_float(_first_value(ad, ("plotArea", "plot_area", "plotSize", "plot_size_sqft")))
+    out.size_sqft = out.size_sqft or (
+        _safe_float(_first_value(ad, ("bua_sqft", "size_sqft")))
+        or _sqm_to_sqft(_first_value(ad, ("area", "size", "builtUpArea", "bua")))
+    )
+    out.plot_size_sqft = out.plot_size_sqft or (
+        _safe_float(_first_value(ad, ("plot_size_sqft",)))
+        or _sqm_to_sqft(_first_value(ad, ("plotArea", "plot_area", "plotSize", "plotSizeSqm")))
+    )
     if out.asking_price_aed and out.size_sqft and not out.price_per_sqft_aed:
         out.price_per_sqft_aed = round(out.asking_price_aed / out.size_sqft, 2)
 
