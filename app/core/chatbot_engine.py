@@ -601,7 +601,7 @@ class ChatbotEngine:
                 crud.update_conversation(db, conv)
 
                 escalation = EscalationAlert(
-                    escalation_type=EscalationType.legitimate_conveyancing,
+                    escalation_type=EscalationType.legitimate_conveyancing.value,
                     escalation_subtype="matched_offer" if matched_offer else "unverified_lawyer_mou",
                     priority="high" if matched_offer else "normal",
                     conversation_id=conv.conversation_id,
@@ -1553,7 +1553,7 @@ class ChatbotEngine:
                     if (is_marginal and threshold) else None
                 )
                 escalation = EscalationAlert(
-                    escalation_type=EscalationType.offer,
+                    escalation_type=EscalationType.offer.value,
                     conversation_id=conv.conversation_id,
                     listing_id=listing_id,
                     buyer_phone=inbound.from_number,
