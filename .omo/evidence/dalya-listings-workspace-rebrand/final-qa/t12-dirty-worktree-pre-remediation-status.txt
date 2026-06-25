@@ -1,0 +1,60 @@
+ M BACKLOG.md
+ M DESIGN.md
+ M PROJECT_BRIEF.md
+ M app/main.py
+ M frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+ M frontend/src/app/(app)/listings/new/portal/page.tsx
+ M frontend/src/app/(app)/listings/page.tsx
+ M frontend/src/components/app/nav-items.ts
+ M frontend/src/components/listings/FinishedListingFlow.tsx
+ M frontend/src/components/viewings/ListingLogisticsForm.tsx
+ M frontend/src/lib/queries.ts
+ M tests/test_brokerage_context_dal172.py
+?? .omo/boulder.json
+?? .omo/drafts/
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-final-confirmation-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t11-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t12-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t3-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-retry-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t7-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-code-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-retry-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand/
+?? .omo/evidence/t10-legacy-listing-redirects-gate-review.md
+?? .omo/pilots/
+?? .omo/plans/dalya-internal-omo-pilot.md
+?? .omo/plans/dalya-listings-workspace-rebrand.md
+?? .omo/start-work/
+?? .venv-pilot/
+?? app/api/listing_inventory.py
+?? claude-pilot/
+?? codex-pilot/
+?? frontend/scripts/verify-listing-legacy-redirects.mjs
+?? frontend/scripts/verify-listings-workspace.mjs
+?? frontend/src/app/(app)/listings/[id]/
+?? frontend/src/components/listings/AgentListingsControls.tsx
+?? frontend/src/components/listings/AgentListingsIndex.tsx
+?? frontend/src/components/listings/AgentListingsTable.tsx
+?? frontend/src/components/listings/ListingDocumentsWorkspace.tsx
+?? frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx
+?? frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeTypes.ts
+?? frontend/src/components/listings/ListingKnowledgeWorkspace.tsx
+?? frontend/src/components/listings/ListingLogisticsWorkspace.tsx
+?? frontend/src/components/listings/ListingOffersWorkspace.tsx
+?? frontend/src/components/listings/ListingOverviewWorkspace.tsx
+?? frontend/src/components/listings/ListingWorkspaceShell.tsx
+?? frontend/src/components/listings/listingIndexActions.ts
+?? frontend/src/components/listings/listingIndexLabels.ts
+?? tests/test_listing_inventory_api.py

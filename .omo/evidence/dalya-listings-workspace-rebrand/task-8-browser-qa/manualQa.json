@@ -1,0 +1,258 @@
+{
+  "surfaceEvidence": [
+    {
+      "scenarioId": "T8-knowledge-1280",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/knowledge\") with viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-logistics-1280",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/logistics\") with viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-offers-1280",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/offers\") with viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-offers-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-knowledge-768",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/knowledge\") with viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-logistics-768",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/logistics\") with viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-offers-768",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/offers\") with viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-offers-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-knowledge-375",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/knowledge\") with viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-logistics-375",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/logistics\") with viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-offers-375",
+      "criterionRef": "DESIGN.md Visual QA Requirements; Listings Workspace canonical subroutes",
+      "surface": "Browser UI http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:61883/listings/T8-QA-SEA-HAVEN/offers\") with viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-offers-375",
+        "browser-transcript"
+      ]
+    }
+  ],
+  "adversarialCases": [
+    {
+      "scenarioId": "T8-mobile-overflow",
+      "criterionRef": "DESIGN.md Visual QA Requirements",
+      "adversarialClass": "375px mobile horizontal overflow",
+      "expectedBehavior": "Canonical listing subroutes fit the viewport without document-level horizontal scroll.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-375",
+        "screenshot-logistics-375",
+        "screenshot-offers-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-legacy-token-visible-scan",
+      "criterionRef": "DESIGN.md Non-Negotiables",
+      "adversarialClass": "Legacy dark/gold visible token leakage",
+      "expectedBehavior": "Rendered route text does not expose banned legacy classes/tokens and visuals remain light/slate.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-focus-visible",
+      "criterionRef": "DESIGN.md Visual QA Requirements",
+      "adversarialClass": "Keyboard focus discoverability",
+      "expectedBehavior": "Reachable inputs/buttons expose focus styles via border, outline, or ring/box-shadow.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-logistics-prefill-readable",
+      "criterionRef": "Task T8 logistics empty/prefill state",
+      "adversarialClass": "Prefill data readability",
+      "expectedBehavior": "Logistics route renders building prefill, confidence, form tabs, and save action at all requested widths.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-1280",
+        "screenshot-logistics-768",
+        "screenshot-logistics-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-authenticated-route-gate",
+      "criterionRef": "Task constraint: routes likely authenticated/data-backed",
+      "adversarialClass": "Unauthenticated direct HTTP request",
+      "expectedBehavior": "Without a seeded auth session, canonical listing subroutes redirect to login; with seeded local auth and brokerage/API stubs, the browser reaches ListingWorkspaceShell.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "existing-server-auth-redirect-curl",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "T8-scoped-legacy-token-source-scan",
+      "criterionRef": "DESIGN.md Non-Negotiables",
+      "adversarialClass": "Banned legacy class/token in canonical T8 route source",
+      "expectedBehavior": "No banned legacy dark/gold tokens in the canonical route, shell, knowledge, logistics, offers, or logistics form files.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "scoped-legacy-token-scan"
+      ]
+    }
+  ],
+  "artifactRefs": [
+    {
+      "id": "screenshot-knowledge-1280",
+      "kind": "browser-screenshot",
+      "description": "knowledge route at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-knowledge-1280.png"
+    },
+    {
+      "id": "screenshot-logistics-1280",
+      "kind": "browser-screenshot",
+      "description": "logistics route at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-logistics-1280.png"
+    },
+    {
+      "id": "screenshot-offers-1280",
+      "kind": "browser-screenshot",
+      "description": "offers route at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-offers-1280.png"
+    },
+    {
+      "id": "screenshot-knowledge-768",
+      "kind": "browser-screenshot",
+      "description": "knowledge route at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-knowledge-768.png"
+    },
+    {
+      "id": "screenshot-logistics-768",
+      "kind": "browser-screenshot",
+      "description": "logistics route at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-logistics-768.png"
+    },
+    {
+      "id": "screenshot-offers-768",
+      "kind": "browser-screenshot",
+      "description": "offers route at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-offers-768.png"
+    },
+    {
+      "id": "screenshot-knowledge-375",
+      "kind": "browser-screenshot",
+      "description": "knowledge route at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-knowledge-375.png"
+    },
+    {
+      "id": "screenshot-logistics-375",
+      "kind": "browser-screenshot",
+      "description": "logistics route at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-logistics-375.png"
+    },
+    {
+      "id": "screenshot-offers-375",
+      "kind": "browser-screenshot",
+      "description": "offers route at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-offers-375.png"
+    },
+    {
+      "id": "browser-transcript",
+      "kind": "browser-transcript",
+      "description": "Navigation, API fulfillment, DOM, focus, and overflow checks",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/t8-browser-transcript.json"
+    },
+    {
+      "id": "scoped-legacy-token-scan",
+      "kind": "text",
+      "description": "Scoped banned legacy token scan for T8 canonical listing route/shell/workspace files",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/banned-legacy-token-scan.txt"
+    },
+    {
+      "id": "existing-server-auth-redirect-curl",
+      "kind": "http-transcript",
+      "description": "curl -i transcript showing the pre-existing localhost:3000 server redirects unauthenticated canonical listing route requests to login",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/curl-existing-server-redirect.txt"
+    },
+    {
+      "id": "cleanup-receipt",
+      "kind": "text",
+      "description": "QA-owned dev server PID and cleanup result",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/cleanup-receipt.txt"
+    },
+    {
+      "id": "qa-harness",
+      "kind": "script",
+      "description": "Evidence-only Playwright harness used for the staged browser QA run",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/task-8-browser-qa/run-t8-browser-qa.mjs"
+    }
+  ]
+}

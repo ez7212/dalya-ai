@@ -1,0 +1,52 @@
+ImportError while loading conftest '/Users/eric/dalya-ai/tests/conftest.py'.
+tests/conftest.py:21: in <module>
+    Base.metadata.create_all(bind=engine)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5868: in create_all
+    bind._run_ddl_visitor(
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3252: in _run_ddl_visitor
+    with self.begin() as conn:
+../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3242: in begin
+    with self.connect() as conn:
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3278: in connect
+    return self._connection_cls(self)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:148: in __init__
+    Connection._handle_dbapi_exception_noconnection(
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2442: in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:146: in __init__
+    self._dbapi_connection = engine.raw_connection()
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3302: in raw_connection
+    return self.pool.connect()
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:449: in connect
+    return _ConnectionFairy._checkout(self)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:1263: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:712: in checkout
+    rec = pool._do_get()
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/impl.py:179: in _do_get
+    with util.safe_reraise():
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/impl.py:177: in _do_get
+    return self._create_connection()
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:390: in _create_connection
+    return _ConnectionRecord(self)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:674: in __init__
+    self.__connect()
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:900: in __connect
+    with util.safe_reraise():
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/pool/base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/create.py:643: in connect
+    return dialect.connect(*cargs, **cparams)
+.venv-pilot/lib/python3.12/site-packages/sqlalchemy/engine/default.py:621: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+.venv-pilot/lib/python3.12/site-packages/psycopg2/__init__.py:122: in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E   sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not translate host name "ep-late-butterfly-a4qmj3ea-pooler.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+E
+E   (Background on this error at: https://sqlalche.me/e/20/e3q8)

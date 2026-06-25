@@ -6,6 +6,7 @@ export interface AppNavItem {
 
 const CORE_NAV_ITEMS = [
   { label: 'Dashboard', href: '/agent', icon: 'dashboard' },
+  { label: 'Listings', href: '/listings', icon: 'real_estate_agent' },
   { label: 'Buyers', href: '/agent/buyers', icon: 'groups' },
   { label: 'Drafts', href: '/agent/drafts', icon: 'edit_note' },
   { label: 'Viewings', href: '/agent/viewings', icon: 'event_available' },
@@ -16,7 +17,6 @@ const CORE_NAV_ITEMS = [
 const OWNER_SURFACE_NAV_ITEMS = [
   { label: 'Campaigns', href: '/campaigns', icon: 'campaign' },
   { label: 'Inbox', href: '/inbox', icon: 'inbox' },
-  { label: 'Listings', href: '/listings', icon: 'real_estate_agent' },
   { label: 'Pages', href: '/pages', icon: 'article' },
 ] as const satisfies readonly AppNavItem[]
 

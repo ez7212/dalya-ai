@@ -1,0 +1,111 @@
+{
+  "task": "T7 Migrate overview and documents routes into the new workspace",
+  "changed_files": [
+    "frontend/src/app/(app)/listings/[id]/page.tsx",
+    "frontend/src/app/(app)/listings/[id]/documents/page.tsx",
+    "frontend/src/components/listings/ListingOverviewWorkspace.tsx",
+    "frontend/src/components/listings/ListingDocumentsWorkspace.tsx",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-7-overview-documents.json"
+  ],
+  "commands": [
+    {
+      "command": "omo sparkshell --shell 'rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/'\\''(app)'\\''/listings frontend/src/components/listings || true' --budget 20000",
+      "result": "exit 0; matched only out-of-scope creation-flow files: frontend/src/components/listings/FinishedListingFlow.tsx and frontend/src/components/listings/NewListingFlow.tsx. No matches in the T7-owned route files or new overview/documents components."
+    },
+    {
+      "command": "omo sparkshell --shell 'rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/\"(app)\"/listings/[id]/page.tsx frontend/src/app/\"(app)\"/listings/[id]/documents/page.tsx frontend/src/components/listings/ListingOverviewWorkspace.tsx frontend/src/components/listings/ListingDocumentsWorkspace.tsx || true' --budget 20000",
+      "result": "exit 0; no matches."
+    },
+    {
+      "command": "cd frontend && npx --no-install tsc --noEmit",
+      "result": "exit 1; blocked by out-of-scope concurrent changes: src/components/viewings/ListingLogisticsForm.tsx(206,7): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'; src/components/viewings/ListingLogisticsForm.tsx(318,56): error TS2322: Type 'object' is not assignable to type 'LogisticsSection'."
+    },
+    {
+      "command": "omo sparkshell --shell 'for f in frontend/src/components/listings/ListingOverviewWorkspace.tsx frontend/src/components/listings/ListingDocumentsWorkspace.tsx frontend/src/app/\"(app)\"/listings/[id]/page.tsx frontend/src/app/\"(app)\"/listings/[id]/documents/page.tsx; do awk '\\''!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/ {count++} END {print count, FILENAME}'\\'' \"$f\"; done' --budget 20000",
+      "result": "exit 0; ListingOverviewWorkspace.tsx 248 LOC, ListingDocumentsWorkspace.tsx 239 LOC, page.tsx 10 LOC, documents/page.tsx 10 LOC."
+    },
+    {
+      "command": "bash -lc \"git diff --check frontend/src/app/'(app)'/listings/[id]/page.tsx frontend/src/app/'(app)'/listings/[id]/documents/page.tsx frontend/src/components/listings .omo/evidence/dalya-listings-workspace-rebrand/task-7-overview-documents.json\"",
+      "result": "exit 0; no whitespace errors."
+    },
+    {
+      "command": "omo sparkshell --shell 'rg -n \"font-mono|JetBrains|text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/\"(app)\"/listings/[id]/page.tsx frontend/src/app/\"(app)\"/listings/[id]/documents/page.tsx frontend/src/components/listings/ListingOverviewWorkspace.tsx frontend/src/components/listings/ListingDocumentsWorkspace.tsx || true' --budget 20000",
+      "result": "exit 0; no matches."
+    }
+  ],
+  "acceptance_checklist": [
+    {
+      "item": "/listings/[id] renders useful overview content in the new light/slate workspace style.",
+      "status": "passed",
+      "evidence": "Overview route now renders ListingOverviewWorkspace with key stats, processing health, listing settings, next actions, optional inspection notes, optional buyer matches, and optional seller/agent notes."
+    },
+    {
+      "item": "/listings/[id]/documents is the canonical document workspace for SPA, title deed, floor plans, brochures, ready-property docs, and attachments.",
+      "status": "passed",
+      "evidence": "Documents route now renders ListingDocumentsWorkspace with transfer/ownership, floor plan/brochure, ready-property, agent/seller attachment groups, processed document rows, reference attachment count, and an off-plan SPA-derived context section only when data exists."
+    },
+    {
+      "item": "SPA labels must not imply every listing has SPA.",
+      "status": "passed",
+      "evidence": "The page uses 'Off-plan context' and 'SPA-derived details when available'; the section is hidden for listings without off-plan/SPA-like fields."
+    },
+    {
+      "item": "AED values use Inter/tabular numerals via normal font utilities, not JetBrains/legacy mono.",
+      "status": "passed",
+      "evidence": "Money and numeric fields use normal font with tabular-nums; no new font-mono classes in T7-owned files."
+    },
+    {
+      "item": "No gold/dark legacy classes in canonical listing files/components touched.",
+      "status": "passed",
+      "evidence": "Owned-file rg returned no matches. Broader required rg only found out-of-scope creation-flow files."
+    },
+    {
+      "item": "Loading/error/empty states are readable.",
+      "status": "passed",
+      "evidence": "Both new components include skeleton loading states and bordered white error/empty states with neutral/slate text."
+    }
+  ],
+  "known_limitations": [
+    "Full frontend typecheck is currently blocked by out-of-scope concurrent errors in src/components/viewings/ListingLogisticsForm.tsx. This worker did not edit logistics/viewings code by instruction.",
+    "Browser QA was not completed in this worker slice because the full app currently has the out-of-scope TypeScript module-resolution failure and authenticated listing fixtures were not available in the prompt.",
+    "Existing creation-flow files still contain surface-1 token strings that match the broad legacy scan; those files are outside T7 write ownership and were not changed."
+  ],
+  "adversarial_notes": [
+    {
+      "class": "dirty_worktree",
+      "result": "Probed. Existing listing workspace and creation-flow files were already untracked/modified by other workers; this change touched only the two route files, two new T7 components, and this evidence file."
+    },
+    {
+      "class": "stale_state",
+      "result": "Probed. Re-read canonical route files and reran scans after edits. Concurrent out-of-scope TypeScript errors changed during verification, ending in ListingLogisticsForm.tsx."
+    },
+    {
+      "class": "misleading_success_output",
+      "result": "Probed. The broad legacy-class scan exits 0 because of '|| true' while still printing matches; matches are explicitly separated as out-of-scope rather than treated as a clean global pass."
+    },
+    {
+      "class": "malformed_input",
+      "result": "Not applicable. This task renders existing typed API payloads and does not add new input parsing or mutation surfaces."
+    },
+    {
+      "class": "prompt_injection",
+      "result": "Not applicable. This task does not execute instructions from external documents; document previews are rendered as inert text."
+    },
+    {
+      "class": "cancel_resume",
+      "result": "Not applicable. No resumable flow or long-running operation was added."
+    },
+    {
+      "class": "hung_or_long_commands",
+      "result": "Probed. Typecheck and rg commands completed promptly; no process was left running."
+    },
+    {
+      "class": "flaky_tests",
+      "result": "Not applicable. No new tests were added in this write-limited worker slice."
+    },
+    {
+      "class": "mid_operation_interrupts",
+      "result": "Not applicable. No destructive or multi-step persisted operation was introduced."
+    }
+  ]
+}

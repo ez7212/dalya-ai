@@ -1,0 +1,219 @@
+{
+  "task": "T5 - Upgrade /listings into the operational inventory command center",
+  "changed_files": [
+    "frontend/src/components/listings/AgentListingsIndex.tsx",
+    "frontend/src/components/listings/AgentListingsControls.tsx",
+    "frontend/src/components/listings/AgentListingsTable.tsx",
+    "frontend/src/components/listings/listingIndexActions.ts",
+    "frontend/src/components/listings/listingIndexLabels.ts",
+    "frontend/src/lib/queries.ts",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-code-quality-review.md"
+  ],
+  "pre_existing_dirty_in_scope_used_not_reverted": [
+    "frontend/src/app/(app)/listings/page.tsx",
+    "frontend/src/lib/queries.ts"
+  ],
+  "captured_artifacts": [
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-code-quality-review.md",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/transcript.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/source-state-receipt.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-1280.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-768.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-375.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-375-no-results.png",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-5-server-cleanup.md"
+  ],
+  "commands": [
+    {
+      "scenario": "Baseline characterization - old index/table lacked operational inventory controls and next-action columns",
+      "invocation": "rg -n \"ListingsTable|ActivityBlock|next action|filter|sort|dashboard/listings\" frontend/src/app/'(app)'/listings/page.tsx frontend/src/components/listings/AgentListingsIndex.tsx frontend/src/components/listings/AgentListingsTable.tsx frontend/src/lib/queries.ts",
+      "exit_code": 0,
+      "observable": "Matches showed the shallow ListingsTable usage, ActivityBlock, and simple ready/off-plan filters only; no operational search/filter/sort controls or next-action routing were present before the T5 edit.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "TypeScript typecheck",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; command passed.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Lint",
+      "invocation": "cd frontend && npm run lint",
+      "exit_code": 1,
+      "observable": "Blocked by unrelated pre-existing errors outside T5 ownership: react/no-unescaped-entities in ConversationDetail.tsx, no-explicit-any in EscalationInbox.tsx, react-hooks/set-state-in-effect in SellerUpload.tsx, and react-hooks/immutability in InspectionAudioInput.tsx. The T5-owned AgentListingsIndex warning from the first lint run was fixed; the rerun reported no T5-owned errors or warnings.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Required legacy route and legacy style scan",
+      "invocation": "rg -n \"/dashboard/listings|text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/'(app)'/listings frontend/src/components/listings || true",
+      "exit_code": 0,
+      "observable": "No matches in T5-owned files. Out-of-scope matches remain in FinishedListingFlow.tsx and NewListingFlow.tsx due CSS variable fallback strings containing surface-1/raw token values; those creation-flow files were explicitly outside T5 write ownership.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Scoped owned-file legacy route and legacy style scan",
+      "invocation": "rg -n \"/dashboard/listings|text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E\" frontend/src/app/'(app)'/listings/page.tsx frontend/src/components/listings/AgentListingsIndex.tsx frontend/src/components/listings/AgentListingsControls.tsx frontend/src/components/listings/AgentListingsTable.tsx || true",
+      "exit_code": 0,
+      "observable": "No stdout; no owned-file matches.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Scoped canonical link scan",
+      "invocation": "rg -n \"/dashboard/listings\" frontend/src/app/'(app)'/listings frontend/src/components/listings || true",
+      "exit_code": 0,
+      "observable": "No stdout; no /dashboard/listings links in canonical listing app/components.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 gate blocker remediation - follow_up_buyers next action mapping",
+      "invocation": "rg -n \"follow_up_buyers|/dashboard/listings\" frontend/src/components/listings/AgentListingsTable.tsx",
+      "exit_code": 0,
+      "observable": "Matched only AgentListingsTable.tsx:234 follow_up_buyers; no /dashboard/listings match. The action now routes to /listings/<id> with label Follow up buyers.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 blocker remediation - 1280 visual QA table breakpoint source check",
+      "invocation": "rg -n \"2xl:block|2xl:hidden|min-w-\\[1180px\\]\" frontend/src/components/listings/AgentListingsTable.tsx",
+      "exit_code": 0,
+      "observable": "Lines 12 and 59 show the desktop table activates only at 2xl while cards remain below 2xl; line 13 preserves the 1180px table width so it no longer activates in the 1280-with-sidebar viewport.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 blocker remediation - finite listing index field contracts",
+      "invocation": "rg -n \"AgentListingPropertyType|AgentListingStatus|AgentListingReadinessStatus|AgentListingLogisticsStatus|AgentListingPrimaryNextAction|primary_next_action\" frontend/src/lib/queries.ts frontend/src/components/listings/listingIndexActions.ts frontend/src/components/listings/listingIndexLabels.ts",
+      "exit_code": 0,
+      "observable": "queries.ts defines finite unions for property_type, status, knowledge_status, logistics_status, and primary_next_action; listingIndexActions.ts consumes AgentListingPrimaryNextAction and switches on primary_next_action.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 blocker remediation - primary_next_action contract verifier",
+      "invocation": "cd frontend && node -e 'const fs=require(\"node:fs\"); const quote=String.fromCharCode(39); const src=fs.readFileSync(\"src/components/listings/listingIndexActions.ts\",\"utf8\"); const expected=\"review_knowledge,set_logistics,manage_viewings,review_offers,review_documents,upload_documents,follow_up_buyers,open_listing\".split(\",\"); const list=src.slice(src.indexOf(\"SUPPORTED_INDEX_ACTIONS\"),src.indexOf(\"export interface ListingNextAction\")); const missingList=expected.filter((action)=>!list.includes(quote+action+quote)); const missingCase=expected.filter((action)=>!src.includes(\"case \"+quote+action+quote)); if (missingList.length||missingCase.length){console.error(JSON.stringify({missingList,missingCase}));process.exit(1)} console.log(\"contract ok: \"+expected.length+\" supported actions and explicit cases\")'",
+      "exit_code": 0,
+      "observable": "contract ok: 8 supported actions and explicit cases",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 blocker remediation - table file size after utility split",
+      "invocation": "awk '!/^[[:space:]]*$/ && !/^[[:space:]]*\\/\\//' frontend/src/components/listings/AgentListingsTable.tsx | wc -l",
+      "exit_code": 0,
+      "observable": "224 pure LOC, below the 250 LOC threshold.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 gate blocker remediation - TypeScript typecheck",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; command passed.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 gate blocker remediation - scoped component lint",
+      "invocation": "cd frontend && npx --no-install eslint src/components/listings/AgentListingsIndex.tsx src/components/listings/AgentListingsControls.tsx src/components/listings/AgentListingsTable.tsx src/components/listings/listingIndexActions.ts src/components/listings/listingIndexLabels.ts",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; command passed.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 gate blocker remediation - whitespace and conflict-marker diff check",
+      "invocation": "git diff --check frontend/src/components/listings/AgentListingsTable.tsx .omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; command passed after recording this remediation.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 gate blocker remediation - evidence JSON parse",
+      "invocation": "python3 -m json.tool .omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json >/dev/null",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; JSON is valid after recording this remediation.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Live route unauthenticated behavior",
+      "invocation": "curl -i -o .omo/evidence/dalya-listings-workspace-rebrand/task-5-curl-listings.txt http://127.0.0.1:3000/listings",
+      "exit_code": 0,
+      "observable": "Existing dev server returned HTTP 307 with location /login?redirect=%2Flistings. This proves the route is live behind auth but does not visually exercise the authenticated inventory table.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Whitespace and conflict-marker diff check",
+      "invocation": "git diff --check frontend/src/app/'(app)'/listings/page.tsx frontend/src/components/listings frontend/src/lib/queries.ts .omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; command passed.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Evidence JSON parse",
+      "invocation": "jq empty .omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json",
+      "exit_code": 0,
+      "observable": "No stdout/stderr; JSON is valid.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Command Center activity log",
+      "invocation": "COMMAND_CENTER_WORKING_DIR=\"$PWD\" npm --prefix /Users/eric/command-center run activity-log -- --project dalya --title \"Upgrade listings inventory command center\" --work-type coding --labels feature,listings --purpose \"Make /listings answer which inventory needs agent attention using the T3 listing health fields.\" --process \"Reworked the listings index into searchable, filterable, sortable inventory controls and dense table/mobile cards with canonical next-action routes.\" --outcome \"The T5-owned listings index now surfaces assigned agent, buyer activity, knowledge/logistics readiness, viewings, offers, last activity, and primary next actions under /listings routes.\"",
+      "exit_code": 0,
+      "observable": "activity-log ok project=dalya id=dalya-2026-06-24-upgrade-listings-inventory-command-center-d63e9b84",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "Command Center activity log - T5 blocker remediation",
+      "invocation": "COMMAND_CENTER_WORKING_DIR=\"$PWD\" npm --prefix /Users/eric/command-center run activity-log -- --project dalya --title \"Remediate T5 listings QA blockers\" --work-type coding --labels bugfix,listings,quality --purpose \"Clear T5 listings index code-quality and 1280px visual QA blockers inside the listings-index ownership slice.\" --process \"Narrowed finite listing index contracts, extracted explicit primary_next_action mapping with a contract verifier, moved the desktop table breakpoint to 2xl, split table helpers below the file-size threshold, and recorded evidence.\" --outcome \"T5-owned listing index files now typecheck and lint cleanly with deterministic action-contract evidence; authenticated visual QA remains to be rerun.\"",
+      "exit_code": 0,
+      "observable": "activity-log ok project=dalya id=dalya-2026-06-24-remediate-t5-listings-qa-blockers-b0bcf636",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-index.json"
+    },
+    {
+      "scenario": "T5 server ownership and cleanup clarification",
+      "invocation": "lsof -nP -iTCP:3000 -sTCP:LISTEN; lsof -p 25996 | awk '$4==\"cwd\" {print $1, $2, $4, $9}'; ps -p 25996 -o pid=,ppid=,lstart=,etime=,command=; ps -p 25995 -o pid=,ppid=,lstart=,etime=,command=; lsof -nP -iTCP:3197 -sTCP:LISTEN; stat -f '%Sm %N' .omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/transcript.json .omo/evidence/dalya-listings-workspace-rebrand/task-5-browser-qa/listings-1280.png",
+      "exit_code": 0,
+      "observable": "Port 3197 has no listener and the QA transcript records the T5-owned staged server at /private/tmp/dalya-final-surface-listings-qa exited after SIGTERM with the Supabase stub closed. Port 3000 remains PID 25996/parent PID 25995, cwd /Users/eric/dalya-ai/frontend, command next dev --hostname 127.0.0.1 --port 3000, started Wed Jun 24 19:29:06/07 2026 before the T5 browser QA artifacts written at Jun 24 23:49:01/02 2026. It was not killed because it matches the pre-existing user-facing app session, not the T5 QA-owned server.",
+      "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-5-server-cleanup.md"
+    }
+  ],
+  "acceptance_checklist": [
+    {
+      "criterion": "Dense operational command center rather than legacy marketplace styling",
+      "result": "Implemented a summary strip, operational controls, dense desktop table, and mobile cards using neutral/slate/sage/copper/brick Tailwind tokens."
+    },
+    {
+      "criterion": "Rows/cards show status, property type/community, price, assigned agent, buyer conversations, missing facts/knowledge, logistics, active viewings, open offers, last activity, and primary next action",
+      "result": "Implemented in AgentListingsTable.tsx using AgentListingSummary T3 fields."
+    },
+    {
+      "criterion": "Search/filter/sort for status, attention needed, active buyers/offers/viewings, and recent activity",
+      "result": "Implemented in AgentListingsIndex.tsx and AgentListingsControls.tsx. Search covers title, community, subcommunity, building/project, unit, and listing id."
+    },
+    {
+      "criterion": "Canonical /listings/<id> and subroute links only",
+      "result": "Primary action maps to /knowledge, /logistics, /offers, /documents, or /listings/<id>. The gate-blocking follow_up_buyers action now maps to /listings/<id> with label Follow up buyers because there is no canonical buyers subroute. Scoped /dashboard/listings scan returned no matches."
+    },
+    {
+      "criterion": "Loading, error, empty, and no-results states",
+      "result": "Preserved loading/error/empty states and added a composed no-results state for active filters."
+    },
+    {
+      "criterion": "No gold/dark legacy classes or raw legacy gold token in T5-owned files",
+      "result": "Scoped owned-file scan returned no matches."
+    }
+  ],
+  "known_limitations": [
+    "npm run lint exits 1 because of unrelated existing repo errors outside the T5 write scope; T5-owned warning was fixed before the final lint run.",
+    "Authenticated browser QA completed through a staged local frontend on 127.0.0.1:3197 with mock auth/API and passed at 1280, 768, and 375 widths. The T5-owned QA server and Supabase auth stub were cleaned up. The remaining 127.0.0.1:3000 listener is a pre-existing/user-facing Next dev server in /Users/eric/dalya-ai/frontend and was intentionally left running.",
+    "The broad required scan still reports out-of-scope creation-flow files (FinishedListingFlow.tsx, NewListingFlow.tsx) containing surface-1/raw token fallback strings; those files are explicitly excluded from T5 write ownership."
+  ],
+  "adversarial_notes": {
+    "dirty_worktree": "Before T5 edits, page.tsx and queries.ts were already modified, and AgentListingsIndex.tsx/AgentListingsTable.tsx were already untracked. I preserved those changes and only edited the index/table surface plus one new controls component.",
+    "gate_blocker_remediation": "Independent gate found backend primary_next_action follow_up_buyers counted as attention by AgentListingsIndex but falling through to Open listing in AgentListingsTable. The mapping now lives in listingIndexActions.nextActionForListing with SUPPORTED_INDEX_ACTIONS and explicit switch cases for all 8 known backend action values; no /dashboard/listings route was introduced.",
+    "stale_state": "T3 additive fields were verified directly in frontend/src/lib/queries.ts and app/api/listing_inventory.py before consumption. No cached reports were trusted.",
+    "misleading_success_output": "Lint failure was not treated as pass; exact unrelated blockers are listed. A successful typecheck alone was not treated as visual completion.",
+    "hung_or_long_commands": "T5-owned browser QA used a staged Next server on 127.0.0.1:3197 with cwd /private/tmp/dalya-final-surface-listings-qa; transcript cleanup records SIGTERM, Supabase stub closure, and safe temp workdir removal. Current lsof confirms no 3197 listener. The 127.0.0.1:3000 listener started at Wed Jun 24 19:29:06/07 2026 in /Users/eric/dalya-ai/frontend, hours before the T5 QA artifacts, and was preserved as the pre-existing user-facing dev server.",
+    "flaky_tests": "No new tests were added in this scoped T5 implementation; static commands were deterministic on rerun.",
+    "malformed_input": "No new parsing boundary was added; search/filter values are constrained through typed UI state and parser functions for select values.",
+    "prompt_injection": "No untrusted external text is executed or sent to an LLM in this index UI.",
+    "cancel_resume": "No resumable user workflow or persisted operation was added.",
+    "repeated_interruptions": "No mid-operation mutation requiring recovery semantics was introduced."
+  }
+}

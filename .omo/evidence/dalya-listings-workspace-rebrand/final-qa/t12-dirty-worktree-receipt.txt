@@ -1,0 +1,320 @@
+T12 dirty-worktree boundary receipt
+timestamp=2026-06-24T21:20:14Z
+truePreT12StatusAvailable=false
+limitation=No immutable pre-T12 git status was captured immediately before original T12 finalization; this receipt uses Task 1 baseline plus pre-remediation/current status artifacts.
+
+[Task 1 baseline: .omo/evidence/dalya-listings-workspace-rebrand/task-1-git-status.txt]
+ M BACKLOG.md
+ M app/main.py
+ M frontend/src/app/(app)/listings/new/portal/page.tsx
+ M frontend/src/app/(app)/listings/page.tsx
+ M frontend/src/components/app/nav-items.ts
+ M frontend/src/components/listings/FinishedListingFlow.tsx
+ M frontend/src/lib/queries.ts
+ M tests/test_brokerage_context_dal172.py
+?? .omo/boulder.json
+?? .omo/drafts/
+?? .omo/evidence/dalya-listings-workspace-rebrand/
+?? .omo/pilots/
+?? .omo/plans/dalya-internal-omo-pilot.md
+?? .omo/plans/dalya-listings-workspace-rebrand.md
+?? .omo/start-work/
+?? .venv-pilot/
+?? app/api/listing_inventory.py
+?? claude-pilot/
+?? codex-pilot/
+?? frontend/src/components/listings/AgentListingsIndex.tsx
+?? frontend/src/components/listings/AgentListingsTable.tsx
+
+[Pre-remediation status captured before this remediation]
+ M BACKLOG.md
+ M DESIGN.md
+ M PROJECT_BRIEF.md
+ M app/main.py
+ M frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+ M frontend/src/app/(app)/listings/new/portal/page.tsx
+ M frontend/src/app/(app)/listings/page.tsx
+ M frontend/src/components/app/nav-items.ts
+ M frontend/src/components/listings/FinishedListingFlow.tsx
+ M frontend/src/components/viewings/ListingLogisticsForm.tsx
+ M frontend/src/lib/queries.ts
+ M tests/test_brokerage_context_dal172.py
+?? .omo/boulder.json
+?? .omo/drafts/
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-final-confirmation-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t11-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t12-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t3-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-retry-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t7-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-code-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-retry-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand/
+?? .omo/evidence/t10-legacy-listing-redirects-gate-review.md
+?? .omo/pilots/
+?? .omo/plans/dalya-internal-omo-pilot.md
+?? .omo/plans/dalya-listings-workspace-rebrand.md
+?? .omo/start-work/
+?? .venv-pilot/
+?? app/api/listing_inventory.py
+?? claude-pilot/
+?? codex-pilot/
+?? frontend/scripts/verify-listing-legacy-redirects.mjs
+?? frontend/scripts/verify-listings-workspace.mjs
+?? frontend/src/app/(app)/listings/[id]/
+?? frontend/src/components/listings/AgentListingsControls.tsx
+?? frontend/src/components/listings/AgentListingsIndex.tsx
+?? frontend/src/components/listings/AgentListingsTable.tsx
+?? frontend/src/components/listings/ListingDocumentsWorkspace.tsx
+?? frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx
+?? frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeTypes.ts
+?? frontend/src/components/listings/ListingKnowledgeWorkspace.tsx
+?? frontend/src/components/listings/ListingLogisticsWorkspace.tsx
+?? frontend/src/components/listings/ListingOffersWorkspace.tsx
+?? frontend/src/components/listings/ListingOverviewWorkspace.tsx
+?? frontend/src/components/listings/ListingWorkspaceShell.tsx
+?? frontend/src/components/listings/listingIndexActions.ts
+?? frontend/src/components/listings/listingIndexLabels.ts
+?? tests/test_listing_inventory_api.py
+
+[Pre-remediation tracked diff names]
+BACKLOG.md
+DESIGN.md
+PROJECT_BRIEF.md
+app/main.py
+frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+frontend/src/app/(app)/listings/new/portal/page.tsx
+frontend/src/app/(app)/listings/page.tsx
+frontend/src/components/app/nav-items.ts
+frontend/src/components/listings/FinishedListingFlow.tsx
+frontend/src/components/viewings/ListingLogisticsForm.tsx
+frontend/src/lib/queries.ts
+tests/test_brokerage_context_dal172.py
+
+[Allowed T12 remediation ownership]
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/manualQa.json
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/browser-transcript.json
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/cleanup-receipt.txt and final-qa command/log artifacts
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-code-quality-review.md
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-receipt.txt
+.omo/evidence/dalya-listings-workspace-rebrand/task-12-final.json
+.omo/evidence/dalya-listings-workspace-rebrand/final-report.md
+
+[Current status at receipt creation]
+ M BACKLOG.md
+ M DESIGN.md
+ M PROJECT_BRIEF.md
+ M app/main.py
+ M frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+ M frontend/src/app/(app)/listings/new/portal/page.tsx
+ M frontend/src/app/(app)/listings/page.tsx
+ M frontend/src/components/app/nav-items.ts
+ M frontend/src/components/listings/FinishedListingFlow.tsx
+ M frontend/src/components/viewings/ListingLogisticsForm.tsx
+ M frontend/src/lib/queries.ts
+ M tests/test_brokerage_context_dal172.py
+?? .omo/boulder.json
+?? .omo/drafts/
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-final-confirmation-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t11-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t12-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t3-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-retry-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t7-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-code-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-retry-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand/
+?? .omo/evidence/t10-legacy-listing-redirects-gate-review.md
+?? .omo/pilots/
+?? .omo/plans/dalya-internal-omo-pilot.md
+?? .omo/plans/dalya-listings-workspace-rebrand.md
+?? .omo/start-work/
+?? .venv-pilot/
+?? app/api/listing_inventory.py
+?? claude-pilot/
+?? codex-pilot/
+?? frontend/scripts/verify-listing-legacy-redirects.mjs
+?? frontend/scripts/verify-listings-workspace.mjs
+?? frontend/src/app/(app)/listings/[id]/
+?? frontend/src/components/listings/AgentListingsControls.tsx
+?? frontend/src/components/listings/AgentListingsIndex.tsx
+?? frontend/src/components/listings/AgentListingsTable.tsx
+?? frontend/src/components/listings/ListingDocumentsWorkspace.tsx
+?? frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx
+?? frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeTypes.ts
+?? frontend/src/components/listings/ListingKnowledgeWorkspace.tsx
+?? frontend/src/components/listings/ListingLogisticsWorkspace.tsx
+?? frontend/src/components/listings/ListingOffersWorkspace.tsx
+?? frontend/src/components/listings/ListingOverviewWorkspace.tsx
+?? frontend/src/components/listings/ListingWorkspaceShell.tsx
+?? frontend/src/components/listings/listingIndexActions.ts
+?? frontend/src/components/listings/listingIndexLabels.ts
+?? tests/test_listing_inventory_api.py
+
+[Post-remediation status after browser QA rerun]
+ M BACKLOG.md
+ M DESIGN.md
+ M PROJECT_BRIEF.md
+ M app/main.py
+ M frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+ M frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+ M frontend/src/app/(app)/listings/new/portal/page.tsx
+ M frontend/src/app/(app)/listings/page.tsx
+ M frontend/src/components/app/nav-items.ts
+ M frontend/src/components/listings/FinishedListingFlow.tsx
+ M frontend/src/components/viewings/ListingLogisticsForm.tsx
+ M frontend/src/lib/queries.ts
+ M tests/test_brokerage_context_dal172.py
+?? .omo/boulder.json
+?? .omo/drafts/
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-final-confirmation-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t10-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t11-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t12-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t3-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-retry-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t5-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t7-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-code-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t8-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand-t9-retry-gate-review.md
+?? .omo/evidence/dalya-listings-workspace-rebrand/
+?? .omo/evidence/t10-legacy-listing-redirects-gate-review.md
+?? .omo/pilots/
+?? .omo/plans/dalya-internal-omo-pilot.md
+?? .omo/plans/dalya-listings-workspace-rebrand.md
+?? .omo/start-work/
+?? .venv-pilot/
+?? app/api/listing_inventory.py
+?? claude-pilot/
+?? codex-pilot/
+?? frontend/scripts/verify-listing-legacy-redirects.mjs
+?? frontend/scripts/verify-listings-workspace.mjs
+?? frontend/src/app/(app)/listings/[id]/
+?? frontend/src/components/listings/AgentListingsControls.tsx
+?? frontend/src/components/listings/AgentListingsIndex.tsx
+?? frontend/src/components/listings/AgentListingsTable.tsx
+?? frontend/src/components/listings/ListingDocumentsWorkspace.tsx
+?? frontend/src/components/listings/ListingKnowledgeFactsPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeSourcePanels.tsx
+?? frontend/src/components/listings/ListingKnowledgeSummaryPanel.tsx
+?? frontend/src/components/listings/ListingKnowledgeTypes.ts
+?? frontend/src/components/listings/ListingKnowledgeWorkspace.tsx
+?? frontend/src/components/listings/ListingLogisticsWorkspace.tsx
+?? frontend/src/components/listings/ListingOffersWorkspace.tsx
+?? frontend/src/components/listings/ListingOverviewWorkspace.tsx
+?? frontend/src/components/listings/ListingWorkspaceShell.tsx
+?? frontend/src/components/listings/listingIndexActions.ts
+?? frontend/src/components/listings/listingIndexLabels.ts
+?? tests/test_listing_inventory_api.py
+
+[Post-remediation tracked diff names]
+BACKLOG.md
+DESIGN.md
+PROJECT_BRIEF.md
+app/main.py
+frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+frontend/src/app/(app)/listings/new/portal/page.tsx
+frontend/src/app/(app)/listings/page.tsx
+frontend/src/components/app/nav-items.ts
+frontend/src/components/listings/FinishedListingFlow.tsx
+frontend/src/components/viewings/ListingLogisticsForm.tsx
+frontend/src/lib/queries.ts
+tests/test_brokerage_context_dal172.py
+
+[Post-remediation untracked evidence files of interest]
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/banned-legacy-token-scan.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/browser-transcript.json
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/canonical-dashboard-link-scan.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/canonical-listing-files.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/canonical-workspace-precise-legacy-scan.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/cleanup-receipt.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/command-center-activity-log.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/curl-127001-3000-listings.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/curl-localhost-3000-listings.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-1280.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-375.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-768.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-escalated-2.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-escalated-3.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-escalated.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output-remediation.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/final-browser-qa-output.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-1280.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-375.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-768.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-1280.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-375.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-768.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/legacy-token-dashboard-owned-scan.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-1280.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-375.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-768.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/lsof-port-3000-after.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/lsof-qa-port-after-remediation.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/lsof-qa-port-after.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/manualQa.json
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/npm-build-escalated.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/npm-build.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/npm-lint.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-1280.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-375.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-768.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/out-of-scope-creation-flow-scan.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-1280.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-375.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-768.png
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/pytest-listing-inventory-escalated.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/pytest-listing-inventory.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-code-quality-review.md
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-pre-remediation-diff-names.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-pre-remediation-status.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-pre-remediation-untracked.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-receipt.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/tsc.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/verify-listing-legacy-redirects.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-qa/verify-listings-workspace.txt
+.omo/evidence/dalya-listings-workspace-rebrand/final-report.md
+.omo/evidence/dalya-listings-workspace-rebrand/task-12-final.json
+
+[Boundary conclusion]
+This remediation touched only allowed T12 evidence/final-report artifacts. Product-code dirty entries visible in git status are pre-existing broader-plan/user/other-agent changes and were not edited here.

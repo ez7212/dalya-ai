@@ -2,7 +2,7 @@
 
 *Five-minute human-readable overview for a smart outside reader. Read this once, you'll know what the project is and how to navigate the rest of the repo.*
 
-*Last updated: 2026-06-23 (DAL-202 Verified Facts rule-key integrity)*
+*Last updated: 2026-06-24 (DAL-203 listings workspace migration)*
 
 ## Mission
 
@@ -20,11 +20,13 @@ The product expands beyond off-plan resale to include **ready-property resale an
 
 The legacy seller dashboard is now retired from the active product path and preserved only as `/seller-dashboard-archive` for reference. Active app work should target `/agent` and the agent workflow APIs first; admin/owner dashboards come later after agent stickiness is proven.
 
+The active agent listing surface is now `/listings`: an operational inventory command center with route-backed `/listings/[id]` workspace tabs for overview, documents, knowledge, logistics, and offers. Legacy `/dashboard/listings/*` URLs are compatibility redirects into the canonical listings workspace. The full listing creation-flow split is deferred as Pass 2 follow-up.
+
 Onboarding is brokerage-first. Dalya registers/approves a brokerage first, records its DLD `RealEstateNumber`, and only then can agents create profiles under it. Agents cannot self-create unknown brokerages during the first rollout; if their RERA card's registered brokerage number is not active on Dalya, they are routed to contact Dalya.
 
 ## Product surface model
 
-- **MVP surface: Individual agent workspace** (mobile-first, WhatsApp-adjacent): hot list, conversation thread, escalation support, dashboard reply composer, draft approval queue, viewing logistics, ready-property knowledge, calendar/tenant coordination, post-viewing capture, and personal performance.
+- **MVP surface: Individual agent workspace** (mobile-first, WhatsApp-adjacent): hot list, conversation thread, escalation support, dashboard reply composer, draft approval queue, listing inventory workspace, viewing logistics, ready-property knowledge, calendar/tenant coordination, post-viewing capture, and personal performance.
 - **Deferred surface: Brokerage owner dashboard** (desktop): aggregate performance, listing pipeline, listing acquisition signal, RERA + PDPL compliance audit trail. Do not build owner login, owner rollups, or leaderboards for MVP.
 
 Shared data layer. One platform.

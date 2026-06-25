@@ -378,7 +378,7 @@ export function ViewingDetail({ viewingId }: ViewingDetailProps) {
                 ]}
               />
               <Link
-                href={`/dashboard/listings/${viewing.listing_id}/logistics`}
+                href={`/listings/${viewing.listing_id}/logistics`}
                 className="mt-4 inline-flex min-h-10 w-full items-center justify-center rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100"
               >
                 Edit listing logistics

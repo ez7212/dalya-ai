@@ -1,0 +1,59 @@
+{
+  "verdict": "Red",
+  "modes": {
+    "smoke": false,
+    "chatbot": false,
+    "browser": false
+  },
+  "safety": "BLOCKED",
+  "rows": [
+    {
+      "label": "Phase 0 safety gate",
+      "mode": "smoke",
+      "status": "BLOCKED",
+      "path": "task-2-safety.json"
+    },
+    {
+      "label": "Dashboard listing creation (4 URLs)",
+      "mode": "browser",
+      "status": "BLOCKED",
+      "path": "listing-creation/listing-ids.json"
+    },
+    {
+      "label": "Dependent seed summary",
+      "mode": "smoke",
+      "status": "BLOCKED",
+      "path": "seed-summary.json"
+    },
+    {
+      "label": "Buyer scenario runner",
+      "mode": "chatbot",
+      "status": "BLOCKED",
+      "path": "scenarios"
+    },
+    {
+      "label": "Pilot-critical API smoke",
+      "mode": "smoke",
+      "status": "BLOCKED",
+      "path": "task-6-api-smoke.json"
+    },
+    {
+      "label": "/agent browser walkthrough",
+      "mode": "browser",
+      "status": "BLOCKED",
+      "path": "browser"
+    },
+    {
+      "label": "Golden + stress rehearsal",
+      "mode": "chatbot",
+      "status": "BLOCKED",
+      "path": "demo"
+    },
+    {
+      "label": "Minimal safety sanity",
+      "mode": "smoke",
+      "status": "BLOCKED",
+      "path": "minimal-safety.json"
+    }
+  ]
+}

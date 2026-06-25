@@ -1,0 +1,18 @@
+surface browser-ui
+invocation {"command":"node /Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs","devServerCommand":"cd frontend && npm run start -- --hostname 127.0.0.1 --port 51925","baseUrl":"http://127.0.0.1:51925","pid":54269}
+navigate {"width":1280,"route":"index","url":"http://127.0.0.1:51925/listings"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('heading', { name: 'Listings' }) to be visible[22m
+
+    at summarizePage (/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:265:84)
+    at run (/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:317:31)
+    at async file:///Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/run-final-browser-qa.mjs:398:1 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

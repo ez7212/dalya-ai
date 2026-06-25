@@ -1,0 +1,115 @@
+{
+  "task": "T10 legacy dashboard listing redirects",
+  "changed_files": {
+    "modified_by_this_task": [
+      "frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx",
+      "frontend/scripts/verify-listing-legacy-redirects.mjs",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-10-redirects.json"
+    ],
+    "pre_existing_scoped_dirty_files_verified_not_rewritten": [
+      "frontend/src/app/(app)/dashboard/listings/[id]/page.tsx",
+      "frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx",
+      "frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx",
+      "frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx",
+      "frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx"
+    ]
+  },
+  "commands": [
+    {
+      "name": "initial static characterization before fix",
+      "command": "rg -n \"text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E|/dashboard/listings|useListingDetail|useAuth|TABS|material-symbols-outlined\" frontend/src/app/'(app)'/dashboard/listings/'[id]'",
+      "exit_code": 0,
+      "result": "Failed acceptance: output found legacy implementation in layout.tsx, including useAuth, useListingDetail, TABS, /dashboard/listings hrefs, text-sand, border-gold, text-gold, and material-symbols-outlined. Page modules already contained redirect stubs."
+    },
+    {
+      "name": "static scan of old route files for redirect targets and absence of legacy UI implementation",
+      "command": "rg -n 'redirect\\(`/listings/\\$\\{id\\}(|/knowledge|/logistics|/offers|/documents)`\\)' frontend/src/app/'(app)'/dashboard/listings/'[id]' && ! rg -n 'text-gold|btn-gold|surface-1|text-sand|border-gold|bg-deep|ghost-border|shadow-gold|#C9A96E|useListingDetail|useAuth|TABS|usePathname|/dashboard/listings|framer-motion|apiFetch|ListingLogisticsForm' frontend/src/app/'(app)'/dashboard/listings/'[id]'",
+      "exit_code": 0,
+      "result": "Passed. Redirect target matches were found for page.tsx, knowledge/page.tsx, logistics/page.tsx, offers/page.tsx, and spa/page.tsx. The inverted legacy implementation scan returned no matches."
+    },
+    {
+      "name": "script verification command",
+      "command": "cd frontend && node scripts/verify-listing-legacy-redirects.mjs",
+      "exit_code": 0,
+      "result": "Passed. Static Next route module verification status=pass with no failures; final_url_map recorded below."
+    },
+    {
+      "name": "TypeScript compiler",
+      "command": "cd frontend && npx --no-install tsc --noEmit",
+      "exit_code": 0,
+      "result": "Passed with no stdout or stderr."
+    },
+    {
+      "name": "changed file pure LOC check",
+      "command": "for f in frontend/src/app/'(app)'/dashboard/listings/'[id]'/layout.tsx frontend/scripts/verify-listing-legacy-redirects.mjs; do printf '%s ' \"$f\"; awk '!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/' \"$f\" | wc -l; done",
+      "exit_code": 0,
+      "result": "layout.tsx: 7 pure LOC; verify-listing-legacy-redirects.mjs: 109 pure LOC."
+    },
+    {
+      "name": "git diff whitespace check",
+      "command": "git diff --check -- frontend/src/app/'(app)'/dashboard/listings/'[id]'/layout.tsx frontend/src/app/'(app)'/dashboard/listings/'[id]'/page.tsx frontend/src/app/'(app)'/dashboard/listings/'[id]'/knowledge/page.tsx frontend/src/app/'(app)'/dashboard/listings/'[id]'/logistics/page.tsx frontend/src/app/'(app)'/dashboard/listings/'[id]'/offers/page.tsx frontend/src/app/'(app)'/dashboard/listings/'[id]'/spa/page.tsx .omo/evidence/dalya-listings-workspace-rebrand/task-10-redirects.json",
+      "exit_code": 0,
+      "result": "Passed with no stdout or stderr."
+    }
+  ],
+  "final_url_map": {
+    "/dashboard/listings/legacy-smoke-listing-123": "/listings/legacy-smoke-listing-123",
+    "/dashboard/listings/legacy-smoke-listing-123/knowledge": "/listings/legacy-smoke-listing-123/knowledge",
+    "/dashboard/listings/legacy-smoke-listing-123/logistics": "/listings/legacy-smoke-listing-123/logistics",
+    "/dashboard/listings/legacy-smoke-listing-123/offers": "/listings/legacy-smoke-listing-123/offers",
+    "/dashboard/listings/legacy-smoke-listing-123/spa": "/listings/legacy-smoke-listing-123/documents"
+  },
+  "acceptance_checklist": [
+    {
+      "criterion": "Old layout is compatibility-only",
+      "status": "pass",
+      "observable": "frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx imports only ReactNode and returns children directly."
+    },
+    {
+      "criterion": "Legacy overview redirects to canonical overview",
+      "status": "pass",
+      "observable": "frontend/src/app/(app)/dashboard/listings/[id]/page.tsx redirects to /listings/${id}."
+    },
+    {
+      "criterion": "Legacy knowledge redirects to canonical knowledge",
+      "status": "pass",
+      "observable": "frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx redirects to /listings/${id}/knowledge."
+    },
+    {
+      "criterion": "Legacy logistics redirects to canonical logistics",
+      "status": "pass",
+      "observable": "frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx redirects to /listings/${id}/logistics."
+    },
+    {
+      "criterion": "Legacy offers redirects to canonical offers",
+      "status": "pass",
+      "observable": "frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx redirects to /listings/${id}/offers."
+    },
+    {
+      "criterion": "Legacy SPA redirects to canonical documents",
+      "status": "pass",
+      "observable": "frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx redirects to /listings/${id}/documents."
+    },
+    {
+      "criterion": "Old route tree contains no legacy dark/gold listing UI implementation",
+      "status": "pass",
+      "observable": "Final static scan and verifier found no banned legacy implementation tokens in the old route tree."
+    }
+  ],
+  "known_limitations": [
+    "Live browser navigation was not used because the app routes are auth-protected and may redirect through auth/session state before route rendering.",
+    "Verification used static Next route module checks plus TypeScript compilation; this directly validates redirect() targets and absence of legacy UI in the compatibility route modules."
+  ],
+  "adversarial_notes": {
+    "dirty_worktree": "The repository was dirty before this task. Scoped old page redirect files were already modified and were verified but not rewritten. Other dirty files include BACKLOG.md, DESIGN.md, app/main.py, canonical listings files, listing components, tests, and OMO artifacts.",
+    "stale_state": "Existing task-4 evidence still records earlier /dashboard/listings findings from before T10; it is treated as stale historical evidence, not current state.",
+    "misleading_success_output": "The first redirect-target rg command was accidentally quoted with shell-evaluated backticks and printed zsh no such file or directory messages while still showing route matches; it was not used as final evidence. The final static scan uses single-quoted regex and passed.",
+    "auth_live_router_limitation": "A live browser final-URL check could be misleading because auth middleware may intercept old protected routes. The added verifier records the Next-router-compatible old-to-canonical map from the route modules without auth side effects.",
+    "redirect_loop_browser_back_behavior": "Old /dashboard/listings/[id] route modules redirect one-way to canonical /listings/[id] routes. The canonical checked scope has no redirect() or /dashboard/listings match back to the old dashboard listing routes, which avoids browser Back bouncing between duplicate UIs."
+  },
+  "artifacts": {
+    "evidence_json": ".omo/evidence/dalya-listings-workspace-rebrand/task-10-redirects.json",
+    "verification_script": "frontend/scripts/verify-listing-legacy-redirects.mjs",
+    "code_quality_review": ".omo/evidence/dalya-listings-workspace-rebrand/task-10-code-quality-review.md"
+  }
+}

@@ -1,0 +1,1148 @@
+{
+  "name": "The Oasis by Emaar",
+  "developer": "Emaar Properties PJSC",
+  "last_updated": "2025-01-27",
+  "researcher_notes": [
+    "Primary sources: Emaar official website (Source 21, 27), Hotelier Middle East launch article (Source 20), Propsearch.ae (Source 15), Christie's Real Estate Dubai (Source 6), Barnes Dubai (Source 18), Engel & Völkers (Source 42), Property Finder off-plan listings (Source 24), Bayut area guides (Source 32), Apil Properties amenities article (Source 29), Tanami Properties location data (Source 17), Driven Properties area guide (Source 23), Emaar Annual Report 2024 (Source 40), LinkedIn/Xperience Realty market commentary (Source 36).",
+    "MASTER DEVELOPMENT: Total land area of 100 million sq ft (9.4 million sq m) confirmed by multiple sources (Sources 15, 18, 20, 21, 42). Total residential units cited as 7,000+ by most sources (Sources 15, 18, 20, 42) but Emaar's own website (Source 21) states 2,600 villas — this is a significant discrepancy. The 7,000 figure likely refers to the full master plan across all phases; the 2,600 figure may reflect currently announced/launched units. Apil Properties (Source 29) cites 3,100 villas. Reddit (Source 37) also cites ~3,100. The LinkedIn post (Source 36) confirms 3,100 standalone villas. Confidence: MEDIUM — the 3,100 figure for standalone villas appears most consistent across independent sources; 7,000 may be the total master plan target including future phases.",
+    "LOCATION: Described as Dubailand by Bayut (Source 32) and Christie's (Source 6). Also referenced as near Jebel Ali area by fäm Properties (Source 47) and Me'aisem by fäm Properties listing URL. Located near Sheikh Zayed bin Hamdan Al Nahyan Street (D54) and Jebel Ali-Al Hibab Road (D57) per Bayut (Source 32) and Driven Properties (Source 23). Drive times vary by source: Downtown Dubai cited as 20 min (Source 20 — Hotelier, official launch), 30 min (Sources 18, 23, 42), 32 min (Source 23 body text), 35 min (Source 17). Al Maktoum Airport cited as 18 min (Source 17), 30-31 min (Sources 6, 5). Dubai Marina cited as 21 min (Source 23), 28 min (Source 17). Dubai Hills Mall cited as 20 min (Source 17). Confidence: MEDIUM — drive times vary by source and traffic conditions; ranges used.",
+    "TOTAL DEVELOPMENT VALUE: USD 20 billion confirmed at launch (Sources 15, 20). Later expanded to AED 73 billion (from AED 34 billion) per Propsearch (Source 15), representing 108% increase in landscaped land space.",
+    "AMENITIES: 25% of land dedicated to open spaces confirmed by multiple sources (Sources 15, 18, 20, 21, 29, 42). Four international golf courses nearby confirmed (Sources 18, 20, 21, 42). Swimmable lagoons, cycling/jogging tracks, parks, retail area of 1.5 million sq ft confirmed (Sources 15, 20, 29). Specific cycling track length (54 km) mentioned in example schema but NOT confirmed by any source in this research — marked as null/unverified. Private beaches mentioned by Christie's (Source 6) and Barnes (Source 18). Mosque confirmed (Source 29). Wellness/spa centers mentioned (Sources 18, 29).",
+    "SUB-DEVELOPMENTS IDENTIFIED from Property Finder (Source 24) and DXBOffplan (Source 22): Palmiera (original, Phase 1), Palmiera 2, Palmiera 3, Palmiera Collective, Mirage, Mareva (Mareva The Oasis), Mareva 2, Lavita, Palace Villas Ostra, Address Villas Tierra, Oasis Address Branded Villas, Valoria Villas. Most original phases are sold out at developer level but active in resale market.",
+    "PRICING: Palmiera 4BR villas launched at AED 8.4M (Source 36), now trading at AED 14M+ (Source 36). Palmiera resale listings show AED 1,173–2,231 AED/sqft range (Sources 7, 9). Mirage launched at AED 15.8M (Source 24), resale listings AED 1,428–1,806 AED/sqft (Source 28). Mareva launched from AED 13.87M (Source 24), resale AED 1,348–1,866 AED/sqft (Source 10). Lavita launched at AED 38M (Source 24), resale 6BR at AED 2,062–2,104 AED/sqft (Sources 3, 25). Palace Villas Ostra launched from AED 13.27M (Source 24). Address Villas Tierra launched from AED 13.16M (Source 24). Palmiera Collective launched at AED 13.6M (Source 24). 5BR villas (general) cited at AED 15.8M, 6BR at AED 20.5M by Binayah (Source 5). 6BR villas on Bayut range AED 15.38M–50M (Source 11). Residential plots AED 14.5M–27.58M (Source 12).",
+    "ROI: Metropolitan Real Estate (Source 1) cites estimated average ROI of 6% for 4BR villas in Dubailand as of Q3 2024. DXBOffplan (Source 22) references Knight Frank data citing 7-12% annual appreciation for Emaar properties. LinkedIn post (Source 36) cites 50%+ ROI on equity for Palmiera in 12 months (marketing claim, not independently verified). YouTube (Source 35) references 60-80% appreciation projections. Engel & Völkers (Source 46) shows villa rental yields in Dubai average 4.98% as of April 2026. Confidence: LOW-MEDIUM — ROI figures vary widely and some are marketing claims. Conservative estimate of 5-7% rental yield used.",
+    "GOLDEN VISA: Not explicitly confirmed in any source for this specific development, but properties above AED 2M in Dubai are generally eligible. All units at The Oasis are well above AED 2M threshold. Marked as true with note.",
+    "PAYMENT PLANS: 80/20 structure common (Source 8). Specific plans per sub-development: Palmiera Collective 10/75/15 (Source 24); Mareva/Mareva 2 10/70/20 (Source 24); Palace Villas Ostra 10/70/20 (Source 24); Address Villas Tierra 10/70/20 (Source 24); Lavita 20/60/20 (Source 24); Palmiera 2 10/80/10 (Source 24); Mirage 10/80/10 (Source 24). No post-handover payment plans confirmed (Source 8).",
+    "SCHOOLS: Propsearch (Source 41) identifies British schools within 5km including Jebel Ali School (4.3/5) and Royal Grammar School Guildford Dubai (4.3/5). Bright Riders School identified as closest school by Christie's (Source 6). American schools include Nibras International School. Specific distances not confirmed — marked as approximate.",
+    "HEALTHCARE: NMC Speciality Hospital Dubai Investments Park identified as closest hospital by Christie's (Source 6). No other specific healthcare facilities confirmed with distances.",
+    "RETAIL: City Centre Me'aisem cited as 10-13 min drive (Sources 42, 32). Dubai Hills Mall cited as 20 min (Source 17). The Ranches Souk cited as 13 min (Source 32). 1.5M sq ft internal retail area planned (Sources 15, 20).",
+    "DEVELOPER PROFILE: Emaar Properties PJSC 2024 Annual Report (Source 40) confirms: AED 35.5Bn revenue, AED 19.3Bn EBITDA, AED 17.5Bn net profit, AED 110Bn+ revenue backlog, 405+ Mn sq ft UAE landbank, MSCI BBB ESG rating. Emaar Development 2024 property sales AED 65Bn (75% increase) per Source 43.",
+    "CONTRADICTIONS: (1) Total unit count: 2,600 (Emaar website) vs 3,100 (multiple independent sources) vs 7,000 (master plan total). (2) Downtown drive time: 20 min (launch press) vs 30-35 min (broker sources). (3) ROI figures range from 6% rental yield to 100%+ equity return — different metrics being compared.",
+    "DATA GAPS: Exact cycling track length not confirmed. Service charge rates not found in sources. Exact plot sizes per sub-development not fully confirmed. Completion status of infrastructure not confirmed. Total number of sub-development phases not confirmed. Valoria Villas details sparse."
+  ],
+  "master_development": {
+    "overview": {
+      "official_name": "The Oasis by Emaar",
+      "developer": "Emaar Properties PJSC",
+      "launch_date": "2023-06-13",
+      "launch_event": "Gala event at Armani Hotel, Burj Khalifa, Downtown Dubai",
+      "total_land_area_sqft": 100000000,
+      "total_land_area_sqm": 9400000,
+      "total_residential_units_master_plan": 7000,
+      "total_standalone_villas_confirmed": 3100,
+      "emaar_website_villa_count": 2600,
+      "unit_count_note": "Discrepancy between sources: Emaar website states 2,600 villas; multiple independent sources cite 3,100 standalone villas; 7,000 may be full master plan target across all phases",
+      "property_types": [
+        "villas",
+        "mansions",
+        "super-mansions",
+        "branded villas"
+      ],
+      "bedroom_configurations": [
+        "4BR",
+        "5BR",
+        "6BR",
+        "7BR+"
+      ],
+      "freehold": true,
+      "total_development_value_usd": 20000000000,
+      "total_development_value_aed_expanded": 73000000000,
+      "open_spaces_percentage": 25,
+      "retail_area_sqft": 1500000,
+      "nearby_golf_courses": 4,
+      "community_type": "Gated luxury villa master community",
+      "density": "Low-density — approximately 3,100 villas across ~10 sq km",
+      "architectural_styles": [
+        "Classical",
+        "Contemporary",
+        "Chamfered"
+      ],
+      "contractor_initial_phases": "Wade Adams Contracting (pumping station, utility connections)",
+      "community_area_sqkm": 10
+    },
+    "location_connectivity": {
+      "area": "Dubailand / Me'aisem Second, Dubai",
+      "sub_area_note": "Located near Jebel Ali-Al Hibab Road (D57) and Sheikh Zayed bin Hamdan Al Nahyan Street (D54)",
+      "nearest_metro_station": "Dubai Investment Park Metro Station",
+      "nearest_bus_stop": "Gulf News, DIP bus stop",
+      "public_transport_note": "Limited public transport; most residents use private cars, taxis, or ride-hailing",
+      "highway_access": [
+        "Sheikh Zayed bin Hamdan Al Nahyan Street (D54)",
+        "Jebel Ali-Al Hibab Road (D57)",
+        "Emirates Road"
+      ],
+      "drive_times_minutes": {
+        "downtown_dubai_burj_khalifa": "20-35",
+        "dubai_marina": "21-28",
+        "palm_jumeirah": 26,
+        "dubai_hills_mall": 20,
+        "al_maktoum_international_airport": "18-31",
+        "dubai_international_airport_dxb": null,
+        "business_bay": 27,
+        "jumeirah_beach_residence": 22,
+        "sheikh_zayed_road": 16,
+        "trump_international_golf_club": 10,
+        "dubai_polo_equestrian_club": 11,
+        "city_centre_meaisem": "10-13",
+        "dubai_autodrome": 12,
+        "dubai_international_stadium": 11,
+        "the_ranches_souk": 13,
+        "hamdan_sports_complex": null
+      },
+      "drive_time_notes": "Drive times vary by source and traffic; ranges provided where sources conflict"
+    },
+    "shared_amenities": {
+      "water_features": {
+        "swimmable_lagoons": true,
+        "water_canals": true,
+        "lakes": true,
+        "private_beach_access": true,
+        "private_jetties": "Available for mansion and super-mansion units",
+        "private_islands": "Corner plot super-mansions include private island"
+      },
+      "green_spaces": {
+        "percentage_of_land": 25,
+        "landscaped_parks": true,
+        "japanese_zen_gardens": true,
+        "jogging_tracks": true,
+        "cycling_tracks": true,
+        "cycling_track_km": null,
+        "playgrounds": true,
+        "event_lawn": true,
+        "picnic_grounds": true
+      },
+      "fitness_wellness": {
+        "outdoor_gym": true,
+        "sports_courts": true,
+        "wellness_centers": true,
+        "zen_spa": true,
+        "yoga_spaces": true,
+        "bbq_areas": true
+      },
+      "community_facilities": {
+        "community_centre": true,
+        "mosque": true,
+        "retail_outlets": true,
+        "dining_cafes": true,
+        "retail_area_sqft": 1500000,
+        "waterfall_stage": true,
+        "boulevard": true,
+        "socializing_zones": true
+      },
+      "security": {
+        "gated_community": true,
+        "advanced_security_systems": true
+      },
+      "nearby_golf_courses": {
+        "count": 4,
+        "named_courses": [
+          "Trump International Golf Club",
+          "The Els Club"
+        ],
+        "drive_time_minutes": "10-15"
+      }
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "Bright Riders School",
+          "curriculum": "Indian/CBSE",
+          "distance_note": "Closest school per Christie's",
+          "distance_km": null
+        },
+        {
+          "name": "Jebel Ali School",
+          "curriculum": "British",
+          "rating": "4.3/5 (WhichSchoolAdvisor)",
+          "distance_note": "Within 5km"
+        },
+        {
+          "name": "Royal Grammar School Guildford Dubai",
+          "curriculum": "British",
+          "rating": "4.3/5 (WhichSchoolAdvisor)",
+          "distance_note": "Within 5km"
+        },
+        {
+          "name": "Nibras International School",
+          "curriculum": "American",
+          "rating": "2.4/5 (WhichSchoolAdvisor)",
+          "distance_note": "Within 5km"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "NMC Speciality Hospital Dubai Investments Park",
+          "distance_note": "Closest hospital per Christie's",
+          "distance_km": null
+        }
+      ],
+      "retail_leisure": [
+        {
+          "name": "City Centre Me'aisem",
+          "drive_time_minutes": "10-13"
+        },
+        {
+          "name": "Dubai Hills Mall",
+          "drive_time_minutes": 20
+        },
+        {
+          "name": "The Ranches Souk",
+          "drive_time_minutes": 13
+        },
+        {
+          "name": "Mall of the Emirates",
+          "drive_time_minutes": null,
+          "note": "Within reasonable driving distance per Christie's"
+        }
+      ],
+      "sports": [
+        {
+          "name": "Trump International Golf Club",
+          "drive_time_minutes": 10
+        },
+        {
+          "name": "The Els Club",
+          "drive_time_minutes": null
+        },
+        {
+          "name": "Dubai Polo & Equestrian Club",
+          "drive_time_minutes": 11
+        },
+        {
+          "name": "Hamdan Sports Complex",
+          "drive_time_minutes": null
+        },
+        {
+          "name": "Dubai Autodrome",
+          "drive_time_minutes": 12
+        }
+      ]
+    },
+    "investment_data": {
+      "ownership_type": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "All units priced well above AED 2M threshold; eligibility assumed but not explicitly confirmed in sources",
+      "price_ranges_by_type": {
+        "palmiera_4br_villa": {
+          "launch_price_aed": 8400000,
+          "current_resale_aed_approx": "9700000-16600000",
+          "price_per_sqft_resale": "1173-2231"
+        },
+        "mirage_5_6br_villa": {
+          "launch_price_aed": 15800000,
+          "current_resale_aed_approx": "16000000-24000000",
+          "price_per_sqft_resale": "1428-1806"
+        },
+        "mareva_4_6br_villa": {
+          "launch_price_aed": 13870000,
+          "current_resale_aed_approx": "13400000-70000000",
+          "price_per_sqft_resale": "1348-1866"
+        },
+        "lavita_6_7br_mansion": {
+          "launch_price_aed": 38000000,
+          "current_resale_aed_approx": "44000000-68000000",
+          "price_per_sqft_resale": "2062-2104"
+        },
+        "palace_villas_ostra_4_6br": {
+          "launch_price_aed": 13270000,
+          "current_resale_aed_approx": "13000000-21000000",
+          "price_per_sqft_resale": "1166-1942"
+        },
+        "address_villas_tierra_4_6br": {
+          "launch_price_aed": 13160000,
+          "current_resale_aed_approx": "13000000-20000000",
+          "price_per_sqft_resale": "1866-1866"
+        },
+        "palmiera_collective_4_6br": {
+          "launch_price_aed": 13600000,
+          "current_resale_aed_approx": "13600000-17000000",
+          "price_per_sqft_resale": "2001-2001"
+        },
+        "general_5br_villa": {
+          "price_aed": 15800000,
+          "size_sqft": "10225-11163"
+        },
+        "general_6br_villa": {
+          "price_aed": 20500000,
+          "size_sqft": "11298-12967"
+        },
+        "residential_plots": {
+          "price_range_aed": "14500000-27583000"
+        }
+      },
+      "projected_roi_rental_yield_percent": "5-7",
+      "projected_capital_appreciation_note": "Palmiera Phase 1 launched at AED 8.4M, trading at AED 14M+ (50%+ ROI in ~12 months per market commentary). Knight Frank cited 7-12% annual appreciation for Emaar properties historically.",
+      "comparable_communities": [
+        "Emirates Hills",
+        "District One",
+        "Jumeirah Golf Estates",
+        "Dubai Hills Estate"
+      ],
+      "price_positioning_note": "Priced at a discount vs Emirates Hills and District One on per-sqft basis at launch",
+      "payment_plans": {
+        "typical_structure": "80/20 (80% during construction, 20% at handover)",
+        "post_handover": false,
+        "post_handover_note": "No post-handover payment plans available per off-planproperties.ae",
+        "sub_development_specific_plans": {
+          "palmiera_collective": "10/75/15",
+          "mareva": "10/70/20",
+          "mareva_2": "10/70/20",
+          "palace_villas_ostra": "10/70/20",
+          "address_villas_tierra": "10/70/20",
+          "lavita": "20/60/20",
+          "palmiera_2": "10/80/10",
+          "mirage": "10/80/10"
+        }
+      },
+      "service_charge_aed_per_sqft": null,
+      "dld_transactions_note": "50 sale transaction records available on Propsearch as of research date"
+    },
+    "developer_profile": {
+      "legal_name": "Emaar Properties PJSC",
+      "founded": null,
+      "headquarters": "Dubai, UAE",
+      "stock_listing": "Dubai Financial Market (DFM)",
+      "net_asset_value_aed": 212800000000,
+      "net_asset_value_usd": 57900000000,
+      "revenue_2024_aed": 35500000000,
+      "ebitda_2024_aed": 19300000000,
+      "net_profit_2024_aed": 17500000000,
+      "revenue_backlog_aed": 110000000000,
+      "property_sales_2024_aed": 65000000000,
+      "property_sales_growth_2024": "75% year-on-year",
+      "uae_landbank_sqft": 405000000,
+      "esg_rating": "MSCI BBB",
+      "dividend_2024": "100% of share capital (AED 8.8 billion)",
+      "flagship_projects": [
+        "Burj Khalifa",
+        "Dubai Mall",
+        "Downtown Dubai",
+        "Dubai Hills Estate",
+        "Arabian Ranches",
+        "Emaar South",
+        "Dubai Creek Harbour"
+      ],
+      "track_record_summary": "Emaar Properties PJSC is one of the world's most valuable real estate developers, responsible for the Burj Khalifa, Dubai Mall, and multiple master communities across Dubai. With AED 35.5Bn in 2024 revenue, AED 110Bn+ revenue backlog, and a 75% increase in property sales to AED 65Bn in 2024, Emaar has a proven track record of delivering iconic, value-appreciating communities. The Oasis represents Emaar's first ultra-luxury waterfront lagoon villa community.",
+      "customer_satisfaction_score": "94.2%"
+    }
+  },
+  "sub_developments": {
+    "palmiera": {
+      "aliases": [
+        "palmiera",
+        "palmiera the oasis",
+        "palmiera at the oasis",
+        "palmiera 1",
+        "palmiera phase 1",
+        "the oasis palmiera",
+        "oasis palmiera",
+        "palmeira",
+        "palmeira the oasis"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Palmiera",
+        "investment_overrides": {
+          "launch_price_aed": "8,400,000",
+          "current_resale_price_range_aed": "9,700,000 – 16,600,000",
+          "price_per_sqft_resale": "1,173 – 2,231 AED/sqft",
+          "handover": "Q4 2027 – Q2 2028",
+          "payment_plan": "10/80/10",
+          "status": "Sold out at developer; active resale market",
+          "capital_appreciation_note": "Launched at AED 8.4M, now trading at AED 14M+ — over 50% ROI in approximately 12 months"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Palmiera was the inaugural phase of The Oasis and is now fully sold out at developer level. All available units are resale, meaning buyers are purchasing from early investors who secured at launch prices of AED 8.4M — units now trade at AED 14M+, representing over 50% capital appreciation in approximately 12 months.",
+          "lifestyle_pitch": "Palmiera offers 4 and 5-bedroom villas in Classical, Contemporary, and Chamfered architectural styles, set around swimmable lagoons and landscaped parks. As the first completed phase, residents will benefit from the most mature community infrastructure within The Oasis.",
+          "investment_pitch": "Palmiera's price trajectory — from AED 8.4M at launch to AED 14M+ in resale — is one of the strongest capital appreciation stories in Dubai's 2023-2024 villa market. With handover approaching in 2027-2028, buyers today are acquiring a near-complete asset with significant embedded equity."
+        }
+      },
+      "overview": {
+        "phase": "Phase 1 (original launch)",
+        "launch_date": "2023",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa"
+        ],
+        "architectural_styles": [
+          "Classical",
+          "Contemporary",
+          "Chamfered"
+        ],
+        "bua_range_sqft": "8,231 – 11,309",
+        "plot_size_range_sqft": null,
+        "launch_price_aed": 8400000,
+        "resale_price_range_aed": "9,700,000 – 16,600,000",
+        "price_per_sqft_resale": "1,173 – 2,231",
+        "handover": "Q4 2027 – Q2 2028",
+        "payment_plan": "10/80/10",
+        "developer_stock": "Sold out",
+        "resale_listings_approx": 198,
+        "key_features": [
+          "Lagoon-facing units available",
+          "Swimmable lagoon access",
+          "Community centre",
+          "Parks and cycling tracks"
+        ]
+      }
+    },
+    "palmiera_2": {
+      "aliases": [
+        "palmiera 2",
+        "palmiera 2 the oasis",
+        "palmiera 2 at the oasis",
+        "palmiera two",
+        "palmeira 2"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Palmiera 2",
+        "investment_overrides": {
+          "launch_price_aed": "9,850,000",
+          "price_per_sqft_resale": null,
+          "handover": "Q2 2028",
+          "payment_plan": "10/80/10",
+          "status": "Sold out at developer; resale available"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Palmiera 2 is sold out at developer level. Resale units represent the only route to ownership in this phase, with prices having appreciated since launch.",
+          "lifestyle_pitch": "Palmiera 2 continues the Palmiera villa collection with the same lagoon-integrated lifestyle, offering 4 and 5-bedroom villas within The Oasis master community.",
+          "investment_pitch": "With handover in Q2 2028, Palmiera 2 resale buyers are acquiring a near-completion asset with strong capital appreciation potential driven by The Oasis's overall price trajectory."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 9850000,
+        "handover": "Q2 2028",
+        "payment_plan": "10/80/10",
+        "developer_stock": "Sold out",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa"
+        ],
+        "bua_range_sqft": null
+      }
+    },
+    "palmiera_3": {
+      "aliases": [
+        "palmiera 3",
+        "palmiera 3 the oasis",
+        "palmiera 3 at the oasis",
+        "palmiera three",
+        "palmeira 3"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Palmiera 3",
+        "investment_overrides": {
+          "launch_price_aed": "9,180,000",
+          "handover": "Q4 2028",
+          "status": "Sold out at developer; resale available"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Palmiera 3 is sold out at developer level with handover in Q4 2028. Resale units offer buyers a chance to enter The Oasis at a later phase with near-term delivery.",
+          "lifestyle_pitch": "Palmiera 3 extends the award-winning Palmiera villa collection within The Oasis, offering the same lagoon-facing lifestyle and world-class amenities.",
+          "investment_pitch": "Q4 2028 handover means buyers are close to receiving a completed luxury villa in one of Dubai's most talked-about master communities."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 9180000,
+        "handover": "Q4 2028",
+        "developer_stock": "Sold out",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa"
+        ],
+        "bua_range_sqft": null
+      }
+    },
+    "palmiera_collective": {
+      "aliases": [
+        "palmiera collective",
+        "palmiera collective the oasis",
+        "palmiera collective at the oasis",
+        "oasis palmiera collective"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Palmiera Collective",
+        "investment_overrides": {
+          "launch_price_aed": "13,600,000",
+          "price_per_sqft_resale": "2,001 AED/sqft (sample listing)",
+          "handover": "Q1 2029",
+          "payment_plan": "10/75/15",
+          "status": "Developer stock available",
+          "bedroom_range": "4 – 6 bedrooms"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Palmiera Collective is one of the few phases at The Oasis with remaining developer stock, offering buyers the opportunity to purchase directly from Emaar at launch pricing before the resale premium applies.",
+          "lifestyle_pitch": "Palmiera Collective offers 4 to 6-bedroom villas within the established Palmiera neighbourhood of The Oasis, combining the proven lagoon-lifestyle blueprint with larger villa configurations.",
+          "investment_pitch": "With a 10/75/15 payment plan and Q1 2029 handover, Palmiera Collective allows investors to control a luxury villa with minimal upfront capital while benefiting from The Oasis's demonstrated price appreciation trajectory."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 13600000,
+        "handover": "Q1 2029",
+        "payment_plan": "10/75/15",
+        "developer_stock": "Available",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "bua_range_sqft": "8,267 – 11,309",
+        "sample_resale_price_per_sqft": 2001
+      }
+    },
+    "mirage": {
+      "aliases": [
+        "mirage",
+        "mirage the oasis",
+        "mirage at the oasis",
+        "the oasis mirage",
+        "oasis mirage",
+        "mirage emaar"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Mirage",
+        "investment_overrides": {
+          "launch_price_aed": "15,800,000",
+          "current_resale_price_range_aed": "16,000,000 – 24,000,000",
+          "price_per_sqft_resale": "1,428 – 1,806 AED/sqft",
+          "handover": "Q2 2028",
+          "payment_plan": "10/80/10",
+          "status": "Sold out at developer; active resale market (145+ listings)",
+          "construction_progress": "19%",
+          "bedroom_range": "5 – 6 bedrooms"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Mirage is sold out at developer level with 145+ active resale listings. At 19% construction completion, buyers are entering at an early stage with significant upside before Q2 2028 handover.",
+          "lifestyle_pitch": "Mirage offers 5 and 6-bedroom villas in Classical, Contemporary, and Chamfered styles, featuring a swimmable lagoon, waterfall stage, boulevard, community centre, mosque, and outdoor gym. Situated near Trump International Golf Club and The Els Club.",
+          "investment_pitch": "Mirage launched at AED 15.8M and resale units are trading at AED 1,428–1,806/sqft. With Q2 2028 handover and 19% construction complete, buyers can still capture meaningful appreciation before delivery."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 15800000,
+        "resale_price_range_aed": "16,000,000 – 24,000,000",
+        "price_per_sqft_resale": "1,428 – 1,806",
+        "handover": "Q2 2028",
+        "payment_plan": "10/80/10",
+        "developer_stock": "Sold out",
+        "construction_progress_percent": 19,
+        "unit_types": [
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "architectural_styles": [
+          "Classical",
+          "Contemporary",
+          "Chamfered"
+        ],
+        "bua_range_sqft": "10,333 – 16,800",
+        "resale_listings_approx": 145,
+        "key_features": [
+          "Swimmable lagoon",
+          "Waterfall stage",
+          "Boulevard",
+          "Community centre",
+          "Mosque",
+          "Outdoor gym",
+          "Sports courts",
+          "BBQ areas",
+          "Event lawn",
+          "Playgrounds",
+          "Near Trump International Golf Club",
+          "Near The Els Club"
+        ],
+        "location_detail": "Near Jebel Ali-Al Hibab Road (D57) and Sheikh Zayed bin Hamdan Road (D54)"
+      }
+    },
+    "mareva": {
+      "aliases": [
+        "mareva",
+        "mareva the oasis",
+        "mareva at the oasis",
+        "the oasis mareva",
+        "oasis mareva",
+        "mareva emaar",
+        "mareva residence",
+        "mareva villas"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Mareva",
+        "investment_overrides": {
+          "launch_price_aed": "13,870,888",
+          "current_resale_price_range_aed": "13,400,000 – 70,000,000",
+          "price_per_sqft_resale": "1,348 – 1,866 AED/sqft",
+          "handover": "Q1 2030",
+          "payment_plan": "10/70/20",
+          "status": "Sold out at developer; active resale market (81+ listings)",
+          "bedroom_range": "4 – 6 bedrooms"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Mareva is sold out at developer level. With 81+ active resale listings and Q1 2030 handover, buyers have time to benefit from continued price appreciation as The Oasis matures.",
+          "lifestyle_pitch": "Mareva features a collection of 4 to 6-bedroom villas with water-inspired design and elegant interiors, emphasising light, space, and lagoon views. Floor plans range from approximately 7,254 to 12,986 sqft with basement options available.",
+          "investment_pitch": "Mareva launched from AED 13.87M and resale units trade at AED 1,348–1,866/sqft. The Q1 2030 handover timeline provides investors with a longer runway for capital appreciation within The Oasis's growth story."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 13870888,
+        "resale_price_range_aed": "13,400,000 – 70,000,000",
+        "price_per_sqft_resale": "1,348 – 1,866",
+        "handover": "Q1 2030",
+        "payment_plan": "10/70/20",
+        "developer_stock": "Sold out",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "bua_range_sqft": "7,254 – 14,726",
+        "basement_option": true,
+        "resale_listings_approx": 81,
+        "design_theme": "Water-inspired design, elegant interiors, emphasis on light and space"
+      }
+    },
+    "mareva_2": {
+      "aliases": [
+        "mareva 2",
+        "mareva 2 the oasis",
+        "mareva 2 at the oasis",
+        "mareva two",
+        "mareva residence 2",
+        "mareva villas 2"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Mareva 2",
+        "investment_overrides": {
+          "launch_price_aed": "13,830,000",
+          "handover": "Q1 2030",
+          "payment_plan": "10/70/20",
+          "status": "Sold out at developer; resale available",
+          "bedroom_range": "4 – 6 bedrooms"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Mareva 2 is sold out at developer level. Resale units represent the only entry point into this phase, with Q1 2030 handover providing a longer investment horizon.",
+          "lifestyle_pitch": "Mareva 2 continues the water-inspired Mareva design philosophy with 4 to 6-bedroom villas, lagoon views, and the full suite of The Oasis community amenities.",
+          "investment_pitch": "Launched at AED 13.83M, Mareva 2 resale buyers benefit from The Oasis's established price appreciation track record with a Q1 2030 delivery timeline."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 13830000,
+        "handover": "Q1 2030",
+        "payment_plan": "10/70/20",
+        "developer_stock": "Sold out",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "bua_range_sqft": null
+      }
+    },
+    "lavita": {
+      "aliases": [
+        "lavita",
+        "lavita the oasis",
+        "lavita at the oasis",
+        "the oasis lavita",
+        "oasis lavita",
+        "lavita mansions",
+        "lavita emaar"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Lavita",
+        "investment_overrides": {
+          "launch_price_aed": "38,000,000",
+          "current_resale_price_range_aed": "44,000,000 – 68,000,000+",
+          "price_per_sqft_resale": "2,062 – 2,104 AED/sqft",
+          "handover": "Q1 2029",
+          "payment_plan": "20/60/20",
+          "status": "Sold out at developer; active resale market",
+          "construction_progress": "10%",
+          "bedroom_range": "6 – 7 bedrooms",
+          "property_type": "Ultra-luxury mansion"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Lavita represents The Oasis's ultra-luxury mansion tier, launched at AED 38M and now trading in resale at AED 44M–68M+. With only a limited number of 6 and 7-bedroom mansions in this collection, Lavita is one of Dubai's most exclusive off-plan offerings.",
+          "lifestyle_pitch": "Lavita mansions offer 6 and 7-bedroom configurations on massive plots of 21,000–32,000+ sqft, with private lagoon access, premium finishes, and the full Oasis lifestyle. These are among the largest private residences available in any Dubai master community.",
+          "investment_pitch": "At AED 2,062–2,104/sqft in resale, Lavita is priced at a significant discount to comparable ultra-luxury communities like Emirates Hills. With Q1 2029 handover and only 10% construction complete, early resale buyers have maximum appreciation runway."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 38000000,
+        "resale_price_range_aed": "44,000,000 – 68,000,000+",
+        "price_per_sqft_resale": "2,062 – 2,104",
+        "handover": "Q1 2029",
+        "payment_plan": "20/60/20",
+        "developer_stock": "Sold out",
+        "construction_progress_percent": 10,
+        "unit_types": [
+          "6BR Mansion",
+          "7BR Mansion"
+        ],
+        "bua_range_sqft": "21,334 – 32,315",
+        "property_tier": "Ultra-luxury mansion",
+        "key_features": [
+          "Massive plots",
+          "Private lagoon access",
+          "Premium finishes",
+          "Largest units in The Oasis"
+        ]
+      }
+    },
+    "palace_villas_ostra": {
+      "aliases": [
+        "palace villas ostra",
+        "ostra",
+        "ostra palace",
+        "palace villas",
+        "palace villas the oasis",
+        "ostra the oasis",
+        "palace ostra"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Palace Villas Ostra",
+        "investment_overrides": {
+          "launch_price_aed": "13,270,350",
+          "current_resale_price_range_aed": "13,000,000 – 21,000,000",
+          "price_per_sqft_resale": "1,166 – 1,942 AED/sqft",
+          "handover": "Q3 2029",
+          "payment_plan": "10/70/20",
+          "status": "Sold out at developer; active resale market",
+          "bedroom_range": "4 – 6 bedrooms",
+          "property_type": "Palace-style villa"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Palace Villas Ostra is sold out at developer level. Resale units — some listed below original purchase price — represent a rare opportunity to acquire a palace-style villa in The Oasis at or near launch pricing.",
+          "lifestyle_pitch": "Palace Villas Ostra brings a signature palace-style architectural aesthetic to The Oasis, with 4 to 6-bedroom villas on generous plots, many with direct lagoon backing.",
+          "investment_pitch": "With resale listings available from AED 1,166/sqft — among the lowest price-per-sqft in The Oasis — Palace Villas Ostra offers compelling value for investors seeking maximum plot size per dirham spent. Q3 2029 handover."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 13270350,
+        "resale_price_range_aed": "13,000,000 – 21,000,000",
+        "price_per_sqft_resale": "1,166 – 1,942",
+        "handover": "Q3 2029",
+        "payment_plan": "10/70/20",
+        "developer_stock": "Sold out",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "bua_range_sqft": "8,741 – 18,007",
+        "architectural_style": "Palace-style",
+        "key_features": [
+          "Lagoon-backing units available",
+          "Signature villa plots",
+          "Palace architectural design"
+        ]
+      }
+    },
+    "address_villas_tierra": {
+      "aliases": [
+        "address villas tierra",
+        "tierra",
+        "address tierra",
+        "address villas the oasis",
+        "oasis address tierra",
+        "tierra the oasis",
+        "address villas emaar oasis"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Address Villas Tierra",
+        "investment_overrides": {
+          "launch_price_aed": "13,160,000",
+          "current_resale_price_range_aed": "13,000,000 – 20,000,000",
+          "price_per_sqft_resale": "1,866 AED/sqft (sample)",
+          "handover": "Q2 2029",
+          "payment_plan": "10/70/20",
+          "status": "Sold out at developer; active resale market",
+          "construction_progress": "1%",
+          "bedroom_range": "4 – 6 bedrooms",
+          "brand": "Address Hotels + Resorts (Emaar Hospitality)"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Address Villas Tierra brings the prestigious Address Hotels + Resorts brand to The Oasis villa community — a rare combination of branded hospitality services with private villa ownership. Sold out at developer level.",
+          "lifestyle_pitch": "Address Villas Tierra offers 4 to 6-bedroom branded villas with access to Address hotel services and amenities, set within The Oasis's lagoon and park landscape. The Address brand is synonymous with five-star luxury in Dubai.",
+          "investment_pitch": "Branded residences in Dubai command a 20-30% premium over non-branded equivalents. Address Villas Tierra, launched at AED 13.16M with Q2 2029 handover, offers investors the dual benefit of Emaar's master community appreciation and the Address brand premium."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 13160000,
+        "resale_price_range_aed": "13,000,000 – 20,000,000",
+        "price_per_sqft_resale": "1,866",
+        "handover": "Q2 2029",
+        "payment_plan": "10/70/20",
+        "developer_stock": "Sold out",
+        "construction_progress_percent": 1,
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "bua_range_sqft": "10,448",
+        "brand": "Address Hotels + Resorts",
+        "branded_residence": true
+      }
+    },
+    "oasis_address_branded_villas": {
+      "aliases": [
+        "oasis address",
+        "oasis address branded villas",
+        "address branded villas oasis",
+        "the oasis address",
+        "address villas oasis"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Oasis Address Branded Villas",
+        "investment_overrides": {
+          "launch_price_aed": "13,160,000",
+          "handover": "Q2 2029",
+          "status": "Sold out at developer; resale available",
+          "bedroom_range": "4 – 6 bedrooms",
+          "brand": "Address Hotels + Resorts (Emaar Hospitality)"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Oasis Address Branded Villas is sold out at developer level. This is a distinct branded villa collection within The Oasis carrying the Address Hotels + Resorts brand.",
+          "lifestyle_pitch": "Oasis Address Branded Villas combines the privacy of a standalone villa with the services and prestige of the Address Hotels + Resorts brand, within The Oasis's lagoon community.",
+          "investment_pitch": "Branded villa residences in Dubai's luxury segment have historically commanded significant premiums at resale. Launched at AED 13.16M with Q2 2029 handover."
+        }
+      },
+      "overview": {
+        "launch_price_aed": 13160000,
+        "handover": "Q2 2029",
+        "developer_stock": "Sold out",
+        "unit_types": [
+          "4BR Villa",
+          "5BR Villa",
+          "6BR Villa"
+        ],
+        "branded_residence": true,
+        "brand": "Address Hotels + Resorts",
+        "note": "May overlap with Address Villas Tierra — listed separately as appears as distinct project on Property Finder"
+      }
+    },
+    "valoria": {
+      "aliases": [
+        "valoria",
+        "valoria the oasis",
+        "valoria villas",
+        "valoria at the oasis",
+        "oasis valoria"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Valoria",
+        "investment_overrides": {
+          "launch_price_aed": null,
+          "handover": null,
+          "status": "Available units — limited data",
+          "bedroom_range": null
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Valoria is one of the newer villa collections within The Oasis master community. Limited public data available — contact for current pricing and availability.",
+          "lifestyle_pitch": "Valoria Villas form part of The Oasis's expanding villa portfolio, offering residents access to the full suite of lagoon, park, and lifestyle amenities within the master community.",
+          "investment_pitch": "As a newer phase within The Oasis, Valoria may offer earlier-stage pricing with the benefit of The Oasis's established appreciation track record."
+        }
+      },
+      "overview": {
+        "launch_price_aed": null,
+        "handover": null,
+        "developer_stock": "Available units",
+        "unit_types": null,
+        "bua_range_sqft": null,
+        "note": "Limited data available in research sources — requires further investigation"
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "The Oasis by Emaar: 100 million sq ft master community, 3,100 standalone villas, USD 20 billion development value (expanded to AED 73 billion), 25% of land dedicated to open spaces and amenities, 4 international golf courses nearby, 1.5 million sq ft planned retail.",
+      "scarcity_argument": "The Oasis is one of Dubai's most land-constrained luxury villa communities — just 3,100 standalone villas across approximately 10 sq km. For context, Dubai Hills Estate has approximately 32,000 units across a similar footprint. This extreme low density is irreplaceable and cannot be replicated in Dubai's increasingly land-scarce luxury market. Most phases are sold out at developer level, meaning all available inventory is resale — from investors who secured at launch pricing.",
+      "lifestyle_pitch": "The Oasis is Emaar's first ultra-luxury waterfront lagoon villa community — a permanent resort lifestyle within a gated, low-density neighbourhood. Residents wake up to swimmable lagoons, water canals, and landscaped parks, with four international golf courses within 15 minutes. The community is 20-30 minutes from Downtown Dubai, Dubai Marina, and Palm Jumeirah, yet feels entirely removed from the city's density. With 25% of the land dedicated to open spaces — Japanese Zen gardens, cycling tracks, jogging paths, private beaches, wellness centres, and a planned 1.5 million sq ft retail boulevard — The Oasis offers a lifestyle that Dubai's apartment communities simply cannot match.",
+      "investment_pitch": "Palmiera, The Oasis's first phase, launched at AED 8.4M in 2023 and is now trading at AED 14M+ in resale — over 50% capital appreciation in approximately 12 months. Emaar properties have historically delivered 7-12% annual appreciation (Knight Frank). Rental yields for luxury villas in Dubai average 4.98% (Engel & Völkers, April 2026), with The Oasis's unique lagoon positioning expected to command a premium. All units are well above the AED 2M Golden Visa threshold. With Emaar's AED 110Bn+ revenue backlog and 94.2% customer satisfaction score, delivery risk is minimal.",
+      "objection_handling": {
+        "location_too_far": "The Oasis is 20-30 minutes from Downtown Dubai and Dubai Marina — comparable to Arabian Ranches, Dubai Hills Estate, and Jumeirah Golf Estates, all of which command significant premiums. The Sheikh Zayed bin Hamdan Al Nahyan Street and Emirates Road provide direct highway access. Al Maktoum International Airport — set to become the world's largest — is just 18-31 minutes away, making The Oasis ideally positioned for the next decade of Dubai's growth.",
+        "no_public_transport": "The Oasis is a private villa community designed for residents with cars. The nearest metro station (Dubai Investment Park) is a short drive away. This is consistent with all of Dubai's premium villa communities — Emirates Hills, Palm Jumeirah, and Arabian Ranches all operate on the same model.",
+        "off_plan_risk": "Emaar Properties PJSC reported AED 35.5Bn in 2024 revenue, AED 110Bn+ revenue backlog, and a 94.2% customer satisfaction score. They are the developer of Burj Khalifa and Dubai Mall. The Oasis is their flagship villa community — delivery risk is as low as it gets in Dubai real estate.",
+        "price_high": "On a per-sqft basis, The Oasis is priced at a significant discount to comparable communities. Emirates Hills trades at AED 3,000-5,000/sqft; District One at AED 2,500-4,000/sqft. The Oasis resale units are available from AED 1,166/sqft — representing exceptional value for a lagoon-front, Emaar-branded, ultra-low-density villa community."
+      }
+    },
+    "per_sub_development": {
+      "palmiera": {
+        "headline": "Palmiera — The Oasis's Proven First Phase | 50%+ Appreciation in 12 Months",
+        "scarcity_argument": "Palmiera is fully sold out at developer level. All units are resale from early investors who secured at AED 8.4M — now trading at AED 14M+.",
+        "investment_pitch": "The strongest capital appreciation story in Dubai's 2023-2024 villa market. Handover approaching in 2027-2028."
+      },
+      "mirage": {
+        "headline": "Mirage — 5 & 6BR Lagoon Villas | 19% Construction Complete | Q2 2028",
+        "scarcity_argument": "Sold out at developer. 145+ active resale listings with lagoon-facing units available.",
+        "investment_pitch": "Launched at AED 15.8M, resale from AED 1,428/sqft. 19% construction complete with Q2 2028 handover."
+      },
+      "mareva": {
+        "headline": "Mareva — Water-Inspired 4-6BR Villas | Q1 2030 | Longer Investment Horizon",
+        "scarcity_argument": "Sold out at developer. 81+ resale listings available.",
+        "investment_pitch": "Q1 2030 handover provides maximum appreciation runway. Floor plans from 7,254 to 14,726 sqft with basement options."
+      },
+      "lavita": {
+        "headline": "Lavita — Ultra-Luxury 6-7BR Mansions | AED 38M+ | Dubai's Most Exclusive Off-Plan",
+        "scarcity_argument": "Extremely limited mansion inventory. Sold out at developer. Plots of 21,000-32,000+ sqft.",
+        "investment_pitch": "At AED 2,062-2,104/sqft, Lavita is priced at a fraction of Emirates Hills. Q1 2029 handover."
+      },
+      "palace_villas_ostra": {
+        "headline": "Palace Villas Ostra — Palace-Style 4-6BR Villas | From AED 1,166/sqft | Q3 2029",
+        "scarcity_argument": "Sold out at developer. Some resale listings below original purchase price — rare opportunity.",
+        "investment_pitch": "Lowest price-per-sqft entry point in The Oasis. Palace architectural design with lagoon-backing options."
+      },
+      "address_villas_tierra": {
+        "headline": "Address Villas Tierra — Branded Villas with 5-Star Hotel Services | Q2 2029",
+        "scarcity_argument": "Sold out at developer. Branded residences are the rarest asset class in Dubai's villa market.",
+        "investment_pitch": "Address brand commands 20-30% premium at resale. Only 1% construction complete — maximum appreciation potential."
+      },
+      "palmiera_collective": {
+        "headline": "Palmiera Collective — Developer Stock Available | 4-6BR | AED 13.6M | Q1 2029",
+        "scarcity_argument": "One of the few phases with remaining developer stock — buy directly from Emaar at launch pricing.",
+        "investment_pitch": "10/75/15 payment plan. Q1 2029 handover. Benefit from The Oasis's proven appreciation track record."
+      }
+    }
+  },
+  "aliases": [
+    "the oasis",
+    "oasis by emaar",
+    "emaar oasis",
+    "the oasis by emaar",
+    "oasis emaar",
+    "emaar the oasis",
+    "oasis dubai",
+    "the oasis dubai",
+    "palmiera",
+    "palmiera the oasis",
+    "palmiera at the oasis",
+    "palmeira",
+    "mirage the oasis",
+    "mirage at the oasis",
+    "mareva the oasis",
+    "mareva at the oasis",
+    "lavita the oasis",
+    "lavita at the oasis",
+    "palace villas ostra",
+    "ostra palace",
+    "address villas tierra",
+    "tierra the oasis",
+    "palmiera 2",
+    "palmiera 3",
+    "palmiera collective",
+    "mareva 2",
+    "oasis address",
+    "valoria the oasis",
+    "the oasis villas",
+    "emaar oasis villas",
+    "oasis villas dubai",
+    "oasis by emaar dubai",
+    "emaar oasis by emaar"
+  ],
+  "developer_keywords": [
+    "emaar"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties PJSC",
+    "community": "The Oasis by Emaar",
+    "location": {
+      "area": "Dubailand, Dubai",
+      "description": "The Oasis by Emaar is a landmark ultra-luxury gated villa community spanning 100 million square feet in Dubailand, near the intersection of Sheikh Zayed bin Hamdan Al Nahyan Street (D54) and Jebel Ali-Al Hibab Road (D57). Comprising approximately 3,100 standalone villas and mansions — one of the lowest-density luxury communities in Dubai — The Oasis is positioned 20-30 minutes from Downtown Dubai and Dubai Marina, with Al Maktoum International Airport approximately 18-31 minutes away. The community is characterised by swimmable lagoons, water canals, private beaches, and 25% of its total land area dedicated to parks, green spaces, and world-class amenities. Four international golf courses, including Trump International Golf Club and The Els Club, are within 10-15 minutes. The community is car-dependent with the nearest metro station (Dubai Investment Park) a short drive away.",
+      "distances": {
+        "downtown_dubai_burj_khalifa": "20-35 min",
+        "dubai_marina": "21-28 min",
+        "palm_jumeirah": 26,
+        "dubai_hills_mall": 20,
+        "al_maktoum_international_airport": "18-31 min",
+        "business_bay": 27,
+        "jumeirah_beach_residence": 22,
+        "sheikh_zayed_road": 16,
+        "trump_international_golf_club": 10,
+        "dubai_polo_equestrian_club": 11,
+        "city_centre_meaisem": "10-13 min",
+        "dubai_autodrome": 12,
+        "the_ranches_souk": 13
+      }
+    },
+    "community_amenities": [
+      "Swimmable crystal lagoons",
+      "Water canals and lakes throughout the community",
+      "Private beach access",
+      "Private jetties (mansion and super-mansion units)",
+      "25% of land dedicated to open spaces and amenities",
+      "Landscaped parks and green corridors",
+      "Japanese Zen-themed gardens with fragrant flowers",
+      "Cycling and jogging tracks",
+      "Paved walkways and pedestrian paths",
+      "Outdoor gymnasium",
+      "Sports courts",
+      "Children's playgrounds",
+      "Community centres",
+      "Zen spa and wellness centres",
+      "Yoga and relaxation spaces",
+      "BBQ and socialising areas",
+      "Event lawn and waterfall stage",
+      "Boulevard with retail and dining",
+      "1.5 million sq ft planned retail area with lifestyle brands",
+      "Food and beverage outlets",
+      "Mosque",
+      "Gated community with advanced security systems",
+      "4 international golf courses within 10-15 minutes (Trump International, The Els Club)",
+      "Private swimming pools (per villa)",
+      "Communal swimming pools"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "Bright Riders School",
+          "distance_km": null,
+          "curriculum": "Indian/CBSE",
+          "note": "Closest school per Christie's Real Estate Dubai"
+        },
+        {
+          "name": "Jebel Ali School",
+          "distance_km": "within 5km",
+          "curriculum": "British",
+          "rating": "4.3/5 (WhichSchoolAdvisor)"
+        },
+        {
+          "name": "Royal Grammar School Guildford Dubai",
+          "distance_km": "within 5km",
+          "curriculum": "British",
+          "rating": "4.3/5 (WhichSchoolAdvisor)"
+        },
+        {
+          "name": "Nibras International School",
+          "distance_km": "within 5km",
+          "curriculum": "American",
+          "rating": "2.4/5 (WhichSchoolAdvisor)"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "NMC Speciality Hospital Dubai Investments Park",
+          "distance_km": null,
+          "note": "Closest hospital per Christie's Real Estate Dubai"
+        }
+      ],
+      "retail": [
+        {
+          "name": "City Centre Me'aisem",
+          "distance_km": null,
+          "drive_time_minutes": "10-13"
+        },
+        {
+          "name": "Dubai Hills Mall",
+          "distance_km": null,
+          "drive_time_minutes": 20
+        },
+        {
+          "name": "The Ranches Souk",
+          "distance_km": null,
+          "drive_time_minutes": 13
+        },
+        {
+          "name": "Mall of the Emirates",
+          "distance_km": null,
+          "drive_time_minutes": null,
+          "note": "Within reasonable driving distance"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "All units priced well above AED 2M threshold; eligibility assumed based on Dubai property rules",
+      "projected_roi_percent": "5 to 7",
+      "projected_roi_note": "Rental yield estimate 5-7% based on Dubailand villa market data (Metropolitan RE, Q3 2024: 6% for 4BR). Capital appreciation: Palmiera Phase 1 delivered 50%+ in ~12 months. Knight Frank cites 7-12% annual appreciation for Emaar properties historically.",
+      "price_range_aed": "9,700,000 – 70,000,000+ (resale across all sub-developments)",
+      "price_per_sqft_range_aed": "1,166 – 2,231",
+      "entry_level_sub_development": "Palace Villas Ostra (from ~AED 1,166/sqft resale)",
+      "ultra_luxury_tier": "Lavita Mansions (from AED 38M, 6-7BR, 21,000-32,000+ sqft)",
+      "payment_plans_available": "10/70/20, 10/75/15, 10/80/10, 20/60/20 depending on sub-development",
+      "post_handover_payment_plan": false,
+      "service_charge_aed_per_sqft": null,
+      "branded_premium_note": "Address Villas Tierra and Oasis Address Branded Villas carry the Address Hotels + Resorts brand (Emaar Hospitality), which historically commands a 20-30% premium over non-branded equivalents at resale.",
+      "comparable_communities": [
+        "Emirates Hills",
+        "District One MBR City",
+        "Jumeirah Golf Estates",
+        "Dubai Hills Estate"
+      ],
+      "value_proposition": "Priced at AED 1,166-2,231/sqft vs Emirates Hills at AED 3,000-5,000/sqft — significant discount for comparable or superior lagoon-front, low-density luxury",
+      "capital_appreciation_track_record": "Palmiera Phase 1 launched AED 8.4M (2023), now trading AED 14M+ — over 50% ROI in approximately 12 months"
+    },
+    "sales_talking_points": {
+      "scarcity_argument": "The Oasis contains just 3,100 standalone villas across 100 million sq ft — one of the lowest-density luxury communities in Dubai. For comparison, Dubai Hills Estate has approximately 32,000 units. Most phases are sold out at developer level; all available inventory is resale from early investors. This scarcity is permanent and irreplaceable.",
+      "lifestyle_pitch": "The Oasis is Emaar's first ultra-luxury waterfront lagoon villa community — a permanent resort lifestyle within a gated, low-density neighbourhood. Swimmable lagoons, water canals, private beaches, Japanese Zen gardens, cycling tracks, wellness centres, and a planned 1.5 million sq ft retail boulevard, all within 20-30 minutes of Downtown Dubai and Dubai Marina.",
+      "investment_pitch": "Palmiera Phase 1 launched at AED 8.4M in 2023 and now trades at AED 14M+ — over 50% capital appreciation in approximately 12 months. Emaar properties have historically delivered 7-12% annual appreciation (Knight Frank). Rental yields for luxury villas in Dubai average 4.98% (Engel & Völkers, April 2026). All units qualify for UAE Golden Visa. Emaar's AED 110Bn+ revenue backlog and 94.2% customer satisfaction score make delivery risk minimal."
+    },
+    "developer_track_record": "Emaar Properties PJSC is the developer of Burj Khalifa, Dubai Mall, Downtown Dubai, Dubai Hills Estate, Arabian Ranches, and Dubai Creek Harbour — among the most iconic and value-appreciating real estate in the world. In 2024, Emaar reported AED 35.5Bn in revenue, AED 17.5Bn net profit, AED 110Bn+ revenue backlog, and property sales of AED 65Bn (a 75% year-on-year increase). With a net asset value of AED 212.8Bn (USD 57.9Bn), an MSCI BBB ESG rating, and a 94.2% customer satisfaction score, Emaar is the UAE's most trusted and financially robust real estate developer. The Oasis represents Emaar's most ambitious villa community to date."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2025-01-27T12:00:00Z",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.tanamiproperties.com/Projects/Palmiera-at-The-Oasis-Location",
+      "https://img.staticmb.com/mbimages/project/15162889116712017-08-05SG-Oasis-Brochure.pdf",
+      "https://www.propertyfinder.ae/en/buy/dubai/villas-for-sale-the-oasis-by-emaar-the-oasis-palmiera.html",
+      "https://www.emaar.com/en/our-communities/the-oasis",
+      "https://www.hoteliermiddleeast.com/news/oasis-by-emaar-dubai-revealed",
+      "https://investindxb.com/property/emaar-palmiera-the-oasis",
+      "https://www.bayut.com/for-sale/6-bedroom-villas/dubai/the-oasis-by-emaar",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-the-oasis-by-emaar.html",
+      "https://www.drivenproperties.com/dubai-properties-areas/the-oasis",
+      "https://properties.emaar.com/wp-content/uploads/2025/03/Emaar-Properties-IR-2024_English_F.pdf",
+      "https://www.propertyfinder.ae/en/new-projects/lp/dubai/the-oasis-by-emaar",
+      "https://vistaoasisdubai.com/top-10-dubai-off-plan-projects-in-2025",
+      "https://www.scribd.com/document/991634312/Mareva-the-Oasis-Floor-Plans",
+      "https://www.axisoneapts.com/floorplans/the-oasis",
+      "https://luxebalsam-properties.com/communities/the-oasis-by-emaar",
+      "https://www.engelvoelkers.com/ae/en/resources/the-oasis-by-emaar",
+      "https://www.linkedin.com/posts/xrealty-ae_the-oasis-by-emaar-dubais-next-billion-activity-7317130714250932224-Z_p4",
+      "https://dxboffplan.com/for-sale/property/uae/dubai/the-oasis-by-emaar",
+      "https://www.emaar.com/en/property-for-sale/the-oasis",
+      "https://www.propertyfinder.ae/en/buy/dubai/villas-for-sale-the-oasis-by-emaar-the-oasis-mirage.html",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-the-oasis-by-emaar-the-oasis-palmiera.html",
+      "https://propsearch.ae/dubai/the-oasis-by-emaar",
+      "https://www.reddit.com/r/dubairealestate/comments/1p0cdvn/why_the_oasis_by_emaar_might_be_one_of_the",
+      "https://off-planproperties.ae/oasis-emaar-payment-plan",
+      "https://www.bayut.com/area-guides/mirage-the-oasis",
+      "https://d15zjc2r4e8kr7.cloudfront.net/9823/Floor%20Plans/Oasis%20Hallandale/OASIS_RESIDENCE_Floorplans.pdf",
+      "https://metropolitan.realestate/the-oasis",
+      "https://docs.publicnow.com/viewDoc.aspx?filename=177285%5CEXT%5C7D417BC6659FACBB754FE3FAA8AC51F430CE707E_FB89EB8A9DA630771BA44D8FD4B5031B9C37E623.PDF",
+      "https://www.bayut.com/new-projects/dubai/the-oasis-by-emaar",
+      "https://www.bayut.com/for-sale/villas/dubai/the-oasis-by-emaar/mareva-the-oasis",
+      "https://www.bayut.com/for-sale/apartments/dubai/the-oasis-by-emaar",
+      "https://investindxb.com/wp-content/uploads/2024/09/UNIESTATE-OASIS-LOFTS-FLOOR-PLANS-investindxb.pdf",
+      "https://famproperties.com/blog/oasis-emaar-fam-properties",
+      "https://www.bayut.com/for-sale/residential-plots/dubai/the-oasis-by-emaar",
+      "https://www.propertyfinder.ae/en/for-sale/off-plan/properties/dubai/the-oasis-by-emaar",
+      "https://www.youtube.com/watch?v=Xa9nALIE6SM",
+      "https://www.bayut.com/for-sale/villas/dubai/the-oasis-by-emaar/mirage-the-oasis",
+      "https://www.apilproperties.com/blog/amenities-in-the-oasis-by-emaar-community",
+      "https://providentestate.com/area-guides/the-oasis-by-emaar",
+      "https://www.bayut.com/for-sale/villas/dubai/the-oasis-by-emaar",
+      "https://www.christiesrealestatedubai.com/areas/dubai/the-oasis-by-emaar",
+      "https://propsearch.ae/dubai/the-oasis-by-emaar/schools",
+      "https://www.barnes-dubai.com/en/news-events/2024/your-ultimate-guide-to-the-oasis-by-emaar-a-luxurious-neighbourhood-in-dubai-299.html",
+      "https://www.engelvoelkers.com/ae/en/resources/rental-yield-dubai",
+      "https://www.binayah.com/dubai-projects/the-oasis-villas-by-emaar",
+      "https://www.bayut.com/for-sale/property/dubai/the-oasis-by-emaar",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-the-oasis-by-emaar-mareva-the-oasis.html"
+    ],
+    "audit_flags": [
+      "Total unit count discrepancy unresolved: Emaar website states 2,600 villas; independent sources cite 3,100; master plan total cited as 7,000 — requires clarification from Emaar directly",
+      "Downtown Dubai drive time conflict: 20 min (official launch press) vs 30-35 min (broker sources) — likely reflects different traffic conditions and route choices",
+      "Cycling track length (54 km) from example schema not confirmed by any source in this research — not included",
+      "Service charge rates not found in any source — requires DLD or Emaar confirmation",
+      "Valoria Villas sub-development has very limited data — requires further research",
+      "Oasis Address Branded Villas and Address Villas Tierra may be the same project listed under different names — requires verification",
+      "ROI figures vary widely across sources (6% rental yield to 100%+ equity return) — different metrics; conservative rental yield estimate used",
+      "Golden Visa eligibility assumed based on AED 2M threshold rule but not explicitly confirmed for this development in sources",
+      "School distances not confirmed with specific km figures — proximity descriptions used",
+      "Healthcare facility distances not confirmed with specific km figures",
+      "Schema validation: None is not of type 'number', 'string' (at prompt_data.nearby.schools.0.distance_km)"
+    ]
+  }
+}

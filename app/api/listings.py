@@ -94,6 +94,7 @@ class ListingFactUpdateRequest(BaseModel):
 
 class CreateListingRequest(BaseModel):
     property_type: str = Field(..., pattern="^(off_plan|ready)$")
+    property_category: Optional[str] = None  # Villa / Townhouse / Apartment / etc. (building category, not listing type)
     listing_title: Optional[str] = None
     listing_reference: Optional[str] = None
     portal_source: Optional[str] = None
@@ -131,6 +132,8 @@ class CreateListingRequest(BaseModel):
     reference_documents: list[ReferenceDocument] = Field(default_factory=list)
     seller_notes: Optional[str] = None
     seller_phone: Optional[str] = None
+    # Off-plan SPA payment plan (milestones from the SPA parser), folded into spa_data.
+    payment_schedule: list[dict] = Field(default_factory=list)
     # Optional override — by default the authenticated agent is the managing agent.
     managing_agent_user_id: Optional[str] = None
     spa_data: Optional[dict] = None  # populated by SPA parser for off_plan flow
@@ -436,7 +439,7 @@ async def create_listing(
         "vat_percent": 0,
         "estimated_completion_date": body.handover_date,
         "noc_eligible": True if body.property_type == "ready" else None,
-        "payment_schedule": [],
+        "payment_schedule": body.payment_schedule or [],
         "purchasers": [],
         "imported_listing": {
             "title": body.listing_title,
@@ -446,6 +449,7 @@ async def create_listing(
             "purpose": body.purpose,
             "completion_status": body.completion_status,
             "furnishing": body.furnishing,
+            "property_category": body.property_category,
             "community": body.community,
             "subcommunity": body.subcommunity,
             "price_per_sqft_aed": body.price_per_sqft_aed,
@@ -499,28 +503,51 @@ async def create_listing(
     except Exception as exc:
         logger.warning("listings/create: failed to generate buyer re-marketing matches: %s", exc)
 
-    # Trigger community research if we have no record for this community.
+    # Trigger project-level research. Terminology: the *community* is the larger area
+    # (e.g. "Dubai Hills Estate"); the *project* is the actual development (e.g. "Golf Grove",
+    # "Park Ridge"). The legacy field name `spa_data.project` predates ready stock, but its
+    # value is the project. The buyer-facing advisor matches research by project name, so
+    # research is keyed by project — not community — and one project research covers all its
+    # listings regardless of which community it sits in.
+    project_name = (body.building_or_project or body.subcommunity or body.community or "").strip()
     community_research_status = None
-    if community_key:
+    if project_name:
         existing = (
             db.query(DBCommunityResearch)
-            .filter(DBCommunityResearch.project_name.ilike(f"%{body.community}%"))
+            .filter(DBCommunityResearch.project_name.ilike(project_name))
             .first()
         )
-        if not existing:
+        if existing:
+            community_research_status = existing.status
+        else:
             try:
                 research = DBCommunityResearch(
-                    project_name=body.community or community_key,
-                    developer="",
+                    project_name=project_name,
+                    developer=body.developer or "",
                     status="pending",
                 )
                 db.add(research)
                 safe_commit(db)
+                db.refresh(research)
                 community_research_status = "queued"
+                # Fire the job now so a new listing auto-researches its project (non-blocking).
+                try:
+                    import asyncio
+
+                    from app.api.research import _run_research_job
+
+                    asyncio.create_task(
+                        _run_research_job(
+                            research_id=research.id,
+                            project_name=project_name,
+                            developer=body.developer or "",
+                            sub_community=None,
+                        )
+                    )
+                except Exception as exc:
+                    logger.warning("listings/create: research row created but job not started: %s", exc)
             except Exception as exc:
-                logger.warning("listings/create: failed to enqueue community research: %s", exc)
-        else:
-            community_research_status = existing.status
+                logger.warning("listings/create: failed to enqueue project research: %s", exc)
 
     return {
         "listing_id": listing_id,

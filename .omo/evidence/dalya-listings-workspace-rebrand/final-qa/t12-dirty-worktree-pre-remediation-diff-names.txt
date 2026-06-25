@@ -1,0 +1,17 @@
+BACKLOG.md
+DESIGN.md
+PROJECT_BRIEF.md
+app/main.py
+frontend/src/app/(app)/dashboard/listings/[id]/knowledge/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/layout.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/logistics/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/offers/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/page.tsx
+frontend/src/app/(app)/dashboard/listings/[id]/spa/page.tsx
+frontend/src/app/(app)/listings/new/portal/page.tsx
+frontend/src/app/(app)/listings/page.tsx
+frontend/src/components/app/nav-items.ts
+frontend/src/components/listings/FinishedListingFlow.tsx
+frontend/src/components/viewings/ListingLogisticsForm.tsx
+frontend/src/lib/queries.ts
+tests/test_brokerage_context_dal172.py

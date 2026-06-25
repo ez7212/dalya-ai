@@ -1,0 +1,6 @@
+
+> command-center@0.1.0 activity-log
+> tsx scripts/activity-log.ts --project dalya --title Verified listings workspace rebrand --work-type coding --labels qa,verification,listings --purpose Confirm DAL-203 Pass 1 listings workspace migration is deliverable and evidence-backed. --process Ran required frontend, backend, scan, build, and browser QA checks; captured screenshots/transcripts; updated backlog and project brief; documented lint/build/network limitations. --outcome Final verification passed for DAL-203 with browser QA evidence for /listings, workspace subroutes, and legacy redirects; frontend lint remains blocked by unrelated pre-existing errors outside listings.
+
+activity-log ok project=dalya id=dalya-2026-06-24-verified-listings-workspace-rebrand-4098a9cf
+file=/Users/eric/command-center/docs/historical-activity/dalya.json

@@ -1,0 +1,232 @@
+{
+  "task": "T3 listing API contract",
+  "plan": ".omo/plans/dalya-listings-workspace-rebrand.md",
+  "status": "independently_verified_with_env_test",
+  "changed_files": [
+    "app/main.py",
+    "app/api/listing_inventory.py",
+    "frontend/src/lib/queries.ts",
+    "tests/test_listing_inventory_api.py",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-3-api.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-3-code-quality-review.md"
+  ],
+  "scope_notes": [
+    "app/main.py is an uncommitted T3 route-mount dependency in the dirty worktree; this remediation accounted for it in evidence but did not edit it.",
+    "No listing UI components were edited.",
+    "frontend/src/lib/queries.ts was already modified in the shared worktree; this task only extended AgentListingSummary.",
+    "app/api/listing_inventory.py and tests/test_listing_inventory_api.py are new/untracked in the shared worktree."
+  ],
+  "dirty_worktree": {
+    "pre_status_command": "omo sparkshell --shell 'git status --short' --budget 20000",
+    "pre_status_result_excerpt": [
+      "M BACKLOG.md",
+      "M DESIGN.md",
+      "M app/main.py",
+      "M frontend/src/lib/queries.ts",
+      "?? app/api/listing_inventory.py",
+      "?? tests/test_listing_inventory_api.py",
+      "?? .omo/evidence/dalya-listings-workspace-rebrand/"
+    ],
+    "scoped_status_command": "omo sparkshell --shell 'git status --short app/main.py app/api/listing_inventory.py frontend/src/lib/queries.ts tests/test_listing_inventory_api.py .omo/evidence/dalya-listings-workspace-rebrand/task-3-api.json' --budget 20000",
+    "scoped_status_result_before_evidence": [
+      "M app/main.py",
+      "M frontend/src/lib/queries.ts",
+      "?? app/api/listing_inventory.py",
+      "?? tests/test_listing_inventory_api.py"
+    ],
+    "scoped_status_result_after_remediation": [
+      "M app/main.py",
+      "M frontend/src/lib/queries.ts",
+      "?? .omo/evidence/dalya-listings-workspace-rebrand/task-3-api.json",
+      "?? app/api/listing_inventory.py",
+      "?? tests/test_listing_inventory_api.py"
+    ],
+    "app_main_status": "M app/main.py",
+    "app_main_remediation_action": "inspected only; not edited by this remediation worker"
+  },
+  "route_mount": {
+    "scenario": "FastAPI app mounts listing inventory router for /api/v1/listings/mine before the legacy listings router",
+    "source_file": "app/main.py",
+    "remediation_action": "No product-source edit was needed; current dirty worktree already imports and includes listing_inventory.router.",
+    "grep_invocation": "omo sparkshell --shell 'rg -n \"listing_inventory|include_router\\(listing_inventory\\.router|/listings/mine\" app/main.py app/api/listing_inventory.py' --budget 20000",
+    "grep_result": [
+      "app/api/listing_inventory.py:180:def _listing_inventory_item(db: Session, listing: DBListing) -> dict[str, Any>",
+      "app/api/listing_inventory.py:262:@router.get(\"/listings/mine\")",
+      "app/api/listing_inventory.py:273:    items = [_listing_inventory_item(db, listing) for listing in listings]",
+      "app/main.py:7:from app.api import agent, agent_dashboard, crm, leads, listing_inventory, listings, media, onboarding, research, seller, spa_parser, viewings, whatsapp",
+      "app/main.py:145:app.include_router(listing_inventory.router, prefix=\"/api/v1\", tags=[\"Listings\"])"
+    ],
+    "mount_order_context": [
+      "app.include_router(onboarding.router, prefix=\"/api/v1\", tags=[\"Onboarding\"])",
+      "app.include_router(listing_inventory.router, prefix=\"/api/v1\", tags=[\"Listings\"])",
+      "app.include_router(listings.router, prefix=\"/api/v1\", tags=[\"Listings\"])"
+    ],
+    "response_json_key_evidence": {
+      "required_index_keys_present": [
+        "active_viewing_count",
+        "assigned_agent_name",
+        "buyer_conversation_count",
+        "knowledge_status",
+        "last_activity_at",
+        "logistics_status",
+        "missing_fact_count",
+        "open_offer_count",
+        "primary_next_action"
+      ],
+      "pytest_fixture_observable": "tests/test_listing_inventory_api.py contains fixture-backed assertions for the lean /api/v1/listings/mine item shape. Sandbox/local DB reachability initially blocked some probes; an approved no-secrets .env.test escalated pytest run later passed with 3 passed, 23 warnings."
+    },
+    "no_mega_payload_evidence": {
+      "forbidden_nested_keys_present": [],
+      "forbidden_payload_classes": [
+        "full documents",
+        "full facts",
+        "full offers",
+        "full logistics payloads"
+      ]
+    },
+    "binary_observable": "The app imports listing_inventory and includes listing_inventory.router at /api/v1 immediately before listings.router; /listings/mine is defined on that router."
+  },
+  "t3_remediation_v2": {
+    "reason": "Second T3 gate failure required explicit independent-testability evidence and code-quality/slop audit coverage.",
+    "code_quality_artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-3-code-quality-review.md",
+    "independent_testability_status": "verified_with_env_test_disposable_postgres",
+    "safe_test_verification_path": {
+      "required_environment": [
+        "DALYA_ENV=test",
+        "DATABASE_URL pointing at a disposable/test-class PostgreSQL or Neon branch",
+        "PROD_DB_HOST set to the production DB hostname for denylisting"
+      ],
+      "command_template": "DALYA_ENV=test DATABASE_URL='<test database url>' PROD_DB_HOST='<production db host only>' PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+        "do_not_print": [
+          "DATABASE_URL credentials"
+        ],
+        "local_disposable_probe": {
+          "invocation": "DALYA_ENV=test DATABASE_URL='postgresql://dalya_test:dalya_test@127.0.0.1:65432/dalya_test' PROD_DB_HOST='prod-db.invalid' PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+          "result": "exit 4",
+          "observable": "pytest failed during tests/conftest.py collection at Base.metadata.create_all(bind=engine) because connecting to 127.0.0.1:65432 was not permitted; no local disposable PostgreSQL target is available in this sandbox."
+        },
+        "env_test_followup": {
+          "date": "2026-06-24",
+          "env_file": ".env.test",
+          "secret_handling": "Loaded into process environment only; no values printed, copied, or summarized.",
+          "sandboxed_result": "exit 4 during tests/conftest.py collection because sandbox DNS/network blocked database host resolution.",
+          "network_escalated_result": "exit 0",
+          "network_escalated_observable": "3 passed, 23 warnings in focused DB-backed pytest run."
+        },
+        "blocker_proof": [
+        "tests/conftest.py imports app.main, then app.db.session, during collection.",
+        "app/db/session.py requires DATABASE_URL and creates a PostgreSQL SQLAlchemy engine.",
+        "tests/conftest.py calls Base.metadata.create_all(bind=engine) at import time.",
+        "Sandbox/local DB reachability initially blocked some collection/runtime probes; an approved no-secrets .env.test escalated pytest run later resolved verification with 3 passed, 23 warnings.",
+        "tests/harness/README.md documents a dedicated test Neon branch pattern; no local SQLite or testcontainers pattern exists for this import path."
+      ]
+    },
+    "code_quality_audit_topics": [
+      "no mega-payload regression",
+      "query/per-listing aggregation risk",
+      "status derivation",
+      "tenant/brokerage scoping",
+      "serialization edge cases",
+      "overfit/slop risks",
+      "acceptable and deferred risks"
+    ]
+  },
+  "failing_first": [
+    {
+      "scenario": "sandboxed red test attempt for missing inventory contract fields",
+      "invocation": "PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "result": "exit 4",
+      "observable": "Import failed while loading tests/conftest.py because sandbox DNS could not resolve ep-dawn-sky-a48nhiwr-pooler.us-east-1.aws.neon.tech."
+    },
+    {
+      "scenario": "network-escalated red test after fixing seed ordering",
+      "invocation": "PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "result": "exit 1",
+      "observable": "1 failed, 2 passed; expected failure was KeyError: 'assigned_agent_name' in test_my_listings_flags_missing_knowledge_and_logistics_for_attention."
+    }
+  ],
+  "implementation_summary": [
+    "Added lean index-level fields to /api/v1/listings/mine: last_activity_at, assigned_agent_name, knowledge_status, missing_fact_count, active_viewing_count, open_offer_count, buyer_conversation_count, logistics_status, primary_next_action.",
+    "Computed counts/statuses from existing listing stats, conversations, offer records, viewings, knowledge summaries/facts, listing logistics, and agent/member profile names.",
+    "Kept the response lean: no full documents, facts, offers, or logistics payloads are returned.",
+    "Kept non-managing agent scoping unchanged: seller_id or assigned_agent_id within the resolved brokerage."
+  ],
+  "required_verification": [
+    {
+      "scenario": "route mount grep",
+      "invocation": "omo sparkshell --shell 'rg -n \"listing_inventory|include_router\\(listing_inventory\\.router|/listings/mine\" app/main.py app/api/listing_inventory.py' --budget 20000",
+      "result": "exit 0",
+      "observable": "app/main.py:7 imports listing_inventory; app/main.py:145 includes listing_inventory.router at prefix /api/v1; app/api/listing_inventory.py:262 defines @router.get(\"/listings/mine\")."
+    },
+    {
+      "scenario": "focused backend inventory API tests",
+      "invocation": "Loaded .env.test into the command environment without echoing values; DALYA_ENV=test PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "result": "exit 0 with network escalation for disposable/test database access",
+      "observable": "3 passed, 23 warnings. The sandboxed attempt exited 4 during collection because DNS/network access to the configured test database host was blocked; the escalated run passed."
+    },
+    {
+      "scenario": "code-quality and slop audit artifact",
+      "invocation": "test -f .omo/evidence/dalya-listings-workspace-rebrand/task-3-code-quality-review.md && rg -n \"mega-payload|overfit|tenant|brokerage|serialization|query|risk\" .omo/evidence/dalya-listings-workspace-rebrand/task-3-code-quality-review.md",
+      "result": "exit 0",
+      "observable": "Artifact exists and contains explicit mega-payload, overfit, tenant/brokerage, serialization, query, and risk coverage."
+    },
+    {
+      "scenario": "Python syntax compile",
+      "invocation": ".venv-pilot/bin/python -m py_compile app/api/listing_inventory.py tests/test_listing_inventory_api.py app/main.py",
+      "result": "exit 0",
+      "observable": "stdout empty; py_compile completed successfully"
+    },
+    {
+      "scenario": "frontend TypeScript contract check",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "result": "exit 0",
+      "observable": "stdout empty; tsc completed successfully"
+    },
+    {
+      "scenario": "scoped diff hygiene",
+      "invocation": "omo sparkshell --shell 'git diff --check app/main.py app/api/listing_inventory.py frontend/src/lib/queries.ts tests/test_listing_inventory_api.py .omo/evidence/dalya-listings-workspace-rebrand/task-3-api.json' --budget 20000",
+      "result": "exit 0",
+      "observable": "stdout empty; git diff --check found no whitespace errors"
+    }
+  ],
+  "manual_qa": {
+    "scenario": "prior pytest fixture response JSON evidence for lean index shape",
+    "invocation": "omo sparkshell --shell 'PYTHONPATH=. .venv-pilot/bin/python - <<\"PY\" ... TestClient(app).get(\"/api/v1/listings/mine\") ... PY' --budget 20000",
+    "artifact_path": ".omo/evidence/dalya-listings-workspace-rebrand/task-3-api.json",
+    "binary_observable": {
+      "status_code": 200,
+      "new_fields": {
+        "active_viewing_count": 1,
+        "assigned_agent_name": "Assigned Inventory Agent",
+        "buyer_conversation_count": 1,
+        "knowledge_status": "needs_attention",
+        "last_activity_at": "2026-06-24T18:27:18.422244",
+        "logistics_status": "needs_attention",
+        "missing_fact_count": 1,
+        "open_offer_count": 1,
+        "primary_next_action": "review_knowledge"
+      },
+      "forbidden_nested_keys_present": []
+    }
+  },
+  "adversarial_qa": [
+    "malformed_input: _text_from_json, _number_from_json, _first_image_url, and listing dict fallbacks tolerate absent or malformed spa/imported/media JSON; missing knowledge/logistics fall back to needs_attention or zero counts.",
+    "dirty_worktree: scoped status was captured; unrelated dirty files were not touched.",
+    "stale_state: route mount grep was rerun after the evidence update; focused pytest initially hit sandbox/local DB reachability blockers, then an approved no-secrets .env.test escalated run passed with 3 passed, 23 warnings.",
+    "misleading_success_output: manual QA inspected concrete response keys and forbidden nested keys, not just pytest pass output.",
+    "long external commands: Neon-backed pytest required network escalation after sandbox DNS failure; no command was left running.",
+    "flaky_tests: tests use unique UUID-suffixed DB rows and cleanup after execution."
+  ],
+  "size_review": {
+    "app/api/listing_inventory.py": "249 pure LOC after cleanup",
+    "tests/test_listing_inventory_api.py": "244 pure LOC after cleanup",
+    "frontend/src/lib/queries.ts": "608 pure LOC; pre-existing large shared API type/query file, only AgentListingSummary fields were extended within task scope",
+    "app/main.py": "281 pure LOC; pre-existing app assembly file, route mount was inspected for T3 but not edited by this remediation worker"
+  },
+  "cleanup_receipt": "No long-running servers or background processes were started. Test-created DB rows use UUID-suffixed identifiers and fixture cleanup.",
+  "risks": [
+    "The inventory implementation uses per-listing aggregate queries; acceptable for T3 lean contract coverage but may need batching if listing counts grow.",
+    "Open offers are approximated as non-superseded offer records because there is no separate offer lifecycle status on DBOfferRecord.",
+    "Logistics status is conservative: ready listings without confirmed logistics are needs_attention, off-plan listings are not_required."
+  ]
+}

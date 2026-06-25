@@ -1,0 +1,810 @@
+{
+  "name": "Golf Grove by Emaar",
+  "developer": "Emaar Properties PJSC",
+  "last_updated": "2026-06-27",
+  "researcher_notes": [
+    "PRIMARY SUBJECT: Golf Grove by Emaar Properties at Dubai Hills Estate — a completed gated villa community. Construction began May 2019, completed October 2022 (Source 4, propsearch.ae). DLD master project name: 'DUBAI HILLS - GOLF GROVE' (Source 4).",
+    "IMPORTANT DISAMBIGUATION: There is a completely separate project called 'Golf Grove by Regent Developments' located in Dubai Production City (IMPZ) — a 7-storey apartment building with studios and 1-beds, anticipated completion Q2 2027 (Sources 6, 22, 25, 26, 31). This is NOT the same project. The Regent project is included as a sub_development entry for alias matching purposes only, clearly flagged as a different developer/location.",
+    "UNIT MIX: Three villa types confirmed across all sources — Eames (3BR, ~2,911 sqft), Savoye (3BR, ~2,939 sqft), Aalto (4BR, ~3,368 sqft). Sources 1, 2, 7, 14, 42 all consistent.",
+    "TOTAL UNIT COUNT: Zeus Capital (Source 29) states 30 units. Propsearch (Source 4) states project valued at AED 178,273,000. These figures suggest a small, boutique community. The 30-unit figure from Zeus Capital is noted but not independently verified — treat with moderate confidence.",
+    "LAUNCH/COMPLETION DATES: Launched approximately 2018-2019 based on payment plan milestones (Source 2: 5% down payment March 2019, completion July 2021*). Propsearch (Source 4) states construction began May 2019, completed October 2022. The July 2021 completion date in Source 2 appears to be an original estimate; actual completion was October 2022 per Propsearch.",
+    "PRICING — ORIGINAL LAUNCH: Starting from AED 3.03M–3.12M per multiple broker sites (Sources 2, 3, 10). This was the off-plan launch price.",
+    "PRICING — CURRENT RESALE MARKET (2025-2026): Property Finder listings show 3BR villas asking AED 7.5M–8.8M; 4BR villas asking AED 10.5M–13M (Sources 8, 9, 11, 12, 13, 19). Bayut average asking price for villas: AED 8,735,889 (Source 38). Property Finder average sale price: AED 6,567,167 (Sources 8, 9, 12, 13 — this appears to be a broader Dubai Hills Estate average, not Golf Grove specific). Recent DLD transactions: 3BR sold AED 7.4M–8.1M (Jun 2026–Mar 2026); mortgage registrations at AED 4M–4.76M suggest some distressed/refinancing activity (Source 4).",
+    "PRICE PER SQFT: Recent sale transactions show AED 1,011–2,511/sqft for 3BR (Source 4). Active listings show AED 2,230–3,700/sqft (Sources 8, 9, 11, 12, 19). The wide range reflects plot size, upgrades, and golf-facing premium. Upgraded/extended/pool villas command significant premiums.",
+    "RENTAL MARKET: 3BR villas renting AED 335,000–495,000/year (Sources 29, 30, 41). Bayut range AED 335,000–700,000 (Source 41). Recent rental transactions: AED 335,000–435,000/year for 3BR (Sources 8, 12, 13).",
+    "ROI CALCULATION: Using AED 360,000 annual rent on AED 7,500,000 purchase = ~4.8% gross yield. Using AED 435,000 on AED 8,000,000 = ~5.4% gross yield. Estimated gross ROI range: 4.5%–5.5% for standard units. Premium/upgraded units may yield less due to higher purchase price. No specific ROI figure was stated in sources for Golf Grove specifically.",
+    "SERVICE CHARGES: AED 7.55/sqft confirmed across multiple Property Finder listings (Sources 8, 9, 13). This is a reliable figure.",
+    "GOLDEN VISA: Properties above AED 2M qualify for UAE Golden Visa. All Golf Grove villas are well above this threshold at current market prices. Not explicitly stated in sources but inferred from UAE policy.",
+    "LOCATION: Gated sub-community of Dubai Hills Estate, situated to the east of the development close to Al Khail Road (E44) (Source 4). DLD zone: Hadaeq Sheikh Mohammed Bin Rashid (Sources 8, 9, 12, 13).",
+    "DRIVE TIMES: 15 min to Downtown Dubai and Dubai Marina (Sources 2, 33, 42); 20 min to Dubai International Airport (Source 12); 5 min to Dubai Hills Mall (Sources 2, 33); no metro within walking distance — car dependent (Sources 27, 33).",
+    "GOLF COURSE: 18-hole par-72 championship course operated by Troon Golf, designed by European Golf Design, spanning 1.2 million sqm, with 83 bunkers, F&B outlets, golf club academy, practice facility (Source 42).",
+    "SCHOOLS NEARBY: GEMS New Millennium School (2.2km, British/Indian, AED 28,000/yr, Very Good rating); GEMS International School Dubai Hills (2.2km, British/IB, AED 66,000/yr, Good rating); GEMS Wellington Academy Al Khail (2.3km, British, AED 73,000/yr, Very Good); Safa Community School (4.2km, British, AED 69,000/yr, Outstanding); Kings' School Al Barsha (4.2km, British, AED 80,500/yr, Outstanding); Dunecrest American School (4.1km, American/IB, AED 74,500/yr, Good) (Source 35).",
+    "HEALTHCARE: King's College Hospital Dubai (Al Quoz, ~10 min drive); Mediclinic Parkview Hospital (Al Barsha South, ~10 min drive); Aster Clinic Dubai Hills Mall (~5 min drive) (Source 33).",
+    "EMAAR DEVELOPER PROFILE: Data from Source 46 (Emaar Q1 2025 investor presentation) — credit rating BBB+/Baa2 (S&P/Moody's), Q1 2025 revenue AED 10.1Bn (+50% YoY), net profit AED 4.636Bn, cash AED 58.35Bn, revenue backlog ~AED 127Bn. Developer of Burj Khalifa, Dubai Mall, Dubai Fountain. 120,000+ units delivered globally since 2002.",
+    "ARCHITECTURAL STYLES: Three distinct styles confirmed — Eames (3BR, modern, deep inset walls, glazing, shadow-casting window screens), Savoye (3BR, contemporary, emphasis on building mass, compact clean-cut), Aalto (4BR, modern, clean lines, simple material palette, panoramic views) (Sources 1, 2, 7, 14, 42).",
+    "VILLA FEATURES: Private rooftop terrace on all units, private garden, garage/covered parking, maid's room, walk-in closets, built-in wardrobes, unfurnished (Sources 36, 42). Some units overlook community pool, manicured lawn, kids areas, Residents' Club (Source 36).",
+    "ACTIVE LISTINGS COUNT: ~26 sale listings, ~61 rental listings on Property Finder at time of research (Sources 13, 30). Price range on sale: AED 7M–13M (Source 8).",
+    "CONTRADICTIONS: Source 2 states completion July 2021; Source 4 states October 2022. Source 10 states Q1 2022 handover. Most reliable is Propsearch (Source 4) which cites DLD data — October 2022 used as primary. Source 29 (Zeus Capital) states 30 units and completion Dec 2022 — broadly consistent with October 2022 from Propsearch. Starting price varies: AED 3.03M (Source 2), AED 3.12M (Sources 3, 10, 24) — these are original off-plan prices, now irrelevant for resale.",
+    "CONFIDENCE LEVELS: Unit types/sizes: HIGH (consistent across 8+ sources). Current resale pricing: HIGH (multiple live listings + DLD transactions). Original launch pricing: HIGH (multiple broker sites). Total unit count: LOW (only one source, Zeus Capital). Completion date: MEDIUM-HIGH (two sources broadly agree on late 2022). ROI: MEDIUM (calculated from transaction data, not stated by authoritative source). Drive times: MEDIUM (consistent across sources but not independently verified).",
+    "DATA GAPS: Exact total number of villas in Golf Grove not confirmed (Zeus Capital says 30 — seems low given 26 active sale listings alone, but possible for a boutique community). No confirmed HOA/community management company name. No confirmed total land area of the sub-community. No confirmed number of parking spaces per villa type beyond 'covered parking'. Exact plot sizes not confirmed beyond BUA figures."
+  ],
+  "master_development": {
+    "overview": {
+      "official_name": "Golf Grove",
+      "developer": "Emaar Properties PJSC",
+      "master_community": "Dubai Hills Estate",
+      "dld_master_project_name": "DUBAI HILLS - GOLF GROVE",
+      "dld_zone": "Hadaeq Sheikh Mohammed Bin Rashid",
+      "launch_date_approx": "2018-2019",
+      "construction_start": "May 2019",
+      "completion_date": "October 2022",
+      "status": "Completed / Ready",
+      "total_residential_units": null,
+      "total_units_note": "Zeus Capital states 30 units — low confidence, requires verification against DLD records",
+      "property_types": [
+        "Detached villas"
+      ],
+      "bedroom_configurations": [
+        "3 bedroom",
+        "4 bedroom"
+      ],
+      "bua_range_sqft": "2,911 to 3,368",
+      "freehold": true,
+      "gated_community": true,
+      "project_value_aed": 178273000,
+      "project_value_note": "Estimate submitted by developer prior to construction per DLD open data (Source 4)"
+    },
+    "location_connectivity": {
+      "address": "Golf Grove, Dubai Hills Estate, Dubai, UAE",
+      "coordinates_note": "Eastern side of Dubai Hills Estate, close to Al Khail Road (E44)",
+      "highway_access": [
+        "Al Khail Road (E44)",
+        "Umm Suqeim Road (D63)",
+        "Sheikh Mohammed bin Zayed Road"
+      ],
+      "metro_access": "No metro within walking distance. Nearest stations: Onpassive Metro Station, Equiti Metro Station, Dubai Internet City Metro Station — approximately 16-18 min drive (Source 27)",
+      "bus_access": "Bus stops at Ducast Factory 1 & 2, Le Meridien Hotel Accommodation 1 & 2 — approximately 9-12 min drive from Al Quoz Industrial Area 2 (Source 27)",
+      "drive_times_minutes": {
+        "downtown_dubai": 15,
+        "dubai_marina": 15,
+        "dubai_hills_mall": 5,
+        "dubai_international_airport": 20,
+        "mall_of_the_emirates": 10,
+        "kings_college_hospital": 10,
+        "al_khail_road_e44": 2
+      },
+      "car_dependency": "High — no practical public transport within community"
+    },
+    "shared_amenities": {
+      "note": "Golf Grove amenities are shared with the wider Dubai Hills Estate community",
+      "golf_course": "18-hole par-72 championship course operated by Troon Golf, designed by European Golf Design, spanning 1.2 million sqm, 83 bunkers, F&B outlets, golf club academy, practice facility",
+      "community_pool": true,
+      "tennis_court": true,
+      "half_basketball_court": true,
+      "outdoor_fitness_areas": true,
+      "nature_trails_and_shaded_areas": true,
+      "cycle_paths": true,
+      "childrens_play_areas": true,
+      "retail_area": true,
+      "residents_club": true,
+      "manicured_lawns": true,
+      "parks_and_open_spaces": true,
+      "bbq_area": true,
+      "mosque": true,
+      "security": "Gated community with security"
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "GEMS New Millennium School",
+          "location": "Dubai Hills Estate",
+          "distance_km": 2.2,
+          "curriculum": "British and Indian",
+          "annual_fees_aed": 28000,
+          "government_rating": "Very Good",
+          "parent_rating": "4.3/5"
+        },
+        {
+          "name": "GEMS International School Dubai Hills",
+          "location": "Dubai Hills Estate",
+          "distance_km": 2.2,
+          "curriculum": "British and IB",
+          "annual_fees_aed": 66000,
+          "government_rating": "Good",
+          "parent_rating": "3.0/5"
+        },
+        {
+          "name": "GEMS Wellington Academy Al Khail",
+          "location": "Dubai Hills Estate",
+          "distance_km": 2.3,
+          "curriculum": "British",
+          "annual_fees_aed": 73000,
+          "government_rating": "Very Good",
+          "parent_rating": "2.9/5"
+        },
+        {
+          "name": "Safa Community School",
+          "location": "Arjan",
+          "distance_km": 4.2,
+          "curriculum": "British",
+          "annual_fees_aed": 69000,
+          "government_rating": "Outstanding",
+          "parent_rating": "4.3/5"
+        },
+        {
+          "name": "Kings' School Al Barsha",
+          "location": "Al Barsha",
+          "distance_km": 4.2,
+          "curriculum": "British",
+          "annual_fees_aed": 80500,
+          "government_rating": "Outstanding",
+          "parent_rating": "2.3/5"
+        },
+        {
+          "name": "Dunecrest American School",
+          "location": "Al Barari",
+          "distance_km": 4.1,
+          "curriculum": "American and IB",
+          "annual_fees_aed": 74500,
+          "government_rating": "Good",
+          "parent_rating": "4.5/5"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "King's College Hospital Dubai",
+          "location": "Al Quoz",
+          "distance_minutes_drive": 10,
+          "type": "International hospital"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "location": "Al Barsha South",
+          "distance_minutes_drive": 10,
+          "type": "Hospital"
+        },
+        {
+          "name": "Aster Clinic Dubai Hills Mall",
+          "location": "Dubai Hills Mall",
+          "distance_minutes_drive": 5,
+          "type": "Clinic"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Hills Mall",
+          "distance_minutes_drive": 5,
+          "description": "Major mall with Waitrose supermarket, Reel Cinema, 650+ shopping and dining outlets, family entertainment, 2 million sqft retail"
+        },
+        {
+          "name": "Spinneys",
+          "distance_minutes_drive": 10,
+          "description": "Supermarket"
+        },
+        {
+          "name": "Carrefour",
+          "distance_minutes_drive": 10,
+          "description": "Supermarket"
+        }
+      ]
+    },
+    "investment_data": {
+      "original_launch_price_aed": "3,030,000 to 3,120,888",
+      "current_resale_price_range_aed": {
+        "3_bedroom": "7,000,000 to 8,800,000",
+        "4_bedroom": "10,500,000 to 13,000,000",
+        "upgraded_extended_premium": "Up to 12,650,000+ for 3BR with pool and designer upgrades"
+      },
+      "average_asking_price_aed": 8735889,
+      "average_asking_price_source": "Bayut (Source 38)",
+      "price_per_sqft_range_aed": {
+        "recent_dld_transactions": "1,011 to 2,511",
+        "active_listings": "2,230 to 3,700",
+        "note": "Wide range reflects plot size, golf-facing premium, and upgrade level"
+      },
+      "rental_range_aed_per_year": {
+        "3_bedroom": "335,000 to 495,000",
+        "4_bedroom": "Up to 700,000",
+        "source": "Bayut and Property Finder listings (Sources 30, 41)"
+      },
+      "estimated_gross_roi_percent": "4.5 to 5.5",
+      "roi_calculation_note": "Based on AED 360,000-435,000 annual rent on AED 7.5M-8M purchase price. Calculated from transaction data.",
+      "service_charge_aed_per_sqft": 7.55,
+      "service_charge_source": "Multiple Property Finder listings (Sources 8, 9, 13)",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "All units well above AED 2M threshold at current market prices",
+      "capital_appreciation_note": "Original launch price AED 3.03M-3.12M; current resale AED 7M-8.8M for 3BR — approximately 130-180% appreciation since 2019 launch",
+      "active_sale_listings": 26,
+      "active_rental_listings": 61,
+      "listings_source": "Property Finder (Sources 13, 30)",
+      "recent_dld_transactions": [
+        {
+          "date": "2026-06-19",
+          "price_aed": 7400000,
+          "size_sqft": 4163,
+          "type": "3BR villa",
+          "transaction_type": "Sale"
+        },
+        {
+          "date": "2026-04-23",
+          "price_aed": 7500000,
+          "size_sqft": 2987,
+          "type": "3BR villa",
+          "transaction_type": "Sale"
+        },
+        {
+          "date": "2026-03-31",
+          "price_aed": 7750000,
+          "size_sqft": 3957,
+          "type": "3BR villa",
+          "transaction_type": "Sale"
+        },
+        {
+          "date": "2026-03-04",
+          "price_aed": 8100000,
+          "size_sqft": 3933,
+          "type": "3BR villa",
+          "transaction_type": "Sale"
+        },
+        {
+          "date": "2025-12-09",
+          "price_aed": 7500000,
+          "size_sqft": 2859,
+          "type": "3BR villa",
+          "transaction_type": "Sale"
+        }
+      ]
+    },
+    "developer_profile": {
+      "legal_name": "Emaar Properties PJSC",
+      "founded": 1997,
+      "headquarters": "Dubai, UAE",
+      "credit_rating": "BBB+ (S&P), Baa2 (Moody's), BBB (Fitch) — all with stable outlook",
+      "q1_2025_revenue_aed_bn": 10.1,
+      "q1_2025_net_profit_aed_bn": 4.636,
+      "cash_aed_bn": 58.35,
+      "revenue_backlog_aed_bn": 127,
+      "units_delivered_globally_since_2002": 120000,
+      "flagship_projects": [
+        "Burj Khalifa",
+        "Dubai Mall",
+        "Dubai Fountain",
+        "Downtown Dubai",
+        "Dubai Hills Estate",
+        "Arabian Ranches",
+        "The Oasis"
+      ],
+      "track_record": "Emaar Properties PJSC is the developer of the Burj Khalifa, the world's tallest building, and Dubai Mall, the world's most visited destination in 2023 and 2024. Founded in 1997, Emaar has delivered over 120,000 units globally and holds investment-grade credit ratings from S&P, Moody's, and Fitch. With a revenue backlog of approximately AED 127 billion and Q1 2025 revenues of AED 10.1 billion (+50% YoY), Emaar is the UAE's most financially robust residential developer."
+    }
+  },
+  "sub_developments": {
+    "dubai_hills_estate_golf_grove": {
+      "aliases": [
+        "golf grove dubai hills estate",
+        "golf grove dubai hills",
+        "golf grove emaar dubai hills",
+        "golf grove villas dubai hills",
+        "golf grove at dubai hills estate",
+        "golf grove by emaar dubai hills",
+        "dubai hills golf grove",
+        "golf grove villas",
+        "golf grove eames",
+        "golf grove savoye",
+        "golf grove aalto",
+        "eames golf grove",
+        "savoye golf grove",
+        "aalto golf grove"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Golf Grove at Dubai Hills Estate",
+        "investment_overrides": {
+          "price_range_aed": "7,000,000 – 13,000,000",
+          "price_per_sqft_aed": "2,230 – 3,700 (active listings); 1,011 – 2,511 (recent DLD sales)",
+          "rental_range_aed_per_year": "335,000 – 700,000",
+          "estimated_gross_roi_percent": "4.5 to 5.5",
+          "service_charge_aed_per_sqft": 7.55,
+          "status": "Completed — Ready to move in",
+          "completion_date": "October 2022",
+          "original_launch_price_aed": "3,030,000 – 3,120,888",
+          "capital_appreciation_since_launch": "Approximately 130–180% for 3BR units"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Golf Grove is a boutique gated community within Dubai Hills Estate with only a small number of villas ever built. With 26 active sale listings against 61 rental listings, demand consistently outpaces supply. Golf-facing plots are irreplaceable — no new supply is being added to this specific sub-community.",
+          "lifestyle_pitch": "Golf Grove offers direct access to the 18-hole par-72 championship golf course operated by Troon Golf — one of only a handful of communities in Dubai where your home backs onto the fairways. Three distinct architectural styles (Eames, Savoye, Aalto) each with a private rooftop terrace, private garden, and maid's room. Five minutes to Dubai Hills Mall, 15 minutes to Downtown Dubai, surrounded by six schools within 4.5km including two Outstanding-rated institutions.",
+          "investment_pitch": "Purchased at launch for AED 3.03M–3.12M, Golf Grove 3BR villas now trade at AED 7M–8.8M — representing 130–180% capital appreciation in under 5 years. Current gross rental yields of 4.5–5.5% on a completed, tenanted asset with no construction risk. Service charges of AED 7.55/sqft are competitive for a golf-course community. All units qualify for UAE Golden Visa."
+        }
+      },
+      "overview": {
+        "property_type": "Detached villas",
+        "status": "Completed — Ready to move in",
+        "completion_date": "October 2022",
+        "construction_start": "May 2019",
+        "gated": true,
+        "freehold": true
+      },
+      "unit_mix": {
+        "eames_3br": {
+          "bedrooms": 3,
+          "style": "Modern — deep inset walls, glazing, shadow-casting window screens",
+          "bua_sqft": 2911,
+          "floors": "Ground floor, first floor, rooftop terrace",
+          "features": [
+            "Private rooftop terrace",
+            "Private garden",
+            "Covered parking",
+            "Maid's room",
+            "Walk-in closets",
+            "Built-in wardrobes"
+          ]
+        },
+        "savoye_3br": {
+          "bedrooms": 3,
+          "style": "Contemporary — emphasis on building mass, compact clean-cut look",
+          "bua_sqft": 2939,
+          "floors": "Ground floor, first floor, rooftop terrace",
+          "features": [
+            "Private rooftop terrace",
+            "Private garden",
+            "Covered parking",
+            "Maid's room",
+            "Walk-in closets",
+            "Built-in wardrobes"
+          ]
+        },
+        "aalto_4br": {
+          "bedrooms": 4,
+          "style": "Modern — clean lines, simple material palette, panoramic views of nature",
+          "bua_sqft": 3368,
+          "floors": "Ground floor, first floor, rooftop terrace",
+          "features": [
+            "Private rooftop terrace",
+            "Private garden",
+            "Covered parking",
+            "Maid's room",
+            "Walk-in closets",
+            "Built-in wardrobes",
+            "Panoramic views"
+          ]
+        }
+      },
+      "pricing": {
+        "original_launch_price_aed": "3,030,000 – 3,120,888",
+        "current_resale_3br_aed": "7,000,000 – 8,800,000",
+        "current_resale_4br_aed": "10,500,000 – 13,000,000",
+        "premium_upgraded_3br_aed": "Up to 12,650,000",
+        "rental_3br_aed_per_year": "335,000 – 495,000",
+        "rental_4br_aed_per_year": "Up to 700,000",
+        "service_charge_aed_per_sqft": 7.55
+      }
+    },
+    "golf_grove_by_regent_impz": {
+      "aliases": [
+        "golf grove by regent",
+        "golf grove regent",
+        "golf grove regent developments",
+        "golf grove impz",
+        "golf grove dubai production city",
+        "golf grove production city",
+        "golf grove by regent developments"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Golf Grove by Regent Developments (Dubai Production City)",
+        "investment_overrides": {
+          "price_range_aed": "586,000 – 1,173,000+",
+          "status": "Off-plan — Under construction",
+          "anticipated_completion": "Q2 2027",
+          "developer_note": "IMPORTANT: This is a DIFFERENT project by Regent Developments, NOT Emaar. Located in Dubai Production City (IMPZ), not Dubai Hills Estate.",
+          "ownership": "Freehold",
+          "service_charge_aed_per_sqft": 15,
+          "dld_project_number": "3245"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Golf Grove by Regent is a boutique 98-unit development in Dubai Production City with views of Jumeirah Golf Estates course, IMPZ Lake, and Dubai Marina skyline. Only 56 studios and 42 one-bedroom units available.",
+          "lifestyle_pitch": "A contemporary 7-storey residential building with premium amenities including rooftop infinity pool, sky cinema, golf simulator, cold plunge, sauna, co-working space, and zen garden. Views of JGE Golf Course and Dubai Marina skyline.",
+          "investment_pitch": "Off-plan entry from AED 586,000 for studios with a 10/10/40/40 payment plan. Freehold ownership in Dubai Production City with golf course views. Anticipated Q2 2027 completion."
+        }
+      },
+      "overview": {
+        "developer": "Regent Developments",
+        "property_type": "Apartments",
+        "location": "Dubai Production City (IMPZ), Dubai",
+        "status": "Off-plan — Under construction",
+        "anticipated_completion": "Q2 2027",
+        "building_configuration": "Basement + Ground + 1 Podium + 7 Floors + Roof",
+        "total_units": 98,
+        "freehold": true,
+        "dld_project_number": "3245",
+        "escrow_status": "Open"
+      },
+      "unit_mix": {
+        "studio_type_a": {
+          "unit_numbers": "01/02/03",
+          "suite_area_sqft": 323,
+          "balcony_sqft": 82,
+          "total_sqft": 405,
+          "floors": "1 to 7"
+        },
+        "studio_type_b": {
+          "unit_numbers": "05/06/07",
+          "suite_area_sqft": 318,
+          "balcony_sqft": 97,
+          "total_sqft": 415,
+          "floors": "1 to 7"
+        },
+        "studio_type_c": {
+          "unit_numbers": "09/10",
+          "suite_area_sqft": 332,
+          "balcony_sqft": 68,
+          "total_sqft": 400,
+          "floors": "1 to 7"
+        },
+        "one_bed_unit_04": {
+          "suite_area_sqft": 693,
+          "balcony_sqft": 71.5,
+          "total_sqft": 764.5,
+          "floors": "2 to 7"
+        },
+        "one_bed_unit_08": {
+          "suite_area_sqft": 700,
+          "balcony_sqft": 178,
+          "total_sqft": 878,
+          "floors": "2 to 7"
+        },
+        "one_bed_garden_suite": {
+          "suite_area_sqft": "693 – 948",
+          "total_sqft": "948 – 1,173",
+          "floor": "Ground floor",
+          "type": "Garden Suite"
+        }
+      },
+      "pricing": {
+        "studios_from_aed": 586000,
+        "one_bed_from_aed": 902000,
+        "one_bed_garden_suite_from_aed": 1040000
+      },
+      "payment_plan": {
+        "on_booking_percent": 10,
+        "on_signing_spa_percent": 10,
+        "during_construction_percent": 40,
+        "on_handover_percent": 40
+      },
+      "amenities": [
+        "Rooftop infinity pool",
+        "Sky cinema",
+        "Golf simulator",
+        "Cold plunge",
+        "Sauna",
+        "Fitness lab",
+        "Rooftop yoga zone",
+        "Grill and chill area",
+        "Grove garden",
+        "Clubhouse",
+        "Coffee bar",
+        "Paw park",
+        "Co-working space",
+        "Zen garden",
+        "Changing rooms",
+        "Bicycle parking",
+        "Double height lobby",
+        "Smart door locks",
+        "Home automation",
+        "Freestanding bathtub",
+        "Branded appliances",
+        "CCTV",
+        "POD parking"
+      ],
+      "views": [
+        "JGE Golf Course",
+        "IMPZ Lake",
+        "Dubai Marina Skyline",
+        "Community Park"
+      ],
+      "nearby_landmarks": [
+        "Jumeirah Golf Estates",
+        "Sheikh Mohammed Bin Zayed Road",
+        "Al Khail Road",
+        "Dubai Hills Mall",
+        "Mall of the Emirates",
+        "Dubai Internet City",
+        "Dubai Media City",
+        "Dubai Marina",
+        "Expo City Dubai",
+        "JAFZA",
+        "Al Maktoum International Airport (DWC)"
+      ]
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "Golf Grove by Emaar: A boutique gated villa community within Dubai Hills Estate. 3 and 4-bedroom villas (2,911–3,368 sqft) directly alongside the 18-hole par-72 championship golf course. Completed October 2022. Original launch price AED 3.03M; current resale AED 7M–13M. Service charge AED 7.55/sqft.",
+      "scarcity_argument": "Golf Grove is one of the smallest and most exclusive villa sub-communities within Dubai Hills Estate — a boutique enclave where homes back directly onto the championship golf course fairways. With only a limited number of villas ever built and no new supply being added, every resale is a genuine scarcity play. The combination of golf-facing plots, Emaar pedigree, and Dubai Hills Estate's master-planned infrastructure makes this one of the hardest communities to replicate.",
+      "lifestyle_pitch": "Imagine waking up to panoramic views of the 18-hole Troon Golf-operated championship course, stepping onto your private rooftop terrace for morning coffee, and having Dubai Hills Mall five minutes away. Golf Grove offers three architecturally distinct villa styles — Eames, Savoye, and Aalto — each with a private rooftop terrace, private garden, maid's room, and covered parking. Six schools within 4.5km including two Outstanding-rated institutions. King's College Hospital 10 minutes away. Downtown Dubai 15 minutes. This is Dubai's premium family lifestyle at its most refined.",
+      "investment_pitch": "Golf Grove villas launched at AED 3.03M–3.12M in 2019. Today, 3-bedroom villas trade at AED 7M–8.8M — that's 130–180% capital appreciation in under 5 years on a completed, tenanted asset. Current gross rental yields of 4.5–5.5% with 3BR villas renting at AED 335,000–495,000 per year. All units qualify for UAE Golden Visa. Service charges of AED 7.55/sqft are competitive for a golf-course community. With 61 rental listings versus 26 sale listings, rental demand is deep and consistent.",
+      "objection_handling": {
+        "too_expensive": "Golf Grove villas at AED 7M–8.8M for a 3BR represent AED 2,230–3,700/sqft — competitive for a completed, golf-facing, gated Emaar community in Dubai Hills Estate. Comparable communities like Golf Place and Sidra Villas trade at similar or higher levels. The rental income of AED 335,000–495,000/year means the asset is self-funding a significant portion of any mortgage.",
+        "no_metro": "Golf Grove is 15 minutes from Downtown Dubai and Dubai Marina by car, and 5 minutes from Dubai Hills Mall. The community is designed for car-owning families — covered parking is included with every villa. Ride-hailing is practical for daily use.",
+        "completed_not_off_plan": "Buying a completed villa means zero construction risk, immediate rental income, and the ability to inspect exactly what you're purchasing. Golf Grove was delivered by Emaar — one of the UAE's most reliable developers — and is now a mature, established community."
+      }
+    },
+    "per_sub_development": {
+      "dubai_hills_estate_golf_grove": {
+        "eames_3br": {
+          "pitch": "The Eames is Golf Grove's most distinctive villa — a modern standalone home with deep inset walls, dramatic glazing, and shadow-casting window screens that create a striking architectural statement. At approximately 2,911 sqft with a private rooftop terrace, it offers the most contemporary aesthetic in the community.",
+          "investment_note": "3BR Eames villas currently asking AED 7.5M–8.8M. Recent DLD sales: AED 7.4M–8.1M. Rental income: AED 335,000–435,000/year."
+        },
+        "savoye_3br": {
+          "pitch": "The Savoye villa takes a contemporary approach — emphasising the beauty of the building's mass for a compact, clean-cut look. At approximately 2,939 sqft, it offers a slightly larger footprint than the Eames with the same private rooftop terrace and garden.",
+          "investment_note": "3BR Savoye villas in the same price range as Eames — AED 7.5M–8.8M asking. Strong rental demand at AED 360,000–435,000/year."
+        },
+        "aalto_4br": {
+          "pitch": "The Aalto is Golf Grove's flagship — a 4-bedroom modern villa at 3,368 sqft with clean lines, a simple material palette, and panoramic views of nature. The largest and most spacious villa type in the community, ideal for larger families or those wanting maximum space.",
+          "investment_note": "4BR Aalto villas currently asking AED 10.5M–13M. Premium golf-facing Aalto units have traded above AED 13M. Rental income up to AED 700,000/year for premium units."
+        }
+      },
+      "golf_grove_by_regent_impz": {
+        "pitch": "Golf Grove by Regent Developments is a completely separate project from Golf Grove by Emaar. Located in Dubai Production City (IMPZ), this 7-storey apartment building offers studios from AED 586,000 and 1-bedroom units from AED 902,000 with views of Jumeirah Golf Estates. Anticipated completion Q2 2027 with a 10/10/40/40 payment plan.",
+        "differentiation_note": "Buyers searching for 'Golf Grove' may be looking for either the Emaar villa community in Dubai Hills Estate or the Regent apartment project in IMPZ. These are entirely different products at different price points, locations, and stages of completion."
+      }
+    }
+  },
+  "aliases": [
+    "golf grove",
+    "golf grove emaar",
+    "emaar golf grove",
+    "golf grove dubai hills",
+    "golf grove dubai hills estate",
+    "golf grove at dubai hills estate",
+    "golf grove by emaar",
+    "golf grove villas",
+    "golf grove villas emaar",
+    "golf grove villas dubai hills",
+    "golf grove villas dubai hills estate",
+    "golf grove eames",
+    "golf grove savoye",
+    "golf grove aalto",
+    "eames villa golf grove",
+    "savoye villa golf grove",
+    "aalto villa golf grove",
+    "golf grove regent",
+    "golf grove by regent",
+    "golf grove regent developments",
+    "golf grove impz",
+    "golf grove production city",
+    "golf grove dubai production city",
+    "golf grove by regent developments",
+    "dubai hills golf grove",
+    "hadaeq golf grove"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties PJSC",
+    "community": "Golf Grove by Emaar",
+    "location": {
+      "area": "Dubai Hills Estate, Dubai",
+      "description": "Golf Grove is a boutique gated villa community within Dubai Hills Estate, positioned directly alongside the 18-hole par-72 championship golf course operated by Troon Golf. Situated in the Hadaeq Sheikh Mohammed Bin Rashid zone, the community sits off Al Khail Road (E44) on the eastern side of Dubai Hills Estate. It offers a rare combination of golf-course-facing plots, Emaar master-planning, and proximity to Dubai Hills Mall (5 min), Downtown Dubai (15 min), and Dubai Marina (15 min). The community is car-dependent with no metro within walking distance, making it ideal for families with vehicles.",
+      "distances": {
+        "downtown_dubai": 15,
+        "dubai_marina": 15,
+        "dubai_hills_mall": 5,
+        "dubai_international_airport": 20,
+        "mall_of_the_emirates": 10,
+        "kings_college_hospital": 10,
+        "al_khail_road_e44": 2
+      }
+    },
+    "community_amenities": [
+      "18-hole par-72 championship golf course (Troon Golf operated, European Golf Design, 1.2M sqm, 83 bunkers)",
+      "Golf club academy and practice facility",
+      "Community swimming pool",
+      "Tennis court",
+      "Half basketball court",
+      "Outdoor fitness areas",
+      "Nature trails and shaded walkways",
+      "Cycle paths",
+      "Children's play areas",
+      "Retail area",
+      "Residents' Club",
+      "Manicured lawns and landscaped parks",
+      "BBQ area",
+      "Mosque",
+      "Gated security",
+      "Private rooftop terrace on every villa",
+      "Private garden on every villa",
+      "Covered parking on every villa"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "GEMS New Millennium School",
+          "distance_km": 2.2,
+          "curriculum": "British and Indian",
+          "annual_fees_aed": 28000,
+          "government_rating": "Very Good"
+        },
+        {
+          "name": "GEMS International School Dubai Hills",
+          "distance_km": 2.2,
+          "curriculum": "British and IB",
+          "annual_fees_aed": 66000,
+          "government_rating": "Good"
+        },
+        {
+          "name": "GEMS Wellington Academy Al Khail",
+          "distance_km": 2.3,
+          "curriculum": "British",
+          "annual_fees_aed": 73000,
+          "government_rating": "Very Good"
+        },
+        {
+          "name": "Safa Community School",
+          "distance_km": 4.2,
+          "curriculum": "British",
+          "annual_fees_aed": 69000,
+          "government_rating": "Outstanding"
+        },
+        {
+          "name": "Kings' School Al Barsha",
+          "distance_km": 4.2,
+          "curriculum": "British",
+          "annual_fees_aed": 80500,
+          "government_rating": "Outstanding"
+        },
+        {
+          "name": "Dunecrest American School",
+          "distance_km": 4.1,
+          "curriculum": "American and IB",
+          "annual_fees_aed": 74500,
+          "government_rating": "Good"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "King's College Hospital Dubai",
+          "distance_minutes_drive": 10,
+          "type": "International hospital",
+          "location": "Al Quoz"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "distance_minutes_drive": 10,
+          "type": "Hospital",
+          "location": "Al Barsha South"
+        },
+        {
+          "name": "Aster Clinic Dubai Hills Mall",
+          "distance_minutes_drive": 5,
+          "type": "Clinic",
+          "location": "Dubai Hills Mall"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Hills Mall",
+          "distance_minutes_drive": 5,
+          "description": "Major regional mall — Waitrose supermarket, Reel Cinema, 650+ outlets, family entertainment, 2M sqft retail"
+        },
+        {
+          "name": "Spinneys",
+          "distance_minutes_drive": 10,
+          "description": "Supermarket"
+        },
+        {
+          "name": "Carrefour",
+          "distance_minutes_drive": 10,
+          "description": "Supermarket"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "All Golf Grove villas are well above the AED 2M Golden Visa threshold at current market prices of AED 7M–13M",
+      "projected_roi_percent": "4.5 to 5.5",
+      "roi_basis": "Based on AED 335,000–495,000 annual rental income on AED 7M–8.8M purchase price for 3BR villas",
+      "current_resale_price_range_aed": {
+        "3_bedroom": "7,000,000 – 8,800,000",
+        "4_bedroom": "10,500,000 – 13,000,000",
+        "premium_upgraded": "Up to 12,650,000+ for 3BR with pool and designer upgrades"
+      },
+      "price_per_sqft_aed": {
+        "active_listings": "2,230 – 3,700",
+        "recent_dld_sales": "1,011 – 2,511",
+        "note": "Wide range reflects golf-facing premium, plot size, and upgrade level"
+      },
+      "rental_range_aed_per_year": {
+        "3_bedroom": "335,000 – 495,000",
+        "4_bedroom": "Up to 700,000"
+      },
+      "service_charge_aed_per_sqft": 7.55,
+      "original_launch_price_aed": "3,030,000 – 3,120,888",
+      "capital_appreciation_note": "Approximately 130–180% appreciation since 2019 launch for 3BR units",
+      "status": "Completed — Ready to move in (October 2022)",
+      "active_sale_listings": 26,
+      "active_rental_listings": 61,
+      "branded_premium_note": "Golf Grove commands a premium within Dubai Hills Estate due to direct golf-course-facing plots. Golf-facing villas carry a significant price premium over comparable stock elsewhere in the estate."
+    },
+    "sales_talking_points": {
+      "scarcity_argument": "Golf Grove is a boutique gated enclave within Dubai Hills Estate where homes back directly onto the 18-hole championship golf course. No new supply is being added to this sub-community. With only 26 active sale listings against 61 rental listings, demand consistently outpaces supply — making every resale a genuine scarcity opportunity.",
+      "lifestyle_pitch": "Golf Grove offers direct access to the Troon Golf-operated 18-hole par-72 championship course, a private rooftop terrace on every villa, and five minutes to Dubai Hills Mall. Three architecturally distinct villa styles — Eames, Savoye, and Aalto — each with private garden, maid's room, and covered parking. Six schools within 4.5km including two Outstanding-rated institutions. King's College Hospital 10 minutes away. Downtown Dubai 15 minutes.",
+      "investment_pitch": "Golf Grove 3BR villas launched at AED 3.03M–3.12M in 2019 and now trade at AED 7M–8.8M — approximately 130–180% capital appreciation in under 5 years. Current gross rental yields of 4.5–5.5% with 3BR villas renting at AED 335,000–495,000/year. All units qualify for UAE Golden Visa. Service charges of AED 7.55/sqft. Zero construction risk — completed October 2022 by Emaar."
+    },
+    "developer_track_record": "Emaar Properties PJSC is the developer of the Burj Khalifa (world's tallest building), Dubai Mall (world's most visited destination in 2023 and 2024), and the Dubai Fountain. Founded in 1997, Emaar has delivered over 120,000 units globally and holds investment-grade credit ratings of BBB+ (S&P), Baa2 (Moody's), and BBB (Fitch) — all with stable outlook. In Q1 2025, Emaar reported revenues of AED 10.1 billion (+50% year-on-year) and a revenue backlog of approximately AED 127 billion. Dubai Hills Estate, where Golf Grove is located, is one of Emaar's flagship master-planned communities and a benchmark for premium family living in Dubai."
+  },
+  "developer_keywords": [
+    "emaar"
+  ],
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2026-06-27T12:00:00Z",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dubai-dubai-hills-estate-golf-grove-99978377.html",
+      "https://drehomes.ae/emaar-golf-grove/floor-plan.php",
+      "https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dubai-dubai-hills-estate-golf-grove-104695005.html",
+      "https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dubai-dubai-hills-estate-golf-grove-80282733.html",
+      "https://westgatedubai.com/new-off%E2%80%91plan-projects-in-dubai-2025-prices-payment-plans",
+      "https://www.goldpillars.ae/project/golf-grove-villas-floor-plan",
+      "https://housing-is-01.s3.amazonaws.com/6a32315a/f543156a792798685f9a55c1830a7329/original.pdf",
+      "https://opr.ae/projects/emaar-golf-grove-villas-dubai-hills-estate",
+      "https://www.youtube.com/watch?v=G1WWDaoUK_s",
+      "https://floridaproperties.floridarealtors.org/search",
+      "http://dubai-hills-estate.ae/golf-grove.php",
+      "https://propsearch.ae/dubai/golf-grove/schools",
+      "https://www.bayut.com/for-sale/3-bedroom-villas/dubai/dubai-hills-estate/golf-grove",
+      "https://www.propjunction.ae/projects/golf-grove-villas-brochure-download",
+      "https://thedatabaseleads.com/shop/golf-grove-villas-property-owners-database-online-2",
+      "https://www.instagram.com/reel/DZQLMwsq5kF",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-dubai-hills-estate-golf-grove.html",
+      "https://www.fazwaz.ae/projects/united-arab-emirates/dubai/dubai-hills-estate/dubai-hills/golf-grove",
+      "https://regent-developments.com/wp-content/uploads/2025/05/Golf-Grove-by-Regent_Floor-Plans-Document.pdf",
+      "https://www.reddit.com/r/dubairealestate/comments/1l8mngh/looking_for_capital_appreciation_and_rental_yield",
+      "https://www.bayut.com/for-sale/property/dubai/dubai-production-city-impz/golf-grove-by-regent",
+      "https://www.bayut.com/property/details-15435973.html",
+      "https://www.bayut.com/for-sale/3-bedroom-apartments/dubai/dubai-hills-estate/golf-grove",
+      "https://www.youtube.com/watch?v=ueU7E7KFZSk",
+      "https://off-planproperties.ae/projects/grove-ridge-emaar-south",
+      "https://www.zeuscapital.ae/projects/united-arab-emirates/dubai/dubai-hills-estate/dubai-hills/golf-grove",
+      "https://www.instagram.com/reel/DGvRk-4p-S-",
+      "https://homist.ae/top-5-off-plan-projects-in-dubai-for-2025",
+      "https://www.villasdubaihills.com/subcommunities/golf-grove",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-dubai-hills-estate-golf-grove.html?page=2",
+      "https://timehomesrealestate.com/projects/golf-grove-at-dubai-hills-estate-payment-plan",
+      "https://luxurymrhaus.ae/communities/dubai-hills-golf-grove",
+      "https://inchbrick.com/properties/dubai-hills-estate-golf-grove-2",
+      "https://www.instagram.com/reel/BtdaBsmHAvD",
+      "https://www.indyhomes.com/center-grove/golf-course",
+      "https://theinfinixrealestate.com/properties/golf-grove-villas-amenities",
+      "https://www.engelvoelkers.com/ae/en/resources/rental-yield-dubai",
+      "https://www.bayut.com/for-sale/property/dubai/dubai-hills-estate/golf-grove",
+      "https://www.youtube.com/watch?v=v0W3VA2xg8A",
+      "https://properties.emaar.com/wp-content/uploads/2025/05/Emaar-Properties-Q1-2025-Investor-presentation.pdf",
+      "https://investindxb.com/property/golf-grove-at-dubai-hills-by-emaar",
+      "https://www.tanamiproperties.com/Projects/Golf-Grove-FloorPlans",
+      "https://www.bayut.com/for-sale/villas/dubai/dubai-hills-estate/golf-grove",
+      "https://highlandcreekgolfclub.com/course-news",
+      "https://metropolitan.realestate/dubai-hills-estate/golf-grove",
+      "https://www.bayut.com/area-guides/golf-grove",
+      "https://www.propertyfinder.ae/en/rent/dubai/properties-for-rent-dubai-hills-estate-golf-grove.html?page=3",
+      "https://regent-developments.com/wp-content/uploads/2025/05/Golf-Grove-by-Regent_Fact-Sheet.pdf",
+      "https://www.facebook.com/skyavenue.me/posts/two-of-emaar-souths-most-exciting-launches-one-decision-%EF%B8%8Fvista-ridge-resort-styl/2010668206344626",
+      "https://range.ae/projects/emaar-golf-grove",
+      "https://propsearch.ae/dubai/golf-grove",
+      "https://grandreverealty.com/projects/golf-grove-by-regent-floor-plan-download",
+      "https://www.propertyfinder.ae/en/plp/buy/villa-for-sale-dubai-dubai-hills-estate-golf-grove-106837739.html",
+      "https://www.gaiarealty.ae/blog/best-emaar-projects-for-high-rental-yield-in-2025",
+      "https://www.bayut.com/to-rent/villas/dubai/dubai-hills-estate/golf-grove",
+      "https://www.bayut.com/for-sale/apartments/dubai/dubai-hills-estate/golf-grove",
+      "https://timehomesrealestate.com/projects/golf-grove-villas-brochure-download",
+      "https://www.utahpropertyfinder.com"
+    ],
+    "audit_flags": [
+      "Total unit count for Golf Grove by Emaar not confirmed — Zeus Capital states 30 units but this requires verification against DLD records; 26 active sale listings alone makes 30 seem plausible but tight",
+      "Completion date conflict: Source 2 states July 2021, Source 10 states Q1 2022, Source 4 (Propsearch/DLD) states October 2022 — October 2022 used as primary but should be verified against DLD certificate of completion",
+      "ROI figure of 4.5–5.5% is researcher-calculated from transaction data, not sourced from an authoritative market report — should be verified against a formal market analysis",
+      "Drive times are sourced from broker marketing materials and community guides — should be verified against Google Maps under normal traffic conditions",
+      "Golf Grove by Regent Developments (IMPZ) included as sub_development for alias matching — this is a completely different developer and location; ensure AI advisor clearly differentiates these two projects when responding to buyer queries",
+      "No confirmed HOA or community management company name for Golf Grove by Emaar",
+      "Original payment plan milestones from Source 2 are historical (2019 launch) and no longer relevant for resale — included in master_development for context only"
+    ]
+  }
+}

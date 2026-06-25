@@ -1,0 +1,294 @@
+{
+  "task": "T9 add focused API and inventory UI tests",
+  "plan": ".omo/plans/dalya-listings-workspace-rebrand.md",
+  "status": "remediated_after_t9_gate_rejection",
+  "prior_rejection": {
+    "source": "T9 initial DoneClaim gate rejection",
+    "blockers": [
+      "Backend inventory test covered same-brokerage assignment scoping but not true cross-brokerage or multi-brokerage context scoping for /api/v1/listings/mine.",
+      "Frontend verifier duplicated AgentListingsIndex search/filter/sort helper logic locally instead of exercising production helper behavior."
+    ],
+    "resolution": [
+      "Added multi-brokerage inventory fixture where the same active user owns assigned listings in brokerage A and brokerage B; no X-Brokerage-Id now asserts fail-closed 409, and explicit brokerage B asserts only brokerage B rows are returned.",
+      "Replaced verifier-local applyInventoryView/matchesSearch/matchesStatus/matchesAttention/compareListings/dateValue copies with a runtime extraction of the InventoryView helper block from frontend/src/components/listings/AgentListingsIndex.tsx, exporting and importing the generated applyInventoryView module for behavior cases."
+    ]
+  },
+  "changed_files": [
+    "tests/test_listing_inventory_api.py",
+    "frontend/scripts/verify-listings-workspace.mjs",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+    ".omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md"
+  ],
+  "scope_control": {
+    "dirty_worktree": "active",
+    "pre_edit_status_summary": "Worktree was already dirty with unrelated modified product files and untracked listing workspace files. tests/test_listing_inventory_api.py, frontend/scripts/verify-listings-workspace.mjs, and this evidence directory were untracked before this corrective task.",
+    "owned_paths_only": true,
+    "product_ui_or_api_implementation_edits": false,
+    "git_staged": false,
+    "plan_checkbox_edited": false
+  },
+  "final_t9_cleanup": {
+    "purpose": "Reduce tests/test_listing_inventory_api.py below the 250 pure-LOC ceiling while preserving the corrected T9 backend and frontend verification coverage.",
+    "changed_files_for_cleanup": [
+      "tests/test_listing_inventory_api.py",
+      ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    ],
+    "test_file_refactor": "Collapsed repeated brokerage, member, profile, listing teardown, and response-id helpers inside tests/test_listing_inventory_api.py. The six behavior-focused tests and their assertions remain in the same file.",
+    "pure_loc_measurements": [
+      {
+        "path": "tests/test_listing_inventory_api.py",
+        "invocation": "awk '!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/' tests/test_listing_inventory_api.py | wc -l",
+        "result": "221",
+        "status": "pass"
+      },
+      {
+        "path": "frontend/scripts/verify-listings-workspace.mjs",
+        "invocation": "awk '!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/' frontend/scripts/verify-listings-workspace.mjs | wc -l",
+        "result": "222",
+        "status": "pass"
+      }
+    ]
+  },
+  "gate_rejection_remediation": {
+    "blockers": [
+      "Missing backend coverage for primary_next_action == set_logistics when knowledge is ready but logistics is missing.",
+      "Missing T9 code-quality/slop artifact covering overfit, tautological tests, implementation-mirroring, unnecessary production extraction, scope drift, and secret handling."
+    ],
+    "resolution": [
+      "Added test_my_listings_routes_ready_knowledge_missing_logistics_to_set_logistics with a ready knowledge summary, empty missing_information, no logistics row, lean row assertion, and primary_next_action set_logistics.",
+      "Added .omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md with the requested slop/code-quality review topics and bounded-risk assessment."
+    ],
+    "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md"
+  },
+  "acceptance_checklist": [
+    {
+      "criterion": "backend normal row shape and attention fields",
+      "scenario": "Assigned agent requests /api/v1/listings/mine for seeded ready listing with buyer conversation, offer, viewing, missing knowledge, and absent logistics.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_flags_missing_knowledge_and_logistics_for_attention passed; row key set equals LEAN_LISTING_KEYS and asserts title, live status, asking price, assigned agent, knowledge/logistics attention, missing_fact_count 1, buyer/open-offer/viewing counts.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "backend last_activity_at reflects latest seeded activity",
+      "scenario": "Same seeded listing has conversation updated at now-1h, knowledge at now-30m, offer at now-20m, viewing updated at now-5m, and listing creation at now-2d.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_flags_missing_knowledge_and_logistics_for_attention passed with exact assertion listing.last_activity_at == expected now-5m viewing timestamp.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "backend ready knowledge with missing logistics routes to set logistics",
+      "scenario": "Assigned ready-property listing has DBListingKnowledgeSummary status ready, empty missing_information, and no logistics row.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_routes_ready_knowledge_missing_logistics_to_set_logistics passed; row key set equals LEAN_LISTING_KEYS, knowledge_status ready, missing_fact_count 0, logistics_status needs_attention, and primary_next_action set_logistics.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "backend same-brokerage assignment scoping",
+      "scenario": "Non-managing assigned agent requests inventory in a brokerage that also has another agent's listing.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_keeps_non_manager_scoped_to_own_or_assigned_listings passed; assigned listing id is present and hidden same-brokerage listing id is absent.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "backend empty brokerage state",
+      "scenario": "Active member in brokerage with no listings requests /api/v1/listings/mine.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_returns_empty_counts_for_empty_brokerage passed; response is empty listings with total_listings, total_conversations, and total_escalated all zero.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "backend multi-brokerage no-header fail-closed behavior",
+      "scenario": "Same user has active memberships and assigned listings in brokerage A and brokerage B, then requests /api/v1/listings/mine without X-Brokerage-Id.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_multi_brokerage_user_without_header_fails_closed passed; HTTP 409 with detail.code brokerage_context_required.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "backend explicit brokerage context prevents cross-brokerage leaks",
+      "scenario": "Same multi-membership user selects brokerage B via X-Brokerage-Id while also having an assigned brokerage A listing.",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "binary_observable": "test_my_listings_respects_explicit_brokerage_context_for_multi_membership_user passed; returned listing_ids exactly equal the brokerage B listing id, so removing DBListing.brokerage_id == member.brokerage_id would leak the brokerage A listing and fail.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "frontend inventory behavior uses production helper logic",
+      "scenario": "Verifier reads AgentListingsIndex.tsx, extracts source from interface InventoryView through before function Metric, exports applyInventoryView in a temp module, fixes Date.now for recent-filter determinism, and imports that module for search/filter/sort cases.",
+      "invocation": "cd frontend && node scripts/verify-listings-workspace.mjs",
+      "binary_observable": "Verifier passed 25 checks; search/status/attention/recent/sort cases call imported applyInventoryView from the extracted production helper block, not local duplicate helper implementations.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "frontend action mapping and canonical href guard remain covered",
+      "scenario": "Verifier transpiles current listingIndexActions.ts and scans listing workspace source roots for legacy /dashboard/listings hrefs.",
+      "invocation": "cd frontend && node scripts/verify-listings-workspace.mjs",
+      "binary_observable": "8 supported action href cases passed; unsupported action open_legacy_dashboard failed loudly; injected /dashboard/listings probe failed the scanner; 29 source files scanned with symlinks skipped.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "frontend typecheck",
+      "scenario": "Next.js frontend type checking after verifier changes.",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "binary_observable": "Exit code 0 with no output.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    },
+    {
+      "criterion": "T9 code-quality and slop review artifact",
+      "scenario": "Review artifact covers overfit, tautological tests, implementation-mirroring, extraction, scope drift, and secret handling.",
+      "invocation": "test -f .omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md && rg -n \"overfit|tautological|implementation-mirroring|extraction|scope drift|secret\" .omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md",
+      "binary_observable": "Artifact exists and the required rg command exits 0 with matches.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md",
+      "status": "pass"
+    },
+    {
+      "criterion": "whitespace gates for tracked and untracked owned paths",
+      "scenario": "Required diff whitespace check plus explicit no-index probes for untracked owned files.",
+      "invocation": "git diff --check tests/test_listing_inventory_api.py frontend/scripts .omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json; git diff --no-index --check /dev/null <owned path>",
+      "binary_observable": "Required git diff --check exited 0 with no output. Each no-index probe exited 1 because /dev/null differs from the file, with empty stdout/stderr, meaning no whitespace diagnostics were emitted.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "status": "pass"
+    }
+  ],
+  "commands": [
+    {
+      "scenario": "focused backend API tests with dotenv-loaded .env.test",
+      "invocation": ".venv-pilot/bin/dotenv -f .env.test run -- env PYTHONPATH=. .venv-pilot/bin/python -m pytest tests/test_listing_inventory_api.py -q",
+      "exit_code": 0,
+      "result": "6 passed, 56 warnings in 50.75s",
+      "binary_observable": "pytest process exit 0; six tests include normal row, set_logistics next-action branch, assignment scope, empty brokerage, multi-brokerage no-header fail-closed, and explicit brokerage B no-leak scenarios.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "frontend inventory verifier using extracted production helper",
+      "invocation": "cd frontend && node scripts/verify-listings-workspace.mjs",
+      "exit_code": 0,
+      "result": "25 checks passed; 8 action href cases covered; 29 source files scanned; unsupported action and injected legacy href probes failed as expected.",
+      "binary_observable": "JSON output scenario Task 9 listings workspace inventory verifier with checks array all passed and binaryObservable.actionCases 8.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "frontend typecheck",
+      "invocation": "cd frontend && npx --no-install tsc --noEmit",
+      "exit_code": 0,
+      "result": "passed with no output",
+      "binary_observable": "tsc process exit 0 and empty stdout/stderr.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "required whitespace diff check",
+      "invocation": "git diff --check tests/test_listing_inventory_api.py frontend/scripts .omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "exit_code": 0,
+      "result": "passed with no output",
+      "binary_observable": "git diff --check process exit 0 and empty stdout/stderr.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "untracked no-index whitespace check for backend test",
+      "invocation": "git diff --no-index --check /dev/null tests/test_listing_inventory_api.py",
+      "exit_code": 1,
+      "result": "no whitespace diagnostics; exit 1 is expected for normal no-index file differences against /dev/null",
+      "binary_observable": "empty stdout/stderr.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "untracked no-index whitespace check for frontend verifier",
+      "invocation": "git diff --no-index --check /dev/null frontend/scripts/verify-listings-workspace.mjs",
+      "exit_code": 1,
+      "result": "no whitespace diagnostics; exit 1 is expected for normal no-index file differences against /dev/null",
+      "binary_observable": "empty stdout/stderr.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "untracked no-index whitespace check for evidence JSON",
+      "invocation": "git diff --no-index --check /dev/null .omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "exit_code": 1,
+      "result": "no whitespace diagnostics; exit 1 is expected for normal no-index file differences against /dev/null",
+      "binary_observable": "empty stdout/stderr.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "post-edit pure LOC measurement",
+      "invocation": "awk '!/^[[:space:]]*$/ && !/^[[:space:]]*(\\/\\/|#|--)/' <file> | wc -l",
+      "exit_code": 0,
+      "result": "tests/test_listing_inventory_api.py: 221 pure LOC; frontend/scripts/verify-listings-workspace.mjs: 222 pure LOC",
+      "binary_observable": "wc outputs 221 and 222 respectively.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "evidence JSON parse",
+      "invocation": "python3 -m json.tool .omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json",
+      "exit_code": 0,
+      "result": "valid JSON printed to stdout",
+      "binary_observable": "python json.tool process exit 0.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-tests.json"
+    },
+    {
+      "scenario": "T9 code-quality/slop artifact check",
+      "invocation": "test -f .omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md && rg -n \"overfit|tautological|implementation-mirroring|extraction|scope drift|secret\" .omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md",
+      "exit_code": 0,
+      "result": "required artifact exists and rg found the requested review topics",
+      "binary_observable": "test plus rg process exit 0 with matches.",
+      "artifact": ".omo/evidence/dalya-listings-workspace-rebrand/task-9-code-quality-review.md"
+    }
+  ],
+  "adversarial_notes": {
+    "dirty_worktree": {
+      "status": "active",
+      "probe": "git status --short was captured before edits; unrelated dirty files were left untouched. Final scope inspection is limited to changed files in this evidence record.",
+      "result": "pass"
+    },
+    "cross_brokerage_leak": {
+      "status": "active",
+      "probe": "Same user has assigned listings in two brokerages; selected brokerage B response must equal only the brokerage B listing id.",
+      "result": "pass"
+    },
+    "ambiguous_brokerage_context": {
+      "status": "active",
+      "probe": "Same multi-membership user requests /api/v1/listings/mine without X-Brokerage-Id.",
+      "result": "pass: HTTP 409 brokerage_context_required"
+    },
+    "duplicated_frontend_logic": {
+      "status": "active",
+      "probe": "Verifier no longer defines local applyInventoryView, matchesSearch, matchesStatus, matchesAttention, compareListings, or dateValue implementations.",
+      "result": "pass"
+    },
+    "temp_cleanup": {
+      "status": "active",
+      "probe": "Verifier uses finally blocks for action module temp dir, extracted inventory helper temp dir, probe temp dir, and Date.now restoration.",
+      "result": "pass"
+    },
+    "symlink_loop_scan": {
+      "status": "active",
+      "probe": "Recursive scanner uses lstatSync and skips symbolic links before descending directories.",
+      "result": "pass"
+    },
+    "flaky_tests": {
+      "status": "active",
+      "probe": "Backend fixtures use uuid-scoped IDs and teardown; frontend verifier pins Date.now for recent activity checks.",
+      "result": "pass"
+    },
+    "prompt_injection": {
+      "status": "not_applicable",
+      "reason": "No LLM or untrusted natural-language prompt path was added."
+    }
+  },
+  "known_limitations": [
+    "The frontend verifier is a static/transpiled harness rather than browser visual QA; T9 requested focused helper/action/link verification, not visual behavior.",
+    "No product UI/API implementation was changed, so this task verifies current behavior rather than fixing product route logic."
+  ],
+  "cleanup": {
+    "repo_temp_files": "none",
+    "runtime_temp_files": "frontend verifier creates temporary compiled action, extracted inventory helper, and legacy href probe directories under the OS temp directory and removes them in finally blocks",
+    "servers_started": "none",
+    "git_staged": false
+  }
+}

@@ -1,0 +1,434 @@
+{
+  "surfaceEvidence": [
+    {
+      "scenarioId": "final-index-1280",
+      "criterionRef": "T12 browser QA /listings",
+      "surface": "Browser UI http://127.0.0.1:52310/listings",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings\") viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-index-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-overview-1280",
+      "criterionRef": "T12 browser QA /listings/[id] overview",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001\") viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-overview-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-documents-1280",
+      "criterionRef": "T12 browser QA /listings/[id] documents",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents\") viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-documents-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-knowledge-1280",
+      "criterionRef": "T12 browser QA /listings/[id] knowledge",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge\") viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-logistics-1280",
+      "criterionRef": "T12 browser QA /listings/[id] logistics",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics\") viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-offers-1280",
+      "criterionRef": "T12 browser QA /listings/[id] offers",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers\") viewport 1280x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-offers-1280",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-index-768",
+      "criterionRef": "T12 browser QA /listings",
+      "surface": "Browser UI http://127.0.0.1:52310/listings",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings\") viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-index-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-overview-768",
+      "criterionRef": "T12 browser QA /listings/[id] overview",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001\") viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-overview-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-documents-768",
+      "criterionRef": "T12 browser QA /listings/[id] documents",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents\") viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-documents-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-knowledge-768",
+      "criterionRef": "T12 browser QA /listings/[id] knowledge",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge\") viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-logistics-768",
+      "criterionRef": "T12 browser QA /listings/[id] logistics",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics\") viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-offers-768",
+      "criterionRef": "T12 browser QA /listings/[id] offers",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers\") viewport 768x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-offers-768",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-index-375",
+      "criterionRef": "T12 browser QA /listings",
+      "surface": "Browser UI http://127.0.0.1:52310/listings",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings\") viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-index-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-overview-375",
+      "criterionRef": "T12 browser QA /listings/[id] overview",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001\") viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-overview-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-documents-375",
+      "criterionRef": "T12 browser QA /listings/[id] documents",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/documents\") viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-documents-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-knowledge-375",
+      "criterionRef": "T12 browser QA /listings/[id] knowledge",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/knowledge\") viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-knowledge-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-logistics-375",
+      "criterionRef": "T12 browser QA /listings/[id] logistics",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/logistics\") viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-logistics-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-offers-375",
+      "criterionRef": "T12 browser QA /listings/[id] offers",
+      "surface": "Browser UI http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/listings/FINAL-QA-LISTING-001/offers\") viewport 375x920",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "screenshot-offers-375",
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-legacy--dashboard-listings-FINAL-QA-LISTING-001",
+      "criterionRef": "T12 legacy route no old dashboard bounce",
+      "surface": "Browser UI http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001\")",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-legacy--dashboard-listings-FINAL-QA-LISTING-001-knowledge",
+      "criterionRef": "T12 legacy route no old dashboard bounce",
+      "surface": "Browser UI http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/knowledge",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/knowledge\")",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-legacy--dashboard-listings-FINAL-QA-LISTING-001-logistics",
+      "criterionRef": "T12 legacy route no old dashboard bounce",
+      "surface": "Browser UI http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/logistics",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/logistics\")",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-legacy--dashboard-listings-FINAL-QA-LISTING-001-offers",
+      "criterionRef": "T12 legacy route no old dashboard bounce",
+      "surface": "Browser UI http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/offers",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/offers\")",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-legacy--dashboard-listings-FINAL-QA-LISTING-001-spa",
+      "criterionRef": "T12 legacy route no old dashboard bounce",
+      "surface": "Browser UI http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/spa",
+      "exactInvocation": "Playwright page.goto(\"http://127.0.0.1:52310/dashboard/listings/FINAL-QA-LISTING-001/spa\")",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    }
+  ],
+  "adversarialCases": [
+    {
+      "scenarioId": "final-stale-state",
+      "criterionRef": "T12 adversarial",
+      "adversarialClass": "stale_state",
+      "expectedBehavior": "Fresh server, API stubs, auth cookie, and direct route loads render current workspace state.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-dirty-worktree",
+      "criterionRef": "T12 adversarial",
+      "adversarialClass": "dirty_worktree",
+      "expectedBehavior": "QA runs against current dirty tree with a T12 boundary receipt and without reverting or broad product edits.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript",
+        "cleanup-receipt",
+        "t12-dirty-worktree-receipt"
+      ]
+    },
+    {
+      "scenarioId": "final-misleading-success-output",
+      "criterionRef": "T12 adversarial",
+      "adversarialClass": "misleading_success_output",
+      "expectedBehavior": "Browser PASS requires screenshot files plus DOM route/link/overflow checks, not just HTTP 200.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    },
+    {
+      "scenarioId": "final-hung-or-long-commands",
+      "criterionRef": "T12 adversarial",
+      "adversarialClass": "hung_or_long_commands",
+      "expectedBehavior": "The QA-owned server is stopped, the safe temp workdir is removed, and the QA port is closed after cleanup.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "cleanup-receipt"
+      ]
+    },
+    {
+      "scenarioId": "final-flaky-tests",
+      "criterionRef": "T12 adversarial",
+      "adversarialClass": "flaky_tests",
+      "expectedBehavior": "Focused browser harness uses deterministic fixtures and records exact routes/screenshots.",
+      "verdict": "PASS",
+      "artifactRefs": [
+        "browser-transcript"
+      ]
+    }
+  ],
+  "artifactRefs": [
+    {
+      "id": "screenshot-index-1280",
+      "kind": "browser-screenshot",
+      "description": "/listings at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-1280.png"
+    },
+    {
+      "id": "screenshot-overview-1280",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001 at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-1280.png"
+    },
+    {
+      "id": "screenshot-documents-1280",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/documents at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-1280.png"
+    },
+    {
+      "id": "screenshot-knowledge-1280",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/knowledge at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-1280.png"
+    },
+    {
+      "id": "screenshot-logistics-1280",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/logistics at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-1280.png"
+    },
+    {
+      "id": "screenshot-offers-1280",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/offers at 1280px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-1280.png"
+    },
+    {
+      "id": "screenshot-index-768",
+      "kind": "browser-screenshot",
+      "description": "/listings at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-768.png"
+    },
+    {
+      "id": "screenshot-overview-768",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001 at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-768.png"
+    },
+    {
+      "id": "screenshot-documents-768",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/documents at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-768.png"
+    },
+    {
+      "id": "screenshot-knowledge-768",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/knowledge at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-768.png"
+    },
+    {
+      "id": "screenshot-logistics-768",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/logistics at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-768.png"
+    },
+    {
+      "id": "screenshot-offers-768",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/offers at 768px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-768.png"
+    },
+    {
+      "id": "screenshot-index-375",
+      "kind": "browser-screenshot",
+      "description": "/listings at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/index-375.png"
+    },
+    {
+      "id": "screenshot-overview-375",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001 at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/overview-375.png"
+    },
+    {
+      "id": "screenshot-documents-375",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/documents at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/documents-375.png"
+    },
+    {
+      "id": "screenshot-knowledge-375",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/knowledge at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/knowledge-375.png"
+    },
+    {
+      "id": "screenshot-logistics-375",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/logistics at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/logistics-375.png"
+    },
+    {
+      "id": "screenshot-offers-375",
+      "kind": "browser-screenshot",
+      "description": "/listings/FINAL-QA-LISTING-001/offers at 375px",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/offers-375.png"
+    },
+    {
+      "id": "browser-transcript",
+      "kind": "browser-transcript",
+      "description": "Playwright navigation, redirect, DOM, overflow, and link checks",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/browser-transcript.json"
+    },
+    {
+      "id": "cleanup-receipt",
+      "kind": "text",
+      "description": "QA server cleanup and port 3000 disposition",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/cleanup-receipt.txt"
+    },
+    {
+      "id": "t12-dirty-worktree-receipt",
+      "kind": "text",
+      "description": "T12 dirty-worktree boundary receipt",
+      "path": "/Users/eric/dalya-ai/.omo/evidence/dalya-listings-workspace-rebrand/final-qa/t12-dirty-worktree-receipt.txt"
+    }
+  ]
+}

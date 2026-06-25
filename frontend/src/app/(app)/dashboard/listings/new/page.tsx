@@ -1,5 +1,5 @@
-import { NewListingFlow } from '@/components/listings/NewListingFlow'
+import { redirect } from 'next/navigation'
 
-export default function NewListingPage() {
-  return <NewListingFlow />
+export default function LegacyNewListingPage() {
+  redirect('/listings/new')
 }

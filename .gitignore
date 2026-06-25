@@ -53,3 +53,6 @@ supabase/.temp/
 /dalya-strategic-brief.docx
 /dalya-reviewers.zip
 .env.dal170d_rehearsal
+
+# pilot virtualenv (do not commit)
+.venv-pilot/

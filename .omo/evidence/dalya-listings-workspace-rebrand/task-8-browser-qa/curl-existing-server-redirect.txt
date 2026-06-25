@@ -1,0 +1,8 @@
+HTTP/1.1 307 Temporary Redirect
+location: /login?redirect=%2Flistings%2FT8-QA-SEA-HAVEN%2Fknowledge
+Date: Wed, 24 Jun 2026 19:08:51 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+/login?redirect=%2Flistings%2FT8-QA-SEA-HAVEN%2Fknowledge

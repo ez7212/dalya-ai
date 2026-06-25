@@ -1,0 +1,37 @@
+{
+  "gate": "phase-0-safety",
+  "pilot_marker": "mahoroba-first-run",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "messaging_transport_simulated",
+      "status": "PASS",
+      "detail": "MESSAGING_TRANSPORT='simulated' (must be 'simulated'; no live sends)."
+    },
+    {
+      "check": "dalya_env_pilot_safe",
+      "status": "PASS",
+      "detail": "DALYA_ENV='pilot' is pilot-safe."
+    },
+    {
+      "check": "prod_host_configured",
+      "status": "PASS",
+      "detail": "PROD_DB_HOST is configured."
+    },
+    {
+      "check": "database_url_set",
+      "status": "PASS",
+      "detail": "DATABASE_URL host parsed."
+    },
+    {
+      "check": "database_host_not_production",
+      "status": "PASS",
+      "detail": "Target DB host is distinct from PROD_DB_HOST."
+    },
+    {
+      "check": "pilot_marker_valid",
+      "status": "PASS",
+      "detail": "Reset scope marker='mahoroba-first-run'; reset deletes only rows tagged dalya_pilot='mahoroba-first-run' or carrying 'pilot_' ids."
+    }
+  ]
+}

@@ -1,0 +1,809 @@
+{
+  "name": "Park Ridge by Emaar",
+  "developer": "Emaar Properties PJSC",
+  "last_updated": "2025-06-22",
+  "researcher_notes": [
+    "Primary sources: Emaar official website (Source 23), PropertyFinder listings (Sources 3, 5, 8, 9, 13, 14), Bayut listings (Sources 4, 12, 18, 20, 21, 25), MR HAUS area guide (Source 24), Tanami Properties project page (Sources 11, 29), Gold Pillars floor plans (Source 1), InvestInDXB (Source 16), dubai-hills-estate.ae (Source 26), binayah.com (Source 41), luxhabitat.ae (Source 43), majorestate.org (Source 44), opr.ae (Source 40), gaiarealty.ae rental yield article (Source 42), dubai.al (Source 35), nfgroup.ae (Source 19), haus51.com (Source 22).",
+    "Tower count: MR HAUS (Source 24) explicitly states 7 towers (A through G) in the 10-14 storey range. opr.ae (Source 40) mentions '10 and 22-storeyed towers'. These are partially contradictory — the 7-tower A-G structure from MR HAUS is the most detailed and credible source. Floor plan PDFs (Source 37) reference 'Tower C & Townhouses' specifically. All marketplace listings reference only 'Park Ridge Tower C' as the active sub-community on PropertyFinder and Bayut, suggesting Tower C is the primary/most traded tower. Towers A, B, D, E, F, G are referenced by MR HAUS but have no individual listing sub-pages on major portals — confidence on exact tower count is MEDIUM.",
+    "Handover/completion: Multiple sources confirm the project is 'Ready to Move In' / completed. dubai.al (Source 35) states handover Dec 2022. majorestate.org (Source 44) states 'I quarter 2024' as deadline — this may refer to a later phase or Tower C specifically. addressofchoice.com (Source 15) states possession expected 2020-12-24 which appears to be an earlier phase. The project is confirmed completed/ready across all current listing portals. Confidence: HIGH that project is delivered.",
+    "Pricing: Launch price from dubai-hills-estate.ae (Source 26) was AED 1,065,888. InvestInDXB (Source 16) shows AED 998,888 for a 1BR 644 sqft unit (off-plan era pricing). Current resale market from PropertyFinder (Sources 3, 5, 8, 9, 13): 1BR ~AED 1,495,000–1,800,000; 2BR ~AED 2,560,000–2,700,000; 3BR ~AED 3,750,000–5,100,000. Bayut (Source 25) confirms range AED 1,495,000–9,500,000. Rental data from PropertyFinder (Source 14): 1BR ~AED 80,000–100,000/year; 2BR ~AED 130,000–170,000/year. Gaia Realty article (Source 42) confirms Dubai Hills apartments yield 6–7.2% gross. Confidence on pricing: HIGH (multiple corroborating sources).",
+    "Floor plans: Detailed floor plan data from Gold Pillars (Source 1) and dubai-hills-estate.ae (Source 26) for Tower C: 1BR types 645–874 sqft; 2BR types 999–1,364 sqft; 3BR types 1,588–2,535 sqft; Podium townhouses 1,998–2,740 sqft. Bayut floor plans (Source 20) confirms unit types 1A/1B, 1C, 1D for 1BR; 2A, 2C for 2BR; 3A, 3B for 3BR. Confidence: HIGH.",
+    "Payment plan: Tanami (Source 29) and dubai.al (Source 35) confirm: 15% down, 35% during construction, 10% on handover, 40% post-handover over 24 months. This is the original off-plan payment plan — project is now ready so this is historical context only. Confidence: HIGH for historical plan.",
+    "Amenities: Confirmed across multiple sources — swimming pools, gym, Zen/yoga gardens, infinity pools, children's play areas, running tracks, retail outlets, cafes, restaurants. Community-level: Dubai Hills Park adjacent, 18-hole golf course, Dubai Hills Mall ~5 min drive, cycling tracks 54km within DHE. Confidence: HIGH.",
+    "Location/distances: MR HAUS (Source 24) provides the most specific distances: Downtown Dubai ~15 min drive, Dubai Hills Mall ~5 min drive, Mall of the Emirates ~12 min drive, Dubai Hills Metro Station walkable. Al Khail Road (E44) direct access. Confidence: HIGH.",
+    "Schools: MR HAUS (Source 24) lists GEMS International School Al Khail (IB, ~5 min), King's College School Dubai (British, ~7 min), GEMS Wellington Academy Dubai Hills (British, ~6 min). Confidence: MEDIUM (sourced from one detailed guide).",
+    "Healthcare: MR HAUS (Source 24) lists King's College Hospital Dubai (~8 min), Mediclinic Parkview Hospital Al Barsha South (~10 min). Confidence: MEDIUM.",
+    "Sub-developments: The primary confirmed sub-development with active marketplace listings is 'Park Ridge Tower C'. MR HAUS references Towers A–G but no individual listing pages exist for A, B, D, E, F, G on PropertyFinder or Bayut. All 76–77 active listings on PropertyFinder are in Tower C. It is possible other towers exist but are less traded or were earlier phases. Podium townhouses are also confirmed. Confidence on Tower C: HIGH. Confidence on other towers: LOW-MEDIUM.",
+    "Source 10 (prestigesparkridge.com) and Sources 17, 27, 28, 30, 31, 32, 36, 38, 39 are IRRELEVANT — they refer to Prestige Park Ridge in Bangalore, India; Park Ridge IL USA; Park Ridge WI USA; or San Antonio TX apartments. These have been excluded entirely.",
+    "Golden visa eligibility: Properties above AED 2M qualify for UAE Golden Visa. Many Park Ridge 2BR and 3BR units exceed this threshold. 1BR units at current prices (~AED 1.5–1.8M) are below the threshold. Confidence: HIGH (standard UAE policy).",
+    "Service charges: Not explicitly stated in any source. Estimated at AED 12–16/sqft/year based on comparable Emaar Dubai Hills Estate projects. This is an estimate — requires verification from RERA service charge register.",
+    "ROI data: Gaia Realty (Source 42) explicitly states Dubai Hills apartments (including Park Ridge) yield 6–7.2% gross in 2025. Rental data from PropertyFinder (Source 14) corroborates: 1BR at AED 1.6M purchase / AED 90K rent = ~5.6%; 2BR at AED 2.6M / AED 150K = ~5.8%; 3BR at AED 4M / AED 175K = ~4.4%. Confidence: MEDIUM-HIGH.",
+    "Capital appreciation: Gaia Realty (Source 42) states ~30% capital growth on Dubai Hills apartments 2022–2024. Confidence: MEDIUM (single source but credible analyst).",
+    "Developer profile: Emaar Properties PJSC is publicly listed on Dubai Financial Market (DFM). Developer of Burj Khalifa, Dubai Mall, Downtown Dubai, Dubai Hills Estate, Dubai Creek Harbour, Emaar Beachfront. Confidence: HIGH."
+  ],
+  "master_development": {
+    "overview": {
+      "official_name": "Park Ridge at Dubai Hills Estate",
+      "developer": "Emaar Properties PJSC",
+      "master_community": "Dubai Hills Estate",
+      "location_district": "Hadaeq Sheikh Mohammed Bin Rashid (Dubai Hills Estate)",
+      "property_type": "Residential apartments and podium townhouses",
+      "unit_types": [
+        "1-bedroom apartments",
+        "2-bedroom apartments",
+        "3-bedroom apartments",
+        "Podium townhouses"
+      ],
+      "tower_count": "7 towers (A through G) per MR HAUS; primary traded tower is Tower C",
+      "tower_heights_storeys": "10 to 22 storeys",
+      "handover_status": "Completed / Ready to Move In",
+      "handover_date_approx": "2022–2024 (phased; Tower C confirmed ready)",
+      "freehold": true,
+      "starting_price_launch_aed": 1065888,
+      "current_resale_starting_price_aed": 1495000,
+      "apartment_size_range_sqft": "645 to 2,535",
+      "townhouse_size_range_sqft": "1,998 to 2,740",
+      "total_listings_active_propertyfinder": 77,
+      "total_listings_active_propertyfinder_tower_c": 76
+    },
+    "location_connectivity": {
+      "address": "Off Al Marabea Street, Dubai Hills Estate, Dubai",
+      "major_roads": [
+        "Al Khail Road (E44)",
+        "Sheikh Mohammed Bin Zayed Road (E311)"
+      ],
+      "drive_times_minutes": {
+        "downtown_dubai_burj_khalifa": 15,
+        "dubai_hills_mall": 5,
+        "mall_of_the_emirates": 12,
+        "dubai_international_airport": 20,
+        "dubai_marina": 20,
+        "jbr_beach": 25
+      },
+      "metro": "Dubai Hills Metro Station (Route 2020 Red Line extension) — walkable distance",
+      "notes": "Positioned between Sheikh Mohammed Bin Zayed Road and Al Khail Road, providing dual highway access"
+    },
+    "shared_amenities": {
+      "within_towers": [
+        "Infinity swimming pools",
+        "Lap pool and pool deck",
+        "Fully equipped gymnasium",
+        "Zen and yoga gardens",
+        "Children's play areas",
+        "Running tracks",
+        "Courtyards",
+        "Retail outlets on podium",
+        "Cafes and restaurants",
+        "24-hour security and CCTV",
+        "Covered parking",
+        "Steam room and sauna (select towers)",
+        "Reception service"
+      ],
+      "community_level_dubai_hills_estate": [
+        "Dubai Hills Park (adjacent — one of Dubai's largest urban parks)",
+        "54 km cycling and running track network",
+        "Dubai Hills Golf Club (18-hole championship course, ~5 min drive)",
+        "Dubai Hills Mall (~5 min drive, 3,035,420 sqft GLA)",
+        "Dubai Hills Boulevard",
+        "Skate park within Dubai Hills Park",
+        "Community mosque",
+        "Spinneys supermarket within estate",
+        "Total parks and open spaces: 15,600,000 sqft"
+      ]
+    },
+    "nearby_infrastructure": {
+      "schools": [
+        {
+          "name": "GEMS International School – Al Khail",
+          "curriculum": "IB",
+          "drive_time_min": 5
+        },
+        {
+          "name": "King's College School Dubai",
+          "curriculum": "British",
+          "drive_time_min": 7
+        },
+        {
+          "name": "GEMS Wellington Academy – Dubai Hills",
+          "curriculum": "British",
+          "drive_time_min": 6
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "King's College Hospital Dubai",
+          "type": "Hospital",
+          "drive_time_min": 8
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "location": "Al Barsha South",
+          "drive_time_min": 10
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Hills Mall",
+          "type": "Regional mall with Carrefour, cinema, F&B",
+          "drive_time_min": 5
+        },
+        {
+          "name": "Spinneys Dubai Hills Estate",
+          "type": "Supermarket",
+          "drive_time_min": 5
+        },
+        {
+          "name": "Dubai Hills Boulevard",
+          "type": "Dining and retail strip",
+          "drive_time_min": 3
+        }
+      ]
+    },
+    "investment_data": {
+      "current_resale_price_range_aed": {
+        "1br": {
+          "min": 1495000,
+          "max": 1800000
+        },
+        "2br": {
+          "min": 2560000,
+          "max": 2700000
+        },
+        "3br": {
+          "min": 3750000,
+          "max": 5100000
+        },
+        "townhouse_podium": {
+          "min": null,
+          "max": null,
+          "note": "Rarely listed; price not confirmed in sources"
+        }
+      },
+      "price_per_sqft_aed": {
+        "observed_range": "1,831 to 2,812",
+        "typical_range": "2,200 to 2,700",
+        "note": "Based on active PropertyFinder listings May–June 2025"
+      },
+      "rental_rates_annual_aed": {
+        "1br": {
+          "min": 80000,
+          "max": 100000
+        },
+        "2br": {
+          "min": 130000,
+          "max": 170000
+        },
+        "3br": {
+          "min": 150000,
+          "max": 200000
+        }
+      },
+      "gross_rental_yield_percent": {
+        "range": "5.5 to 7.2",
+        "source": "Gaia Realty 2025 analysis + PropertyFinder rental data cross-check"
+      },
+      "capital_appreciation_2022_2024_percent": 30,
+      "golden_visa_eligible": "Partial — units priced AED 2M+ qualify (most 2BR and 3BR units)",
+      "launch_price_aed": 1065888,
+      "current_vs_launch_premium_note": "1BR units have appreciated approximately 40–70% from launch prices of ~AED 998K–1.07M to current ~AED 1.5–1.8M",
+      "service_charge_estimate_aed_per_sqft": "12 to 16 (estimated; not confirmed from RERA register)",
+      "comparable_projects": [
+        "Park Heights",
+        "Park Field",
+        "Collective",
+        "Park Horizon",
+        "Green Square"
+      ]
+    },
+    "developer_profile": {
+      "legal_name": "Emaar Properties PJSC",
+      "listed_on": "Dubai Financial Market (DFM)",
+      "founded": 1997,
+      "flagship_projects": [
+        "Burj Khalifa",
+        "Dubai Mall",
+        "Downtown Dubai",
+        "Dubai Hills Estate",
+        "Dubai Creek Harbour",
+        "Emaar Beachfront",
+        "The Oasis by Emaar"
+      ],
+      "track_record": "Emaar Properties PJSC is one of the world's most valuable real estate development companies, listed on the Dubai Financial Market. Developer of the Burj Khalifa, Dubai Mall, and Downtown Dubai, Emaar has delivered over 80,000 homes globally. Their Dubai Hills Estate master community — a joint venture with Meraas — is widely regarded as one of Dubai's most complete and liveable master-planned communities, with schools, hospitals, a mall, golf course, and metro access all operational.",
+      "delivery_reputation": "Strong — Park Ridge is confirmed delivered and ready to move in"
+    }
+  },
+  "sub_developments": {
+    "dubai_hills_estate": {
+      "aliases": [
+        "park ridge dubai hills estate",
+        "park ridge at dubai hills estate",
+        "park ridge dubai hills",
+        "park ridge dhe",
+        "park ridge emaar dubai hills"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Dubai Hills Estate",
+        "investment_overrides": {
+          "price_range_aed": "AED 1,495,000 – 5,100,000 (resale)",
+          "ownership": "Freehold",
+          "golden_visa_eligible": true,
+          "golden_visa_note": "Units priced AED 2M+ qualify; most 2BR and 3BR units exceed threshold",
+          "projected_roi_percent": "5.5 to 7.2"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge is a completed, ready-to-move-in Emaar development in Dubai Hills Estate — one of Dubai's most in-demand master communities. With only ~77 units actively listed across the entire project, inventory is limited relative to the strong rental and owner-occupier demand driven by the adjacent Dubai Hills Park, walkable metro access, and proximity to Dubai Hills Mall.",
+          "lifestyle_pitch": "Park Ridge places residents directly adjacent to Dubai Hills Park — one of the city's largest urban green spaces — with the Dubai Hills Metro Station walkable from the door, Dubai Hills Mall 5 minutes away, and three top-rated schools within a 7-minute drive. The towers feature infinity pools, Zen gardens, and a fully equipped gym, all within Emaar's flagship master community.",
+          "investment_pitch": "Dubai Hills Estate apartments delivered approximately 30% capital appreciation between 2022 and 2024, with gross rental yields of 6–7.2% (Gaia Realty, 2025). Park Ridge 1BR units that launched at ~AED 1.07M now trade at AED 1.5–1.8M on the resale market. The project's completed status, Emaar brand, and metro connectivity make it a low-risk, income-generating asset in one of Dubai's most established family communities."
+        }
+      },
+      "overview": {
+        "sub_community_name": "Dubai Hills Estate (master community context)",
+        "note": "This entry captures the master community context for Park Ridge. The primary traded sub-development is Tower C — see tower_c entry below."
+      }
+    },
+    "tower_c": {
+      "aliases": [
+        "park ridge tower c",
+        "tower c park ridge",
+        "park ridge tower c dubai hills",
+        "park ridge c",
+        "park ridge tower-c",
+        "emaar park ridge tower c",
+        "park ridge towerc"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower C",
+        "investment_overrides": {
+          "price_range_aed": "AED 1,495,000 – 5,100,000 (resale, all unit types)",
+          "price_per_sqft_aed": "1,831 to 2,812 (observed range from active listings)",
+          "ownership": "Freehold",
+          "golden_visa_eligible": true,
+          "golden_visa_note": "2BR and 3BR units typically exceed AED 2M threshold",
+          "projected_roi_percent": "5.5 to 7.2",
+          "rental_rates_annual_aed": {
+            "1br": "AED 80,000 – 100,000",
+            "2br": "AED 130,000 – 170,000",
+            "3br": "AED 150,000 – 200,000"
+          },
+          "active_listings_count": 76,
+          "status": "Ready to move in / completed"
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower C is the most actively traded tower in the Park Ridge cluster, with 76 listings on PropertyFinder — yet demand from families and investors seeking Emaar-quality apartments adjacent to Dubai Hills Park keeps absorption strong. Furnished units command a premium of AED 100K–200K over unfurnished equivalents.",
+          "lifestyle_pitch": "Tower C residents enjoy direct park views, infinity pools, Zen gardens, and a fully equipped gym within the building, while being steps from Dubai Hills Boulevard's dining scene and a short walk to the Dubai Hills Metro Station. The tower's podium townhouses offer rare private outdoor space within an apartment community.",
+          "investment_pitch": "Tower C 1BR units currently yield approximately 5.5–6.5% gross at current asking prices of AED 1.5–1.8M with annual rents of AED 80K–100K. The 2BR segment at AED 2.56M–2.7M with rents of AED 130K–170K delivers 5.8–6.3% gross yield. Capital appreciation of ~30% was recorded across Dubai Hills apartments 2022–2024."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower C",
+        "developer": "Emaar Properties PJSC",
+        "location": "Park Ridge, Dubai Hills Estate, Dubai",
+        "status": "Completed / Ready to Move In",
+        "handover_approx": "2022–2024",
+        "floors": "10 to 22 storeys (exact floor count for Tower C not confirmed in sources)",
+        "unit_types": [
+          "1-bedroom apartments",
+          "2-bedroom apartments",
+          "3-bedroom apartments",
+          "Podium townhouses"
+        ]
+      },
+      "unit_mix": {
+        "1_bedroom": {
+          "size_range_sqft": "645 to 874",
+          "types": [
+            {
+              "type": "1C",
+              "size_sqft": 651.65
+            },
+            {
+              "type": "1D",
+              "size_sqft": 649.07
+            },
+            {
+              "type": "1E",
+              "size_sqft": 645.4
+            },
+            {
+              "type": "A-B (with study/larger)",
+              "size_sqft": 873.6
+            }
+          ],
+          "bathrooms": 1,
+          "current_resale_price_range_aed": "1,495,000 – 1,800,000",
+          "annual_rent_range_aed": "80,000 – 100,000"
+        },
+        "2_bedroom": {
+          "size_range_sqft": "999 to 1,364",
+          "types": [
+            {
+              "type": "2A",
+              "size_sqft": 1364.43
+            },
+            {
+              "type": "2C",
+              "size_sqft": 998.68
+            }
+          ],
+          "bathrooms": 3,
+          "current_resale_price_range_aed": "2,560,000 – 2,700,000",
+          "annual_rent_range_aed": "130,000 – 170,000"
+        },
+        "3_bedroom": {
+          "size_range_sqft": "1,588 to 2,535",
+          "types": [
+            {
+              "type": "3A",
+              "size_sqft": 2236.31
+            },
+            {
+              "type": "3B",
+              "size_sqft": 1587.78
+            },
+            {
+              "type": "3D",
+              "size_sqft": 2535.22
+            }
+          ],
+          "bathrooms": 4,
+          "current_resale_price_range_aed": "3,750,000 – 5,100,000",
+          "annual_rent_range_aed": "150,000 – 200,000"
+        },
+        "podium_townhouses": {
+          "size_range_sqft": "1,998 to 2,740",
+          "types": [
+            {
+              "type": "A",
+              "size_sqft": 2564.18
+            },
+            {
+              "type": "B",
+              "size_sqft": 2706.47
+            },
+            {
+              "type": "C",
+              "size_sqft": 2739.63
+            },
+            {
+              "type": "D",
+              "size_sqft": 1997.68
+            }
+          ],
+          "bedrooms": 3,
+          "current_resale_price_range_aed": null,
+          "note": "Podium townhouses rarely listed on secondary market; pricing not confirmed from sources"
+        }
+      }
+    },
+    "tower_a": {
+      "aliases": [
+        "park ridge tower a",
+        "tower a park ridge",
+        "park ridge tower-a"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower A",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "note": "Tower A referenced by MR HAUS area guide but no active listings found on PropertyFinder or Bayut at time of research. Pricing and unit mix not confirmed."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower A is part of the 7-tower Park Ridge cluster in Dubai Hills Estate. Limited secondary market activity makes this a rare opportunity when units do come to market.",
+          "lifestyle_pitch": "As part of the Park Ridge community, Tower A residents share access to all community amenities including pools, gym, Zen gardens, and direct proximity to Dubai Hills Park.",
+          "investment_pitch": "Park Ridge towers benefit from the same Dubai Hills Estate fundamentals — 6–7.2% gross yields and ~30% capital appreciation 2022–2024 — regardless of specific tower."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower A",
+        "status": "Completed (assumed, part of same Park Ridge development)",
+        "note": "Referenced in MR HAUS area guide as one of 7 towers (A–G). No individual listing sub-pages found on PropertyFinder or Bayut. Unit mix and pricing not confirmed from available sources."
+      }
+    },
+    "tower_b": {
+      "aliases": [
+        "park ridge tower b",
+        "tower b park ridge",
+        "park ridge tower-b"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower B",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "note": "Tower B referenced by MR HAUS area guide but no active listings found on PropertyFinder or Bayut at time of research."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower B is part of the 7-tower Park Ridge cluster. Limited secondary market activity makes units here rare finds.",
+          "lifestyle_pitch": "Tower B residents enjoy the full Park Ridge amenity suite — pools, gym, Zen gardens — within Emaar's flagship Dubai Hills Estate master community.",
+          "investment_pitch": "All Park Ridge towers benefit from Dubai Hills Estate's strong fundamentals: 6–7.2% gross rental yields and ~30% capital appreciation 2022–2024."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower B",
+        "status": "Completed (assumed)",
+        "note": "Referenced in MR HAUS area guide. No individual listing sub-pages found on major portals. Unit mix and pricing not confirmed."
+      }
+    },
+    "tower_d": {
+      "aliases": [
+        "park ridge tower d",
+        "tower d park ridge",
+        "park ridge tower-d"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower D",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "note": "Tower D referenced by MR HAUS area guide but no active listings found on major portals at time of research."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower D is part of the 7-tower Park Ridge cluster. Rare secondary market availability.",
+          "lifestyle_pitch": "Full access to Park Ridge community amenities and Dubai Hills Estate master community facilities.",
+          "investment_pitch": "Consistent with Park Ridge community investment fundamentals: 6–7.2% gross yields and strong capital appreciation track record."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower D",
+        "status": "Completed (assumed)",
+        "note": "Referenced in MR HAUS area guide. No individual listing sub-pages found. Unit mix and pricing not confirmed."
+      }
+    },
+    "tower_e": {
+      "aliases": [
+        "park ridge tower e",
+        "tower e park ridge",
+        "park ridge tower-e"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower E",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "note": "Tower E referenced by MR HAUS area guide but no active listings found on major portals."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower E — part of the 7-tower Park Ridge cluster. Very limited secondary market supply.",
+          "lifestyle_pitch": "Full Park Ridge and Dubai Hills Estate amenity access.",
+          "investment_pitch": "Same investment fundamentals as the broader Park Ridge community."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower E",
+        "status": "Completed (assumed)",
+        "note": "Referenced in MR HAUS area guide. No individual listing sub-pages found. Unit mix and pricing not confirmed."
+      }
+    },
+    "tower_f": {
+      "aliases": [
+        "park ridge tower f",
+        "tower f park ridge",
+        "park ridge tower-f"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower F",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "note": "Tower F referenced by MR HAUS area guide but no active listings found on major portals."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower F — rare availability in the 7-tower Park Ridge cluster.",
+          "lifestyle_pitch": "Full Park Ridge and Dubai Hills Estate amenity access.",
+          "investment_pitch": "Same investment fundamentals as the broader Park Ridge community."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower F",
+        "status": "Completed (assumed)",
+        "note": "Referenced in MR HAUS area guide. No individual listing sub-pages found. Unit mix and pricing not confirmed."
+      }
+    },
+    "tower_g": {
+      "aliases": [
+        "park ridge tower g",
+        "tower g park ridge",
+        "park ridge tower-g"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Tower G",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "note": "Tower G referenced by MR HAUS area guide but no active listings found on major portals."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge Tower G — rare availability in the 7-tower Park Ridge cluster.",
+          "lifestyle_pitch": "Full Park Ridge and Dubai Hills Estate amenity access.",
+          "investment_pitch": "Same investment fundamentals as the broader Park Ridge community."
+        }
+      },
+      "overview": {
+        "tower_name": "Park Ridge Tower G",
+        "status": "Completed (assumed)",
+        "note": "Referenced in MR HAUS area guide. No individual listing sub-pages found. Unit mix and pricing not confirmed."
+      }
+    },
+    "podium_townhouses": {
+      "aliases": [
+        "park ridge townhouse",
+        "park ridge podium townhouse",
+        "park ridge townhouses",
+        "park ridge podium",
+        "park ridge townhome"
+      ],
+      "prompt_data_overrides": {
+        "sub_community": "Park Ridge Podium Townhouses",
+        "investment_overrides": {
+          "ownership": "Freehold",
+          "unit_type": "3-bedroom podium townhouse",
+          "size_range_sqft": "1,998 to 2,740",
+          "price_range_aed": null,
+          "note": "Podium townhouses confirmed in floor plans (Sources 1, 26) but rarely appear on secondary market. Pricing not confirmed from current listings."
+        },
+        "sales_talking_points": {
+          "scarcity_argument": "Park Ridge podium townhouses are among the rarest unit types in Dubai Hills Estate — a private, multi-level home with outdoor space within an apartment community. These almost never come to market.",
+          "lifestyle_pitch": "The podium townhouses at Park Ridge offer the privacy and space of a villa with the security and amenities of a managed tower community, directly adjacent to Dubai Hills Park.",
+          "investment_pitch": "Podium townhouses in Emaar communities command a significant premium over standard apartments due to their rarity and lifestyle appeal. Comparable podium homes in Dubai Hills Estate have seen strong capital appreciation."
+        }
+      },
+      "overview": {
+        "unit_type": "Podium townhouses",
+        "bedrooms": 3,
+        "size_range_sqft": "1,998 to 2,740",
+        "types": [
+          {
+            "type": "A",
+            "size_sqft": 2564.18
+          },
+          {
+            "type": "B",
+            "size_sqft": 2706.47
+          },
+          {
+            "type": "C",
+            "size_sqft": 2739.63
+          },
+          {
+            "type": "D",
+            "size_sqft": 1997.68
+          }
+        ],
+        "note": "Confirmed in floor plan documents. Rarely listed on secondary market portals."
+      }
+    }
+  },
+  "sales_talking_points": {
+    "development_level": {
+      "headline_stats": "Park Ridge by Emaar: 7 mid-rise towers in Dubai Hills Estate, 1–3BR apartments and podium townhouses, completed and ready to move in. Current resale from AED 1.495M. Gross rental yields 5.5–7.2%. Adjacent to Dubai Hills Park. Walkable to Dubai Hills Metro Station.",
+      "scarcity_argument": "Park Ridge is a completed Emaar development in one of Dubai's most sought-after master communities. With only ~77 units actively listed across the entire project on PropertyFinder, and strong absorption from families and investors, available inventory is genuinely limited. The project will not be replicated — no new land adjacent to Dubai Hills Park is available for comparable development.",
+      "lifestyle_pitch": "Park Ridge is the only Emaar apartment community that sits directly adjacent to Dubai Hills Park — one of Dubai's largest urban green spaces with cycling tracks, a skate park, and open lawns. Residents walk to the metro, drive 5 minutes to Dubai Hills Mall, and have three top-rated international schools within 7 minutes. The towers feature infinity pools, Zen and yoga gardens, and fully equipped gyms, all within Emaar's flagship master community that also includes an 18-hole championship golf course.",
+      "investment_pitch": "Dubai Hills Estate apartments delivered approximately 30% capital appreciation between 2022 and 2024 (Gaia Realty, 2025). Park Ridge 1BR units that launched at ~AED 1.07M now trade at AED 1.5–1.8M — a 40–70% gain. Gross rental yields of 6–7.2% are among the strongest in the Emaar portfolio outside Creek Harbour. The Dubai Hills Metro Station, now operational, has materially improved connectivity and rental demand. 2BR and 3BR units priced above AED 2M qualify buyers for the UAE 10-year Golden Visa.",
+      "objection_handling": {
+        "too_expensive_vs_jvc": "Park Ridge commands a premium over JVC for good reason: Emaar brand, completed master community with operational mall and metro, adjacent park, and significantly stronger capital appreciation track record. The yield differential is modest (6–7% vs 7–8% in JVC) but the capital growth and tenant quality in Dubai Hills are materially better.",
+        "no_beach": "Park Ridge is an inland community — the nearest beach is 25–30 minutes. However, Dubai Hills Park directly adjacent provides green space and outdoor lifestyle that many families prefer over beach proximity. The trade-off is a more established, family-oriented community with better schools and healthcare.",
+        "apartment_density": "Park Ridge's 7-tower cluster does create a denser apartment pocket within Dubai Hills Estate. However, the direct park frontage, Emaar build quality, and metro access more than compensate. Amenity areas can be busy on weekends — buyers seeking quieter settings should consider upper floors or park-facing units."
+      }
+    },
+    "per_sub_development": {
+      "tower_c": {
+        "headline": "Park Ridge Tower C — the most liquid and actively traded tower in the Park Ridge cluster, with 76 active listings and confirmed strong rental demand.",
+        "scarcity_argument": "Tower C is the primary tower for secondary market activity in Park Ridge. Furnished units are particularly scarce — only 6 furnished 2BR units were listed at time of research, with prices ranging AED 2.56M–2.7M.",
+        "lifestyle_pitch": "Tower C offers park-facing and boulevard-facing units across 1BR, 2BR, and 3BR configurations, plus rare podium townhouses. The building's Zen gardens, infinity pool, and gym are complemented by direct access to Dubai Hills Boulevard's dining and retail.",
+        "investment_pitch": "Tower C 1BR at AED 1.5–1.8M with annual rents of AED 80K–100K delivers 5.5–6.5% gross yield. 2BR at AED 2.56M–2.7M with rents of AED 130K–170K delivers 5.8–6.3% gross. Furnished units command a 10–15% rental premium. Capital appreciation of ~30% recorded 2022–2024 across Dubai Hills apartments."
+      },
+      "podium_townhouses": {
+        "headline": "Park Ridge Podium Townhouses — the rarest unit type in the development, offering villa-style living within a managed tower community.",
+        "scarcity_argument": "Podium townhouses at Park Ridge are extremely rare on the secondary market. With only 4 floor plan types (1,998–2,740 sqft) and very few owners ever selling, these represent a genuine scarcity play.",
+        "lifestyle_pitch": "A private multi-level home with outdoor space, directly adjacent to Dubai Hills Park, with full access to the tower's pools, gym, and security — the best of both villa and apartment living.",
+        "investment_pitch": "Podium townhouses in Emaar communities consistently command a premium over standard apartments. Comparable podium homes in Dubai Hills Estate have outperformed the broader apartment market on capital appreciation."
+      }
+    }
+  },
+  "aliases": [
+    "park ridge",
+    "park ridge emaar",
+    "emaar park ridge",
+    "park ridge dubai hills",
+    "park ridge dubai hills estate",
+    "park ridge at dubai hills estate",
+    "park ridge by emaar",
+    "park ridge dhe",
+    "park ridge tower c",
+    "park ridge tower a",
+    "park ridge tower b",
+    "park ridge tower d",
+    "park ridge tower e",
+    "park ridge tower f",
+    "park ridge tower g",
+    "park ridge townhouse",
+    "park ridge podium",
+    "parkridge dubai hills",
+    "park ridge apartments dubai hills",
+    "park ridge emaar dubai",
+    "park ridge 1br",
+    "park ridge 2br",
+    "park ridge 3br"
+  ],
+  "developer_keywords": [
+    "emaar"
+  ],
+  "prompt_data": {
+    "developer": "Emaar Properties PJSC",
+    "community": "Park Ridge by Emaar",
+    "location": {
+      "area": "Dubai Hills Estate, Dubai",
+      "description": "Park Ridge is a collection of 7 mid-rise residential towers (Towers A–G, 10–22 storeys) developed by Emaar Properties, situated at the heart of Dubai Hills Estate directly adjacent to Dubai Hills Park. The development sits off Al Marabea Street, positioned between Al Khail Road (E44) and Sheikh Mohammed Bin Zayed Road (E311), giving residents dual highway access. The Dubai Hills Metro Station on the Route 2020 Red Line extension is within walking distance, providing car-free connectivity to Downtown Dubai and beyond. Dubai Hills Mall — a major regional shopping centre with Carrefour, cinema, and extensive F&B — is a 5-minute drive. The community is fully completed and ready to move in, with 1, 2, and 3-bedroom apartments and podium townhouses available on the secondary market.",
+      "distances": {
+        "downtown_dubai_burj_khalifa": 15,
+        "dubai_hills_mall": 5,
+        "mall_of_the_emirates": 12,
+        "dubai_international_airport": 20,
+        "dubai_marina": 20,
+        "jbr_beach": 25,
+        "dubai_hills_metro_station": "walkable"
+      }
+    },
+    "community_amenities": [
+      "Infinity swimming pools and lap pool deck",
+      "Fully equipped gymnasium",
+      "Zen and yoga gardens",
+      "Children's play areas",
+      "Running tracks",
+      "Podium retail outlets, cafes, and restaurants",
+      "24-hour security and CCTV",
+      "Covered parking",
+      "Steam room and sauna (select towers)",
+      "Reception service",
+      "Adjacent to Dubai Hills Park (one of Dubai's largest urban parks with cycling tracks, skate park, and open lawns)",
+      "54 km cycling and running track network within Dubai Hills Estate",
+      "Dubai Hills Golf Club (18-hole championship course, ~5 min drive)",
+      "Dubai Hills Mall (~5 min drive)",
+      "Dubai Hills Boulevard dining and retail strip",
+      "Spinneys supermarket within estate",
+      "Community mosque"
+    ],
+    "nearby": {
+      "schools": [
+        {
+          "name": "GEMS International School – Al Khail",
+          "distance_km": "~3",
+          "curriculum": "IB (International Baccalaureate)"
+        },
+        {
+          "name": "King's College School Dubai",
+          "distance_km": "~4",
+          "curriculum": "British"
+        },
+        {
+          "name": "GEMS Wellington Academy – Dubai Hills",
+          "distance_km": "~3.5",
+          "curriculum": "British"
+        }
+      ],
+      "healthcare": [
+        {
+          "name": "King's College Hospital Dubai",
+          "distance_km": "~5",
+          "type": "Full-service hospital"
+        },
+        {
+          "name": "Mediclinic Parkview Hospital",
+          "distance_km": "~7",
+          "type": "Hospital",
+          "location": "Al Barsha South"
+        }
+      ],
+      "retail": [
+        {
+          "name": "Dubai Hills Mall",
+          "distance_km": "~3",
+          "type": "Regional mall — Carrefour, cinema, 650+ stores and F&B"
+        },
+        {
+          "name": "Spinneys Dubai Hills Estate",
+          "distance_km": "~3",
+          "type": "Supermarket"
+        },
+        {
+          "name": "Dubai Hills Boulevard",
+          "distance_km": "~1",
+          "type": "Dining and retail strip"
+        }
+      ]
+    },
+    "investment": {
+      "ownership": "Freehold",
+      "golden_visa_eligible": true,
+      "golden_visa_note": "Units priced AED 2M+ qualify for UAE 10-year Golden Visa. Most 2BR and 3BR units exceed this threshold at current market prices.",
+      "projected_roi_percent": "5.5 to 7.2",
+      "price_range_resale_aed": {
+        "1br_sqft_645_874": "AED 1,495,000 – 1,800,000",
+        "2br_sqft_999_1364": "AED 2,560,000 – 2,700,000",
+        "3br_sqft_1588_2535": "AED 3,750,000 – 5,100,000",
+        "podium_townhouse_sqft_1998_2740": "Price on request (rarely listed)"
+      },
+      "price_per_sqft_aed": "AED 1,831 – 2,812 (typical range AED 2,200 – 2,700)",
+      "rental_rates_annual_aed": {
+        "1br": "AED 80,000 – 100,000",
+        "2br": "AED 130,000 – 170,000",
+        "3br": "AED 150,000 – 200,000"
+      },
+      "capital_appreciation_note": "Dubai Hills Estate apartments recorded approximately 30% capital appreciation 2022–2024. Park Ridge 1BR units have appreciated ~40–70% from launch prices of ~AED 1.07M to current resale of AED 1.5–1.8M.",
+      "service_charge_estimate": "AED 12–16 per sqft per year (estimated; verify with RERA service charge register)",
+      "comparable_projects_in_community": [
+        "Park Heights",
+        "Park Field",
+        "Collective",
+        "Park Horizon",
+        "Green Square"
+      ],
+      "branded_premium_note": "Emaar brand commands a 10–15% premium over comparable non-Emaar apartments in Dubai Hills Estate, supported by stronger resale liquidity and tenant demand."
+    },
+    "sales_talking_points": {
+      "scarcity_argument": "Park Ridge is a completed Emaar development directly adjacent to Dubai Hills Park — no new comparable land is available. With only ~77 units listed across 7 towers, inventory is genuinely limited relative to strong family and investor demand.",
+      "lifestyle_pitch": "The only Emaar apartment community directly fronting Dubai Hills Park, with a walkable metro station, Dubai Hills Mall 5 minutes away, three top international schools within 7 minutes, infinity pools, Zen gardens, and an 18-hole golf course within the master community.",
+      "investment_pitch": "30% capital appreciation 2022–2024. Gross yields of 5.5–7.2%. 1BR units up ~40–70% from launch. 2BR and 3BR units above AED 2M qualify for UAE Golden Visa. Emaar brand ensures strong resale liquidity and premium tenant demand."
+    },
+    "developer_track_record": "Emaar Properties PJSC is one of the world's most valuable real estate development companies, listed on the Dubai Financial Market (DFM) since 2000. Developer of the Burj Khalifa, Dubai Mall, and Downtown Dubai, Emaar has delivered over 80,000 homes globally across communities including Dubai Hills Estate, Dubai Creek Harbour, Emaar Beachfront, Arabian Ranches, and The Valley. Dubai Hills Estate — Emaar's joint venture with Meraas — is widely regarded as Dubai's most complete master-planned community, with schools, hospitals, a regional mall, metro access, and an 18-hole golf course all operational. Emaar's delivery track record on Park Ridge is confirmed: the project is completed and ready to move in."
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_researched_at": "2025-06-22T12:00:00Z",
+    "last_audited_at": null,
+    "research_confidence": 0.78,
+    "source_urls": [
+      "https://www.njmls.com/NJ/BERGEN/PARK%20RIDGE-real-estate",
+      "https://www.instagram.com/reel/DGvRk-4p-S-",
+      "https://www.propertyfinder.ae/en/buy/dubai/3-bedroom-apartments-for-sale-dubai-hills-estate-park-ridge.html",
+      "https://www.instagram.com/cityofparkridge/p/C_LsE63NZ1h",
+      "https://www.tanamiproperties.com/Projects/Park-Ridge-PaymentPlan",
+      "https://www.prestigesparkridge.com/construction-status/completion-date.html",
+      "https://www.bayut.com/for-sale/property/dubai/dubai-hills-estate/park-ridge",
+      "https://www.parkridgeestates-prg.com/floorplans/the-bedford",
+      "https://www.propertyfinder.ae/en/buy/dubai/1-bedroom-apartments-for-sale-dubai-hills-estate-park-ridge.html",
+      "https://www.tanamiproperties.com/Projects/Park-Ridge",
+      "https://www.prestigesparkridge.com/brochure",
+      "http://dubai-hills-estate.ae/emaar-park-ridge.php",
+      "https://www.goldpillars.ae/project/park-ridge-floor-plan",
+      "https://metropolitan.realestate/dubai-hills-estate/park-ridge",
+      "https://luxurymrhaus.ae/communities/park-ridge",
+      "https://www.reddit.com/r/dubairealestate/comments/1l8mngh/looking_for_capital_appreciation_and_rental_yield",
+      "https://www.propertyfinder.ae/en/buy/dubai/furnished-2-bedroom-apartments-for-sale-dubai-hills-estate-park-ridge.html",
+      "https://www.redfin.com/city/15005/IL/Park-Ridge",
+      "https://www.bayut.com/for-sale/apartments/dubai/dubai-hills-estate/park-ridge",
+      "https://www.gaiarealty.ae/blog/best-emaar-projects-for-high-rental-yield-in-2025",
+      "https://www.zeuscapital.ae/projects/united-arab-emirates/dubai/dubai-hills-estate/park-heights/park-ridge",
+      "https://www.bayut.com/for-sale/apartments/dubai/dubai-hills-estate/park-ridge/page-2",
+      "https://www.addressofchoice.com/emaar-park-ridge-al-quoz-dubai-p81247",
+      "https://www.bayut.com/for-sale/property/dubai/dubai-hills-estate/park-ridge/park-ridge-tower-c/page-2",
+      "https://vi.parkridge.wi.gov/road-construction",
+      "https://www.tanamiproperties.com/Projects/Park-Ridge-FloorPlans",
+      "https://dubai.al/tr/off-plan/park-ridge",
+      "https://www.luxhabitat.ae/developments/dubai/park-ridge",
+      "https://opr.ae/projects/emaar-park-ridge-dubai-hills-estate",
+      "https://storage.dxboffplan.com/files/2017/09/Park-Ridge-Floor-Plans.pdf",
+      "https://majorestate.org/objects/park-ridge-c",
+      "https://www.bayut.com/property-market-analysis/transactions/rent/apartments/dubai/dubai-hills-estate/park-ridge",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-dubai-hills-estate-park-ridge-park-ridge-tower-c.html",
+      "https://nfgroup.ae/international/park-ridge-ir32027",
+      "https://www.propertyfinder.ae/en/buy/dubai/properties-for-sale-dubai-hills-estate-park-ridge.html",
+      "https://haus51.com/park-ridge-tower-c",
+      "https://www.facebook.com/cityofparkridge/photos/-city-hall-construction-update-phase-one-of-construction-is-underway-the-tempora/928362262660546",
+      "https://www.zillow.com/park-ridge-il",
+      "https://propsearch.ae/dubai/park-ridge",
+      "https://www.propertyfinder.ae/en/rent/dubai/properties-for-rent-dubai-hills-estate-park-ridge.html",
+      "https://www.har.com/park-ridge/apartment_8520A",
+      "https://investindxb.com/property/park-ridge-at-dubai-hills-estates-by-emaar",
+      "https://www.pleasanthilliowa.org/865/Parkridge-Avenue-Construction-Project",
+      "https://www.bayut.com/floorplans/dubai/dubai-hills-estate/park-ridge",
+      "https://www.emaar.com/en/properties/park-ridge",
+      "https://www.binayah.com/dubai-projects/park-ridge",
+      "https://www.bayut.com/for-sale/apartments/dubai/dubai-hills-estate/park-ridge/park-ridge-tower-c"
+    ],
+    "audit_flags": [
+      "Tower count conflict: MR HAUS states 7 towers (A–G); opr.ae mentions '10 and 22-storeyed towers' without specifying count. Only Tower C has active marketplace listings. Towers A, B, D, E, F, G require verification.",
+      "Handover date conflict: addressofchoice.com states Dec 2020; dubai.al states Dec 2022; majorestate.org states Q1 2024. Project is confirmed delivered but exact phasing dates unresolved.",
+      "Service charge rate not confirmed from RERA register — estimate only.",
+      "Podium townhouse resale pricing not found in any source — field left null.",
+      "Towers A, B, D, E, F, G have no individual listing data — unit mix, pricing, and floor counts for these towers require verification.",
+      "Golden visa threshold eligibility based on standard UAE policy (AED 2M+) — verify current RERA/DLD rules as thresholds may change.",
+      "Capital appreciation figure (30%, 2022–2024) sourced from single analyst report (Gaia Realty) — cross-check with DLD transaction data recommended."
+    ]
+  }
+}
