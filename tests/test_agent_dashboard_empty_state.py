@@ -61,7 +61,28 @@ class _Func:
         return self
 
 
-class _Model:
+class _Col:
+    """Stand-in for a SQLAlchemy column so stubbed models tolerate filter/order ops."""
+    def __eq__(self, other): return self
+    def __ne__(self, other): return self
+    def __ge__(self, other): return self
+    def __gt__(self, other): return self
+    def __le__(self, other): return self
+    def __lt__(self, other): return self
+    def in_(self, *a, **k): return self
+    def notin_(self, *a, **k): return self
+    def is_(self, *a, **k): return self
+    def isnot(self, *a, **k): return self
+    def desc(self): return self
+    def asc(self): return self
+
+
+class _ModelMeta(type):
+    def __getattr__(cls, name):  # any column access on a stubbed model
+        return _Col()
+
+
+class _Model(metaclass=_ModelMeta):
     pass
 
 
@@ -115,7 +136,7 @@ def _install_import_stubs():
             record_compliance_event=lambda *args, **kwargs: None,
             resolve_request_brokerage_context=lambda *args, **kwargs: None,
         ),
-        "app.core.buyer_profiles": _module("app.core.buyer_profiles", effective_fields=lambda *args, **kwargs: {}),
+        "app.core.buyer_profiles": _module("app.core.buyer_profiles", effective_fields=lambda *args, **kwargs: {}, effective_fields_from_rows=lambda *args, **kwargs: {}),
         "app.core.deal_readiness": _module(
             "app.core.deal_readiness",
             compute_readiness=lambda *args, **kwargs: {},
@@ -250,7 +271,22 @@ def test_authenticated_empty_dashboard_returns_live_empty_workspace():
     }
 
     # When: the authenticated dashboard endpoint builds the response.
-    payload = _run_completed(module.agent_dashboard(user=object(), db=object()))
+    # The handler is sync (runs in FastAPI's threadpool); the only direct DB use is
+    # the "has this brokerage ever been scored?" probe, which we stub to None.
+    class _StubDB:
+        def query(self, *a, **k):
+            return self
+
+        def filter(self, *a, **k):
+            return self
+
+        def first(self):
+            return None
+
+        def scalar(self):
+            return None
+
+    payload = module.agent_dashboard(user=object(), db=_StubDB())
 
     # Then: it returns a real empty live workspace, not operational sample data.
     assert payload["sample_data"] is False

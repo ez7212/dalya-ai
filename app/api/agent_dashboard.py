@@ -218,17 +218,21 @@ def _conversation_is_visible(db: Session, ctx: AgentDashboardContext, conversati
 
 
 def _visible_conversation_ids(db: Session, ctx, conversation_ids) -> set:
-    """Batched visibility: fetch all referenced conversations once and return the
-    subset of ids the agent may view (avoids a per-row `_conversation_is_visible`)."""
+    """Batched equivalent of `_conversation_is_visible`: fetch all referenced
+    conversations in one query and return the ids the agent may view. Matches the
+    per-row helper exactly — a missing conversation is treated as visible."""
     ids = [cid for cid in conversation_ids if cid]
     if not ids:
         return set()
-    convs = db.query(DBConversation).filter(DBConversation.conversation_id.in_(ids)).all()
-    return {
-        c.conversation_id
-        for c in convs
-        if can_view_conversation(db, c, user_id=ctx.user_id, brokerage_id=ctx.brokerage_id, role=ctx.role)
-    }
+    found = {c.conversation_id: c for c in db.query(DBConversation).filter(DBConversation.conversation_id.in_(ids)).all()}
+    allowed = set()
+    for cid in ids:
+        conv = found.get(cid)
+        if conv is None:  # not found -> visible, matching _conversation_is_visible
+            allowed.add(cid)
+        elif can_view_conversation(db, conv, user_id=ctx.user_id, brokerage_id=ctx.brokerage_id, role=ctx.role):
+            allowed.add(cid)
+    return allowed
 
 
 def _get_visible_reply_draft_or_404(
@@ -592,7 +596,12 @@ def _hot_leads(db: Session, ctx: AgentDashboardContext) -> list[dict]:
     )
     leads = []
     for assignment in assignments:
-        if assignment.conversation_id and not _conversation_is_visible(db, ctx, assignment.conversation_id):
+        # assignment.conversation is eager-loaded above — check visibility on it
+        # directly instead of re-fetching per row.
+        conv = assignment.conversation
+        if assignment.conversation_id and not (
+            conv and can_view_conversation(db, conv, user_id=ctx.user_id, brokerage_id=ctx.brokerage_id, role=ctx.role)
+        ):
             continue
         latest = latest_messages.get(assignment.conversation_id)
         metadata = assignment.metadata_json or {}
@@ -1079,9 +1088,10 @@ def _escalation_threads(
         .limit(max(1, min(limit, 100)))
         .all()
     )
+    _vis = _visible_conversation_ids(db, ctx, [thread.conversation_id for thread in rows])
     visible = [
         thread for thread in rows
-        if _conversation_is_visible(db, ctx, thread.conversation_id)
+        if not thread.conversation_id or thread.conversation_id in _vis
     ]
     grouped_questions = _questions_for_threads(db, [thread.thread_id for thread in visible])
     return [
@@ -1134,8 +1144,9 @@ def _drafts(db: Session, ctx: AgentDashboardContext) -> dict:
         .limit(10)
         .all()
     )
-    reply_rows = [row for row in reply_rows if _conversation_is_visible(db, ctx, row.conversation_id)]
-    ai_rows = [row for row in ai_rows if _conversation_is_visible(db, ctx, row.conversation_id)]
+    _vis = _visible_conversation_ids(db, ctx, [r.conversation_id for r in reply_rows] + [r.conversation_id for r in ai_rows])
+    reply_rows = [row for row in reply_rows if not row.conversation_id or row.conversation_id in _vis]
+    ai_rows = [row for row in ai_rows if not row.conversation_id or row.conversation_id in _vis]
     outreach_rows = (
         db.query(DBOutreachDraft)
         .filter(DBOutreachDraft.brokerage_id == ctx.brokerage_id, DBOutreachDraft.status == "draft")
@@ -1362,156 +1373,6 @@ def _metrics(db: Session, ctx: AgentDashboardContext, payload: dict) -> dict:
     }
 
 
-def _performance_metrics(db: Session, ctx: AgentDashboardContext) -> dict:
-    now = datetime.utcnow()
-    today_start = datetime(now.year, now.month, now.day)
-    windows = [
-        ("today", "Today", today_start),
-        ("7d", "7 days", now - timedelta(days=7)),
-        ("30d", "30 days", now - timedelta(days=30)),
-    ]
-    rows = [
-        _performance_window(db, ctx, key=key, label=label, start=start, end=now)
-        for key, label, start in windows
-    ]
-    return {
-        "scope": "current_agent",
-        "agent_user_id": ctx.user_id,
-        "generated_at": _iso(now),
-        "windows": rows,
-        "primary": rows[0],
-    }
-
-
-def _performance_window(
-    db: Session,
-    ctx: AgentDashboardContext,
-    *,
-    key: str,
-    label: str,
-    start: datetime,
-    end: datetime,
-) -> dict:
-    assigned_conversation_filter = (
-        DBConversation.brokerage_id == ctx.brokerage_id,
-        DBConversation.assigned_agent_id == ctx.user_id,
-    )
-    active_statuses = {"new", "active", "viewing", "offer"}
-    completed_viewing_statuses = {"completed", "feedback_requested", "feedback_completed"}
-    return {
-        "key": key,
-        "label": label,
-        "start_at": _iso(start),
-        "end_at": _iso(end),
-        "metrics": {
-            "new_buyer_conversations": (
-                db.query(func.count(DBConversation.conversation_id))
-                .filter(*assigned_conversation_filter, DBConversation.created_at >= start, DBConversation.created_at <= end)
-                .scalar()
-                or 0
-            ),
-            "escalations_handled": (
-                db.query(func.count(DBEscalationThread.thread_id))
-                .filter(
-                    DBEscalationThread.brokerage_id == ctx.brokerage_id,
-                    DBEscalationThread.agent_user_id == ctx.user_id,
-                    DBEscalationThread.state == "resolved",
-                    DBEscalationThread.closed_at >= start,
-                    DBEscalationThread.closed_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "avg_response_minutes": _average_response_minutes(db, ctx, start=start, end=end),
-            "follow_ups_sent": (
-                db.query(func.count(DBDraftReply.draft_id))
-                .filter(
-                    DBDraftReply.brokerage_id == ctx.brokerage_id,
-                    DBDraftReply.agent_user_id == ctx.user_id,
-                    DBDraftReply.intent == "follow_up",
-                    DBDraftReply.status == "sent",
-                    DBDraftReply.sent_at >= start,
-                    DBDraftReply.sent_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "viewings_proposed": (
-                db.query(func.count(DBViewing.viewing_id))
-                .filter(
-                    DBViewing.brokerage_id == ctx.brokerage_id,
-                    DBViewing.agent_user_id == ctx.user_id,
-                    DBViewing.created_at >= start,
-                    DBViewing.created_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "viewings_confirmed": (
-                db.query(func.count(DBViewing.viewing_id))
-                .filter(
-                    DBViewing.brokerage_id == ctx.brokerage_id,
-                    DBViewing.agent_user_id == ctx.user_id,
-                    DBViewing.scheduled_for.isnot(None),
-                    DBViewing.status.in_(["confirmed", *completed_viewing_statuses]),
-                    DBViewing.updated_at >= start,
-                    DBViewing.updated_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "viewings_completed": (
-                db.query(func.count(DBViewing.viewing_id))
-                .filter(
-                    DBViewing.brokerage_id == ctx.brokerage_id,
-                    DBViewing.agent_user_id == ctx.user_id,
-                    DBViewing.status.in_(completed_viewing_statuses),
-                    DBViewing.updated_at >= start,
-                    DBViewing.updated_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "offers_detected": (
-                db.query(func.count(DBOfferRecord.offer_id))
-                .join(DBConversation, DBConversation.conversation_id == DBOfferRecord.conversation_id)
-                .filter(
-                    DBOfferRecord.brokerage_id == ctx.brokerage_id,
-                    DBConversation.assigned_agent_id == ctx.user_id,
-                    DBOfferRecord.created_at >= start,
-                    DBOfferRecord.created_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "hot_leads_active": (
-                db.query(func.count(DBLeadAssignment.assignment_id))
-                .filter(
-                    DBLeadAssignment.brokerage_id == ctx.brokerage_id,
-                    DBLeadAssignment.assigned_agent_id == ctx.user_id,
-                    DBLeadAssignment.status.in_(active_statuses),
-                    DBLeadAssignment.updated_at >= start,
-                    DBLeadAssignment.updated_at <= end,
-                )
-                .scalar()
-                or 0
-            ),
-            "tasks_overdue": (
-                db.query(func.count(DBLeadTask.task_id))
-                .filter(
-                    DBLeadTask.brokerage_id == ctx.brokerage_id,
-                    DBLeadTask.assigned_agent_id == ctx.user_id,
-                    DBLeadTask.status.in_(["open", "in_progress"]),
-                    DBLeadTask.due_at >= start,
-                    DBLeadTask.due_at < end,
-                )
-                .scalar()
-                or 0
-            ),
-        },
-    }
-
-
 def _average_response_minutes(db: Session, ctx: AgentDashboardContext, *, start: datetime, end: datetime) -> Optional[float]:
     actions = (
         db.query(DBLeadAction)
@@ -1548,30 +1409,80 @@ def _average_response_minutes(db: Session, ctx: AgentDashboardContext, *, start:
     return round(sum(deltas) / len(deltas), 1)
 
 
+def _performance_metrics(db: Session, ctx: AgentDashboardContext) -> dict:
+    """Per-agent activity metrics over 24h/7d/30d windows. Each table's counts are
+    computed across all three windows in ONE query via COUNT(*) FILTER, so the whole
+    panel is ~8 queries instead of 3 windows x ~10."""
+    from sqlalchemy import and_
+
+    now = datetime.utcnow()
+    today_start = datetime(now.year, now.month, now.day)
+    windows = [
+        ("today", "Today", today_start),
+        ("7d", "7 days", now - timedelta(days=7)),
+        ("30d", "30 days", now - timedelta(days=30)),
+    ]
+    starts = [w[2] for w in windows]
+    bk, uid = ctx.brokerage_id, ctx.user_id
+    active_statuses = ["new", "active", "viewing", "offer"]
+    completed_viewing_statuses = ["completed", "feedback_requested", "feedback_completed"]
+
+    def c(*conds):
+        return func.count().filter(and_(*conds))
+
+    conv = db.query(*[c(DBConversation.created_at >= s, DBConversation.created_at <= now) for s in starts]).filter(
+        DBConversation.brokerage_id == bk, DBConversation.assigned_agent_id == uid).one()
+    esc = db.query(*[c(DBEscalationThread.closed_at >= s, DBEscalationThread.closed_at <= now) for s in starts]).filter(
+        DBEscalationThread.brokerage_id == bk, DBEscalationThread.agent_user_id == uid, DBEscalationThread.state == "resolved").one()
+    fu = db.query(*[c(DBDraftReply.sent_at >= s, DBDraftReply.sent_at <= now) for s in starts]).filter(
+        DBDraftReply.brokerage_id == bk, DBDraftReply.agent_user_id == uid, DBDraftReply.intent == "follow_up", DBDraftReply.status == "sent").one()
+    vw = db.query(
+        *[c(DBViewing.created_at >= s, DBViewing.created_at <= now) for s in starts],
+        *[c(DBViewing.scheduled_for.isnot(None), DBViewing.status.in_(["confirmed", *completed_viewing_statuses]), DBViewing.updated_at >= s, DBViewing.updated_at <= now) for s in starts],
+        *[c(DBViewing.status.in_(completed_viewing_statuses), DBViewing.updated_at >= s, DBViewing.updated_at <= now) for s in starts],
+    ).filter(DBViewing.brokerage_id == bk, DBViewing.agent_user_id == uid).one()
+    off = db.query(*[c(DBOfferRecord.created_at >= s, DBOfferRecord.created_at <= now) for s in starts]).join(
+        DBConversation, DBConversation.conversation_id == DBOfferRecord.conversation_id).filter(
+        DBOfferRecord.brokerage_id == bk, DBConversation.assigned_agent_id == uid).one()
+    hl = db.query(*[c(DBLeadAssignment.updated_at >= s, DBLeadAssignment.updated_at <= now) for s in starts]).filter(
+        DBLeadAssignment.brokerage_id == bk, DBLeadAssignment.assigned_agent_id == uid, DBLeadAssignment.status.in_(active_statuses)).one()
+    tk = db.query(*[c(DBLeadTask.due_at >= s, DBLeadTask.due_at < now) for s in starts]).filter(
+        DBLeadTask.brokerage_id == bk, DBLeadTask.assigned_agent_id == uid, DBLeadTask.status.in_(["open", "in_progress"])).one()
+
+    rows = []
+    for i, (key, label, start) in enumerate(windows):
+        rows.append({
+            "key": key, "label": label, "start_at": _iso(start), "end_at": _iso(now),
+            "metrics": {
+                "new_buyer_conversations": conv[i] or 0,
+                "escalations_handled": esc[i] or 0,
+                "avg_response_minutes": _average_response_minutes(db, ctx, start=start, end=now),
+                "follow_ups_sent": fu[i] or 0,
+                "viewings_proposed": vw[i] or 0,
+                "viewings_confirmed": vw[3 + i] or 0,
+                "viewings_completed": vw[6 + i] or 0,
+                "offers_detected": off[i] or 0,
+                "hot_leads_active": hl[i] or 0,
+                "tasks_overdue": tk[i] or 0,
+            },
+        })
+    return {"scope": "current_agent", "agent_user_id": uid, "generated_at": _iso(now), "windows": rows, "primary": rows[0]}
+
+
 @router.get("/agent/dashboard")
-async def agent_dashboard(
+def agent_dashboard(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     ctx = _agent_context(user, db)
-    # Throttle the hot-list recompute (same policy as GET /agent/hot-list): skip
-    # it if assignments were refreshed within the TTL, otherwise recompute
-    # brokerage-wide. Avoids a ~30s recompute+write on every dashboard load.
+    # Recompute the hot list on every load so the dashboard always reflects current
+    # state (new conversations, freshly granted visibility, latest scores). With the
+    # DB co-located this is cheap; the prior 5-minute throttle made the view stale
+    # (it skipped the refresh whenever any assignment existed).
     _now = datetime.utcnow()
-    _last_refresh = (
-        db.query(func.max(DBLeadAssignment.updated_at))
-        .filter(DBLeadAssignment.brokerage_id == ctx.brokerage_id)
-        .scalar()
+    refresh_morning_hot_list(
+        db, brokerage_id=ctx.brokerage_id, user_id=ctx.user_id, role=ctx.role, limit=50, now=_now,
     )
-    if not (_last_refresh and _last_refresh >= _now - timedelta(minutes=5)):
-        refresh_morning_hot_list(
-            db,
-            brokerage_id=ctx.brokerage_id,
-            user_id=ctx.user_id,
-            role=ctx.role,
-            limit=50,
-            now=_now,
-        )
     payload = {
         "sample_data": False,
         "generated_at": _iso(datetime.utcnow()),
@@ -1657,7 +1568,7 @@ async def refresh_agent_hot_list(
 
 
 @router.get("/agent/drafts")
-async def agent_draft_queue(
+def agent_draft_queue(
     include_snoozed: bool = Query(default=False),
     limit: int = Query(default=100, ge=1, le=200),
     user: CurrentUser = Depends(get_current_user),
@@ -1927,7 +1838,7 @@ async def snooze_reply_draft(
 
 
 @router.get("/agent/escalations")
-async def agent_escalation_inbox(
+def agent_escalation_inbox(
     state: Optional[str] = Query(default=None),
     category: Optional[str] = Query(default=None),
     agent_user_id: Optional[str] = Query(default=None),

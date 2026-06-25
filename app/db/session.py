@@ -46,10 +46,10 @@ DATABASE_URL = urlunparse((
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
+    pool_size=12,
+    max_overflow=24,
     pool_recycle=300,       # Recycle connections every 5 min — prevents Neon sleep timeout
-    pool_timeout=10,        # Don't wait more than 10s for a connection from the pool
+    pool_timeout=20,        # Wait up to 20s for a pooled connection before erroring
     connect_args={
         "connect_timeout": 10,
         "keepalives": 1,

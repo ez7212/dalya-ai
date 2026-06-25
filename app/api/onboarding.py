@@ -329,7 +329,7 @@ async def onboarding_status(
 
 
 @router.get("/me/brokerages", response_model=MyBrokeragesResponse)
-async def my_brokerages(
+def my_brokerages(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):

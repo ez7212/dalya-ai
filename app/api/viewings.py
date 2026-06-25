@@ -716,7 +716,7 @@ async def complete_calendar_oauth(
 
 
 @router.get("/agent/viewings")
-async def list_agent_viewings(
+def list_agent_viewings(
     status: Optional[str] = None,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
