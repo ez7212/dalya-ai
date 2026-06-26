@@ -97,6 +97,9 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
   const [offers, setOffers] = useState<OfferRow[]>([])
   const [offerAmount, setOfferAmount] = useState('')
   const [offerState, setOfferState] = useState<'idle' | 'working' | 'error'>('idle')
+  const [directReply, setDirectReply] = useState('')
+  const [directReplyState, setDirectReplyState] = useState<'idle' | 'working' | 'sent' | 'error'>('idle')
+  const [directReplyError, setDirectReplyError] = useState('')
 
   useEffect(() => {
     let active = true
@@ -194,6 +197,47 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
     }
   }
 
+  // Refetch the conversation timeline + threads after a send so the just-sent
+  // message actually appears (the sends previously only cleared the form).
+  async function reloadConversation() {
+    try {
+      const [detailResponse, escalationResponse] = await Promise.all([
+        apiFetch(`/api/v1/agent/leads/${conversationId}`),
+        apiFetch('/api/v1/agent/escalations?state=active&limit=100'),
+      ])
+      if (detailResponse.ok) setConversation(await detailResponse.json())
+      if (escalationResponse.ok) {
+        const payload = await escalationResponse.json()
+        setThreads((payload.threads ?? []).filter((thread: EscalationThread) => thread.conversation_id === conversationId))
+      }
+    } catch {
+      // best-effort refresh
+    }
+  }
+
+  async function sendDirectReply() {
+    const body = directReply.trim()
+    if (!body) return
+    setDirectReplyState('working')
+    try {
+      const response = await apiFetch(`/api/v1/agent/leads/${conversationId}/reply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ body }),
+      })
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null)
+        throw new Error(payload?.detail ?? `Reply returned ${response.status}`)
+      }
+      setDirectReply('')
+      setDirectReplyState('sent')
+      await reloadConversation()
+    } catch (error) {
+      setDirectReplyError(error instanceof Error ? error.message : 'Could not send the reply.')
+      setDirectReplyState('error')
+    }
+  }
+
   async function logOffer() {
     const amount = Number(offerAmount.replace(/,/g, ''))
     if (!amount || Number.isNaN(amount)) return
@@ -256,6 +300,7 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
       setMediaCaption('')
       setSelectedAssetUrls([])
       setMediaState('sent')
+      await reloadConversation()
     } catch (error) {
       setMediaError(error instanceof Error ? error.message : 'Could not send the attachments.')
       setMediaState('error')
@@ -278,6 +323,7 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
       if (!response.ok) throw new Error(`Reply returned ${response.status}`)
       setThreads((current) => current.filter((thread) => thread.thread_id !== threadId))
       setReplyState((current) => ({ ...current, [threadId]: 'sent' }))
+      await reloadConversation()
     } catch {
       setReplyState((current) => ({ ...current, [threadId]: 'error' }))
     }
@@ -472,6 +518,38 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
                   </button>
                 </div>
                 {offerState === 'error' && <p className="mt-2 text-xs font-medium text-error-600">Could not update offers.</p>}
+              </section>
+
+              <section className="rounded-lg border border-neutral-200 bg-white p-4 shadow-card-sm">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500">Reply to buyer</p>
+                {conversation.media_window && !conversation.media_window.open ? (
+                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                    The buyer&apos;s 24-hour session window is closed. Send an approved template first to reopen the
+                    conversation before replying.
+                  </p>
+                ) : (
+                  <>
+                    <textarea
+                      value={directReply}
+                      onChange={(event) => { setDirectReply(event.target.value); setDirectReplyState('idle') }}
+                      rows={4}
+                      placeholder="Type a reply to send to the buyer on WhatsApp…"
+                      aria-label="Reply to buyer"
+                      className="mt-3 w-full resize-y rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+                    />
+                    <button
+                      type="button"
+                      onClick={sendDirectReply}
+                      disabled={directReplyState === 'working' || directReply.trim().length === 0}
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-neutral-300"
+                    >
+                      <span className="material-symbols-outlined text-[18px]" aria-hidden="true">send</span>
+                      {directReplyState === 'working' ? 'Sending' : 'Send reply'}
+                    </button>
+                    {directReplyState === 'sent' && <p className="mt-2 text-xs font-medium text-success-700">Reply sent.</p>}
+                    {directReplyState === 'error' && <p className="mt-2 text-xs font-medium text-error-600">{directReplyError}</p>}
+                  </>
+                )}
               </section>
 
               <section className="rounded-lg border border-neutral-200 bg-white p-4 shadow-card-sm">
