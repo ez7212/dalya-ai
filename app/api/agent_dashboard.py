@@ -163,6 +163,10 @@ class DraftSendRequest(BaseModel):
     body: Optional[str] = None
 
 
+class AgentReplyRequest(BaseModel):
+    body: str
+
+
 class DraftRejectRequest(BaseModel):
     reason: Optional[str] = None
 
@@ -1768,6 +1772,113 @@ async def send_reply_draft(
     safe_commit(db)
     db.refresh(draft)
     return {**_serialize_reply_draft(db, draft), "sent": True}
+
+
+@router.post("/agent/leads/{conversation_id}/reply")
+def send_agent_reply(
+    conversation_id: str,
+    body: AgentReplyRequest,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Free-text agent reply to a buyer, sent in-app. Mirrors the draft-send guards
+    (visibility, brokerage AI number, 24h session window, opt-out) so there is a
+    composer for conversations that have no draft and no open escalation thread."""
+    ctx = _agent_context(user, db)
+    conversation = db.get(DBConversation, conversation_id)
+    if not conversation or not conversation.brokerage_id:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    if not can_view_conversation(db, conversation, user_id=ctx.user_id, brokerage_id=ctx.brokerage_id, role=ctx.role):
+        raise HTTPException(status_code=403, detail="Not authorized for this conversation")
+
+    text = (body.body or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Reply body is required")
+
+    brokerage = db.get(DBBrokerage, ctx.brokerage_id)
+    if not brokerage or not brokerage.brokerage_ai_number:
+        raise HTTPException(status_code=400, detail="Brokerage AI number is not configured")
+    buyer_phone = conversation.buyer_phone
+
+    from app.core.media_assets import session_window_state
+
+    window = session_window_state(db, conversation_id)
+    if not window["open"]:
+        raise HTTPException(status_code=409, detail="The buyer's 24-hour session window is closed. Send an approved template to reopen it.")
+    if is_buyer_suppressed(db, ctx.brokerage_id, buyer_phone):
+        record_compliance_event(
+            db,
+            brokerage_id=ctx.brokerage_id,
+            conversation_id=conversation_id,
+            listing_id=conversation.listing_id,
+            buyer_phone=buyer_phone,
+            actor_user_id=ctx.user_id,
+            event_type="agent_reply_blocked_opt_out",
+            direction="outbound",
+            details={"body_preview": text[:200]},
+        )
+        raise HTTPException(status_code=409, detail="Buyer has opted out")
+
+    from app.core.messaging import get_transport
+    from app.core.messaging.types import OutboundBuyerMessage
+
+    send_result = get_transport().send_to_buyer(
+        OutboundBuyerMessage(
+            brokerage_id=ctx.brokerage_id,
+            brokerage_ai_number=brokerage.brokerage_ai_number,
+            buyer_phone=buyer_phone,
+            body=text,
+            conversation_id=conversation_id,
+            listing_id=conversation.listing_id,
+        )
+    )
+    if not send_result.ok:
+        raise HTTPException(status_code=502, detail=send_result.error or "Reply send failed")
+
+    now = datetime.utcnow()
+    db.add(DBMessage(
+        conversation_id=conversation_id,
+        role="assistant",
+        content=text,
+        intent="agent_direct_reply",
+        metadata_json={
+            "source": "conversation_composer",
+            "agent_user_id": ctx.user_id,
+            "transport_message_id": send_result.transport_message_id,
+        },
+    ))
+    conversation.updated_at = now
+    assignment = (
+        db.query(DBLeadAssignment)
+        .filter(DBLeadAssignment.conversation_id == conversation_id)
+        .first()
+    )
+    if assignment:
+        assignment.last_agent_action_at = now
+        assignment.updated_at = now
+    db.add(DBLeadAction(
+        brokerage_id=ctx.brokerage_id,
+        conversation_id=conversation_id,
+        listing_id=conversation.listing_id,
+        buyer_phone=buyer_phone,
+        agent_user_id=ctx.user_id,
+        action_type="agent_direct_reply_sent",
+        note=text[:500],
+        payload={"transport_message_id": send_result.transport_message_id},
+    ))
+    record_compliance_event(
+        db,
+        brokerage_id=ctx.brokerage_id,
+        conversation_id=conversation_id,
+        listing_id=conversation.listing_id,
+        buyer_phone=buyer_phone,
+        actor_user_id=ctx.user_id,
+        event_type="agent_reply_sent",
+        direction="outbound",
+        details={"body_preview": text[:200], "transport_message_id": send_result.transport_message_id},
+    )
+    safe_commit(db)
+    return {"sent": True, "transport_message_id": send_result.transport_message_id}
 
 
 @router.post("/agent/drafts/{draft_id}/reject")
