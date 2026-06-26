@@ -102,7 +102,15 @@ export function TodayQueue({
               )}
               <p className={`text-xs text-neutral-500${item.listingName ? ' mt-1' : ' mt-2 text-sm font-semibold text-neutral-900'}`}>{item.title}</p>
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-700">{item.detail}</p>
-              <QueueHandoffCard item={item} />
+              {/* The full handoff briefing is dense; keep the row a fast scan and
+                  put intent/known/missing/suggested-action behind a disclosure. */}
+              <details className="group mt-2">
+                <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-brand-700 hover:text-brand-800">
+                  <span className="material-symbols-outlined text-[16px] transition-transform group-open:rotate-180" aria-hidden="true">expand_more</span>
+                  Briefing
+                </summary>
+                <QueueHandoffCard item={item} />
+              </details>
             </div>
 
             <div className="flex flex-wrap items-start gap-2 lg:justify-end">

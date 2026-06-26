@@ -145,8 +145,8 @@ export function InboxList() {
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-xs text-neutral-400">{formatShort(conversation.last_message_at)}</p>
-                    <p className="mt-1 text-[11px] text-neutral-400">{conversation.message_count ?? 0} msg</p>
+                    <p className="text-xs text-neutral-500">{formatShort(conversation.last_message_at)}</p>
+                    <p className="mt-1 text-[11px] text-neutral-500">{conversation.message_count ?? 0} msg</p>
                   </div>
                 </Link>
               ))}
