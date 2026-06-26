@@ -169,12 +169,12 @@ export function InspectionAudioInput({
           <div className="mt-4 flex flex-wrap gap-2">
             {!recording ? (
               <button type="button" onClick={startRecording} disabled={disabled} className={sharedUi.primaryButton}>
-                <span className="material-symbols-rounded text-[18px]" aria-hidden="true">mic</span>
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">mic</span>
                 Record
               </button>
             ) : (
               <button type="button" onClick={stopRecording} className={sharedUi.secondaryButton}>
-                <span className="material-symbols-rounded text-[18px]" aria-hidden="true">stop</span>
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">stop</span>
                 Stop
               </button>
             )}
@@ -207,7 +207,7 @@ export function InspectionAudioInput({
             onChange={(event) => handleFile(event.target.files?.[0] || null)}
           />
           <button type="button" onClick={() => fileInputRef.current?.click()} disabled={disabled || recording} className={`${sharedUi.secondaryButton} mt-4`}>
-            <span className="material-symbols-rounded text-[18px]" aria-hidden="true">upload_file</span>
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">upload_file</span>
             Choose audio
           </button>
         </div>

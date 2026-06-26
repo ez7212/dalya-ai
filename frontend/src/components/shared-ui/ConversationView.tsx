@@ -109,7 +109,7 @@ function TurnCard({ turn }: { turn: ConversationTurn }) {
           <span className="text-sm font-semibold text-text-1">{roleLabels[turn.role]}</span>
           {turn.origin === 'voice' && (
             <span className={`${sharedUi.chip} bg-white`}>
-              <span className="material-symbols-rounded text-[14px]" aria-hidden="true">graphic_eq</span>
+              <span className="material-symbols-outlined text-[14px]" aria-hidden="true">graphic_eq</span>
               Voice note transcription
             </span>
           )}
