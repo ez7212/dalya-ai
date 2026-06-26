@@ -379,6 +379,7 @@ interface ApiTask {
   readonly description?: string | null
   readonly priority?: string | null
   readonly listing_id?: string | null
+  readonly listing_name?: string | null
   readonly buyer_phone?: string | null
   readonly due_at?: string | null
   readonly created_at?: string | null
@@ -462,6 +463,7 @@ interface ApiViewing {
   readonly scheduled_for?: string | null
   readonly buyer_phone?: string | null
   readonly listing_id?: string | null
+  readonly listing_name?: string | null
   readonly tenant_notice_required?: boolean | null
   readonly status?: string | null
   readonly access_notes?: string | null
@@ -612,7 +614,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
       title: task.title ?? 'Review task',
       context: task.description ?? task.metadata?.reason ?? 'Review the next action and update the workspace.',
       buyerName: task.buyer_phone ?? 'Workspace',
-      listingName: task.metadata?.entity_label ?? task.listing_id ?? 'Agent task',
+      listingName: task.metadata?.entity_label ?? task.listing_name ?? 'Agent task',
       nextAction: task.task_type ? labelFromKey(task.task_type) : 'Open task',
       due: formatShortTime(task.due_at),
       dueAt: task.due_at ?? null,
@@ -689,7 +691,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     id: conversation.conversation_id ?? `conversation-${index}`,
     buyerName: conversation.buyer?.name ?? conversation.buyer?.phone ?? 'Buyer',
     buyerPhone: conversation.buyer?.phone ?? '',
-    listingName: conversation.listing?.project ?? conversation.listing_id ?? 'Listing',
+    listingName: conversation.listing?.project ?? 'Listing',
     unitNumber: conversation.listing?.unit_number,
     summary: conversation.summary ?? conversation.last_message ?? 'Conversation needs review.',
     nextStep: conversation.next_step_hint ?? (
@@ -718,7 +720,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     time: formatShortTime(viewing.scheduled_for),
     scheduledFor: viewing.scheduled_for ?? null,
     buyerName: viewing.buyer_phone ?? 'Buyer',
-    property: viewing.listing_id ?? 'Property',
+    property: viewing.listing_name ?? 'Property',
     location: viewing.tenant_notice_required ? 'Tenant notice required' : 'Access check',
     status: viewing.status === 'confirmed' ? 'confirmed' : viewing.status === 'completed' ? 'follow_up' : 'pending',
     preparation: viewing.access_notes ?? 'Confirm access and send reminder.',
