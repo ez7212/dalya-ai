@@ -20,26 +20,32 @@ export function ListingKnowledgeWorkspace({ id }: ListingKnowledgeWorkspaceProps
   const knowledgeQuery = useListingKnowledge(id, !authLoading)
   const [documentType, setDocumentType] = useState(DEFAULT_DOCUMENT_TYPE)
   const [documentLabel, setDocumentLabel] = useState('')
-  const [sourceUrl, setSourceUrl] = useState('')
+  const [documentFile, setDocumentFile] = useState<File | null>(null)
   const [documentText, setDocumentText] = useState('')
   const [formError, setFormError] = useState<string | null>(null)
 
   const invalidate = async () => {
     await queryClient.invalidateQueries({ queryKey: ['listing-knowledge', id] })
   }
+  const reset = () => {
+    setDocumentLabel('')
+    setDocumentFile(null)
+    setDocumentText('')
+    setFormError(null)
+  }
   const updateFact = useFactUpdate(id, invalidate)
   const regenerate = useRegenerateKnowledge(id, invalidate)
   const addDocument = useAddKnowledgeDocument(id, invalidate, {
     documentType,
     documentLabel,
-    sourceUrl,
     documentText,
-    reset: () => {
-      setDocumentLabel('')
-      setSourceUrl('')
-      setDocumentText('')
-      setFormError(null)
-    },
+    reset,
+  })
+  const uploadDocument = useUploadKnowledgeDocument(id, invalidate, {
+    documentType,
+    documentLabel,
+    getFile: () => documentFile,
+    reset,
   })
 
   if (authLoading || knowledgeQuery.isLoading) return <KnowledgeSkeleton />
@@ -72,13 +78,13 @@ export function ListingKnowledgeWorkspace({ id }: ListingKnowledgeWorkspaceProps
             setDocumentType={setDocumentType}
             label={documentLabel}
             setLabel={setDocumentLabel}
-            sourceUrl={sourceUrl}
-            setSourceUrl={setSourceUrl}
+            file={documentFile}
+            setFile={setDocumentFile}
             text={documentText}
             setText={setDocumentText}
-            error={formError ?? (addDocument.error ? errorMessage(addDocument.error) : null)}
-            submitting={addDocument.isPending}
-            onSubmit={() => submitDocumentText(documentText, setFormError, addDocument.mutate)}
+            error={formError ?? (addDocument.error || uploadDocument.error ? errorMessage(addDocument.error ?? uploadDocument.error) : null)}
+            submitting={addDocument.isPending || uploadDocument.isPending}
+            onSubmit={() => submitDocument({ file: documentFile, text: documentText, setFormError, upload: uploadDocument.mutate, addText: addDocument.mutate })}
           />
           <ListingKnowledgeDocumentList documents={knowledge?.documents ?? []} />
         </aside>
@@ -134,7 +140,7 @@ function useRegenerateKnowledge(id: string, onSuccess: () => Promise<void>) {
   })
 }
 
-function useAddKnowledgeDocument(id: string, onSuccess: () => Promise<void>, input: { readonly documentType: string; readonly documentLabel: string; readonly sourceUrl: string; readonly documentText: string; readonly reset: () => void }) {
+function useAddKnowledgeDocument(id: string, onSuccess: () => Promise<void>, input: { readonly documentType: string; readonly documentLabel: string; readonly documentText: string; readonly reset: () => void }) {
   return useMutation({
     mutationFn: async () => {
       const trimmedText = input.documentText.trim()
@@ -145,7 +151,6 @@ function useAddKnowledgeDocument(id: string, onSuccess: () => Promise<void>, inp
         body: JSON.stringify({
           document_type: input.documentType,
           label: input.documentLabel.trim() || null,
-          source_url: input.sourceUrl.trim() || null,
           content_text: trimmedText,
           metadata_json: { source: 'listing_knowledge_workspace' },
         }),
@@ -163,45 +168,72 @@ function useAddKnowledgeDocument(id: string, onSuccess: () => Promise<void>, inp
   })
 }
 
+function useUploadKnowledgeDocument(id: string, onSuccess: () => Promise<void>, input: { readonly documentType: string; readonly documentLabel: string; readonly getFile: () => File | null; readonly reset: () => void }) {
+  return useMutation({
+    mutationFn: async () => {
+      const file = input.getFile()
+      if (!file) throw new Error('Choose a file before uploading.')
+      const form = new FormData()
+      form.append('file', file)
+      form.append('document_type', input.documentType)
+      if (input.documentLabel.trim()) form.append('label', input.documentLabel.trim())
+      const res = await apiFetch(`/api/v1/listings/${id}/documents/upload`, { method: 'POST', body: form })
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(errorDetail(body) ?? `Upload failed (${res.status})`)
+      }
+      return res.json()
+    },
+    onSuccess: async () => {
+      input.reset()
+      await onSuccess()
+    },
+  })
+}
+
 function KnowledgeHeader({ documentCount, factCount, buyerSafeCount, missingCount, regenerating, onRegenerate }: { readonly documentCount: number; readonly factCount: number; readonly buyerSafeCount: number; readonly missingCount: number; readonly regenerating: boolean; readonly onRegenerate: () => void }) {
   return (
     <section className="rounded-lg border border-neutral-200 bg-white p-4 sm:p-5">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Knowledge workspace</p>
-          <h2 className="mt-1 text-lg font-semibold text-neutral-900">Buyer-safe listing facts</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-600">Review extracted facts, mark what Dalya can safely say to buyers, and add grounded text from ready-property documents or agent notes.</p>
+          <h2 className="mt-1 text-lg font-semibold text-neutral-900">Property Specific Facts</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-600">Upload additional documents such as DEWA statements, service charges, inspection reports and more to strengthen Dalya&apos;s knowledge about the property.</p>
         </div>
         <button type="button" onClick={onRegenerate} disabled={regenerating} className="inline-flex min-h-10 items-center justify-center rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/30">
           {regenerating ? 'Regenerating...' : 'Regenerate summary'}
         </button>
       </div>
       <div className="mt-4 grid gap-2 text-center sm:grid-cols-4">
-        <Metric label="Documents" value={String(documentCount)} />
-        <Metric label="Facts" value={String(factCount)} />
-        <Metric label="Buyer-safe" value={String(buyerSafeCount)} />
-        <Metric label="Missing" value={String(missingCount)} />
+        <Metric label="Documents" value={String(documentCount)} help="Files and notes attached to this listing." />
+        <Metric label="Facts" value={String(factCount)} help="Individual facts Dalya extracted from the documents." />
+        <Metric label="Buyer-safe" value={String(buyerSafeCount)} help="Facts you've approved for Dalya to tell buyers directly." />
+        <Metric label="Missing" value={String(missingCount)} help="Information gaps Dalya flagged — add documents to fill them." />
       </div>
     </section>
   )
 }
 
-function Metric({ label, value }: { readonly label: string; readonly value: string }) {
+function Metric({ label, value, help }: { readonly label: string; readonly value: string; readonly help?: string }) {
   return (
-    <div className="rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2">
+    <div className="rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2" title={help}>
       <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{label}</p>
       <p className="mt-1 text-lg font-semibold text-neutral-900 tabular-nums">{value}</p>
     </div>
   )
 }
 
-function submitDocumentText(text: string, setFormError: (error: string | null) => void, submit: () => void) {
+function submitDocument({ file, text, setFormError, upload, addText }: { file: File | null; text: string; setFormError: (error: string | null) => void; upload: () => void; addText: () => void }) {
   setFormError(null)
-  if (!text.trim()) {
-    setFormError('Add document text before submitting.')
+  if (file) {
+    upload()
     return
   }
-  submit()
+  if (!text.trim()) {
+    setFormError('Upload a file or paste document text before submitting.')
+    return
+  }
+  addText()
 }
 
 function groupFacts(facts: readonly ListingFact[]): Record<string, readonly ListingFact[]> {
