@@ -136,35 +136,52 @@ export function BuyerList() {
             </div>
           ) : (
             <div className="divide-y divide-neutral-200">
+              <div className="hidden gap-2 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-400 md:grid md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.3fr)_minmax(0,1.3fr)_72px_64px_84px] md:items-center">
+                <span>Buyer</span>
+                <span>Qualification</span>
+                <span>Readiness</span>
+                <span title="Hot-list urgency score (0–100), how reactive this buyer is right now">Urgency</span>
+                <span title="Open offers awaiting action">Offers</span>
+                <span>Next viewing</span>
+              </div>
               {buyers.map((buyer) => (
                 <Link
                   key={buyer.profile_id}
                   href={`/agent/buyers/${buyer.profile_id}`}
-                  className="grid gap-2 px-4 py-4 transition-colors hover:bg-neutral-50 sm:px-5 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1.6fr)_repeat(3,minmax(0,0.8fr))] md:items-center"
+                  className="grid gap-2 px-4 py-4 transition-colors hover:bg-neutral-50 sm:px-5 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.3fr)_minmax(0,1.3fr)_72px_64px_84px] md:items-center"
                 >
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-900">{buyer.name || buyer.phone_masked}</p>
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-neutral-900">{buyer.name || buyer.phone_masked}</p>
                     <p className="mt-0.5 text-xs text-neutral-500">
                       {buyer.phone_masked} · {buyer.conversation_count} conversation{buyer.conversation_count !== 1 ? 's' : ''}
                     </p>
+                    {buyer.top_listing && (
+                      <p className="mt-1 flex items-center gap-1 text-xs text-neutral-600">
+                        <span className="material-symbols-outlined text-[14px] text-neutral-400" aria-hidden="true">apartment</span>
+                        <span className="truncate">{buyer.top_listing}</span>
+                      </p>
+                    )}
                   </div>
-                  <div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {buyer.qualification.budget_max_aed && (
-                        <Chip>≤ AED {Number(buyer.qualification.budget_max_aed).toLocaleString()}</Chip>
-                      )}
-                      {buyer.qualification.financing && <Chip>{label(buyer.qualification.financing)}</Chip>}
-                      {buyer.qualification.timeline && <Chip>{buyer.qualification.timeline}</Chip>}
-                      {buyer.opted_out && (
-                        <span className="rounded-full border border-error-100 bg-error-50 px-2 py-0.5 text-[11px] font-medium text-error-700">
-                          Opted out
-                        </span>
-                      )}
-                    </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {buyer.qualification.budget_max_aed && (
+                      <Chip>Budget ≤ AED {Number(buyer.qualification.budget_max_aed).toLocaleString()}</Chip>
+                    )}
+                    {buyer.qualification.financing && <Chip>{label(buyer.qualification.financing)}</Chip>}
+                    {buyer.qualification.timeline && <Chip>Timeline: {buyer.qualification.timeline}</Chip>}
+                    {buyer.opted_out && (
+                      <span className="rounded-full border border-error-100 bg-error-50 px-2 py-0.5 text-[11px] font-medium text-error-700" title="Buyer opted out of contact (PDPL)">
+                        Opted out
+                      </span>
+                    )}
+                    {!buyer.qualification.budget_max_aed && !buyer.qualification.financing && !buyer.qualification.timeline && !buyer.opted_out && (
+                      <span className="text-xs text-neutral-400">Not yet qualified</span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
                     <DealReadinessSummaryLine readiness={normalizeDealReadiness(buyer.deal_readiness)} compact />
                   </div>
-                  <Cell label="Score" value={buyer.score != null ? String(buyer.score) : '—'} />
-                  <Cell label="Open offers" value={String(buyer.open_offers)} />
+                  <Cell label="Urgency" value={buyer.score != null ? String(buyer.score) : '—'} />
+                  <Cell label="Offers" value={String(buyer.open_offers)} />
                   <Cell
                     label="Next viewing"
                     value={buyer.next_viewing_at ? formatShort(buyer.next_viewing_at) : '—'}

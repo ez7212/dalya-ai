@@ -297,7 +297,7 @@ def profile_to_schema(
 
 # ── Rules-layer extraction on the message-processing path ──────────────────────
 
-_FINANCING_CASH = re.compile(r"\b(cash buyers?|paying cash|all cash|cash purchase|no mortgage)\b", re.IGNORECASE)
+_FINANCING_CASH = re.compile(r"\b(cash buyers?|paying cash|all cash|cash purchase|cash[- ]ready|no mortgage)\b", re.IGNORECASE)
 _FINANCING_PREAPPROVED = re.compile(r"\b(pre[- ]?approv\w*)\b", re.IGNORECASE)
 _FINANCING_MORTGAGE = re.compile(r"\b(mortgage|home loan|financing|bank loan)\b", re.IGNORECASE)
 _TIMELINE = re.compile(
@@ -331,6 +331,14 @@ def extract_qualification_signals(text: str, intent_data: Optional[dict] = None)
     bedrooms = _BEDROOMS.search(text or "")
     if bedrooms:
         signals["bedrooms"] = (int(bedrooms.group(1)), 0.75)
+    # The classifier already extracts purpose and target area, but they were being
+    # dropped here — so every buyer showed "Missing: Purpose, Location". Record them.
+    purpose = intent_data.get("extracted_purpose")
+    if isinstance(purpose, str) and purpose.strip() and purpose.strip().lower() not in ("", "null", "none"):
+        signals["purpose"] = (purpose.strip().lower(), 0.8)
+    area = intent_data.get("extracted_area")
+    if isinstance(area, str) and area.strip() and area.strip().lower() not in ("", "null", "none"):
+        signals["target_areas"] = (area.strip(), 0.75)
     return signals
 
 
@@ -371,13 +379,22 @@ def update_profile_from_message(
 
 
 def backfill_profiles_from_conversations(db: Session) -> int:
-    """Migration-time backfill over existing conversations."""
+    """Migration-time backfill over existing conversations.
+
+    Seeded/historical conversations never ran through the message-path extraction
+    hook, so their buyer profiles had no qualification fields. In addition to the
+    budget from conversation metadata, re-run the text-based signal extraction over
+    each inbound (buyer) message so financing/timeline/bedrooms/etc. get populated.
+    (Budget/purpose/area need the classifier's intent_data, which isn't persisted on
+    historical messages, so those come from metadata only.)
+    """
     created = 0
     conversations = (
         db.query(DBConversation)
         .filter(DBConversation.brokerage_id.isnot(None))
         .all()
     )
+    seen_profiles: set[str] = set()
     for conversation in conversations:
         profile = get_or_create_profile(
             db,
@@ -385,14 +402,35 @@ def backfill_profiles_from_conversations(db: Session) -> int:
             buyer_phone=conversation.buyer_phone,
             name=conversation.buyer_name,
         )
+        # Accumulate the latest value per field across all of this conversation's
+        # inbound messages, then record each field once. A profile carries one
+        # ai_inferred row per field (unique constraint), so recording the same field
+        # per-message would collide within a single transaction.
+        latest: dict[str, tuple[Any, float, Optional[int]]] = {}
         if conversation.detected_budget:
+            latest["budget_max_aed"] = (float(conversation.detected_budget), 0.7, None)
+        messages = (
+            db.query(DBMessage)
+            .filter(DBMessage.conversation_id == conversation.conversation_id, DBMessage.role == "user")
+            .order_by(DBMessage.timestamp.asc())
+            .all()
+        )
+        for message in messages:
+            for field, (value, confidence) in extract_qualification_signals(message.content or "", intent_data=None).items():
+                latest[field] = (value, confidence, message.id)
+        for field, (value, confidence, message_id) in latest.items():
             record_inferred_field(
                 db,
                 profile=profile,
-                field="budget_max_aed",
-                value=float(conversation.detected_budget),
-                confidence=0.7,
+                field=field,
+                value=value,
+                confidence=confidence,
+                source_message_id=message_id,
             )
-        created += 1
-    safe_commit(db)
+        # Commit per profile so record_inferred_field's existing-row lookup sees
+        # prior writes (idempotent across conversations that share a buyer).
+        if profile.profile_id not in seen_profiles:
+            seen_profiles.add(profile.profile_id)
+            created += 1
+        safe_commit(db)
     return created
