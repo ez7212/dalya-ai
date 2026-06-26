@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState, type ReactNode } from 'react'
 import {
   normalizeDealReadiness,
@@ -181,6 +182,13 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
 
   const dayIsClear = todayQueue.length === 0
 
+  // The Today Queue owns hot buyers; show in the Overnight Digest only buyers not
+  // already ranked in the queue, so the same buyer never appears twice.
+  const queuedBuyerIds = new Set(
+    todayQueue.filter((item) => item.kind === 'hot_buyer').map((item) => item.buyer?.id),
+  )
+  const overnightOnly = dashboardData.overnightBuyerDigest.filter((item) => !queuedBuyerIds.has(item.id))
+
   return (
     <div id="dashboard" className="marketing-surface min-h-[calc(100vh-4rem)] bg-neutral-50">
       <div className="mx-auto max-w-[1600px]">
@@ -201,7 +209,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
                 )}
               </div>
               <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
-                Good morning, {dashboardData.agent.name}
+                {greeting()}, {dashboardData.agent.name}
               </h1>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 <button
@@ -218,7 +226,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
             </div>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:min-w-[560px]">
               <SummaryMetric label="Open tasks" value={dashboardData.summary.openTasks} />
-              <SummaryMetric label="Qualified buyers" value={dashboardData.summary.qualifiedBuyers} />
+              <SummaryMetric label="Hot buyers" value={dashboardData.summary.qualifiedBuyers} />
               <SummaryMetric label="Viewings today" value={dashboardData.summary.viewingsToday} />
               <SummaryMetric label="Escalations" value={dashboardData.summary.openEscalations} tone="warning" />
             </div>
@@ -272,7 +280,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
             </div>
 
             <aside className="space-y-5">
-              <OvernightBuyerDigest items={dashboardData.overnightBuyerDigest} />
+              <OvernightBuyerDigest items={overnightOnly} />
               <PersonalMomentum momentum={dashboardData.personalMomentum} />
             </aside>
           </div>
@@ -313,7 +321,7 @@ function DashboardLoadingState() {
             </div>
           </header>
 
-          <div className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(360px,0.85fr)]">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]">
             <div className="space-y-5">
               <LoadingPanel rows={4} />
               <LoadingPanel rows={3} />
@@ -959,6 +967,13 @@ function formatShortTime(value: string | null | undefined): string {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
+function greeting(): string {
+  const hour = new Date().getHours()
+  if (hour < 12) return 'Good morning'
+  if (hour < 18) return 'Good afternoon'
+  return 'Good evening'
+}
+
 function SummaryMetric({
   label,
   value,
@@ -1006,11 +1021,13 @@ function Section({
 }
 
 function OvernightBuyerDigest({ items }: { items: BuyerDigestItem[] }) {
+  // Hidden when every overnight buyer is already in the Today Queue (deduped upstream).
+  if (items.length === 0) return null
   return (
     <Section
       eyebrow="Overnight Buyer Digest"
       title="Signals that arrived while the desk was offline"
-      action={<IconButton icon="mark_chat_unread" label="Open inbox" />}
+      action={<IconButton icon="mark_chat_unread" label="Open inbox" href="/agent/inbox" />}
     >
       <div id="inbox" className="divide-y divide-neutral-200">
         {items.map((item) => (
@@ -1041,7 +1058,7 @@ function PersonalMomentum({ momentum }: { momentum: AgentDashboardData['personal
     <Section
       eyebrow="Personal Momentum"
       title={momentum.weekLabel}
-      action={<IconButton icon="insights" label="Details" />}
+      action={<IconButton icon="insights" label="Details" href="/agent/buyers" />}
     >
       <div id="pages" className="grid gap-3 px-4 py-4 sm:px-5">
         {momentum.stats.map((stat) => (
@@ -1106,17 +1123,18 @@ function MomentumStreakTile({ streak }: { streak: MomentumStreak }) {
   )
 }
 
-function IconButton({ icon, label }: { icon: string; label: string }) {
+function IconButton({ icon, label, href }: { icon: string; label: string; href: string }) {
   return (
-    <button
-      type="button"
+    <Link
+      href={href}
+      aria-label={label}
       className="inline-flex h-9 items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 text-sm font-medium text-neutral-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
     >
       <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
         {icon}
       </span>
       <span className="hidden sm:inline">{label}</span>
-    </button>
+    </Link>
   )
 }
 

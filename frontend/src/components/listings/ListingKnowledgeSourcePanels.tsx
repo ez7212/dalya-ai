@@ -55,7 +55,7 @@ export function ListingKnowledgeAddDocumentPanel(props: AddDocumentPanelProps) {
   )
 }
 
-function FileDropzone({ file, setFile }: { readonly file: File | null; readonly setFile: (value: File | null) => void }) {
+export function FileDropzone({ file, setFile }: { readonly file: File | null; readonly setFile: (value: File | null) => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragOver, setDragOver] = useState(false)
 

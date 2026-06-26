@@ -505,6 +505,8 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
                                 key={asset.url}
                                 type="button"
                                 title={asset.label}
+                                aria-pressed={selected}
+                                aria-label={`${selected ? 'Selected' : 'Attach'} ${asset.label}`}
                                 onClick={() =>
                                   setSelectedAssetUrls((current) =>
                                     selected ? current.filter((url) => url !== asset.url) : [...current, asset.url],
@@ -514,7 +516,7 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
                               >
                                 {isImage ? (
                                   // eslint-disable-next-line @next/next/no-img-element
-                                  <img src={asset.url} alt={asset.label} className="h-full w-full object-cover" />
+                                  <img src={asset.url} alt={asset.label} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                                 ) : (
                                   <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-neutral-50 p-1 text-center">
                                     <span className="material-symbols-outlined text-[20px] text-neutral-400" aria-hidden="true">description</span>

@@ -136,7 +136,7 @@ export function BuyerList() {
             </div>
           ) : (
             <div className="divide-y divide-neutral-200">
-              <div className="hidden gap-2 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-400 md:grid md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.3fr)_minmax(0,1.3fr)_72px_64px_84px] md:items-center">
+              <div className="hidden gap-2 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500 md:grid md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.3fr)_minmax(0,1.3fr)_72px_64px_84px] md:items-center">
                 <span>Buyer</span>
                 <span>Qualification</span>
                 <span>Readiness</span>
@@ -174,7 +174,7 @@ export function BuyerList() {
                       </span>
                     )}
                     {!buyer.qualification.budget_max_aed && !buyer.qualification.financing && !buyer.qualification.timeline && !buyer.opted_out && (
-                      <span className="text-xs text-neutral-400">Not yet qualified</span>
+                      <span className="text-xs text-neutral-500">Not yet qualified</span>
                     )}
                   </div>
                   <div className="min-w-0">
