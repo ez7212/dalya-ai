@@ -74,7 +74,7 @@ export function NotificationPreferences() {
   if (loadState === 'unavailable') return null
 
   return (
-    <section className="mx-auto mt-6 max-w-[760px] rounded-lg border border-neutral-200 bg-white p-5 shadow-card-sm">
+    <section className="rounded-lg border border-neutral-200 bg-white p-5 shadow-card-sm">
       <h2 className="text-sm font-semibold text-neutral-900">WhatsApp notifications</h2>
       <p className="mt-1 text-sm text-neutral-600">
         Time-sensitive events push to your WhatsApp with a link to the right screen. Digest-class events

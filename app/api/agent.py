@@ -99,6 +99,13 @@ class NotificationPreferencesUpdate(BaseModel):
     quiet_hours: Optional[dict[str, str]] = None  # {"start": "22:00", "end": "07:00"}
 
 
+class AgentProfileUpdate(BaseModel):
+    display_name: Optional[str] = None
+    phone: Optional[str] = None
+    rera_number: Optional[str] = None
+    email: Optional[str] = None
+
+
 class BuyerFieldUpdate(BaseModel):
     field: str
     value: object
@@ -341,6 +348,57 @@ async def update_notification_preferences(
 
     updated = notification_preferences(profile)
     return {"events": updated["events"], "quiet_hours": updated["quiet_hours"]}
+
+
+def _serialize_agent_profile(profile: DBAgentProfile) -> dict:
+    """Map the stored DBAgentProfile to the settings-form shape. The form uses
+    generic keys (phone/rera_number); the columns are whatsapp_phone /
+    rera_broker_card_number."""
+    return {
+        "display_name": profile.display_name or "",
+        "phone": profile.whatsapp_phone or "",
+        "rera_number": profile.rera_broker_card_number or "",
+        "email": profile.email or "",
+    }
+
+
+@router.get("/agent/profile")
+def get_agent_profile(
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Editable agent profile (display name, WhatsApp, RERA, email). Autofills the
+    listing-creation form so agents don't re-enter their details each time."""
+    ctx = _agent_context(user, db)
+    profile = _agent_profile_for_context(db, ctx)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Agent profile not found")
+    return _serialize_agent_profile(profile)
+
+
+@router.patch("/agent/profile")
+def update_agent_profile(
+    body: AgentProfileUpdate,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    ctx = _agent_context(user, db)
+    profile = _agent_profile_for_context(db, ctx)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Agent profile not found")
+
+    if body.display_name is not None:
+        profile.display_name = body.display_name.strip()
+    if body.phone is not None:
+        profile.whatsapp_phone = body.phone.strip()
+    if body.rera_number is not None:
+        profile.rera_broker_card_number = body.rera_number.strip()
+    if body.email is not None:
+        profile.email = body.email.strip() or None
+    profile.updated_at = datetime.utcnow()
+    safe_commit(db)
+
+    return _serialize_agent_profile(profile)
 
 
 _HOT_LIST_CACHE_TTL = timedelta(minutes=5)
