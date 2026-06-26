@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { apiFetch } from '@/lib/api'
 
 type LoadState = 'loading' | 'live' | 'error'
-type ActionState = 'saving' | 'sending' | 'rejecting' | 'snoozing' | 'error'
+type ActionState = 'saving' | 'sending' | 'rejecting' | 'snoozing' | 'pushing' | 'pushed' | 'error'
 
 interface ReplyDraft {
   draft_id: string
@@ -137,6 +137,20 @@ export function DraftQueue() {
     await mutateDraft(draftId, 'snoozing', `/api/v1/agent/drafts/${draftId}/snooze`, { minutes: 120, reason: 'Snoozed from draft queue.' })
   }
 
+  // Push to the agent's WhatsApp — unlike send/reject/snooze this keeps the draft
+  // in the queue (it's not handled yet); it disappears on next load once the agent
+  // replies from their phone (delete-on-handle).
+  async function pushDraft(draftId: string) {
+    setActionState((current) => ({ ...current, [draftId]: 'pushing' }))
+    try {
+      const response = await apiFetch(`/api/v1/agent/drafts/${draftId}/push-to-whatsapp`, { method: 'POST' })
+      if (!response.ok) throw new Error(`Push returned ${response.status}`)
+      setActionState((current) => ({ ...current, [draftId]: 'pushed' }))
+    } catch {
+      setActionState((current) => ({ ...current, [draftId]: 'error' }))
+    }
+  }
+
   async function mutateDraft(draftId: string, state: ActionState, path: string, body: Record<string, unknown>) {
     setActionState((current) => ({ ...current, [draftId]: state }))
     try {
@@ -241,6 +255,7 @@ export function DraftQueue() {
                   onSend={() => sendDraft(draft.draft_id)}
                   onReject={() => rejectDraft(draft.draft_id)}
                   onSnooze={() => snoozeDraft(draft.draft_id)}
+                  onPush={() => pushDraft(draft.draft_id)}
                 />
               ))}
             </div>
@@ -260,6 +275,7 @@ function DraftRow({
   onSend,
   onReject,
   onSnooze,
+  onPush,
 }: {
   draft: ReplyDraft
   body: string
@@ -269,8 +285,9 @@ function DraftRow({
   onSend: () => void
   onReject: () => void
   onSnooze: () => void
+  onPush: () => void
 }) {
-  const busy = Boolean(state && state !== 'error')
+  const busy = Boolean(state && state !== 'error' && state !== 'pushed')
   const changed = body.trim() !== (draft.body ?? '').trim()
   const canSend = !busy && body.trim().length > 0
 
@@ -346,6 +363,16 @@ function DraftRow({
           >
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">schedule</span>
             {state === 'snoozing' ? 'Snoozing' : 'Snooze'}
+          </button>
+          <button
+            type="button"
+            onClick={onPush}
+            disabled={busy}
+            title="Send this draft to your WhatsApp to edit and send from your phone"
+            className="inline-flex items-center justify-center gap-2 rounded-md border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">smartphone</span>
+            {state === 'pushing' ? 'Sending…' : state === 'pushed' ? 'Sent to phone' : 'To my WhatsApp'}
           </button>
           <button
             type="button"

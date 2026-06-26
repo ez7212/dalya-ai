@@ -1916,6 +1916,85 @@ async def reject_reply_draft(
     return _serialize_reply_draft(db, draft)
 
 
+@router.post("/agent/drafts/{draft_id}/push-to-whatsapp")
+def push_draft_to_whatsapp(
+    draft_id: str,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Send a reply draft to the agent's own WhatsApp so they can edit/send it from
+    their phone. A reply-route is minted with the draft linked; when the agent
+    replies from their phone the inbound relay discards the draft (delete-on-handle).
+    No-op outbox under the simulated pilot transport."""
+    ctx = _agent_context(user, db)
+    draft = _get_visible_reply_draft_or_404(db, draft_id=draft_id, ctx=ctx)
+    if draft.status not in {"draft", "edited", "snoozed"}:
+        raise HTTPException(status_code=409, detail=f"Draft is {draft.status}")
+
+    brokerage = db.get(DBBrokerage, ctx.brokerage_id)
+    if not brokerage or not brokerage.agents_ai_number:
+        raise HTTPException(status_code=400, detail="Brokerage Agents-AI number is not configured")
+    profile = (
+        db.query(DBAgentProfile)
+        .filter(DBAgentProfile.brokerage_id == ctx.brokerage_id, DBAgentProfile.user_id == ctx.user_id)
+        .first()
+    )
+    if not profile or not profile.whatsapp_phone:
+        raise HTTPException(status_code=400, detail="Your profile has no WhatsApp number. Add it in Settings.")
+
+    from app.core.messaging import get_transport
+    from app.core.messaging.types import OutboundAgentMessage
+
+    send_result = get_transport().send_to_agents_ai(
+        OutboundAgentMessage(
+            brokerage_id=ctx.brokerage_id,
+            agents_ai_number=brokerage.agents_ai_number,
+            agent_phone=profile.whatsapp_phone,
+            body=draft.draft_text,
+            conversation_id=draft.conversation_id,
+            listing_id=draft.listing_id,
+            buyer_phone=draft.buyer_phone,
+            escalation_type="agent_draft_push",
+            agent_user_id=ctx.user_id,
+        )
+    )
+    if not (send_result.ok and send_result.envelope_token):
+        raise HTTPException(status_code=502, detail=send_result.error or "Could not send the draft to WhatsApp")
+
+    now = datetime.utcnow()
+    db.add(DBAgentMessageRoute(
+        brokerage_id=ctx.brokerage_id,
+        conversation_id=draft.conversation_id,
+        listing_id=draft.listing_id,
+        buyer_phone=draft.buyer_phone,
+        agent_user_id=ctx.user_id,
+        agent_phone=profile.whatsapp_phone,
+        agents_ai_envelope_token=send_result.envelope_token,
+        escalation_type="agent_draft_push",
+        draft_id=draft.draft_id,
+        expires_at=now + timedelta(hours=2),
+    ))
+    metadata = dict(draft.metadata_json or {})
+    metadata["pushed_to_whatsapp_at"] = now.isoformat()
+    metadata["pushed_by"] = ctx.user_id
+    draft.metadata_json = metadata
+    draft.updated_at = now
+    record_compliance_event(
+        db,
+        brokerage_id=ctx.brokerage_id,
+        conversation_id=draft.conversation_id,
+        listing_id=draft.listing_id,
+        buyer_phone=draft.buyer_phone,
+        actor_user_id=ctx.user_id,
+        event_type="draft_pushed_to_agent_whatsapp",
+        direction="outbound",
+        details={"draft_id": draft.draft_id},
+    )
+    safe_commit(db)
+    db.refresh(draft)
+    return {**_serialize_reply_draft(db, draft), "pushed_to_whatsapp": True}
+
+
 @router.post("/agent/drafts/{draft_id}/snooze")
 async def snooze_reply_draft(
     draft_id: str,

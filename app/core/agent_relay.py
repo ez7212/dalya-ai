@@ -349,6 +349,22 @@ def _deliver_agent_reply(
     ))
 
     route.consumed_at = now
+
+    # Delete-on-handle: if this route carried a pushed reply draft and the agent
+    # has now replied from their phone, the draft is handled — discard it so it
+    # disappears from the web app's draft queue.
+    if getattr(route, "draft_id", None):
+        from app.models.db_models import DBDraftReply
+
+        pushed_draft = db.get(DBDraftReply, route.draft_id)
+        if pushed_draft and pushed_draft.status in {"draft", "edited", "snoozed"}:
+            draft_metadata = dict(pushed_draft.metadata_json or {})
+            draft_metadata["handled_via"] = "agent_whatsapp_reply"
+            draft_metadata["handled_at"] = now.isoformat()
+            pushed_draft.metadata_json = draft_metadata
+            pushed_draft.status = "discarded"
+            pushed_draft.updated_at = now
+
     thread_question_count = 0
     if route.thread_id:
         from app.core.escalation_threads import resolve_thread_for_route
