@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { getAppNavItems } from './nav-items'
@@ -40,17 +39,18 @@ export function AppSidebar({
           <Link
             href="/agent"
             onClick={onClose}
+            aria-label="Dalya"
             className="flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
           >
-            <Image
-              src="/logo-dalya.png"
-              alt="Dalya AI"
-              height={52}
-              width={538}
-              style={{ width: 'auto', maxHeight: '48px' }}
-              className="object-contain"
-              priority
-            />
+            {/* Typeset wordmark — matches the marketing nav (MarketingNav.tsx).
+                Slate brand-500, lowercase, tight tracking; 80% opacity in dense
+                product chrome per the brand guide. */}
+            <span
+              className="text-xl font-bold tracking-tight text-brand-500/80"
+              style={{ letterSpacing: '-0.015em' }}
+            >
+              dalya
+            </span>
           </Link>
           <button
             type="button"

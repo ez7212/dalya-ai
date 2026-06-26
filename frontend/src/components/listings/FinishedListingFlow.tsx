@@ -218,6 +218,27 @@ export function FinishedListingFlow({ startManual = false }: { startManual?: boo
   const [agentEmail, setAgentEmail] = useState('')
   const [agentPhone, setAgentPhone] = useState('')
   const [agentLicense, setAgentLicense] = useState('')
+
+  // Autofill the agent contact fields from the saved profile, but only when a
+  // field is still empty — scraped portal data (set in the draft-from-url flow)
+  // takes precedence. Runs once on mount.
+  useEffect(() => {
+    let active = true
+    apiFetch('/api/v1/agent/profile')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((profile) => {
+        if (!active || !profile) return
+        if (profile.display_name) setAgentName((cur) => cur || profile.display_name)
+        if (profile.email) setAgentEmail((cur) => cur || profile.email)
+        if (profile.phone) setAgentPhone((cur) => cur || profile.phone)
+        if (profile.rera_number) setAgentLicense((cur) => cur || profile.rera_number)
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [])
+
   const [threshold, setThreshold] = useState<number | ''>('')
   const [commissionPct, setCommissionPct] = useState<number | ''>('')
   const [fees, setFees] = useState<AdditionalFee[]>([])
