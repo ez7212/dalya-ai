@@ -664,6 +664,10 @@ class DBAgentMessageRoute(Base):
     agents_ai_envelope_token = Column(String, nullable=False, unique=True, index=True)
     escalation_type = Column(String, nullable=False)
     tags = Column(JSON, default=list)
+    # Set when this route was created by pushing a reply draft to the agent's
+    # WhatsApp; lets the inbound relay discard that draft once the agent replies
+    # from their phone (delete-on-handle).
+    draft_id = Column(String, nullable=True, index=True)
     expires_at = Column(DateTime, nullable=True)
     consumed_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
