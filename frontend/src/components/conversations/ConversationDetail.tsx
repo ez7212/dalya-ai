@@ -29,6 +29,12 @@ interface ListingAsset {
   label: string
 }
 
+function isImageAsset(asset: ListingAsset): boolean {
+  const kind = (asset.kind || '').toLowerCase()
+  if (kind.includes('image') || kind.includes('photo') || kind.includes('picture')) return true
+  return /\.(jpe?g|png|webp|gif|avif)(\?|$)/i.test(asset.url || '')
+}
+
 interface OfferRow {
   offer_id: string
   amount?: number | null
@@ -489,25 +495,40 @@ export function ConversationDetail({ conversationId }: { conversationId: string 
                     </label>
                     {listingAssets.length > 0 && (
                       <div className="mt-3">
-                        <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-500">Attach from listing</p>
-                        <div className="mt-2 max-h-32 space-y-1 overflow-y-auto">
-                          {listingAssets.map((asset) => (
-                            <label key={asset.url} className="flex items-center gap-2 text-xs text-neutral-700">
-                              <input
-                                type="checkbox"
-                                checked={selectedAssetUrls.includes(asset.url)}
-                                onChange={(event) =>
+                        <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-500">Attach from listing photos</p>
+                        <div className="mt-2 grid max-h-64 grid-cols-3 gap-2 overflow-y-auto">
+                          {listingAssets.map((asset) => {
+                            const selected = selectedAssetUrls.includes(asset.url)
+                            const isImage = isImageAsset(asset)
+                            return (
+                              <button
+                                key={asset.url}
+                                type="button"
+                                title={asset.label}
+                                onClick={() =>
                                   setSelectedAssetUrls((current) =>
-                                    event.target.checked
-                                      ? [...current, asset.url]
-                                      : current.filter((url) => url !== asset.url),
+                                    selected ? current.filter((url) => url !== asset.url) : [...current, asset.url],
                                   )
                                 }
-                                className="h-3.5 w-3.5 rounded border-neutral-300"
-                              />
-                              <span className="truncate">{asset.label}</span>
-                            </label>
-                          ))}
+                                className={`group relative aspect-square overflow-hidden rounded-md border text-left transition-colors ${selected ? 'border-brand-500 ring-2 ring-brand-500/40' : 'border-neutral-200 hover:border-brand-300'}`}
+                              >
+                                {isImage ? (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img src={asset.url} alt={asset.label} className="h-full w-full object-cover" />
+                                ) : (
+                                  <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-neutral-50 p-1 text-center">
+                                    <span className="material-symbols-outlined text-[20px] text-neutral-400" aria-hidden="true">description</span>
+                                    <span className="line-clamp-2 text-[10px] text-neutral-600">{asset.label}</span>
+                                  </span>
+                                )}
+                                {selected && (
+                                  <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-600 text-white">
+                                    <span className="material-symbols-outlined text-[12px]" aria-hidden="true">check</span>
+                                  </span>
+                                )}
+                              </button>
+                            )
+                          })}
                         </div>
                       </div>
                     )}

@@ -6,6 +6,7 @@ export interface AppNavItem {
 
 const CORE_NAV_ITEMS = [
   { label: 'Dashboard', href: '/agent', icon: 'dashboard' },
+  { label: 'Inbox', href: '/agent/inbox', icon: 'forum' },
   { label: 'Listings', href: '/listings', icon: 'real_estate_agent' },
   { label: 'Buyers', href: '/agent/buyers', icon: 'groups' },
   { label: 'Drafts', href: '/agent/drafts', icon: 'edit_note' },

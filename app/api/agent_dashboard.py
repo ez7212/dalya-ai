@@ -1469,6 +1469,18 @@ def _performance_metrics(db: Session, ctx: AgentDashboardContext) -> dict:
     return {"scope": "current_agent", "agent_user_id": uid, "generated_at": _iso(now), "windows": rows, "primary": rows[0]}
 
 
+@router.get("/agent/conversations")
+def agent_conversations(
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Standalone inbox: the agent's full conversation list, reusing the same
+    batched, visibility-scoped builder the dashboard uses. Lets agents reach any
+    conversation directly instead of only via Buyers → buyer → conversation."""
+    ctx = _agent_context(user, db)
+    return {"conversations": _conversation_inbox(db, ctx)}
+
+
 @router.get("/agent/dashboard")
 def agent_dashboard(
     user: CurrentUser = Depends(get_current_user),
