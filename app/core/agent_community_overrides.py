@@ -136,6 +136,9 @@ def build_community_view(
         status = "none"
     elif research.status == "approved":
         status = "approved"
+    elif research.status in ("pending", "queued", "triggered", "researching"):
+        # Actively being researched — no reviewable data yet.
+        status = "in_progress"
     else:
         status = "in_review"
 

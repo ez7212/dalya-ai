@@ -127,6 +127,11 @@ async def get_my_listing_leads(
     stats = crud.get_listing_stats_fast(db, listing_id)
 
     from app.core.listing_stages import serialize_stages
+    from app.core.agent_community_overrides import find_research
+
+    project_name = spa.get("project")
+    research = find_research(db, project_name) if project_name else None
+    community_research_status = research.status if research else None
 
     return {
         "id": listing.listing_id,
@@ -154,7 +159,9 @@ async def get_my_listing_leads(
         "lead_count": stats.get("total_conversations", 0),
         "escalated_count": stats.get("escalated_leads", 0),
         "leads": stats.get("active_buyers", []),
-        "processing_stages": serialize_stages(listing.processing_stages),
+        "processing_stages": serialize_stages(
+            listing.processing_stages, community_research_status=community_research_status
+        ),
     }
 
 

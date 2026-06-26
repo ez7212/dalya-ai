@@ -110,7 +110,7 @@ function ProcessingPanel({ stages }: { readonly stages: readonly ProcessingStage
               <p className="mt-1 text-sm leading-relaxed text-neutral-600">{stage.note || stage.description}</p>
             </div>
             <span className={`w-fit rounded-sm px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${stageTone(stage.status)}`}>
-              {statusLabel(stage.status)}
+              {stage.key === 'ai_advisor_live' && stage.status === 'complete' ? 'Live' : statusLabel(stage.status)}
             </span>
           </div>
         ))}

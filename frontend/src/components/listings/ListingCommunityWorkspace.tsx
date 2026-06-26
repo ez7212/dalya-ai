@@ -26,6 +26,8 @@ export function ListingCommunityWorkspace({ id }: Props) {
       <ScopeBanner project={data.project_name} />
       {data.research_status === 'none' ? (
         <EmptyResearchState project={data.project_name} />
+      ) : data.research_status === 'in_progress' ? (
+        <InProgressResearchState project={data.project_name} />
       ) : (
         <FieldGroups id={id} fields={data.fields} />
       )}
@@ -35,9 +37,15 @@ export function ListingCommunityWorkspace({ id }: Props) {
 
 function Header({ data }: { readonly data: ListingCommunityResponse }) {
   const statusLabel =
-    data.research_status === 'approved' ? 'Approved' : data.research_status === 'in_review' ? 'In review' : 'Not researched'
+    data.research_status === 'approved' ? 'Approved'
+      : data.research_status === 'in_review' ? 'In review'
+      : data.research_status === 'in_progress' ? 'In progress'
+      : 'Not researched'
   const statusTone =
-    data.research_status === 'approved' ? 'bg-sage/15 text-sage' : data.research_status === 'in_review' ? 'bg-copper/15 text-copper' : 'bg-neutral-100 text-neutral-600'
+    data.research_status === 'approved' ? 'bg-sage/15 text-sage'
+      : data.research_status === 'in_review' ? 'bg-copper/15 text-copper'
+      : data.research_status === 'in_progress' ? 'bg-brand-50 text-brand-700'
+      : 'bg-neutral-100 text-neutral-600'
   return (
     <div className="rounded-lg border border-neutral-200 bg-white p-4 sm:p-5">
       <div className="flex flex-wrap items-center gap-3">
@@ -248,6 +256,18 @@ function EmptyResearchState({ project }: { readonly project: string }) {
       <p className="text-sm font-semibold text-neutral-900">No community research yet for {project}.</p>
       <p className="mx-auto mt-2 max-w-md text-sm text-neutral-600">
         Research is generated automatically when a listing in this project is added. It will appear here once it runs.
+      </p>
+    </div>
+  )
+}
+
+function InProgressResearchState({ project }: { readonly project: string }) {
+  return (
+    <div className="rounded-lg border border-brand-200 bg-brand-50 px-4 py-12 text-center">
+      <span className="material-symbols-outlined animate-spin text-[28px] text-brand-600" aria-hidden="true">progress_activity</span>
+      <p className="mt-3 text-sm font-semibold text-neutral-900">Researching {project} — in progress, check back soon.</p>
+      <p className="mx-auto mt-2 max-w-md text-sm text-neutral-600">
+        Dalya is gathering community data, amenities, and investment insights for this project. This usually takes 15–20 minutes.
       </p>
     </div>
   )
