@@ -1,8 +1,11 @@
 'use client'
 
+import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { useSellerOffers } from '@/lib/queries'
 import type { OfferItem } from '@/lib/queries'
+import { apiFetch } from '@/lib/api'
 import { formatMoney } from '@/lib/utils'
 
 type ListingOffersWorkspaceProps = {
@@ -45,7 +48,7 @@ export function ListingOffersWorkspace({ id }: ListingOffersWorkspaceProps) {
           <div className="grid grid-cols-3 gap-2 text-center">
             <Metric label="Active" value={String(activeOffers.length)} />
             <Metric label="Past" value={String(pastOffers.length)} />
-            <Metric label="Threshold" value={moneyLabel(offersQuery.data?.threshold)} />
+            <ThresholdEditor listingId={id} threshold={offersQuery.data?.threshold ?? null} />
           </div>
         </div>
       </section>
@@ -99,6 +102,76 @@ function OfferSection({ title, empty, offers }: { readonly title: string; readon
       )}
     </section>
   )
+}
+
+function ThresholdEditor({ listingId, threshold }: { readonly listingId: string; readonly threshold: number | null }) {
+  const queryClient = useQueryClient()
+  const [editing, setEditing] = useState(false)
+  const [value, setValue] = useState<string>(threshold == null ? '' : String(threshold))
+
+  const save = useMutation({
+    mutationFn: async () => {
+      const trimmed = value.trim()
+      const parsed = trimmed === '' ? null : Number(trimmed)
+      if (parsed != null && (Number.isNaN(parsed) || parsed < 0)) throw new Error('Enter a valid amount.')
+      const res = await apiFetch(`/api/v1/listings/${listingId}/offer-threshold`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ threshold_aed: parsed }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(errorDetail(body) ?? `Update failed (${res.status})`)
+      }
+      return res.json()
+    },
+    onSuccess: async () => {
+      setEditing(false)
+      await queryClient.invalidateQueries({ queryKey: ['seller-offers', listingId] })
+    },
+  })
+
+  if (!editing) {
+    return (
+      <button
+        type="button"
+        onClick={() => { setValue(threshold == null ? '' : String(threshold)); setEditing(true) }}
+        title="Edit the offer escalation threshold"
+        className="min-w-20 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2 text-left transition-colors hover:border-brand-300 hover:bg-brand-50"
+      >
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Threshold</p>
+        <p className="mt-1 text-lg font-semibold text-neutral-900 tabular-nums">{moneyLabel(threshold)}</p>
+      </button>
+    )
+  }
+
+  return (
+    <div className="min-w-20 rounded-md border border-brand-200 bg-brand-50 px-3 py-2 text-left">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Threshold (AED)</p>
+      <input
+        type="number"
+        min={0}
+        value={value}
+        autoFocus
+        onChange={(event) => setValue(event.target.value)}
+        className="mt-1 w-full rounded border border-neutral-300 px-1.5 py-0.5 text-sm tabular-nums outline-none focus:border-brand-500"
+      />
+      <div className="mt-2 flex items-center gap-2">
+        <button type="button" onClick={() => save.mutate()} disabled={save.isPending} className="rounded bg-brand-700 px-2 py-1 text-xs font-semibold text-white disabled:opacity-60">
+          {save.isPending ? 'Saving' : 'Save'}
+        </button>
+        <button type="button" onClick={() => { setEditing(false); setValue(threshold == null ? '' : String(threshold)) }} className="text-xs font-medium text-neutral-500 hover:text-neutral-700">
+          Cancel
+        </button>
+      </div>
+      {save.error && <p className="mt-1 text-[11px] font-medium text-brick">{errorMessage(save.error)}</p>}
+    </div>
+  )
+}
+
+function errorDetail(body: unknown): string | null {
+  if (typeof body !== 'object' || body === null || !('detail' in body)) return null
+  return typeof (body as { detail: unknown }).detail === 'string' ? (body as { detail: string }).detail : null
 }
 
 function Metric({ label, value }: { readonly label: string; readonly value: string }) {

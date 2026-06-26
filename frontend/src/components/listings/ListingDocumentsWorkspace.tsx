@@ -1,6 +1,7 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useRef, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { apiFetch } from '@/lib/api'
 import { useAgentListings, useListingDetail } from '@/lib/queries'
@@ -74,6 +75,8 @@ export function ListingDocumentsWorkspace({ id }: { readonly id: string }) {
         </div>
       </section>
 
+      <UploadDocumentCard listingId={id} />
+
       <OffPlanContext detail={detailQuery.data} />
 
       {documents.length === 0 ? (
@@ -103,6 +106,74 @@ function useListingDocuments(id: string, enabled: boolean) {
       return res.json()
     },
   })
+}
+
+const UPLOADABLE_TYPES = [
+  'title_deed', 'oqood', 'ejari', 'tenancy_contract', 'service_charge_statement', 'noc',
+  'valuation_report', 'mortgage_liability_letter', 'floor_plan', 'snagging_report',
+  'dewa_utility_info', 'building_rules', 'agent_inspection_notes', 'seller_disclosure_notes',
+] as const
+
+function UploadDocumentCard({ listingId }: { readonly listingId: string }) {
+  const queryClient = useQueryClient()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [documentType, setDocumentType] = useState<string>(UPLOADABLE_TYPES[0])
+  const [file, setFile] = useState<File | null>(null)
+
+  const upload = useMutation({
+    mutationFn: async () => {
+      if (!file) throw new Error('Choose a file to upload.')
+      const form = new FormData()
+      form.append('file', file)
+      form.append('document_type', documentType)
+      const res = await apiFetch(`/api/v1/listings/${listingId}/documents/upload`, { method: 'POST', body: form })
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(errorDetail(body) ?? `Upload failed (${res.status})`)
+      }
+      return res.json()
+    },
+    onSuccess: async () => {
+      setFile(null)
+      if (inputRef.current) inputRef.current.value = ''
+      await queryClient.invalidateQueries({ queryKey: ['listing-documents', listingId] })
+      await queryClient.invalidateQueries({ queryKey: ['listing-knowledge', listingId] })
+    },
+  })
+
+  return (
+    <section className="rounded-lg border border-neutral-200 bg-white p-4 sm:p-5">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Add a document</p>
+      <h2 className="mt-1 text-base font-semibold text-neutral-900">Upload title deed, Ejari, service charges, and more</h2>
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+        <label className="block sm:w-56">
+          <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Document type</span>
+          <select value={documentType} onChange={(event) => setDocumentType(event.target.value)} className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20">
+            {UPLOADABLE_TYPES.map((type) => <option key={type} value={type}>{documentTypeLabel(type)}</option>)}
+          </select>
+        </label>
+        <label className="block flex-1">
+          <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">File (PDF, JPG, PNG)</span>
+          <input
+            ref={inputRef}
+            type="file"
+            accept="application/pdf,image/jpeg,image/png"
+            onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+            className="w-full rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm text-neutral-700 file:mr-3 file:rounded file:border-0 file:bg-neutral-100 file:px-3 file:py-1.5 file:text-sm file:font-medium"
+          />
+        </label>
+        <button
+          type="button"
+          onClick={() => upload.mutate()}
+          disabled={!file || upload.isPending}
+          className="inline-flex min-h-10 items-center justify-center rounded-md bg-brand-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-800 disabled:cursor-not-allowed disabled:bg-neutral-300"
+        >
+          {upload.isPending ? 'Uploading...' : 'Upload'}
+        </button>
+      </div>
+      {upload.error && <p className="mt-3 text-sm font-medium text-brick" role="alert">{errorMessage(upload.error)}</p>}
+    </section>
+  )
 }
 
 function DocumentsSkeleton() {

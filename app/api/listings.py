@@ -19,7 +19,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -38,6 +38,10 @@ from app.core.ready_property_knowledge import (
     DOCUMENT_TYPES,
     process_listing_document,
     rebuild_knowledge_summary,
+)
+from app.core.listing_document_storage import (
+    DocumentStorageError,
+    upload_listing_document as upload_listing_document_to_storage,
 )
 from app.db.session import get_db, safe_commit
 from app.core.agent_community_overrides import (
@@ -87,6 +91,12 @@ class ListingDocumentCreateRequest(BaseModel):
     source_url: Optional[str] = None
     content_text: Optional[str] = None
     metadata_json: dict[str, Any] = Field(default_factory=dict)
+
+
+class OfferThresholdUpdate(BaseModel):
+    threshold_aed: Optional[float] = Field(
+        None, description="Minimum offer (AED) that escalates to the agent. Null clears it."
+    )
 
 
 class ListingFactUpdateRequest(BaseModel):
@@ -656,6 +666,83 @@ async def create_listing_document(
         "facts": [_serialize_fact(fact) for fact in facts],
         "summary": _serialize_summary(summary),
     }
+
+
+@router.post("/listings/{listing_id}/documents/upload")
+async def upload_listing_document(
+    listing_id: str,
+    file: UploadFile = File(...),
+    document_type: str = Form(...),
+    label: Optional[str] = Form(None),
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Upload a document file (PDF/JPEG/PNG/text) for a listing. The file is stored
+    in Supabase Storage and made viewable; PDF/text content is extracted so the
+    same fact-extraction + summary-rebuild pipeline runs as for pasted text."""
+    listing, member = _get_scoped_listing(listing_id, user, db)
+    normalized_type = document_type.strip().lower()
+    if normalized_type not in DOCUMENT_TYPES:
+        raise HTTPException(status_code=422, detail=f"Unsupported document_type. Use one of: {', '.join(DOCUMENT_TYPES)}")
+
+    content = await file.read()
+    content_type = (file.content_type or "application/octet-stream").lower()
+    try:
+        stored = upload_listing_document_to_storage(
+            listing_id=listing.listing_id,
+            content=content,
+            content_type=content_type,
+            filename=file.filename or "document",
+        )
+    except DocumentStorageError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+    document = DBListingDocument(
+        brokerage_id=member.brokerage_id,
+        listing_id=listing.listing_id,
+        document_type=normalized_type,
+        label=label or file.filename,
+        source_url=stored.public_url,
+        content_text=stored.content_text,
+        status="pending",
+        metadata_json={
+            "source": "listing_knowledge_upload",
+            "storage_path": stored.storage_path,
+            "original_filename": file.filename,
+            "content_type": content_type,
+        },
+    )
+    db.add(document)
+    safe_commit(db)
+    db.refresh(document)
+    facts = process_listing_document(db, document)
+    summary = rebuild_knowledge_summary(db, listing)
+    db.refresh(document)
+    return {
+        "document": _serialize_document(document),
+        "facts": [_serialize_fact(fact) for fact in facts],
+        "summary": _serialize_summary(summary),
+        "text_extracted": stored.content_text is not None,
+    }
+
+
+@router.patch("/listings/{listing_id}/offer-threshold")
+async def update_listing_offer_threshold(
+    listing_id: str,
+    body: OfferThresholdUpdate,
+    user: CurrentUser = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Agent-facing edit of the offer escalation threshold (the minimum offer that
+    alerts the agent). Brokerage-scoped via _get_scoped_listing. Keeps the legacy
+    and current threshold columns in sync so display and escalation logic agree."""
+    listing, _member = _get_scoped_listing(listing_id, user, db)
+    if body.threshold_aed is not None and body.threshold_aed < 0:
+        raise HTTPException(status_code=422, detail="threshold_aed must not be negative.")
+    listing.negotiation_threshold_aed = body.threshold_aed
+    listing.notification_threshold_aed = body.threshold_aed
+    safe_commit(db)
+    return {"listing_id": listing_id, "threshold": listing.negotiation_threshold_aed}
 
 
 @router.get("/listings/{listing_id}/documents")

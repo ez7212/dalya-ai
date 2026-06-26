@@ -8,6 +8,7 @@ export function ListingKnowledgeSummaryPanel({ summary }: { readonly summary?: K
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Property Advisor summary</p>
           <h2 className="mt-1 text-base font-semibold text-neutral-900">{summary ? statusLabel(summary.status) : 'No summary yet'}</h2>
+          <p className="mt-1 text-xs text-neutral-500">The grounded overview Dalya uses when answering buyers about this property.</p>
         </div>
         <span className={`w-fit rounded-sm px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${summaryTone(summary?.status)}`}>
           {summary ? statusLabel(summary.status) : 'Empty'}
