@@ -218,7 +218,7 @@ def _agent_profile_for_context(db: Session, ctx: AgentContext) -> Optional[DBAge
 
 
 @router.get("/agent/brokerage/config")
-async def get_brokerage_config(
+def get_brokerage_config(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -275,7 +275,7 @@ async def update_brokerage_config(
 
 
 @router.get("/agent/notification-preferences")
-async def get_notification_preferences(
+def get_notification_preferences(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -347,7 +347,7 @@ _HOT_LIST_CACHE_TTL = timedelta(minutes=5)
 
 
 @router.get("/agent/hot-list")
-async def hot_list(
+def hot_list(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -480,7 +480,7 @@ async def hot_list(
 
 
 @router.get("/agent/leads/{conversation_id}")
-async def lead_detail(
+def lead_detail(
     conversation_id: str,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -757,7 +757,7 @@ def _buyer_readiness_payload(
 
 
 @router.get("/agent/buyers")
-async def list_buyers(
+def list_buyers(
     filter: Optional[str] = None,
     sort: str = "score",
     user: CurrentUser = Depends(get_current_user),
@@ -981,7 +981,7 @@ async def list_buyers(
 
 
 @router.get("/agent/buyers/{profile_id}")
-async def buyer_card(
+def buyer_card(
     profile_id: str,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -1170,7 +1170,7 @@ async def create_offer(
 
 
 @router.get("/agent/offers")
-async def list_offers(
+def list_offers(
     conversation_id: Optional[str] = None,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -1452,7 +1452,7 @@ async def send_listing_media_endpoint(
 
 
 @router.get("/agent/listings/{listing_id}/assets")
-async def get_listing_attachable_assets(
+def get_listing_attachable_assets(
     listing_id: str,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -1676,7 +1676,7 @@ async def reassign_conversation_route(
 
 
 @router.get("/agent/listings/{listing_id}/buyer-matches")
-async def listing_buyer_matches(
+def listing_buyer_matches(
     listing_id: str,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -1737,7 +1737,7 @@ async def update_listing_buyer_match(
 
 
 @router.get("/agent/listings/{listing_id}/unit-profile")
-async def get_listing_unit_profile(
+def get_listing_unit_profile(
     listing_id: str,
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
