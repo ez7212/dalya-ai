@@ -87,11 +87,20 @@ export function TodayQueue({
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`rounded-sm border px-2 py-0.5 text-[11px] font-semibold ${KIND_TONE[item.kind]}`}>{KIND_LABEL[item.kind]}</span>
-                <span className="rounded-sm bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-neutral-600">{item.status}</span>
+                {item.status && (
+                  <span className="rounded-sm bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-neutral-600">{item.status}</span>
+                )}
                 <span className="font-mono text-xs text-neutral-500">{item.timestampLabel}</span>
               </div>
-              <h3 className="mt-2 text-sm font-semibold text-neutral-900">{item.title}</h3>
-              <p className="mt-1 text-xs text-neutral-500">{item.subject}</p>
+              {/* Property is the anchor — give it a prominent line of its own,
+                  visually separated from the buyer and the summary. */}
+              {item.listingName && (
+                <p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-neutral-900">
+                  <span className="material-symbols-outlined text-[18px] text-neutral-400" aria-hidden="true">apartment</span>
+                  <span className="truncate">{item.listingName}</span>
+                </p>
+              )}
+              <p className={`text-xs text-neutral-500${item.listingName ? ' mt-1' : ' mt-2 text-sm font-semibold text-neutral-900'}`}>{item.title}</p>
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-700">{item.detail}</p>
               <QueueHandoffCard item={item} />
             </div>
@@ -136,6 +145,9 @@ function QueueActions({
     const taskState = taskActionState[task.id]
     return (
       <>
+        {/* Primary work surface first, then Done; Snooze (postpone) is the last,
+            lowest-emphasis action. */}
+        {item.href && <QueueLink href={item.href} label={queueActionLabel(item)} />}
         <button
           type="button"
           onClick={() => onTaskDone(task.id)}
@@ -149,10 +161,11 @@ function QueueActions({
           type="button"
           onClick={() => onTaskSnooze(task.id)}
           disabled={!actionsEnabled || taskState === 'working'}
-          className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 px-2.5 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+          title="Postpone this task by 24 hours"
+          className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-2.5 py-1.5 text-xs font-medium text-neutral-500 transition-colors hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">schedule</span>
-          Snooze
+          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">snooze</span>
+          Snooze 24h
         </button>
         {taskState === 'error' && <p className="basis-full text-xs font-medium text-error-600 lg:text-right">Could not update this task.</p>}
       </>

@@ -11,8 +11,6 @@ import type {
   BuyerDigestItem,
   BuyerIntent,
   CampaignItem,
-  CampaignSnapshot as CampaignSnapshotType,
-  CampaignStatus,
   ConversationInboxItem,
   EscalationState,
   EscalationThreadItem,
@@ -41,7 +39,6 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
   const [escalationActionState, setEscalationActionState] = useState<Record<string, 'resolved' | 'error' | 'working'>>({})
   const [refreshState, setRefreshState] = useState<'idle' | 'working' | 'error'>('idle')
   const [reloadKey, setReloadKey] = useState(0)
-  const [showMore, setShowMore] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -102,7 +99,7 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
       const res = await apiFetch(endpoint, {
         method: 'POST',
         headers: action === 'snoozed' ? { 'Content-Type': 'application/json' } : undefined,
-        body: action === 'snoozed' ? JSON.stringify({ hours: 24, reason: 'review_later' }) : undefined,
+        body: action === 'snoozed' ? JSON.stringify({ minutes: 24 * 60, reason: 'review_later' }) : undefined,
       })
       if (!res.ok) {
         throw new Error(`Task update returned ${res.status}`)
@@ -247,55 +244,37 @@ export function AgentDashboard({ data }: AgentDashboardProps) {
             </div>
           )}
 
-          <div className="mx-auto max-w-4xl space-y-5">
-            {dayIsClear ? (
-              <DayIsClear
-                sourceLabel={sourceLabel}
-                emptyState={dashboardData.emptyState}
-                refreshState={refreshState}
-                onRefreshHotList={refreshHotList}
-              />
-            ) : (
-              <TodayQueue
-                items={todayQueue}
-                actionsEnabled={actionsEnabled}
-                taskActionState={taskActionState}
-                escalationActionState={escalationActionState}
-                refreshState={refreshState}
-                onTaskDone={(taskId) => updateTask(taskId, 'done')}
-                onTaskSnooze={(taskId) => updateTask(taskId, 'snoozed')}
-                onResolveEscalation={resolveEscalation}
-                onRefreshHotList={refreshHotList}
-              />
-            )}
-          </div>
+          {/* Two-column workspace: the ranked queue takes the primary column and
+              a side rail surfaces overnight signals + momentum, so the wide
+              desktop space is used instead of a narrow centered column. */}
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]">
+            <div className="min-w-0 space-y-5">
+              {dayIsClear ? (
+                <DayIsClear
+                  sourceLabel={sourceLabel}
+                  emptyState={dashboardData.emptyState}
+                  refreshState={refreshState}
+                  onRefreshHotList={refreshHotList}
+                />
+              ) : (
+                <TodayQueue
+                  items={todayQueue}
+                  actionsEnabled={actionsEnabled}
+                  taskActionState={taskActionState}
+                  escalationActionState={escalationActionState}
+                  refreshState={refreshState}
+                  onTaskDone={(taskId) => updateTask(taskId, 'done')}
+                  onTaskSnooze={(taskId) => updateTask(taskId, 'snoozed')}
+                  onResolveEscalation={resolveEscalation}
+                  onRefreshHotList={refreshHotList}
+                />
+              )}
+            </div>
 
-          {/* Analytics — demoted below the fold behind a compact toggle. */}
-          <div className="mx-auto mt-8 max-w-4xl">
-            <button
-              type="button"
-              onClick={() => setShowMore((value) => !value)}
-              aria-expanded={showMore}
-              className="flex w-full items-center justify-between rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-neutral-500" aria-hidden="true">bar_chart</span>
-                More — performance, campaigns &amp; momentum
-              </span>
-              <span className="material-symbols-outlined text-[20px] text-neutral-500" aria-hidden="true">
-                {showMore ? 'expand_less' : 'expand_more'}
-              </span>
-            </button>
-            {showMore && (
-              <div className="mt-5 space-y-5">
-                <AgentPerformancePanel performance={dashboardData.performance} />
-                <div className="grid gap-5 xl:grid-cols-2">
-                  <CampaignSnapshot snapshot={dashboardData.campaignSnapshot} />
-                  <OvernightBuyerDigest items={dashboardData.overnightBuyerDigest} />
-                  <PersonalMomentum momentum={dashboardData.personalMomentum} />
-                </div>
-              </div>
-            )}
+            <aside className="space-y-5">
+              <OvernightBuyerDigest items={dashboardData.overnightBuyerDigest} />
+              <PersonalMomentum momentum={dashboardData.personalMomentum} />
+            </aside>
           </div>
         </main>
       </div>
@@ -688,7 +667,7 @@ function mapApiDashboard(payload: ApiDashboardPayload, fallback: AgentDashboardD
     buyerName: lead.buyer?.name ?? lead.buyer?.phone ?? 'Buyer',
     intent: intentFromSignal(lead.signal_key),
     message: lead.last_message ?? lead.reason ?? 'Buyer activity needs review.',
-    budget: lead.buyer?.budget_aed ? `AED ${Number(lead.buyer.budget_aed).toLocaleString()}` : 'Budget not confirmed',
+    budget: lead.buyer?.budget_aed ? `~AED ${Number(lead.buyer.budget_aed).toLocaleString()}` : 'Not stated',
     target: lead.listing?.project ?? 'Listing',
     recommendedAction: lead.next_action ?? 'Open brief',
     lastSeen: formatShortTime(lead.last_message_at),
@@ -980,52 +959,6 @@ function formatShortTime(value: string | null | undefined): string {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
-function AgentPerformancePanel({ performance }: { performance: AgentDashboardData['performance'] }) {
-  const windows = performance.windows.length ? performance.windows : [performance.primary]
-  return (
-    <section className="mb-5 rounded-lg border border-neutral-200 bg-white shadow-card-sm">
-      <div className="flex flex-col gap-1 border-b border-neutral-200 px-4 py-4 sm:px-5">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500">Agent performance</p>
-        <h2 className="text-base font-semibold text-neutral-900">Current-agent activity</h2>
-      </div>
-      <div className="grid divide-y divide-neutral-200 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-        {windows.map((window) => (
-          <div key={window.key} className="px-4 py-4 sm:px-5">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-sm font-semibold text-neutral-900">{window.label}</p>
-              <span className="rounded-full bg-neutral-100 px-2 py-1 text-[11px] font-medium text-neutral-600">
-                {window.metrics.avgResponseMinutes == null ? 'No response avg' : `${window.metrics.avgResponseMinutes}m avg`}
-              </span>
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <PerformanceValue label="New buyers" value={window.metrics.newBuyerConversations} />
-              <PerformanceValue label="Escalations handled" value={window.metrics.escalationsHandled} />
-              <PerformanceValue label="Follow-ups sent" value={window.metrics.followUpsSent} />
-              <PerformanceValue label="Offers detected" value={window.metrics.offersDetected} />
-              <PerformanceValue label="Viewings proposed" value={window.metrics.viewingsProposed} />
-              <PerformanceValue label="Viewings confirmed" value={window.metrics.viewingsConfirmed} />
-              <PerformanceValue label="Viewings completed" value={window.metrics.viewingsCompleted} />
-              <PerformanceValue label="Hot leads active" value={window.metrics.hotLeadsActive} />
-              <PerformanceValue label="Tasks overdue" value={window.metrics.tasksOverdue} tone={window.metrics.tasksOverdue > 0 ? 'warning' : 'default'} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function PerformanceValue({ label, value, tone = 'default' }: { label: string; value: number; tone?: 'default' | 'warning' }) {
-  return (
-    <div>
-      <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">{label}</p>
-      <p className={tone === 'warning' ? 'mt-1 text-lg font-semibold text-amber-700' : 'mt-1 text-lg font-semibold text-neutral-900'}>
-        {Number(value || 0).toLocaleString()}
-      </p>
-    </div>
-  )
-}
-
 function SummaryMetric({
   label,
   value,
@@ -1072,54 +1005,6 @@ function Section({
   )
 }
 
-function CampaignSnapshot({ snapshot }: { snapshot: CampaignSnapshotType }) {
-  return (
-    <Section
-      eyebrow="Campaign Snapshot"
-      title={snapshot.headline}
-      action={<IconButton icon="tune" label="Optimize" />}
-    >
-      <div id="campaigns" className="grid gap-3 border-b border-neutral-200 px-4 py-4 sm:grid-cols-4 sm:px-5">
-        <CompactMetric label="Active" value={snapshot.activeCampaigns.toString()} />
-        <CompactMetric label="New leads" value={snapshot.newLeads.toString()} />
-        <CompactMetric label="Qualified" value={snapshot.qualifiedLeads.toString()} />
-        <CompactMetric label="CPQL" value={snapshot.costPerQualifiedLead} />
-      </div>
-      <div className="divide-y divide-neutral-200">
-        {snapshot.campaigns.map((campaign) => (
-          <CampaignRow key={campaign.id} campaign={campaign} />
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function CampaignRow({ campaign }: { campaign: CampaignItem }) {
-  const rate = Math.max(0, Math.min(100, Math.round((campaign.qualified / Math.max(campaign.leads, 1)) * 100)))
-
-  return (
-    <div className="px-4 py-4 sm:px-5">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-sm font-semibold text-neutral-900">{campaign.name}</h3>
-            <CampaignStatusPill status={campaign.status} />
-          </div>
-          <p className="mt-1 text-xs text-neutral-500">{campaign.audience}</p>
-        </div>
-        <div className="flex gap-4 text-left sm:text-right">
-          <MiniStat label="Spend" value={campaign.spend} />
-          <MiniStat label="Qualified" value={`${campaign.qualified}/${campaign.leads}`} />
-        </div>
-      </div>
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-neutral-100" aria-label={`${rate}% qualified lead rate`}>
-        <div className="h-full rounded-full bg-brand-500" style={{ width: `${rate}%` }} />
-      </div>
-      <p className="mt-3 text-sm leading-relaxed text-neutral-600">{campaign.insight}</p>
-    </div>
-  )
-}
-
 function OvernightBuyerDigest({ items }: { items: BuyerDigestItem[] }) {
   return (
     <Section
@@ -1137,9 +1022,10 @@ function OvernightBuyerDigest({ items }: { items: BuyerDigestItem[] }) {
               </div>
               <IntentPill intent={item.intent} />
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.message}</p>
+            <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-400">Latest message</p>
+            <p className="mt-1 text-sm leading-relaxed text-neutral-600">{item.message}</p>
             <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-              <Fact label="Budget" value={item.budget} />
+              <Fact label="Est. budget" value={item.budget} />
               <Fact label="Last seen" value={item.lastSeen} />
             </div>
             <p className="mt-3 text-sm font-medium leading-snug text-brand-700">{item.recommendedAction}</p>
@@ -1172,24 +1058,6 @@ function PersonalMomentum({ momentum }: { momentum: AgentDashboardData['personal
         <p className="mt-2 text-sm leading-relaxed text-neutral-700">{momentum.focus}</p>
       </div>
     </Section>
-  )
-}
-
-function CompactMetric({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-500">{label}</p>
-      <p className="mt-1 font-mono text-lg font-semibold text-neutral-900">{value}</p>
-    </div>
-  )
-}
-
-function MiniStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-500">{label}</p>
-      <p className="mt-1 font-mono text-sm font-semibold text-neutral-900">{value}</p>
-    </div>
   )
 }
 
@@ -1250,21 +1118,6 @@ function IconButton({ icon, label }: { icon: string; label: string }) {
       <span className="hidden sm:inline">{label}</span>
     </button>
   )
-}
-
-function CampaignStatusPill({ status }: { status: CampaignStatus }) {
-  const label: Record<CampaignStatus, string> = {
-    live: 'Live',
-    warming: 'Warming',
-    needs_action: 'Needs action',
-  }
-  const tone: Record<CampaignStatus, string> = {
-    live: 'border-success-100 bg-success-50 text-success-700',
-    warming: 'border-brand-100 bg-brand-50 text-brand-700',
-    needs_action: 'border-warning-100 bg-warning-50 text-warning-700',
-  }
-
-  return <Pill className={tone[status]}>{label[status]}</Pill>
 }
 
 function IntentPill({ intent }: { intent: BuyerIntent }) {
