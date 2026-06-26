@@ -22,7 +22,6 @@ from app.models.db_models import (
     DBBrokerageMember,
     DBConversation,
     DBListing,
-    DBListingFact,
     DBListingKnowledgeSummary,
     DBListingLogistics,
     DBOfferRecord,
@@ -93,18 +92,12 @@ def _listing_knowledge(db: Session, listing: DBListing) -> tuple[str, int, Optio
         )
         .first()
     )
-    buyer_safe_fact_count = int(
-        db.query(func.count(DBListingFact.fact_id))
-        .filter(
-            DBListingFact.brokerage_id == listing.brokerage_id,
-            DBListingFact.listing_id == listing.listing_id,
-            DBListingFact.buyer_safe.is_(True),
-            DBListingFact.risk_flag.is_(False),
-        )
-        .scalar()
-        or 0
-    )
-    missing_fact_count = 1 if buyer_safe_fact_count == 0 else 0
+    # missing_fact_count is the number of gaps the AI summary actually flagged —
+    # 0 until a summary exists. (It previously faked a "1" whenever a listing had
+    # no buyer-safe facts, so every new listing read "1 missing facts" even though
+    # no specific fact was missing.) The "needs_attention" status below still
+    # signals a listing whose knowledge hasn't been built yet.
+    missing_fact_count = 0
     if summary and isinstance(summary.missing_information, list):
         missing_fact_count = len(summary.missing_information)
     if missing_fact_count > 0 or summary is None or summary.status in ("needs_review", "needs_attention", "blocked", "stale"):
