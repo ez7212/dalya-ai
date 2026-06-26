@@ -691,7 +691,7 @@ export interface CommunityField {
 export interface ListingCommunityResponse {
   readonly project_name: string | null
   readonly project_key: string | null
-  readonly research_status: 'approved' | 'in_review' | 'none'
+  readonly research_status: 'approved' | 'in_review' | 'in_progress' | 'none'
   readonly research_confidence: number | null
   readonly source_count: number
   readonly fields: readonly CommunityField[]
