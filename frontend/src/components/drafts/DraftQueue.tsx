@@ -223,6 +223,10 @@ export function DraftQueue() {
           ) : visibleDrafts.length === 0 ? (
             <div className="px-4 py-8 sm:px-5">
               <p className="text-sm font-medium text-neutral-800">No drafts in this queue.</p>
+              <p className="mt-1 text-sm text-neutral-500">
+                Dalya queues a reply draft here whenever a buyer message needs your review before sending.
+                Drafts ready for review also surface on the matching Today Queue task.
+              </p>
             </div>
           ) : (
             <div className="divide-y divide-neutral-200">

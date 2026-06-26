@@ -81,9 +81,17 @@ export function buildTodayQueue({ data, needsReply, now = new Date() }: BuildTod
     .map(withoutRanking)
 }
 
+const ACTIONABLE_ESCALATION_STATES = new Set(['open', 'updated', 'timed_out'])
+const ESCALATION_URGENCY_RANK: Record<string, number> = { critical: 0, high: 1, normal: 2 }
+
 function buildEscalationItems(items: readonly EscalationThreadItem[]): RankedQueueItem[] {
   return items
-    .filter((item) => item.urgency === 'critical' && (item.state === 'open' || item.state === 'updated'))
+    // Every open escalation needs agent judgment — surface them all, not just the
+    // 'critical' ones (the previous filter hid normal/high escalations entirely).
+    .filter((item) => ACTIONABLE_ESCALATION_STATES.has(item.state))
+    // Critical first within the escalation bucket, then high, then normal.
+    .slice()
+    .sort((a, b) => (ESCALATION_URGENCY_RANK[a.urgency] ?? 9) - (ESCALATION_URGENCY_RANK[b.urgency] ?? 9))
     .map((item, sequence) => ({
       id: `escalation-${item.id}`,
       kind: 'escalation',
