@@ -23,6 +23,7 @@ export interface TodayQueueItem {
   readonly kind: TodayQueueKind
   readonly title: string
   readonly subject: string
+  readonly listingName: string
   readonly detail: string
   readonly status: string
   readonly reason: string
@@ -90,6 +91,7 @@ function buildEscalationItems(items: readonly EscalationThreadItem[]): RankedQue
       sequence,
       title: item.buyerName,
       subject: item.listingName,
+      listingName: item.listingName,
       detail: cleanText(item.latestQuestion, 'Agent review needed.'),
       status: `${labelFromKey(item.urgency)} escalation`,
       reason: item.state === 'updated' ? 'Buyer added a new question.' : 'Open escalation is waiting on agent judgment.',
@@ -115,8 +117,9 @@ function buildTaskItems(items: readonly QueueItem[], nowMs: number): RankedQueue
         sequence,
         title: item.title,
         subject: item.buyerName,
+        listingName: item.listingName ?? '',
         detail: item.context,
-        status: overdue ? 'Overdue task' : 'Future follow-up',
+        status: overdue ? '' : 'Future follow-up',
         reason: item.nextAction,
         timestampLabel: item.due || 'Today',
         dueAt: item.dueAt ?? null,
@@ -137,6 +140,7 @@ function buildNeedsReplyItems(items: readonly ConversationInboxItem[]): RankedQu
       sequence,
       title: item.buyerName,
       subject: item.listingName,
+      listingName: item.listingName,
       detail: cleanText(item.lastMessage, item.summary),
       status: item.hasPendingDraft ? 'Draft ready' : 'Needs reply',
       reason: item.needsReplyReason || item.nextStep,
@@ -159,6 +163,7 @@ function buildViewingItems(items: readonly ViewingItem[], now: Date, nowMs: numb
       sequence,
       title: item.buyerName,
       subject: item.property,
+      listingName: item.property,
       detail: item.preparation,
       status: `${labelFromKey(item.status)} viewing`,
       reason: item.location,
@@ -177,6 +182,7 @@ function buildReplyDraftItems(items: readonly ReplyDraftItem[]): RankedQueueItem
     sequence,
     title: item.buyerName,
     subject: item.listingName,
+    listingName: item.listingName,
     detail: cleanText(item.body, 'Draft reply is ready for review.'),
     status: 'Draft awaiting approval',
     reason: labelFromKey(item.category),
@@ -195,6 +201,7 @@ function buildHotBuyerItems(items: readonly BuyerDigestItem[]): RankedQueueItem[
     sequence,
     title: item.buyerName,
     subject: item.target,
+    listingName: item.target,
     detail: item.message,
     status: `${labelFromKey(item.intent)} buyer`,
     reason: item.recommendedAction,
