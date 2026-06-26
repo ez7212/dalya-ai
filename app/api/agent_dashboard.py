@@ -885,6 +885,19 @@ def _conversation_inbox(db: Session, ctx: AgentDashboardContext) -> list[dict]:
     return items
 
 
+def _listing_names_by_id(db: Session, listing_ids) -> dict:
+    """Batch-resolve listing_id → project name so tasks/viewings can show the
+    actual listing name instead of falling back to the raw listing_id UUID."""
+    ids = {lid for lid in listing_ids if lid}
+    if not ids:
+        return {}
+    names: dict = {}
+    for listing in db.query(DBListing).filter(DBListing.listing_id.in_(ids)).all():
+        spa = listing.spa_data or {}
+        names[listing.listing_id] = spa.get("project") or spa.get("building_or_project") or "Listing"
+    return names
+
+
 def _tasks(db: Session, ctx: AgentDashboardContext) -> list[dict]:
     now = datetime.utcnow()
     rows = (
@@ -900,6 +913,7 @@ def _tasks(db: Session, ctx: AgentDashboardContext) -> list[dict]:
     )
     _visible = _visible_conversation_ids(db, ctx, [task.conversation_id for task in rows])
     rows = [task for task in rows if not task.conversation_id or task.conversation_id in _visible]
+    _names = _listing_names_by_id(db, [task.listing_id for task in rows])
     return [
         {
             "task_id": task.task_id,
@@ -912,6 +926,7 @@ def _tasks(db: Session, ctx: AgentDashboardContext) -> list[dict]:
             "source": task.source,
             "conversation_id": task.conversation_id,
             "listing_id": task.listing_id,
+            "listing_name": _names.get(task.listing_id),
             "buyer_phone": task.buyer_phone,
             "assigned_agent_id": task.assigned_agent_id,
             "due_at": _iso(task.due_at),
@@ -936,11 +951,13 @@ def _viewings(db: Session, ctx: AgentDashboardContext) -> list[dict]:
     )
     _visible = _visible_conversation_ids(db, ctx, [viewing.conversation_id for viewing in rows])
     rows = [viewing for viewing in rows if not viewing.conversation_id or viewing.conversation_id in _visible]
+    _names = _listing_names_by_id(db, [viewing.listing_id for viewing in rows])
     return [
         {
             "viewing_id": viewing.viewing_id,
             "conversation_id": viewing.conversation_id,
             "listing_id": viewing.listing_id,
+            "listing_name": _names.get(viewing.listing_id),
             "buyer_phone": viewing.buyer_phone,
             "agent_user_id": viewing.agent_user_id,
             "scheduled_for": _iso(viewing.scheduled_for),
