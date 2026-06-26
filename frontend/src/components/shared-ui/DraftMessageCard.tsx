@@ -53,7 +53,7 @@ export function DraftMessageCard({
           <p className={`${sharedUi.muted} mt-1`}>{contextLine}</p>
         </div>
         <button type="button" onClick={copy} disabled={disabled} className={sharedUi.iconButton} aria-label="Copy draft" title="Copy draft">
-          <span className="material-symbols-rounded text-[18px]" aria-hidden="true">{copied ? 'check' : 'content_copy'}</span>
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">{copied ? 'check' : 'content_copy'}</span>
         </button>
       </div>
       <textarea
@@ -67,7 +67,7 @@ export function DraftMessageCard({
         <p className={sharedUi.muted}>Manual v1: copy and send from WhatsApp Business.</p>
         {futureSendSlot || (
           <span className="inline-flex items-center gap-1 text-xs text-text-3">
-            <span className="material-symbols-rounded text-[16px]" aria-hidden="true">lock</span>
+            <span className="material-symbols-outlined text-[16px]" aria-hidden="true">lock</span>
             Send via Property Advisor: future template path
           </span>
         )}

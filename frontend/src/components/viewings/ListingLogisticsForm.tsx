@@ -140,7 +140,9 @@ function AccessSection({ value, onChange }: SectionProps) {
     <div className="grid gap-4 md:grid-cols-2">
       <SelectField label="Access type" value={str(value.type)} onChange={(next) => onChange({ ...value, type: next })} options={['front desk', 'security office', 'direct', 'keypad', 'other']} />
       <TextField label="Meet point" value={str(value.meet_point)} onChange={(next) => onChange({ ...value, meet_point: next })} />
-      <NumberField label="Building/community notice hours" value={value.advance_notice_hours} onChange={(next) => onChange({ ...value, advance_notice_hours: next })} />
+      <NumberField label="Advance notice the building needs (hours)" value={value.advance_notice_hours} onChange={(next) => onChange({ ...value, advance_notice_hours: next })} />
+      <SelectField label="Notify building/community via" value={str(value.notify_method)} onChange={(next) => onChange({ ...value, notify_method: next })} options={['whatsapp', 'email', 'phone']} />
+      <TextField label="Building/community contact" value={str(value.notify_contact)} onChange={(next) => onChange({ ...value, notify_contact: next })} placeholder="Security/management WhatsApp or email" />
       <TextField label="NOC upload reference" value={str(value.noc_upload_url)} onChange={(next) => onChange({ ...value, noc_upload_url: next })} />
       <TextField label="Security opens" value={str(securityHours.start)} onChange={(next) => onChange({ ...value, security_office_hours: { ...securityHours, start: next } })} placeholder="09:00" />
       <TextField label="Security closes" value={str(securityHours.end)} onChange={(next) => onChange({ ...value, security_office_hours: { ...securityHours, end: next } })} placeholder="18:00" />

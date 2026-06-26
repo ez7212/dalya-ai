@@ -64,7 +64,7 @@ export function UnitProfileView({
         </div>
         {onAudioReady && (
           <button type="button" onClick={() => setAdding((value) => !value)} className={sharedUi.primaryButton}>
-            <span className="material-symbols-rounded text-[18px]" aria-hidden="true">mic</span>
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">mic</span>
             {adding ? 'Close notes' : 'Add or update notes'}
           </button>
         )}
