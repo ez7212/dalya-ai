@@ -121,10 +121,11 @@ def _normalize_filename(developer: str, project_name: str) -> str:
     Normalize to a safe filename: lowercase, spaces to underscores,
     strip special chars, e.g. 'Emaar Properties' + 'The Oasis' -> 'emaar_oasis.json'
     """
-    dev_brand = developer.lower().split()[0]
+    dev_parts = developer.lower().split()
+    dev_brand = dev_parts[0] if dev_parts else ""
     project = project_name.lower()
     project = re.sub(r"^the\s+", "", project)
-    combined = f"{dev_brand}_{project}"
+    combined = f"{dev_brand}_{project}" if dev_brand else project
     combined = re.sub(r"[\s\-]+", "_", combined)
     combined = re.sub(r"[^a-z0-9_]", "", combined)
     combined = re.sub(r"_+", "_", combined).strip("_")
